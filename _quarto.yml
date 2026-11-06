@@ -6,19 +6,26 @@ project:
 
 website:
   title: "Veterinary Epidemiology and Economics"
+  site-url: https://rianhs.github.io/veterinary-epidemiology-and-economics/
+  repo-url: https://github.com/rianhs/veterinary-epidemiology-and-economics
   search: true
   navbar:
     left:
-      - href: index.md
-        text: Home
       - href: encyclopedia/index.md
         text: Encyclopedia
       - href: guides/index.md
         text: Guides
       - href: slides/index.md
         text: Slides
+      - href: skills.md
+        text: Skill map
+  page-footer:
+    left: "Veterinary Epidemiology and Economics, Universitas Hasanuddin"
+    right: "Coordinator: drh. Rian Hari Suharto, M.Sc."
 
 format:
   html:
+    theme: [default, theme.scss]
     lang: en
     toc: true
+    smooth-scroll: true
