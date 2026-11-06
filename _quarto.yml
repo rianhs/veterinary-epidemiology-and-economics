@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - "slides/*.html"
+
+website:
+  title: "Veterinary Epidemiology and Economics"
+  search: true
+  navbar:
+    left:
+      - href: index.md
+        text: Home
+      - href: encyclopedia/index.md
+        text: Encyclopedia
+      - href: guides/index.md
+        text: Guides
+      - href: slides/index.md
+        text: Slides
+
+format:
+  html:
+    lang: en
+    toc: true
