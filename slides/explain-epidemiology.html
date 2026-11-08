@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explain epidemiology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!--
+  SLIDE SHELL TEMPLATE
+  Veterinary Epidemiology and Economics
+
+  How to make a new deck:
+  1. Copy this file to slides/<slug>.html.
+  2. Edit the deck-meta block below.
+  3. Replace the example slides, details, and controls in the CONTENT area.
+  4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
+     <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+  5. Register the deck in slides/decks.yml.
+  Rules: 05-slide-deck-guide.md.
+-->
+
+<script type="application/json" id="deck-meta">
+{
+  "title": "Explain epidemiology",
+  "domain": "D0",
+  "competency": "C1",
+  "skills": {
+    "primary": "S1.1",
+    "secondary": [
+      "S1.3"
+    ]
+  },
+  "minutes": 15,
+  "articles": [
+    "epidemiology"
+  ],
+  "guides": [],
+  "status": "draft",
+  "updated": "2026-11-08"
+}
+</script>
+
+<!-- ===================== SHELL STYLES (do not edit) ===================== -->
+<style id="shell-styles">
+:root {
+  --bg: #FFFFFF; --surface: #F5F7F9; --surface-2: #EDF1F4; --line: #E1E6EB;
+  --ink: #18222F; --muted: #5A6573; --accent: #0B7A6E; --accent-ink: #FFFFFF;
+  --ok: #0B7A6E; --bad: #B4441C;
+  --d0: #6B7480; --d1: #0072B2; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #18222F;
+  --panel-w: 400px; --bar-h: 52px; --radius: 12px;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0D1526; --surface: #131D31; --surface-2: #18243B; --line: #243250;
+  --ink: #E6EBF2; --muted: #9AA6B8; --accent: #2DD4BF; --accent-ink: #062A26;
+  --ok: #2DD4BF; --bad: #F08A5D;
+  --d0: #9AA6B8; --d1: #56B4E9; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #E6EBF2;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+:root:fullscreen, :root.is-full { font-size: 20px; }
+body {
+  margin: 0; height: 100vh; height: 100dvh; overflow: hidden;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5;
+  background: var(--bg); color: var(--ink);
+  display: grid; grid-template-rows: var(--bar-h) 1fr var(--bar-h);
+}
+button { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.code { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
+.dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--dc, var(--d0)); display: inline-block; flex: none; }
+
+/* Top bar */
+.topbar { display: flex; align-items: center; gap: 0.75rem; padding: 0 1rem; border-bottom: 1px solid var(--line); min-width: 0; }
+.deck-id { display: flex; align-items: center; gap: 0.55rem; min-width: 0; flex: 1; }
+.deck-id .code { font-size: 0.85rem; white-space: nowrap; }
+.deck-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tools { display: flex; gap: 0.25rem; }
+.icon-btn { width: 2.25rem; height: 2.25rem; border: 1px solid transparent; background: transparent; border-radius: 8px; display: grid; place-items: center; cursor: pointer; color: var(--muted); }
+.icon-btn:hover { background: var(--surface); color: var(--ink); }
+.icon-btn[aria-pressed="true"] { color: var(--ink); background: var(--surface-2); }
+.icon-btn svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn[hidden] { display: none; }
+
+/* Stage */
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+.stage.has-panel { grid-template-columns: minmax(0, 1fr) var(--panel-w); }
+.card { position: relative; min-height: 0; overflow: hidden; }
+.slide { position: absolute; inset: 0; padding: 2.2rem clamp(1.2rem, 4vw, 3.2rem); display: none; flex-direction: column; gap: 1rem; overflow: hidden; }
+.slide.is-active { display: flex; }
+.slide h1 { font-size: 2.6rem; line-height: 1.08; letter-spacing: -0.03em; margin: 0; font-weight: 700; }
+.slide h2 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0; font-weight: 650; }
+.slide p { margin: 0; max-width: 62ch; }
+.slide .lead { font-size: 1.2rem; color: var(--muted); }
+.slide ul { margin: 0; padding-left: 1.2rem; max-width: 62ch; }
+.slide li + li { margin-top: 0.35rem; }
+.notes { display: none; }
+
+/* Slide types */
+.slide[data-type="title"] { justify-content: center; }
+.slide[data-type="title"] .meta-list { display: grid; gap: 0.4rem; margin-top: 1rem; padding: 0; list-style: none; }
+.slide[data-type="title"] .meta-list li { display: flex; gap: 0.6rem; align-items: baseline; }
+.slide[data-type="question"] { justify-content: center; }
+.slide[data-type="summary"] .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; text-decoration: none; color: var(--ink); }
+.btn:hover { border-color: var(--muted); }
+.btn-main { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* Interactive markers */
+.term { border-bottom: 1.5px dotted var(--muted); cursor: help; }
+[data-detail] { position: relative; cursor: pointer; border-radius: var(--radius); outline: 1px solid transparent; transition: outline-color 0.15s; }
+[data-detail]:hover, [data-detail]:focus-visible { outline: 1px solid var(--muted); outline-offset: 4px; }
+[data-detail]::after { content: "i"; position: absolute; top: -0.55rem; right: -0.55rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: 600 0.72rem/1.1rem "Inter", sans-serif; text-align: center; font-style: italic; }
+[data-detail].is-open { outline: 2px solid var(--accent); outline-offset: 4px; }
+.tooltip { position: fixed; z-index: 50; max-width: 18rem; padding: 0.5rem 0.7rem; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 0.85rem; line-height: 1.4; pointer-events: none; opacity: 0; transition: opacity 0.12s; }
+.tooltip.is-on { opacity: 1; }
+
+/* Choice and check components */
+.choices { display: grid; gap: 0.5rem; max-width: 40rem; padding: 0; margin: 0.4rem 0 0; list-style: none; }
+.choice { text-align: left; width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; display: flex; gap: 0.7rem; align-items: baseline; }
+.choice:hover { border-color: var(--muted); }
+.choice .key { font-weight: 600; color: var(--muted); }
+.choice[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); }
+.choice.is-correct { border-color: var(--ok); }
+.choice.is-wrong { border-color: var(--bad); }
+.verdict { min-height: 1.5rem; font-weight: 600; }
+.verdict.ok { color: var(--ok); }
+.verdict.bad { color: var(--bad); }
+
+/* Panel */
+.panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
+.stage.has-panel .panel { display: flex; }
+.panel-head { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.6rem 0 0.8rem; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 0.25rem; flex: 1; }
+.tab { border: none; background: none; padding: 0.55rem 0.7rem; cursor: pointer; color: var(--muted); font-weight: 600; font-size: 0.92rem; border-bottom: 2px solid transparent; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab[hidden] { display: none; }
+.panel-body { overflow: auto; padding: 1.1rem 1.2rem 1.5rem; flex: 1; font-size: 0.95rem; }
+.panel-body h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
+.panel-body p { margin: 0 0 0.75rem; }
+.panel-section[hidden] { display: none; }
+.empty-note { color: var(--muted); }
+.control { display: grid; gap: 0.35rem; margin-bottom: 1.1rem; }
+.control label { font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; gap: 1rem; }
+.control output { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 500; }
+.control input[type="range"] { width: 100%; accent-color: var(--accent); }
+details.acc { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); margin: 0 0 0.75rem; }
+details.acc > summary { list-style: none; cursor: pointer; padding: 0.6rem 0.8rem; font-weight: 600; display: flex; gap: 0.5rem; }
+details.acc > summary::-webkit-details-marker { display: none; }
+details.acc > summary::before { content: "▶"; font-size: 0.7rem; color: var(--muted); line-height: 1.6rem; }
+details.acc[open] > summary::before { content: "▼"; }
+details.acc > div { padding: 0 0.8rem 0.7rem; }
+
+/* Bottom bar */
+.bottombar { position: relative; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; gap: 0.75rem; border-top: 1px solid var(--line); padding: 0 1rem; }
+.nav-btn { width: 2.3rem; height: 2.3rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.25rem; line-height: 1; display: grid; place-items: center; }
+.nav-btn:disabled { opacity: 0.4; cursor: default; }
+.dots { display: flex; gap: 0.35rem; align-items: center; }
+.dots button { width: 0.6rem; height: 0.6rem; padding: 0; border-radius: 50%; border: 1px solid var(--muted); background: transparent; cursor: pointer; }
+.dots button[aria-current="step"] { background: var(--ink); border-color: var(--ink); }
+.counter { border: none; background: none; cursor: pointer; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 6px; }
+.counter:hover { background: var(--surface); color: var(--ink); }
+
+/* Overlays */
+.overlay { position: fixed; inset: var(--bar-h) 0 var(--bar-h); background: var(--bg); z-index: 40; overflow: auto; padding: 2rem clamp(1rem, 4vw, 3rem); display: none; }
+.overlay.is-on { display: block; }
+.overlay h2 { margin: 0 0 1rem; font-size: 1.4rem; }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.75rem; }
+.ov-grid button { text-align: left; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); cursor: pointer; display: grid; gap: 0.2rem; }
+.ov-grid button:hover { border-color: var(--muted); }
+.ov-grid button[aria-current="step"] { border-color: var(--accent); }
+.ov-grid .ov-type { font-size: 0.82rem; color: var(--muted); }
+.help-list { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.2rem; max-width: 40rem; margin: 0 0 1.5rem; }
+.help-list dt { font-weight: 600; }
+.help-list dd { margin: 0; color: var(--muted); }
+.kbd { display: inline-block; border: 1px solid var(--line); border-radius: 5px; padding: 0 0.35rem; font-size: 0.85rem; background: var(--surface); }
+.demo-term { border-bottom: 1.5px dotted var(--muted); }
+.demo-detail { display: inline-block; position: relative; padding: 0.1rem 0.5rem; border: 1px solid var(--line); border-radius: 8px; }
+.demo-detail::after { content: "i"; position: absolute; top: -0.5rem; right: -0.5rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: italic 600 0.7rem/1rem "Inter", sans-serif; text-align: center; }
+
+/* Narrow screens: panel becomes a bottom sheet */
+@media (max-width: 1099px) {
+  .stage.has-panel { grid-template-columns: minmax(0, 1fr); }
+  .panel { position: fixed; left: 0; right: 0; bottom: var(--bar-h); height: 62vh; z-index: 30; border-left: none; border-top: 1px solid var(--line); border-radius: 16px 16px 0 0; transform: translateY(105%); transition: transform 0.2s ease; display: flex; }
+  .panel { visibility: hidden; }
+  .stage.has-panel.sheet-open .panel { transform: translateY(0); visibility: visible; }
+  .stage:not(.has-panel) .panel { display: none; }
+}
+@media (max-width: 700px) and (orientation: portrait) {
+  .slide { overflow-y: auto; padding: 1.4rem 1.1rem 2rem; }
+  .slide h1 { font-size: 2rem; }
+  .slide h2 { font-size: 1.4rem; }
+  .dots { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media print {
+  body { display: block; height: auto; overflow: visible; }
+  .topbar, .bottombar, .panel, .overlay, .tooltip { display: none !important; }
+  .card { overflow: visible; }
+  .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
+  [data-detail]::after { display: none; }
+}
+</style>
+
+<!-- ===================== DECK STYLES (edit for each deck) ===================== -->
+<style id="deck-styles">
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 1rem; }
+.case-layout p + p { margin-top: 0.8rem; }
+.small-note { color: var(--muted); font-size: 0.9rem; }
+.penfig { margin: 0; padding: 0.4rem; display: grid; gap: 0.6rem; }
+.penfig figcaption { color: var(--muted); font-size: 0.9rem; }
+.penmap { display: grid; grid-template-columns: auto 1fr; gap: 0.6rem; align-items: stretch; }
+.inlet { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; padding: 0.5rem 0.4rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); font-weight: 600; font-size: 0.85rem; }
+.pens { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; }
+.pen { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 0.5rem 0.6rem; display: grid; gap: 0.1rem; }
+.pen.hot { border: 2px solid var(--d2); background: var(--surface-2); }
+.pen-id { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+.pen-n { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
+
+.cmp { border-collapse: collapse; width: 100%; max-width: 52rem; font-size: 0.95rem; }
+.cmp th, .cmp td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cmp thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
+.cmp tbody th { font-weight: 600; color: var(--muted); width: 7.5rem; }
+
+.sorter { display: grid; gap: 0.9rem; max-width: 44rem; align-content: start; }
+.sort-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
+.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; max-width: 36ch; }
+.sort-hint { color: var(--muted); }
+.sort-btns { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.sort-btn { padding: 0.75rem 1.2rem; font-size: 1.05rem; }
+.sort-btn:disabled { cursor: default; }
+.sort-btn.is-correct { border: 2px solid var(--ok); }
+.sort-btn.is-wrong { border: 2px solid var(--bad); }
+.sort-why { color: var(--muted); min-height: 3rem; max-width: 50ch; }
+
+.elements { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; margin-top: 0.4rem; }
+.el { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 0.8rem 1rem; display: grid; gap: 0.2rem; align-content: start; min-height: 5.6rem; }
+.el strong { font-size: 1.02rem; line-height: 1.3; }
+.el span { color: var(--muted); font-size: 0.9rem; }
+.el .seen { display: none; font-size: 0.78rem; font-weight: 600; color: var(--ok); }
+.el.is-seen .seen { display: block; }
+
+.slide[data-type="check"] > div { max-width: 44rem; }
+@media (max-width: 900px) {
+  .case-layout { grid-template-columns: 1fr; }
+  .elements { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SHELL MARKUP (do not edit) ===================== -->
+<header class="topbar">
+  <div class="deck-id"><span class="dot" id="deck-dot"></span><span class="code" id="deck-code"></span><span class="deck-title" id="deck-title"></span></div>
+  <div class="tools">
+    <button class="icon-btn" id="btn-panel" aria-label="Show or hide the panel" title="Panel" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+    <button class="icon-btn" id="btn-help" aria-label="Help" title="Help (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg></button>
+    <button class="icon-btn" id="btn-theme" aria-label="Switch light or dark mode" title="Light or dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    <button class="icon-btn" id="btn-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+</header>
+
+<main class="stage" id="stage">
+  <div class="card" id="card">
+
+<!-- ===================== CONTENT (edit for each deck) ===================== -->
+
+<!-- Slide 1: Title -->
+<section class="slide" data-type="title" data-title="Explain epidemiology">
+  <p class="code">C1 Epidemiological and economic thinking</p>
+  <h1>Explain epidemiology</h1>
+  <p class="lead">Why does a veterinarian need to look at the whole flock when one hen is sick?</p>
+  <ul class="meta-list">
+    <li><span class="code">S1.1</span><span>Explain the definition of epidemiology</span></li>
+    <li><span class="code">S1.3</span><span>Distinguish clinical questions from population questions</span></li>
+    <li><span class="code">Time</span><span>About 15 minutes</span></li>
+  </ul>
+</section>
+
+<!-- Slide 2: Anchor case recap -->
+<section class="slide" data-type="concept" data-title="The anchor case">
+  <h2>The case: a layer farm in South Sulawesi</h2>
+  <div class="case-layout">
+    <div>
+      <p>The farm loses 120 of its 8,000 hens in one week, mostly in two pens next to the water inlet. The laboratory later finds Salmonella in the hens, and eggs from the same pens have already reached buyers.</p>
+      <p>Your role: production animal veterinarian (GP1.2), two years after graduation.</p>
+      <p class="small-note">These numbers are synthetic and are for teaching.</p>
+    </div>
+    <figure class="penfig" data-detail="d-pens" tabindex="0" aria-label="Deaths in one week by pen. Pens A1 and B1, next to the water inlet, had 90 of the 120 deaths. Select for details.">
+      <div class="penmap">
+        <div class="inlet">Water inlet</div>
+        <div class="pens">
+          <div class="pen hot"><span class="pen-id">Pen A1</span><span class="pen-n">50</span></div>
+          <div class="pen"><span class="pen-id">Pen A2</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen A3</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen A4</span><span class="pen-n">5</span></div>
+          <div class="pen hot"><span class="pen-id">Pen B1</span><span class="pen-n">40</span></div>
+          <div class="pen"><span class="pen-id">Pen B2</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen B3</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen B4</span><span class="pen-n">5</span></div>
+        </div>
+      </div>
+      <figcaption>Deaths in one week, by pen</figcaption>
+    </figure>
+  </div>
+  <div class="notes">Read the two sentences aloud. Ask the class what they would do first. Most students will name the necropsy. Use that answer on the next slide.</div>
+</section>
+
+<!-- Slide 3: Question -->
+<section class="slide" data-type="question" data-title="Predict first">
+  <h2>You necropsy five hens. Does the result tell the farm what to do?</h2>
+  <p>Choose your prediction.</p>
+  <ul class="choices" data-choice="predict">
+    <li><button class="choice" data-value="a"><span class="key">A</span>Yes. The cause of death in five hens explains the whole problem.</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>Partly. It shows what killed these hens, but does not show how far the problem reaches.</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>No. A necropsy has no value in a flock problem.</button></li>
+  </ul>
+  <p class="verdict" id="predict-note" aria-live="polite"></p>
+</section>
+
+<!-- Slide 4: Concept, two kinds of question -->
+<section class="slide" data-type="concept" data-title="Two kinds of question">
+  <h2>One disease raises two kinds of question</h2>
+  <p>A clinical question concerns one animal. A population question concerns a group of animals and the pattern of health events in it.</p>
+  <table class="cmp">
+    <thead><tr><th scope="col">Comparison</th><th scope="col">Clinician</th><th scope="col">Epidemiologist</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Focus</th><td>Individuals</td><td>Populations</td></tr>
+      <tr><th scope="row">Objective</th><td>Curing the sick individual</td><td>Preventing and controlling disease in populations</td></tr>
+      <tr><th scope="row">Diagnosis</th><td>Based on <span class="term" data-tip="Anamnesis is the history of the animal, given by the owner or keeper.">anamnesis</span>, physical examination, and diagnostic tests</td><td>Based on statistical analysis and epidemiological studies</td></tr>
+      <tr><th scope="row">Treatment</th><td>Giving medical or surgical treatment and care</td><td>Implementing animal health and public health interventions and policies</td></tr>
+    </tbody>
+  </table>
+  <p>In the layer house, the necropsy suggests a cause. The count by pen shows where to act.</p>
+</section>
+
+<!-- Slide 5: Explore, sort six statements -->
+<section class="slide" data-type="explore" data-title="Sort the questions" data-panel="controls">
+  <h2>Is it a clinical question or a population question?</h2>
+  <div class="sorter">
+    <div class="sort-top"><span class="num" id="sort-pos"></span><span class="num" id="sort-score"></span></div>
+    <p class="sort-q" id="sort-q"></p>
+    <p class="sort-hint" id="sort-hint" hidden>Ask: does the question concern one animal or a group of animals?</p>
+    <div class="sort-btns" id="sort-btns">
+      <button class="btn sort-btn" data-answer="C">Clinical question</button>
+      <button class="btn sort-btn" data-answer="P">Population question</button>
+    </div>
+    <p class="verdict" id="sort-verdict" aria-live="polite"></p>
+    <p class="sort-why" id="sort-why"></p>
+    <div><button class="btn btn-main" id="sort-next" hidden>Show the next statement</button></div>
+  </div>
+  <div class="notes">Read each statement aloud and ask the class to vote before you reveal the answer. Statement 5 about the buyers of eggs is the one that students often place wrongly. Ask why eggs belong to the population.</div>
+</section>
+
+<!-- Slide 6: Concept, six elements of the definition -->
+<section class="slide" data-type="concept" data-title="The definition">
+  <h2>The definition has six elements</h2>
+  <p>Epidemiology is the study of the distribution and <span class="term" data-tip="Any factor that changes the frequency of a health event in a population.">determinants</span> of health-related states or events in specified populations, and the application of this study to the control of health problems.</p>
+  <p>Select each element to see what it means in the layer farm case. <span class="num" id="el-count">Elements opened: 0 of 6</span></p>
+  <div class="elements">
+    <div class="el" data-detail="d-el-study" data-el="study" role="button"><strong>Study</strong><span>Systematic and based on data</span><small class="seen">Opened</small></div>
+    <div class="el" data-detail="d-el-events" data-el="events" role="button"><strong>Health-related states or events</strong><span>What is counted</span><small class="seen">Opened</small></div>
+    <div class="el" data-detail="d-el-populations" data-el="populations" role="button"><strong>Specified populations</strong><span>Who is counted</span><small class="seen">Opened</small></div>
+    <div class="el" data-detail="d-el-distribution" data-el="distribution" role="button"><strong>Distribution</strong><span>By animal, place, and time</span><small class="seen">Opened</small></div>
+    <div class="el" data-detail="d-el-determinants" data-el="determinants" role="button"><strong>Determinants</strong><span>Factors that change frequency</span><small class="seen">Opened</small></div>
+    <div class="el" data-detail="d-el-application" data-el="application" role="button"><strong>Application</strong><span>Use of the results</span><small class="seen">Opened</small></div>
+  </div>
+  <div class="notes">Let each student open one element and explain it to a neighbour using the layer farm case. Then ask which element the farm manager has already used without knowing it.</div>
+</section>
+
+<!-- Slide 7: Check, the elements -->
+<section class="slide" data-type="check" data-title="Check: the elements">
+  <h2>The veterinarian separates the two affected pens to protect the other pens. Which element of the definition is this?</h2>
+  <div>
+    <ul class="choices" data-check="q1" data-answer="c" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Distribution</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Determinants</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Application</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 8: Check, transfer to a new case -->
+<section class="slide" data-type="check" data-title="Check: a new case">
+  <h2>A new case: sick dogs in one neighbourhood</h2>
+  <p>Several dogs in one neighbourhood of Makassar develop vomiting and bloody diarrhoea in one week. A clinic veterinarian (GP1.1) treats each dog. This scenario is synthetic and is for teaching.</p>
+  <p><strong>Which question is a population question?</strong></p>
+  <div>
+    <ul class="choices" data-check="q2" data-answer="b" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>What is the diagnosis of the first dog?</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>How many dogs are sick, where do they live, and what do they share?</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Which drug should the first dog receive?</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 9: Summary -->
+<section class="slide" data-type="summary" data-title="Summary">
+  <h2>Key points</h2>
+  <ul>
+    <li>Epidemiology studies the distribution and determinants of health-related events in specified populations, and applies the results to control health problems.</li>
+    <li>A clinical question concerns one animal. A population question concerns a group of animals or the animal products that come from it.</li>
+    <li>The same disease raises both kinds of question, and the veterinarian needs both.</li>
+    <li>The six elements of the definition follow the steps of an investigation, from the first count to the action.</li>
+  </ul>
+  <div class="links">
+    <a class="btn" href="../encyclopedia/epidemiology.html">Read the article: Epidemiology</a>
+    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-1">Open skill S1.1</a>
+    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-3">Open skill S1.3</a>
+  </div>
+</section>
+
+<!-- Details: one template per element with data-detail or data-explain -->
+<template id="d-pens">
+  <h3>About these data</h3>
+  <p>These numbers are synthetic and are for teaching. The flock has 8,000 hens in 8 pens. A flock of this size normally loses about 10 hens a week.</p>
+  <p>Pens A1 and B1 are next to the water inlet. They had 90 of the 120 deaths. The other six pens had 5 deaths each.</p>
+  <p>The necropsy of five hens tells the veterinarian what killed those hens. The table of deaths by pen tells her where the problem is.</p>
+</template>
+<template id="d-el-study">
+  <h3>Study</h3>
+  <p>A scientific and systematic activity based on data.</p>
+  <p>In the case, the veterinarian counts deaths by pen and by day. The decision rests on records, so the impression of the manager does not decide.</p>
+</template>
+<template id="d-el-events">
+  <h3>Health-related states or events</h3>
+  <p>Diseases, infections, deaths, injuries, production problems, welfare states, and food safety hazards.</p>
+  <p>In the case, the events are the deaths of hens, the fall in egg production, and Salmonella in the eggs.</p>
+</template>
+<template id="d-el-populations">
+  <h3>Specified populations</h3>
+  <p>Defined groups of animals, such as herds, flocks, kennels, and village populations, and the animal products that come from them.</p>
+  <p>In the case, the populations are the 8,000 hens of the flock and the eggs that left the farm.</p>
+</template>
+<template id="d-el-distribution">
+  <h3>Distribution</h3>
+  <p>The frequency and pattern of health events by animal, place, and time.</p>
+  <p>In the case, 90 of the 120 deaths came from two pens next to the water inlet. Mortality began 4 days before the visit of the veterinarian.</p>
+</template>
+<template id="d-el-determinants">
+  <h3>Determinants</h3>
+  <p>Factors that change the frequency of health events: agent, host, environment, management, and economic and social factors.</p>
+  <p>In the case, the water supply, the position of the pens, and the management of the flock are factors to test.</p>
+</template>
+<template id="d-el-application">
+  <h3>Application</h3>
+  <p>Use of the results to prevent and control health problems, and to check whether the measures worked.</p>
+  <p>In the case, the veterinarian separates the two pens and asks for daily records by pen. The company traces the buyers of the eggs.</p>
+</template>
+<template id="d-q1">
+  <h3>Answer: Application</h3>
+  <p>Application means using the results to prevent and control a health problem. Separating the pens protects the other hens.</p>
+  <p>Counting the deaths by pen describes the distribution. Testing the water supply looks for a determinant.</p>
+</template>
+<template id="d-q2">
+  <h3>Answer: B</h3>
+  <p>Question B concerns the group of dogs. It asks for the number of sick dogs, their places, and what they share.</p>
+  <p>Questions A and C concern one dog. The clinic veterinarian still treats each dog, so both kinds of question are needed.</p>
+</template>
+
+  </div><!-- /card -->
+
+  <aside class="panel" id="panel" aria-label="Panel">
+    <div class="panel-head">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tab-controls" aria-selected="true" data-tab="controls">Controls</button>
+        <button class="tab" role="tab" id="tab-details" aria-selected="false" data-tab="details">Details</button>
+        <button class="tab" role="tab" id="tab-notes" aria-selected="false" data-tab="notes" hidden>Notes</button>
+      </div>
+      <button class="icon-btn" id="btn-close" aria-label="Close the panel" title="Close (Esc)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-section" id="sec-controls"></div>
+      <div class="panel-section" id="sec-details" hidden><p class="empty-note">Select an element marked with "i" on the slide to see details here.</p></div>
+      <div class="panel-section" id="sec-notes" hidden></div>
+    </div>
+  </aside>
+
+<!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
+<div class="controls" data-for-slide="5" hidden>
+  <div class="control"><label for="in-hint">Show a hint <input type="checkbox" id="in-hint"></label></div>
+  <button class="btn" id="sort-reset" data-reset>Reset the sorting</button>
+</div>
+
+<!-- ===================== END OF CONTENT ===================== -->
+</main>
+
+<footer class="bottombar">
+  <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="counter" id="counter" aria-label="Open the overview"></button>
+  <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+</footer>
+
+<div class="overlay" id="overview" role="dialog" aria-label="Overview"><h2>All slides</h2><div class="ov-grid" id="ov-grid"></div></div>
+<div class="overlay" id="help" role="dialog" aria-label="Help">
+  <h2>How to use these slides</h2>
+  <dl class="help-list">
+    <dt><span class="demo-term">Dotted text</span></dt><dd>A term with a short definition. Hover or tap it.</dd>
+    <dt><span class="demo-detail">Box</span></dt><dd>An element with an "i" opens details in the panel. Click it or press Enter.</dd>
+    <dt><span class="kbd">→</span> <span class="kbd">Space</span> <span class="kbd">Page Down</span></dt><dd>Next slide</dd>
+    <dt><span class="kbd">←</span> <span class="kbd">Page Up</span></dt><dd>Previous slide</dd>
+    <dt><span class="kbd">Home</span> <span class="kbd">End</span></dt><dd>First or last slide</dd>
+    <dt><span class="kbd">F</span></dt><dd>Full screen</dd>
+    <dt><span class="kbd">O</span></dt><dd>Overview of all slides</dd>
+    <dt><span class="kbd">N</span></dt><dd>Lecturer notes</dd>
+    <dt><span class="kbd">Esc</span></dt><dd>Close the panel or this screen</dd>
+  </dl>
+  <button class="btn" id="btn-help-close">Close</button>
+</div>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+
+<!-- ===================== SHELL SCRIPT (do not edit) ===================== -->
+<script id="shell-script">
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const root = document.documentElement;
+  const meta = JSON.parse($('#deck-meta').textContent);
+  const domVar = { D0: '--d0', D1: '--d1', D2: '--d2', D3: '--d3', D4: '--d4', D5: '--d5', Integration: '--dint' };
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+  // Theme
+  const saved = store.get('eev-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+  $('#btn-theme').addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; store.set('eev-theme', root.dataset.theme); });
+
+  // Top bar
+  $('#deck-title').textContent = meta.title;
+  $('#deck-code').textContent = meta.domain === 'Integration' ? meta.competency : meta.domain + ' ' + meta.competency;
+  $('#deck-dot').style.background = 'var(' + (domVar[meta.domain] || '--d0') + ')';
+
+  // Slides and navigation
+  const slides = $$('.slide');
+  const stage = $('#stage');
+  let current = 0, notesMode = false, panelClosed = false;
+  const dots = $('#dots'), ovGrid = $('#ov-grid');
+  slides.forEach((s, i) => {
+    const t = s.dataset.title || ('Slide ' + (i + 1));
+    const d = document.createElement('button'); d.title = (i + 1) + '. ' + t; d.setAttribute('aria-label', 'Slide ' + (i + 1) + ': ' + t);
+    d.addEventListener('click', () => go(i)); dots.appendChild(d);
+    const o = document.createElement('button'); o.innerHTML = '<span class="ov-type"></span><strong></strong>';
+    o.querySelector('.ov-type').textContent = (i + 1) + '. ' + (s.dataset.type || '');
+    o.querySelector('strong').textContent = t;
+    o.addEventListener('click', () => { closeOverlays(); go(i); }); ovGrid.appendChild(o);
+  });
+  const controlsByslide = {};
+  const store2 = document.createElement('div'); store2.hidden = true; document.body.appendChild(store2);
+  $$('.controls').forEach(c => { controlsByslide[c.dataset.forSlide] = c; c.hidden = false; store2.appendChild(c); c._defaults = $$('input, select', c).map(el => [el, el.type === 'checkbox' ? el.checked : el.value]); });
+  const secControls = $('#sec-controls'), secDetails = $('#sec-details'), secNotes = $('#sec-notes');
+  const detailEmpty = secDetails.innerHTML;
+
+  function setTab(name) {
+    ['controls', 'details', 'notes'].forEach(n => { $('#tab-' + n).setAttribute('aria-selected', String(n === name)); $('#sec-' + n).hidden = n !== name; });
+  }
+  function hasPanelContent(s) { return s.dataset.panel === 'controls' || s.querySelector('[data-detail]') || s.querySelector('[data-explain]') || (notesMode && s.querySelector('.notes')); }
+  function updatePanel() {
+    const s = slides[current];
+    const ctl = controlsByslide[String(current + 1)];
+    Array.from(secControls.children).forEach(ch => store2.appendChild(ch)); if (ctl) secControls.appendChild(ctl);
+    $('#tab-controls').hidden = !ctl;
+    const note = s.querySelector('.notes');
+    $('#tab-notes').hidden = !(notesMode && note);
+    secNotes.innerHTML = note ? '<h3>Lecturer notes</h3><p></p>' : ''; if (note) secNotes.querySelector('p').textContent = note.textContent.trim();
+    secDetails.innerHTML = detailEmpty;
+    $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
+    const show = hasPanelContent(s);
+    $('#btn-panel').hidden = !show;
+    stage.classList.toggle('has-panel', show && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(show && !panelClosed));
+    stage.classList.remove('sheet-open');
+    setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
+  }
+  function go(i, fromHash) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    panelClosed = false;
+    slides.forEach((s, k) => s.classList.toggle('is-active', k === current));
+    $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $('#counter').textContent = (current + 1) + ' / ' + slides.length;
+    $('#btn-prev').disabled = current === 0; $('#btn-next').disabled = current === slides.length - 1;
+    if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
+    hideTip(); updatePanel();
+    document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
+  }
+  $('#btn-prev').addEventListener('click', () => go(current - 1));
+  $('#btn-next').addEventListener('click', () => go(current + 1));
+
+  // Panel
+  $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
+  $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
+  $('#btn-panel').addEventListener('click', () => {
+    if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
+    panelClosed = stage.classList.contains('has-panel'); updatePanel();
+  });
+  function openDetail(el) {
+    const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
+    secDetails.innerHTML = ''; secDetails.appendChild(tpl.content.cloneNode(true));
+    $$('[data-detail].is-open').forEach(x => x.classList.remove('is-open'));
+    if (el.dataset.detail) el.classList.add('is-open');
+    panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').hidden = false;
+    if (window.innerWidth < 1100) stage.classList.add('sheet-open');
+    setTab('details');
+  }
+  $$('[data-detail]').forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.tabIndex = 0;
+    el.addEventListener('click', () => openDetail(el));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); openDetail(el); } });
+  });
+
+  // Reset buttons
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-reset]'); if (!b) return;
+    const c = b.closest('.controls'); if (!c) return;
+    c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+  });
+
+  // Choices (predictions) and checks
+  $$('[data-choice], [data-check]').forEach(list => {
+    $$('.choice', list).forEach(btn => btn.addEventListener('click', () => {
+      $$('.choice', list).forEach(b => { b.setAttribute('aria-pressed', 'false'); b.classList.remove('is-correct', 'is-wrong'); });
+      btn.setAttribute('aria-pressed', 'true');
+      if (list.dataset.check) {
+        const ok = btn.dataset.value === list.dataset.answer;
+        const right = $('.choice[data-value="' + list.dataset.answer + '"]', list);
+        btn.classList.add(ok ? 'is-correct' : 'is-wrong'); right.classList.add('is-correct');
+        const v = list.parentElement.querySelector('.verdict');
+        if (v) { v.textContent = ok ? 'Correct.' : 'Not correct. The answer is ' + right.querySelector('.key').textContent + '.'; v.className = 'verdict ' + (ok ? 'ok' : 'bad'); }
+        if (list.dataset.explain) openDetail(list);
+      }
+    }));
+  });
+
+  // Tooltips
+  const tip = $('#tooltip'); let tipFor = null;
+  function showTip(el) {
+    tip.textContent = el.dataset.tip; tip.classList.add('is-on'); tipFor = el;
+    const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect();
+    let x = Math.min(Math.max(8, r.left + r.width / 2 - t.width / 2), window.innerWidth - t.width - 8);
+    let y = r.top - t.height - 8; if (y < 8) y = r.bottom + 8;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip() { tip.classList.remove('is-on'); tipFor = null; }
+  $$('.term[data-tip]').forEach(el => {
+    el.tabIndex = 0;
+    el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('focus', () => showTip(el)); el.addEventListener('blur', hideTip);
+    el.addEventListener('click', e => { e.stopPropagation(); tipFor === el ? hideTip() : showTip(el); });
+  });
+  document.addEventListener('click', e => { if (tipFor && !e.target.closest('.term')) hideTip(); });
+
+  // Overlays
+  function closeOverlays() { $$('.overlay').forEach(o => o.classList.remove('is-on')); }
+  function toggleOverlay(id) { const o = $('#' + id); const on = !o.classList.contains('is-on'); closeOverlays(); o.classList.toggle('is-on', on); }
+  $('#counter').addEventListener('click', () => toggleOverlay('overview'));
+  $('#btn-help').addEventListener('click', () => toggleOverlay('help'));
+  $('#btn-help-close').addEventListener('click', closeOverlays);
+
+  // Full screen
+  function toggleFull() {
+    const el = document.documentElement;
+    if (document.fullscreenElement || document.webkitFullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+    else if (el.requestFullscreen || el.webkitRequestFullscreen) { (el.requestFullscreen || el.webkitRequestFullscreen).call(el); }
+    else { root.classList.toggle('is-full'); }
+  }
+  $('#btn-full').addEventListener('click', toggleFull);
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const k = e.key;
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); go(current + 1); }
+    else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else if (k === 'f' || k === 'F') toggleFull();
+    else if (k === 'o' || k === 'O') toggleOverlay('overview');
+    else if (k === '?') toggleOverlay('help');
+    else if (k === 'n' || k === 'N') { notesMode = !notesMode; panelClosed = false; updatePanel(); if (notesMode && slides[current].querySelector('.notes')) setTab('notes'); }
+    else if (k === 'Escape') { if ($('.overlay.is-on')) closeOverlays(); else if (tipFor) hideTip(); else if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); } }
+  });
+
+  // Swipe on the main card
+  let sx = null, sy = null;
+  const card = $('#card');
+  card.addEventListener('touchstart', e => {
+    if (e.target.closest('input, select, textarea, button, svg, canvas, [data-noswipe]')) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  card.addEventListener('touchend', e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(current + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+
+  // Seeded random numbers and URL parameters for deck scripts
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const params = new URLSearchParams(location.search);
+  window.Deck = {
+    meta, params,
+    rng: seed => mulberry32(Number(seed) || 1),
+    newSeed: () => Math.floor(Math.random() * 1e6),
+    seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
+    current: () => current, go,
+    onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
+  };
+
+  window.addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if (n) go(n - 1, true); });
+  const start = parseInt(location.hash.slice(1), 10);
+  go(start ? start - 1 : 0, true);
+})();
+</script>
+
+<!-- ===================== DECK SCRIPT (edit for each deck) ===================== -->
+<script id="deck-script">
+(function () {
+  const $ = id => document.getElementById(id);
+
+  // Slide 3: reveal the best answer after a prediction
+  const note = $('predict-note');
+  document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
+    note.className = 'verdict';
+    note.textContent = 'Option B is the best answer. A necropsy answers a clinical question about five hens. It does not show how far the problem reaches.';
+  }));
+
+  // Slide 5: sort six statements
+  const items = [
+    { q: 'Hen 14 breathes with difficulty and has a swollen head. What is wrong with her?', a: 'C', why: 'The question concerns one hen. The answer comes from her examination and tests.' },
+    { q: 'How many hens died in each pen this week?', a: 'P', why: 'The question counts events in a group of animals, pen by pen. This describes the distribution of deaths.' },
+    { q: 'Do the pens next to the water inlet lose more hens than the other pens?', a: 'P', why: 'The question compares groups of pens. It looks for a determinant of the deaths.' },
+    { q: 'Which drug should the veterinarian give to this sick hen?', a: 'C', why: 'The decision concerns the treatment of one animal.' },
+    { q: 'Which buyers received eggs from the affected pens?', a: 'P', why: 'Eggs are animal products of the specified population. The question concerns the egg chain, which reaches beyond one hen.' },
+    { q: 'Does the liver lesion explain why this hen died?', a: 'C', why: 'The question concerns the cause of death of one animal.' }
+  ];
+  const label = { C: 'clinical question', P: 'population question' };
+  const qEl = $('sort-q'), posEl = $('sort-pos'), scoreEl = $('sort-score'), verdict = $('sort-verdict'),
+        why = $('sort-why'), next = $('sort-next'), btns = $('sort-btns'), hint = $('sort-hint'), hintBox = $('in-hint');
+  const buttons = Array.from(btns.querySelectorAll('.sort-btn'));
+  let idx = 0, score = 0, answered = false, finished = false;
+
+  function render() {
+    finished = false; answered = false;
+    qEl.textContent = items[idx].q;
+    posEl.textContent = 'Statement ' + (idx + 1) + ' of ' + items.length;
+    scoreEl.textContent = 'Correct so far: ' + score;
+    verdict.textContent = ''; verdict.className = 'verdict'; why.textContent = '';
+    next.hidden = true; btns.hidden = false;
+    buttons.forEach(b => { b.disabled = false; b.classList.remove('is-correct', 'is-wrong'); });
+  }
+  function reset() { idx = 0; score = 0; render(); }
+  function showResult() {
+    finished = true;
+    posEl.textContent = 'Result';
+    scoreEl.textContent = '';
+    qEl.textContent = 'You sorted ' + score + ' of ' + items.length + ' statements correctly.';
+    verdict.textContent = ''; verdict.className = 'verdict';
+    why.textContent = 'A question about one animal is a clinical question. A question about a group, a comparison between groups, or the animal products of a group is a population question.';
+    btns.hidden = true;
+    next.textContent = 'Reset the sorting'; next.hidden = false;
+  }
+  buttons.forEach(b => b.addEventListener('click', () => {
+    if (answered) return;
+    answered = true;
+    const item = items[idx], ok = b.dataset.answer === item.a;
+    if (ok) score++;
+    buttons.forEach(x => { x.disabled = true; });
+    b.classList.add(ok ? 'is-correct' : 'is-wrong');
+    if (!ok) buttons.find(x => x.dataset.answer === item.a).classList.add('is-correct');
+    verdict.textContent = ok ? 'Correct.' : 'Not correct. This is a ' + label[item.a] + '.';
+    verdict.className = 'verdict ' + (ok ? 'ok' : 'bad');
+    why.textContent = item.why;
+    scoreEl.textContent = 'Correct so far: ' + score;
+    next.textContent = idx === items.length - 1 ? 'Show the result' : 'Show the next statement';
+    next.hidden = false;
+  }));
+  next.addEventListener('click', () => {
+    if (finished) { reset(); return; }
+    if (idx === items.length - 1) { showResult(); return; }
+    idx++; render();
+  });
+  $('sort-reset').addEventListener('click', reset);
+  function syncHint() { hint.hidden = !hintBox.checked; }
+  hintBox.addEventListener('input', syncHint); hintBox.addEventListener('change', syncHint);
+  render(); syncHint();
+
+  // Slide 6: count the elements that the student has opened
+  const seen = new Set(), countEl = $('el-count');
+  function mark(el) {
+    seen.add(el.dataset.el); el.classList.add('is-seen');
+    countEl.textContent = seen.size === 6 ? 'All 6 elements opened.' : 'Elements opened: ' + seen.size + ' of 6';
+  }
+  document.querySelectorAll('.el').forEach(el => {
+    el.addEventListener('click', () => mark(el));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') mark(el); });
+  });
+})();
+</script>
+</body>
+</html>
