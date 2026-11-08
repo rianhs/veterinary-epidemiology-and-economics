@@ -20,3 +20,8 @@
   path: /slides/link-approaches-to-domains.html
   description: Link each approach of epidemiology to a domain and place a problem in the five questions and the information-to-action loop.
   categories: [C1, S1.4, S1.7]
+- title: Match population status to objective
+  type: slides
+  path: /slides/match-population-status-to-objective.html
+  description: Match the population status of a disease to the objective of reducing the problem or keeping it out.
+  categories: [C1, S1.5]
