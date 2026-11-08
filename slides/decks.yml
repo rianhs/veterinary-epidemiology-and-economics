@@ -30,3 +30,8 @@
   path: /slides/identify-levels-of-analysis.html
   description: Identify whether a problem is studied at the level of the individual animal, the animal population, or the animal product and economic system.
   categories: [C1, S1.6]
+- title: Write a problem frame
+  type: slides
+  path: /slides/write-problem-frame.html
+  description: "Write a problem frame with five parts: population, outcome, decision, decision maker, and objective."
+  categories: [C1, S1.8]
