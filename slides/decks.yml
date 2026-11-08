@@ -10,3 +10,8 @@
   path: /slides/explain-epidemiology.html
   description: Explain the definition of epidemiology and tell clinical questions from population questions.
   categories: [C1, S1.1, S1.3]
+- title: Explain veterinary economics
+  type: slides
+  path: /slides/explain-veterinary-economics.html
+  description: Explain scarcity, opportunity cost, the value of animal health, and private and public benefits.
+  categories: [C1, S1.2]
