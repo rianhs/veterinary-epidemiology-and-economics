@@ -35,3 +35,8 @@
   path: /slides/write-problem-frame.html
   description: "Write a problem frame with five parts: population, outcome, decision, decision maker, and objective."
   categories: [C1, S1.8]
+- title: List the information that a decision needs
+  type: slides
+  path: /slides/list-information-for-decision.html
+  description: "List the items of information that a decision needs, each with a possible source."
+  categories: [C1, S1.9]
