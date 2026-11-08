@@ -25,3 +25,8 @@
   path: /slides/match-population-status-to-objective.html
   description: Match the population status of a disease to the objective of reducing the problem or keeping it out.
   categories: [C1, S1.5]
+- title: Identify levels of analysis
+  type: slides
+  path: /slides/identify-levels-of-analysis.html
+  description: Identify whether a problem is studied at the level of the individual animal, the animal population, or the animal product and economic system.
+  categories: [C1, S1.6]
