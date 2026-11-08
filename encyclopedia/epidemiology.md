@@ -4,7 +4,7 @@ type: encyclopedia
 parent:
 categories: [C1, S1.1, S1.3]
 related: [approaches-of-epidemiology, level-of-analysis, population-status-of-disease, veterinary-economics]
-status: published
+status: verified
 updated: 2026-11-08
 ---
 
