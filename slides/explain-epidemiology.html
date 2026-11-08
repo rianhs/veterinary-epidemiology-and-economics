@@ -356,11 +356,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <h2>The case: Salmonella on a layer farm</h2>
   <div class="case-layout">
     <div>
-      <p data-step="1">In one week, a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> loses 120 of its 8,000 hens, mostly in the two <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> next to the <span class="term" data-tip="The place where water enters the house, for example from a pipe or a tank.">water inlet</span>.</p>
-      <p data-step="2">The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the hens, and eggs from these pens have already reached buyers.</p>
-      <p data-step="3">You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian protects the health and production of farm animals, for example on poultry or dairy farms.">production animal veterinarian</span> of this farm.</p>
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from the two <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> next to the <span class="term" data-tip="The place where water enters the house, for example from a pipe or a tank.">water inlet</span>.</p>
+      <p>The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the hens, and eggs from these pens have already reached buyers.</p>
+      <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian protects the health and production of farm animals, for example on poultry or dairy farms.">production animal veterinarian</span> of this farm.</p>
     </div>
-    <figure class="penfig" data-step="1" data-detail="d-pens" tabindex="0" aria-label="Deaths in one week by pen. Pens A1 and B1, next to the water inlet, had 90 of the 120 deaths. Select for details.">
+    <figure class="penfig" data-detail="d-pens" tabindex="0" aria-label="Deaths in one week by pen. Pens A1 and B1, next to the water inlet, had 90 of the 120 deaths. Select for details.">
       <div class="penmap">
         <div class="inlet">Water inlet</div>
         <div class="pens">
@@ -377,16 +377,16 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <figcaption>Deaths in one week, by pen</figcaption>
     </figure>
   </div>
-  <div class="notes">Show the three steps one at a time. After step 3, ask the class what they would do first. Most students name the necropsy. Use that answer on the next slide.</div>
+  <div class="notes">Ask the class what they would do first. Most students name the necropsy. Use that answer on the next slide.</div>
 </section>
 <!-- Slide 3: Question, predict -->
 <section class="slide" data-type="question" data-title="Predict first">
-  <h2>You do a <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> on five hens. Does this tell the farm what to do?</h2>
+  <h2>You do a <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> on five hens. Does this tell the farm owner what to do?</h2>
   <p>Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
-    <li><button class="choice" data-value="a"><span class="key">A</span>Yes. Five necropsies are enough to explain the problem in the whole flock.</button></li>
-    <li><button class="choice" data-value="b"><span class="key">B</span>Partly. It gives a cause for five hens and no count for the flock.</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>No. A necropsy tells the farm nothing about a problem in the flock.</button></li>
+    <li><button class="choice" data-value="a"><span class="key">A</span>Yes. The necropsy results of five hens explain the problem in the whole flock.</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>Partly. It gives the cause of death of five hens. It does not show which pens have the most deaths.</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>No. A necropsy gives the farm owner no information about the problem in the flock.</button></li>
   </ul>
   <p class="verdict" id="predict-note" aria-live="polite"></p>
 </section>
@@ -394,10 +394,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide vcenter" data-type="concept" data-title="The simple definition">
   <h2>The simple definition</h2>
   <p class="big-def">Epidemiology is the study of <span class="term" data-tip="Anything that happens to the health of animals: a disease, a death, an injury, an accident, or a pregnancy.">health-related events</span> in <span class="term" data-tip="Groups of animals that share a place or a system, such as all hens on one farm or all dogs in one village.">populations</span>.</p>
-  <div class="def-case" data-step="1">
-    <p>In the layer farm, the health-related events are the deaths of hens.</p>
-    <p>The population is the <span class="term" data-tip="A group of birds, such as hens, kept together.">flock</span> of 8,000 hens.</p>
-  </div>
   <div class="notes">Hover over the two dotted terms. Ask: which other health-related events could the veterinarian count on this farm? Accept answers such as a fall in egg production.</div>
 </section>
 <!-- Slide 5: Concept, one hen and a flock -->
@@ -405,7 +401,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <h2>The same disease raises two kinds of question</h2>
   <div class="fig-wrap">
     <svg class="fig" viewBox="0 0 720 300" role="img" aria-label="Left: one hen with the clinical questions about her illness. Right: a bar chart of deaths in one week by pen, with the population questions about the flock. Pens A1 and B1 have 50 and 40 deaths. The other six pens have 5 each.">
-      <g data-step="1">
+      <g>
         <rect class="f-soft" x="10" y="8" width="340" height="284" rx="12"/>
         <text x="30" y="40" class="t-strong">Clinical question: one animal</text>
         <ellipse class="hen" cx="150" cy="140" rx="52" ry="38"/>
@@ -418,7 +414,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         <text x="30" y="258">What is wrong with her?</text>
         <text x="30" y="280">Which treatment does she need?</text>
       </g>
-      <g data-step="2">
+      <g>
         <rect class="f-soft" x="370" y="8" width="340" height="284" rx="12"/>
         <text x="390" y="40" class="t-strong">Population question: a group</text>
         <rect class="bar-hot" x="392" y="84" width="28" height="100" rx="3"/>
@@ -452,83 +448,51 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       </g>
     </svg>
   </div>
-  <p data-step="3">A <span class="term" data-tip="A question about the diagnosis and treatment of one sick animal.">clinical question</span> concerns one animal. A population question concerns a group of animals. The veterinarian needs both.</p>
-  <div class="notes">Reveal the left panel, then the right panel. Ask which panel the necropsy belongs to. Then ask which panel tells the farm where to act first.</div>
+  <p>A <span class="term" data-tip="A question about the diagnosis and treatment of one sick animal.">clinical question</span> concerns one animal. A population question concerns a group of animals. The veterinarian needs both.</p>
+  <div class="notes">Point to the left panel, then to the right panel. Ask which panel the necropsy belongs to. Then ask which panel tells the farm where to act first.</div>
 </section>
 <!-- Slide 6: Concept, the full definition in three steps -->
 <section class="slide vcenter" data-type="concept" data-title="The full definition">
   <h2>The full definition</h2>
   <p class="def-full">
-    <span data-step="1">Epidemiology is the <span class="term" data-tip="Careful work with a clear method that uses data.">study</span> of the <span class="term" data-tip="How often a health event occurs, and where, when, and in which animals it occurs.">distribution</span> and <span class="term" data-tip="Factors that change how often a health event occurs, such as the feed, the water, or the management.">determinants</span> of <span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">health-related states or events</span></span>
-    <span data-step="2">in <span class="term" data-tip="Groups of animals that the investigator defines clearly: which animals, in which place, and in which period.">specified populations</span>,</span>
-    <span data-step="3">and the <span class="term" data-tip="Using the results of the study in practice to prevent and control health problems.">application</span> of this study to the control of health problems.</span>
+    <span>Epidemiology is the <span class="term" data-tip="Careful work with a clear method that uses data.">study</span> of the <span class="term" data-tip="How often a health event occurs, and where, when, and in which animals it occurs.">distribution</span> and <span class="term" data-tip="Factors that change how often a health event occurs, such as the feed, the water, or the management.">determinants</span> of <span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">health-related states or events</span></span>
+    <span>in <span class="term" data-tip="Groups of animals that the investigator defines clearly: which animals, in which place, and in which period.">specified populations</span>,</span>
+    <span>and the <span class="term" data-tip="Using the results of the study in practice to prevent and control health problems.">application</span> of this study to the control of health problems.</span>
   </p>
-  <div class="def-labels">
-    <div data-step="1">What the study looks at</div>
-    <div data-step="2">Which animals</div>
-    <div data-step="3">What the study is for</div>
-  </div>
   <p class="small-note">Hover over or tap a dotted word. Definition after Last (2001).</p>
-  <div class="notes">Reveal the definition in three parts. After each part, ask a student to explain it in simple words. Point out that the simple definition on the last slide is a short form of this sentence.</div>
+  <div class="notes">Read the definition in three parts. After each part, ask a student to explain it in simple words. Point out that the simple definition on the last slide is a short form of this sentence.</div>
 </section>
-<!-- Slide 7: Example, elements in the case, part 1 -->
-<section class="slide" data-type="example" data-title="The elements in the case (1)">
-  <h2>The elements in the layer farm, part 1</h2>
+<!-- Slide 7: Example, the six elements in the case -->
+<section class="slide" data-type="example" data-title="The elements in the case">
+  <h2>The six elements in the layer farm</h2>
   <table class="cmp ex">
     <thead><tr><th scope="col">Element</th><th scope="col">In the layer farm</th></tr></thead>
     <tbody>
-      <tr data-step="1"><th scope="row"><span class="term" data-tip="Careful work with a clear method that uses data.">Study</span></th><td>The veterinarian works from records and counts.</td></tr>
-      <tr data-step="2"><th scope="row"><span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">Health-related states or events</span></th><td>Deaths of hens and a fall in egg production.</td></tr>
-      <tr data-step="3"><th scope="row"><span class="term" data-tip="Groups of animals that the investigator defines clearly: which animals, in which place, and in which period.">Specified populations</span></th><td>The 8,000 hens in 8 pens.</td></tr>
-      <tr data-step="4"><th scope="row"><span class="term" data-tip="How often a health event occurs, and where, when, and in which animals it occurs.">Distribution</span></th><td>90 of the 120 deaths were in pens A1 and B1, in one week.</td></tr>
+      <tr><th scope="row"><span class="term" data-tip="Careful work with a clear method that uses data.">Study</span></th><td>The veterinarian works from records and counts.</td></tr>
+      <tr><th scope="row"><span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">Health-related states or events</span></th><td>Deaths of hens and a fall in egg production.</td></tr>
+      <tr><th scope="row"><span class="term" data-tip="Groups of animals that the investigator defines clearly: which animals, in which place, and in which period.">Specified populations</span></th><td>The 8,000 hens in 8 pens.</td></tr>
+      <tr><th scope="row"><span class="term" data-tip="How often a health event occurs, and where, when, and in which animals it occurs.">Distribution</span></th><td>90 of the 120 deaths were in pens A1 and B1, in one week.</td></tr>
+      <tr><th scope="row"><span class="term" data-tip="Factors that change how often a health event occurs, such as the feed, the water, or the management.">Determinants</span></th><td>Pens A1 and B1 are next to the water inlet, so the water is a factor to test. The laboratory finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span>.</td></tr>
+      <tr><th scope="row"><span class="term" data-tip="Using the results of the study in practice to prevent and control health problems.">Application</span></th><td>The veterinarian separates the two pens, asks for daily records of deaths by pen, and finds the buyers of the eggs.</td></tr>
     </tbody>
   </table>
-  <div class="notes">Reveal one row at a time. For each row, ask the class where they saw this on the case slide.</div>
+  <div class="notes">For each row, ask the class where they saw this fact on the case slide. Ask which element the manager had already used before the veterinarian arrived. A good answer is distribution, because the manager had counted the deaths.</div>
 </section>
-<!-- Slide 8: Example, elements in the case, part 2 -->
-<section class="slide" data-type="example" data-title="The elements in the case (2)">
-  <h2>The elements in the layer farm, part 2</h2>
-  <table class="cmp ex">
-    <thead><tr><th scope="col">Element</th><th scope="col">In the layer farm</th></tr></thead>
-    <tbody>
-      <tr data-step="1"><th scope="row"><span class="term" data-tip="Factors that change how often a health event occurs, such as the feed, the water, or the management.">Determinants</span></th><td>The pens next to the water inlet point to the water as a factor to test. The laboratory finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span>.</td></tr>
-      <tr data-step="2"><th scope="row"><span class="term" data-tip="Using the results of the study in practice to prevent and control health problems.">Application</span></th><td>The veterinarian separates the two pens, asks for daily records of deaths by pen, and finds the buyers of the eggs.</td></tr>
-    </tbody>
-  </table>
-  <div class="fig-wrap">
-    <svg class="fig" viewBox="0 0 760 110" role="img" aria-label="Four steps of an investigation in order: define the population, describe the distribution, look for determinants, apply the findings." data-step="3">
-      <rect class="f-box" x="10" y="15" width="160" height="70" rx="10"/>
-      <text x="90" y="46" text-anchor="middle">Define the</text><text x="90" y="66" text-anchor="middle">population</text>
-      <path class="f-arrow" d="M174 50 L206 50"/>
-      <rect class="f-box" x="210" y="15" width="160" height="70" rx="10"/>
-      <text x="290" y="46" text-anchor="middle">Describe the</text><text x="290" y="66" text-anchor="middle">distribution</text>
-      <path class="f-arrow" d="M374 50 L406 50"/>
-      <rect class="f-box" x="410" y="15" width="160" height="70" rx="10"/>
-      <text x="490" y="46" text-anchor="middle">Look for</text><text x="490" y="66" text-anchor="middle">determinants</text>
-      <path class="f-arrow" d="M574 50 L606 50"/>
-      <rect class="f-box" x="610" y="15" width="140" height="70" rx="10"/>
-      <text x="680" y="46" text-anchor="middle">Apply the</text><text x="680" y="66" text-anchor="middle">findings</text>
-    </svg>
-  </div>
-  <p data-step="3">The elements follow the steps of an investigation, from the first count to the action.</p>
-  <div class="notes">Ask the class which element the manager had already used before the veterinarian arrived. A good answer is distribution, because the manager had counted the deaths.</div>
-</section>
-<!-- Slide 9: Concept, clinician and epidemiologist -->
+<!-- Slide 8: Concept, clinician and epidemiologist -->
 <section class="slide" data-type="concept" data-title="Two ways of working">
   <h2>Two ways of working with the same disease</h2>
   <table class="cmp">
     <thead><tr><th scope="col">Comparison</th><th scope="col"><span class="term" data-tip="A veterinarian who examines and treats sick animals.">Clinician</span></th><th scope="col"><span class="term" data-tip="A scientist who studies health events in groups of animals.">Epidemiologist</span></th></tr></thead>
     <tbody>
-      <tr data-step="1"><th scope="row">Focus</th><td>Individuals</td><td>Populations</td></tr>
-      <tr data-step="2"><th scope="row">Objective</th><td>Curing the sick individual</td><td>Preventing and controlling disease in populations</td></tr>
-      <tr data-step="3"><th scope="row">Diagnosis</th><td>Based on <span class="term" data-tip="The history of the sick animal, told by the owner or keeper.">anamnesis</span>, physical examination, and <span class="term" data-tip="Tests that help find the cause of a disease, such as blood tests or X-rays.">diagnostic tests</span></td><td>Based on <span class="term" data-tip="Using numbers and calculations to find patterns in data.">statistical analysis</span> and <span class="term" data-tip="Planned investigations that count health events in groups of animals and compare the groups.">epidemiological studies</span></td></tr>
-      <tr data-step="4"><th scope="row">Treatment</th><td>Giving medical or surgical treatment and care</td><td>Implementing animal health and public health <span class="term" data-tip="Actions that aim to prevent or control a disease, such as vaccination or separating sick animals.">interventions</span> and <span class="term" data-tip="Rules or plans made by an authority, such as a rule that sick animals must not be sold.">policies</span></td></tr>
+      <tr><th scope="row">Focus</th><td>Individuals</td><td>Populations</td></tr>
+      <tr><th scope="row">Objective</th><td>Curing the sick individual</td><td>Preventing and controlling disease in populations</td></tr>
+      <tr><th scope="row">Diagnosis</th><td>Based on <span class="term" data-tip="The history of the sick animal, told by the owner or keeper.">anamnesis</span>, physical examination, and <span class="term" data-tip="Tests that help find the cause of a disease, such as blood tests or X-rays.">diagnostic tests</span></td><td>Based on <span class="term" data-tip="Using numbers and calculations to find patterns in data.">statistical analysis</span> and <span class="term" data-tip="Planned investigations that count health events in groups of animals and compare the groups.">epidemiological studies</span></td></tr>
+      <tr><th scope="row">Treatment</th><td>Giving medical or surgical treatment and care</td><td>Implementing animal health and public health <span class="term" data-tip="Actions that aim to prevent or control a disease, such as vaccination or separating sick animals.">interventions</span> and <span class="term" data-tip="Rules or plans made by an authority, such as a rule that sick animals must not be sold.">policies</span></td></tr>
     </tbody>
   </table>
-  <p class="after-table" data-step="5">In the layer house, the <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> suggests a cause. The count by pen shows where to act.</p>
-  <div class="notes">Reveal one row at a time. After the last row, ask which row describes the necropsy and which row describes the count by pen.</div>
+  <div class="notes">Ask which row describes the necropsy and which row describes the count by pen.</div>
 </section>
-<!-- Slide 10: Practice with support, build the definition -->
+<!-- Slide 9: Practice with support, build the definition -->
 <section class="slide" data-type="practice" data-title="Build the definition">
   <h2>Build the definition</h2>
   <p class="practice-note">Choose one phrase for each gap. Think about the layer farm: what did the veterinarian describe, explain, and do?</p>
@@ -541,7 +505,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="build-why" id="b-why"></div>
   <div class="notes">Let students choose alone first, then compare with a neighbour. Ask them to say the correct sentence aloud.</div>
 </section>
-<!-- Slide 11: Practice with support, clinical or population question -->
+<!-- Slide 10: Practice with support, clinical or population question -->
 <section class="slide" data-type="practice" data-title="Clinical or population?" data-panel="controls">
   <h2>Is it a clinical question or a population question?</h2>
   <div class="qsort">
@@ -558,7 +522,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
   <div class="notes">Read each statement aloud and ask the class to vote before you reveal the answer. Statement 5 about the buyers of eggs is the one that students often place wrongly. Ask why eggs belong to the population.</div>
 </section>
-<!-- Slide 12: Practice without support, match the case to the elements -->
+<!-- Slide 11: Practice without support, match the case to the elements -->
 <section class="slide" data-type="practice" data-title="Match the case to the elements">
   <h2>Put each fact from the case under the right element</h2>
   <div class="sorter" data-sorter id="map-sorter">
@@ -588,11 +552,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <p class="practice-note">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
   <div class="notes">Students work in pairs. If a pair places a card wrongly, ask them to read the definition of the element on slide 6 and decide again.</div>
 </section>
-<!-- Slide 13: Practice, find the error -->
+<!-- Slide 12: Practice, find the error -->
 <section class="slide" data-type="practice" data-title="Find the error">
   <h2>Find the error</h2>
   <p>A student summarises the farm case in one note.</p>
-  <p class="quote">"The veterinarian did a <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> on five hens and found Salmonella. This completes the epidemiology of the problem."</p>
+  <p class="quote">"The veterinarian did a <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> on five hens. The laboratory result showed Salmonella. This completes the epidemiology of the problem."</p>
   <p class="q-label">What is missing from the note?</p>
   <div>
     <ul class="choices" data-check="q0" data-answer="c" data-explain="d-q0">
@@ -604,7 +568,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
   <div class="notes">The note describes the cause in five hens. It has no distribution, no determinants, and no application.</div>
 </section>
-<!-- Slide 14: Check, element of the definition -->
+<!-- Slide 13: Check, element of the definition -->
 <section class="slide" data-type="check" data-title="Check: the element">
   <h2>The veterinarian separates the two pens with many deaths from the other pens. Which element of the definition is this?</h2>
   <div>
@@ -616,7 +580,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-<!-- Slide 15: Check, health-related event -->
+<!-- Slide 14: Check, health-related event -->
 <section class="slide" data-type="check" data-title="Check: the event">
   <h2>Which of these is a <span class="term" data-tip="Anything that happens to the health of animals: a disease, a death, an injury, an accident, or a pregnancy.">health-related event</span> in a layer <span class="term" data-tip="A group of birds, such as hens, kept together.">flock</span>?</h2>
   <div>
@@ -628,7 +592,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-<!-- Slide 16: Check, transfer to a new case -->
+<!-- Slide 15: Check, transfer to a new case -->
 <section class="slide" data-type="check" data-title="Check: a new case">
   <h2>A new case: sick dogs in one neighbourhood</h2>
   <p>Several dogs in one <span class="term" data-tip="A part of a town where people live close to each other.">neighbourhood</span> of Makassar have vomiting and bloody <span class="term" data-tip="Frequent loose and watery stool.">diarrhoea</span> in one week. A <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian gives medical care and surgery to pets such as dogs and cats, for example in a clinic or an animal hospital.">companion animal veterinarian</span> in a clinic treats each dog.</p>
@@ -642,7 +606,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-<!-- Slide 17: Summary -->
+<!-- Slide 16: Summary -->
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
@@ -661,7 +625,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Details: one template per element with data-detail or data-explain -->
 <template id="d-pens">
   <h3>About these data</h3>
-  <p>The flock has 8,000 hens in 8 pens. A flock of this size normally loses about 10 hens a week.</p>
+  <p>The flock has 8,000 hens in 8 pens. In a flock of this size, about 10 hens normally die in one week.</p>
   <p>Pens A1 and B1 are next to the water inlet. They had 90 of the 120 deaths. The other six pens had 5 deaths each.</p>
   <p>The necropsy of five hens tells the veterinarian what killed those hens. The count of deaths by pen tells her where the problem is.</p>
 </template>
@@ -705,7 +669,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </aside>
 
 <!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
-<div class="controls" data-for-slide="11" hidden>
+<div class="controls" data-for-slide="10" hidden>
   <div class="control"><label for="in-hint">Show a hint <input type="checkbox" id="in-hint"></label></div>
   <button class="btn" id="qs-reset" data-reset>Reset the sorting</button>
 </div>
@@ -1037,7 +1001,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   const note = $('predict-note');
   document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
     note.className = 'verdict';
-    note.textContent = 'Option B is the best answer. A necropsy answers a clinical question about five hens. It gives no count for the flock.';
+    note.textContent = 'Option B is the best answer. A necropsy answers a clinical question about five hens. It does not show how many hens died in each pen, so the farm owner still does not know where to act.';
   }));
 
   // Slide 10: build the definition
@@ -1077,7 +1041,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   const items = [
     { q: 'Hen 14 breathes with difficulty and her head is swollen. What is wrong with her?', a: 'C', why: 'The question concerns one hen. The answer comes from her examination and tests.' },
     { q: 'How many hens died in each pen this week?', a: 'P', why: 'The question counts events in a group of animals, pen by pen. This describes the distribution of deaths.' },
-    { q: 'Do the pens next to the water inlet lose more hens than the other pens?', a: 'P', why: 'The question compares groups of pens. It looks for a determinant of the deaths.' },
+    { q: 'Do more hens die in the pens next to the water inlet than in the other pens?', a: 'P', why: 'The question compares groups of pens. It looks for a determinant of the deaths.' },
     { q: 'Which medicine should the veterinarian give to this sick hen?', a: 'C', why: 'The decision concerns the treatment of one animal.' },
     { q: 'Which buyers received eggs from the pens with many deaths?', a: 'P', why: 'Eggs are animal products of the specified population. The question concerns the egg chain, which reaches beyond one hen.' },
     { q: 'Does the damage in the liver explain why this hen died?', a: 'C', why: 'The question concerns the cause of death of one animal.' }
