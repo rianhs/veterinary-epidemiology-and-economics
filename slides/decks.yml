@@ -5,4 +5,8 @@
 #   path: /slides/correct-apparent-prevalence.html
 #   description: Use test sensitivity and specificity to estimate the true prevalence.
 #   categories: [C4, S4.5, S4.4]
-[]
+- title: Explain epidemiology
+  type: slides
+  path: /slides/explain-epidemiology.html
+  description: Explain the definition of epidemiology and tell clinical questions from population questions.
+  categories: [C1, S1.1, S1.3]
