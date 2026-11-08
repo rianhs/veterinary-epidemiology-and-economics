@@ -2,7 +2,7 @@
 title: Approaches of epidemiology
 type: encyclopedia
 parent: epidemiology
-categories: [C1, S1.4]
+categories: [C1, S1.6]
 related: [epidemiology, veterinary-economics]
 status: verified
 updated: 2026-11-08

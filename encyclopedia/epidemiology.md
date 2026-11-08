@@ -2,7 +2,7 @@
 title: Epidemiology
 type: encyclopedia
 parent:
-categories: [C1, S1.1, S1.3]
+categories: [C1, S1.1, S1.2]
 related: [approaches-of-epidemiology, level-of-analysis, population-status-of-disease, veterinary-economics]
 status: verified
 updated: 2026-11-08

@@ -2,7 +2,7 @@
 title: Level of analysis
 type: encyclopedia
 parent:
-categories: [C1, S1.6, S1.3]
+categories: [C1, S1.5, S1.2]
 related: [epidemiology, population-status-of-disease]
 status: verified
 updated: 2026-11-08

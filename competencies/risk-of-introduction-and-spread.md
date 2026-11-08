@@ -135,7 +135,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Hazard and risk. Hazards of live animals and animal products.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Match the population status of a disease to an objective</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Match the population status of a disease to an objective</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-2"><span class="code">S14.2</span> Draw a risk pathway</a></li></ul></div></div></div>
 ```
 

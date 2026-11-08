@@ -2,7 +2,7 @@
 title: Veterinary economics
 type: encyclopedia
 parent:
-categories: [C1, S1.2]
+categories: [C1, S1.4]
 related: [epidemiology, approaches-of-epidemiology]
 status: verified
 updated: 2026-11-08

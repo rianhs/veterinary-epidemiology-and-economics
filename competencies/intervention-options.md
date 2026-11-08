@@ -119,7 +119,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Vaccination, test and removal, movement control, biosecurity, treatment, culling, and change in surveillance.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="intervention-options.html#s15-1"><span class="code">S15.1</span> Identify intervention points</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Match the population status of a disease to an objective</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="intervention-options.html#s15-1"><span class="code">S15.1</span> Identify intervention points</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Match the population status of a disease to an objective</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="intervention-options.html#s15-3"><span class="code">S15.3</span> Estimate the expected effect of each option</a></li><li><a href="intervention-options.html#s15-4"><span class="code">S15.4</span> Screen options against constraints</a></li><li><a href="intervention-options.html#s15-5"><span class="code">S15.5</span> Map stakeholders and their interests</a></li><li><a href="evaluating-interventions.html#s18-1"><span class="code">S18.1</span> Define evaluation objectives and indicators</a></li></ul></div></div></div>
 ```
 

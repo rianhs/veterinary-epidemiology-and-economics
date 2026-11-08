@@ -135,7 +135,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Effects of disease on inputs and outputs of animal production.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-2"><span class="code">S1.2</span> Explain what veterinary economics is</a></li><li><a href="occurrence-and-burden.html#s5-6"><span class="code">S5.6</span> Express disease burden as production loss</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-4"><span class="code">S1.4</span> Explain what veterinary economics is</a></li><li><a href="occurrence-and-burden.html#s5-6"><span class="code">S5.6</span> Express disease burden as production loss</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="economic-impact-of-disease.html#s16-2"><span class="code">S16.2</span> Distinguish private and public benefits of control</a></li><li><a href="economic-impact-of-disease.html#s16-3"><span class="code">S16.3</span> Distinguish losses from expenditures</a></li></ul></div></div></div>
 ```
 

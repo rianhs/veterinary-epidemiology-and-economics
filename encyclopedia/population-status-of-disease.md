@@ -2,7 +2,7 @@
 title: Population status of disease
 type: encyclopedia
 parent:
-categories: [C1, S1.5]
+categories: [C1, S1.3]
 related: [epidemiology, approaches-of-epidemiology]
 status: verified
 updated: 2026-11-08
