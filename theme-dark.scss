@@ -1,0 +1,26 @@
+/*-- scss:defaults --*/
+$body-bg: #0D1526;
+$body-color: #E6EBF2;
+$link-color: #2DD4BF;
+$border-color: #243250;
+$navbar-bg: #0D1526;
+$navbar-fg: #E6EBF2;
+$navbar-hl: #2DD4BF;
+$footer-bg: #0D1526;
+$footer-fg: #9AA6B8;
+$toc-color: #9AA6B8;
+$code-color: #E6EBF2;
+$table-color: #E6EBF2;
+$input-bg: #131D31;
+$input-color: #E6EBF2;
+$input-border-color: #243250;
+$dropdown-bg: #131D31;
+$dropdown-link-color: #E6EBF2;
+
+/*-- scss:rules --*/
+:root {
+  --bg: #0D1526; --surface: #131D31; --surface-2: #18243B; --line: #243250;
+  --ink: #E6EBF2; --muted: #9AA6B8; --accent: #2DD4BF; --accent-ink: #062A26;
+  --d0: #9AA6B8; --d1: #56B4E9; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #E6EBF2;
+  --loop-line: #3A4A68;
+}

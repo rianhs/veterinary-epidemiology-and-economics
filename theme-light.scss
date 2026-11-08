@@ -1,0 +1,20 @@
+/*-- scss:defaults --*/
+$body-bg: #FFFFFF;
+$body-color: #18222F;
+$link-color: #0B7A6E;
+$border-color: #E1E6EB;
+$navbar-bg: #FFFFFF;
+$navbar-fg: #18222F;
+$navbar-hl: #0B7A6E;
+$footer-bg: #FFFFFF;
+$footer-fg: #5A6573;
+$toc-color: #5A6573;
+$code-color: #18222F;
+
+/*-- scss:rules --*/
+:root {
+  --bg: #FFFFFF; --surface: #F5F7F9; --surface-2: #EDF1F4; --line: #E1E6EB;
+  --ink: #18222F; --muted: #5A6573; --accent: #0B7A6E; --accent-ink: #FFFFFF;
+  --d0: #6B7480; --d1: #0072B2; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #18222F;
+  --loop-line: #B9C1CB;
+}

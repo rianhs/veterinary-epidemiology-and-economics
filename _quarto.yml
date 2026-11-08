@@ -25,7 +25,10 @@ website:
 
 format:
   html:
-    theme: [default, theme.scss]
+    theme:
+      light: [default, theme-light.scss, theme.scss]
+      dark: [default, theme-dark.scss, theme.scss]
+    respect-user-color-scheme: true
     lang: en
     toc: true
     smooth-scroll: true
