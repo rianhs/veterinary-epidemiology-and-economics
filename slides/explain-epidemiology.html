@@ -96,9 +96,9 @@ a { color: var(--accent); }
 .slide.is-active { display: flex; }
 .slide h1 { font-size: 2.6rem; line-height: 1.08; letter-spacing: -0.03em; margin: 0; font-weight: 700; }
 .slide h2 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0; font-weight: 650; }
-.slide p { margin: 0; max-width: 62ch; }
+.slide p { margin: 0; }
 .slide .lead { font-size: 1.2rem; color: var(--muted); }
-.slide ul { margin: 0; padding-left: 1.2rem; max-width: 62ch; }
+.slide ul { margin: 0; padding-left: 1.2rem; }
 .slide li + li { margin-top: 0.35rem; }
 .notes { display: none; }
 
@@ -122,7 +122,7 @@ a { color: var(--accent); }
 .tooltip.is-on { opacity: 1; }
 
 /* Choice and check components */
-.choices { display: grid; gap: 0.5rem; max-width: 40rem; padding: 0; margin: 0.4rem 0 0; list-style: none; }
+.choices { display: grid; gap: 0.5rem; padding: 0; margin: 0.4rem 0 0; list-style: none; }
 .choice { text-align: left; width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; display: flex; gap: 0.7rem; align-items: baseline; }
 .choice:hover { border-color: var(--muted); }
 .choice .key { font-weight: 600; color: var(--muted); }
@@ -223,21 +223,21 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .pen-id { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
 .pen-n { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
 
-.cmp { border-collapse: collapse; width: 100%; max-width: 52rem; font-size: 0.95rem; }
+.cmp { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
 .cmp th, .cmp td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
 .cmp thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
 .cmp tbody th { font-weight: 600; color: var(--muted); width: 7.5rem; }
 
-.sorter { display: grid; gap: 0.9rem; max-width: 44rem; align-content: start; }
+.sorter { display: grid; gap: 0.9rem; align-content: start; }
 .sort-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
-.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; max-width: 36ch; }
+.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; }
 .sort-hint { color: var(--muted); }
 .sort-btns { display: flex; gap: 0.7rem; flex-wrap: wrap; }
 .sort-btn { padding: 0.75rem 1.2rem; font-size: 1.05rem; }
 .sort-btn:disabled { cursor: default; }
 .sort-btn.is-correct { border: 2px solid var(--ok); }
 .sort-btn.is-wrong { border: 2px solid var(--bad); }
-.sort-why { color: var(--muted); min-height: 3rem; max-width: 50ch; }
+.sort-why { color: var(--muted); min-height: 3rem; }
 
 .elements { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; margin-top: 0.4rem; }
 .el { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 0.8rem 1rem; display: grid; gap: 0.2rem; align-content: start; min-height: 5.6rem; }
@@ -246,7 +246,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .el .seen { display: none; font-size: 0.78rem; font-weight: 600; color: var(--ok); }
 .el.is-seen .seen { display: block; }
 
-.slide[data-type="check"] > div { max-width: 44rem; }
 @media (max-width: 900px) {
   .case-layout { grid-template-columns: 1fr; }
   .elements { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -289,7 +288,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="case-layout">
     <div>
       <p>The farm loses 120 of its 8,000 hens in one week, mostly in two pens next to the water inlet. The laboratory later finds Salmonella in the hens, and eggs from the same pens have already reached buyers.</p>
-      <p>Your role: production animal veterinarian, two years after graduation.</p>
+      <p>Your role: production animal veterinarian (GP1.2), two years after graduation.</p>
       <p class="small-note">These numbers are synthetic and are for teaching.</p>
     </div>
     <figure class="penfig" data-detail="d-pens" tabindex="0" aria-label="Deaths in one week by pen. Pens A1 and B1, next to the water inlet, had 90 of the 120 deaths. Select for details.">
@@ -317,9 +316,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <h2>You necropsy five hens. Does the result tell the farm what to do?</h2>
   <p>Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
-    <li><button class="choice" data-value="a"><span class="key">A</span>Yes. The cause of death in five hens explains the whole problem.</button></li>
-    <li><button class="choice" data-value="b"><span class="key">B</span>Partly. It shows what killed these hens, but does not show how far the problem reaches.</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>No. A necropsy has no value in a flock problem.</button></li>
+    <li><button class="choice" data-value="a"><span class="key">A</span>Yes. Five necropsies are enough to explain the problem in the whole flock.</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>Partly. It gives a cause for five hens and no count for the flock.</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>No. A necropsy tells the farm nothing about a problem in the flock.</button></li>
   </ul>
   <p class="verdict" id="predict-note" aria-live="polite"></p>
 </section>
@@ -333,8 +332,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <tbody>
       <tr><th scope="row">Focus</th><td>Individuals</td><td>Populations</td></tr>
       <tr><th scope="row">Objective</th><td>Curing the sick individual</td><td>Preventing and controlling disease in populations</td></tr>
-      <tr><th scope="row">Diagnosis</th><td>Based on <span class="term" data-tip="Anamnesis is the history of the animal, given by the owner or keeper.">anamnesis</span>, physical examination, and diagnostic tests</td><td>Based on statistical analysis and epidemiological studies</td></tr>
-      <tr><th scope="row">Treatment</th><td>Giving medical or surgical treatment and care</td><td>Implementing animal health and public health interventions and policies</td></tr>
+      <tr><th scope="row">Diagnosis</th><td>Based on <span class="term" data-tip="Anamnesis is the history of the animal, given by the owner or keeper.">anamnesis</span>, physical examination, and diagnostic imaging</td><td>Based on statistical analysis and epidemiological studies</td></tr>
+      <tr><th scope="row">Treatment</th><td>Giving medical or surgical treatment and care</td><td>Putting animal health and public health interventions and policies into practice</td></tr>
     </tbody>
   </table>
   <p>In the layer house, the necropsy suggests a cause. The count by pen shows where to act.</p>
@@ -378,10 +377,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide" data-type="check" data-title="Check: the elements">
   <h2>The veterinarian separates the two affected pens to protect the other pens. Which element of the definition is this?</h2>
   <div>
-    <ul class="choices" data-check="q1" data-answer="c" data-explain="d-q1">
-      <li><button class="choice" data-value="a"><span class="key">A</span>Distribution</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Determinants</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>Application</button></li>
+    <ul class="choices" data-check="q1" data-answer="a" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Application</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Distribution</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Determinants</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
@@ -393,10 +392,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <p>Several dogs in one neighbourhood of Makassar develop vomiting and bloody diarrhoea in one week. A clinic veterinarian (GP1.1) treats each dog. This scenario is synthetic and is for teaching.</p>
   <p><strong>Which question is a population question?</strong></p>
   <div>
-    <ul class="choices" data-check="q2" data-answer="b" data-explain="d-q2">
-      <li><button class="choice" data-value="a"><span class="key">A</span>What is the diagnosis of the first dog?</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>How many dogs are sick, where do they live, and what do they share?</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>Which drug should the first dog receive?</button></li>
+    <ul class="choices" data-check="q2" data-answer="c" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Which diagnosis fits the vomiting and bloody diarrhoea of the first dog?</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Which drug and dose should the clinic give to the first dog?</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>How many dogs are sick, and in which streets do they live?</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
@@ -461,9 +460,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <p>Counting the deaths by pen describes the distribution. Testing the water supply looks for a determinant.</p>
 </template>
 <template id="d-q2">
-  <h3>Answer: B</h3>
-  <p>Question B concerns the group of dogs. It asks for the number of sick dogs, their places, and what they share.</p>
-  <p>Questions A and C concern one dog. The clinic veterinarian still treats each dog, so both kinds of question are needed.</p>
+  <h3>Answer: C</h3>
+  <p>Question C concerns the group of dogs. It asks for the number of sick dogs and the places where they live.</p>
+  <p>Questions A and B concern one dog. The clinic veterinarian still treats each dog, so both kinds of question are needed.</p>
 </template>
 
   </div><!-- /card -->
@@ -732,7 +731,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   const note = $('predict-note');
   document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
     note.className = 'verdict';
-    note.textContent = 'Option B is the best answer. A necropsy answers a clinical question about five hens. It does not show how far the problem reaches.';
+    note.textContent = 'Option B is the best answer. A necropsy answers a clinical question about five hens. It gives no count for the flock.';
   }));
 
   // Slide 5: sort six statements
