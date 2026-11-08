@@ -3,16 +3,118 @@ title: "C14. Risk of introduction and spread"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C14"
+  - id: m-s14-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.1"
+  - id: m-s14-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.2"
+  - id: m-s14-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.3"
+  - id: m-s14-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.4"
+  - id: m-s14-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.5"
+  - id: m-s14-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.6"
+  - id: m-s14-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.7"
+  - id: m-s14-8
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S14.8"
 ---
 
 ```{=html}
@@ -37,6 +139,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-2"><span class="code">S14.2</span> Draw a risk pathway</a></li></ul></div></div></div>
 ```
 
+::: {#m-s14-1 .skill-materials}
+:::
+
 ## S14.2 Draw a risk pathway {#s14-2}
 
 ```{=html}
@@ -45,6 +150,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-1"><span class="code">S14.1</span> Identify the hazards of a commodity or movement</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-3"><span class="code">S14.3</span> Assess the likelihood of release</a></li><li><a href="risk-of-introduction-and-spread.html#s14-4"><span class="code">S14.4</span> Assess the likelihood of exposure</a></li></ul></div></div></div>
 ```
+
+::: {#m-s14-2 .skill-materials}
+:::
 
 ## S14.3 Assess the likelihood of release {#s14-3}
 
@@ -55,6 +163,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-5"><span class="code">S14.5</span> Assess the consequences of introduction</a></li></ul></div></div></div>
 ```
 
+::: {#m-s14-3 .skill-materials}
+:::
+
 ## S14.4 Assess the likelihood of exposure {#s14-4}
 
 ```{=html}
@@ -63,6 +174,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-2"><span class="code">S14.2</span> Draw a risk pathway</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-5"><span class="code">S14.5</span> Assess the consequences of introduction</a></li></ul></div></div></div>
 ```
+
+::: {#m-s14-4 .skill-materials}
+:::
 
 ## S14.5 Assess the consequences of introduction {#s14-5}
 
@@ -73,6 +187,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-6"><span class="code">S14.6</span> Estimate a risk with its uncertainty</a></li></ul></div></div></div>
 ```
 
+::: {#m-s14-5 .skill-materials}
+:::
+
 ## S14.6 Estimate a risk with its uncertainty {#s14-6}
 
 ```{=html}
@@ -81,6 +198,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-5"><span class="code">S14.5</span> Assess the consequences of introduction</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-7"><span class="code">S14.7</span> Propose risk management measures</a></li><li><a href="risk-of-introduction-and-spread.html#s14-8"><span class="code">S14.8</span> Describe a joint risk assessment</a></li><li><a href="integrated-strategy.html#s19-1"><span class="code">S19.1</span> Combine evidence into a strategy document</a></li></ul></div></div></div>
 ```
+
+::: {#m-s14-6 .skill-materials}
+:::
 
 ## S14.7 Propose risk management measures {#s14-7}
 
@@ -91,6 +211,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s14-7 .skill-materials}
+:::
+
 ## S14.8 Describe a joint risk assessment {#s14-8}
 
 ```{=html}
@@ -100,11 +223,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C14 appear here when they are published.
-
-::: {#materials}
+::: {#m-s14-8 .skill-materials}
 :::
 
 ```{=html}

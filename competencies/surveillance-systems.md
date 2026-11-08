@@ -3,16 +3,90 @@ title: "C7. Surveillance systems"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C7"
+  - id: m-s7-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S7.1"
+  - id: m-s7-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S7.2"
+  - id: m-s7-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S7.3"
+  - id: m-s7-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S7.4"
+  - id: m-s7-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S7.5"
+  - id: m-s7-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S7.6"
 ---
 
 ```{=html}
@@ -37,6 +111,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-2"><span class="code">S7.2</span> Judge the fit of surveillance to its objective</a></li></ul></div></div></div>
 ```
 
+::: {#m-s7-1 .skill-materials}
+:::
+
 ## S7.2 Judge the fit of surveillance to its objective {#s7-2}
 
 ```{=html}
@@ -45,6 +122,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="surveillance-systems.html#s7-1"><span class="code">S7.1</span> Describe the components of a surveillance system</a></li><li><a href="data-sources-and-sampling.html#s3-4"><span class="code">S3.4</span> Match a data collection approach to an objective</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-3"><span class="code">S7.3</span> Assess the attributes of a surveillance system</a></li><li><a href="outbreak-investigation.html#s12-9"><span class="code">S12.9</span> Plan surveillance to confirm the end of an outbreak</a></li></ul></div></div></div>
 ```
+
+::: {#m-s7-2 .skill-materials}
+:::
 
 ## S7.3 Assess the attributes of a surveillance system {#s7-3}
 
@@ -55,6 +135,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-5"><span class="code">S7.5</span> Distinguish a change in disease from a change in detection</a></li></ul></div></div></div>
 ```
 
+::: {#m-s7-3 .skill-materials}
+:::
+
 ## S7.4 Set a baseline and an alert threshold {#s7-4}
 
 ```{=html}
@@ -63,6 +146,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-7"><span class="code">S6.7</span> Describe trend and seasonality</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-5"><span class="code">S7.5</span> Distinguish a change in disease from a change in detection</a></li><li><a href="outbreak-investigation.html#s12-1"><span class="code">S12.1</span> Verify that an outbreak exists</a></li></ul></div></div></div>
 ```
+
+::: {#m-s7-4 .skill-materials}
+:::
 
 ## S7.5 Distinguish a change in disease from a change in detection {#s7-5}
 
@@ -73,6 +159,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="evaluating-interventions.html#s18-4"><span class="code">S18.4</span> Judge whether disease or detection changed</a></li></ul></div></div></div>
 ```
 
+::: {#m-s7-5 .skill-materials}
+:::
+
 ## S7.6 Interpret a freedom-from-disease claim {#s7-6}
 
 ```{=html}
@@ -82,11 +171,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C7 appear here when they are published.
-
-::: {#materials}
+::: {#m-s7-6 .skill-materials}
 :::
 
 ```{=html}

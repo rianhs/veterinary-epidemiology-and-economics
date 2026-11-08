@@ -3,16 +3,104 @@ title: "C9. Analysing several factors together"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C9"
+  - id: m-s9-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S9.1"
+  - id: m-s9-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S9.2"
+  - id: m-s9-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S9.3"
+  - id: m-s9-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S9.4"
+  - id: m-s9-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S9.5"
+  - id: m-s9-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S9.6"
+  - id: m-s9-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S9.7"
 ---
 
 ```{=html}
@@ -37,6 +125,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="analysing-several-factors-together.html#s9-2"><span class="code">S9.2</span> Distinguish confounding from effect modification</a></li><li><a href="analysing-several-factors-together.html#s9-3"><span class="code">S9.3</span> Explain why one-factor tests can mislead</a></li><li><a href="designing-observational-studies.html#s11-3"><span class="code">S11.3</span> Plan bias control in a study design</a></li><li><a href="evaluating-interventions.html#s18-3"><span class="code">S18.3</span> Identify alternative explanations for a change</a></li></ul></div></div></div>
 ```
 
+::: {#m-s9-1 .skill-materials}
+:::
+
 ## S9.2 Distinguish confounding from effect modification {#s9-2}
 
 ```{=html}
@@ -45,6 +136,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="analysing-several-factors-together.html#s9-1"><span class="code">S9.1</span> Explain confounding</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="analysing-several-factors-together.html#s9-4"><span class="code">S9.4</span> Calculate an adjusted odds ratio by stratification</a></li></ul></div></div></div>
 ```
+
+::: {#m-s9-2 .skill-materials}
+:::
 
 ## S9.3 Explain why one-factor tests can mislead {#s9-3}
 
@@ -55,6 +149,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="analysing-several-factors-together.html#s9-5"><span class="code">S9.5</span> Explain what a logistic regression model does</a></li></ul></div></div></div>
 ```
 
+::: {#m-s9-3 .skill-materials}
+:::
+
 ## S9.4 Calculate an adjusted odds ratio by stratification {#s9-4}
 
 ```{=html}
@@ -63,6 +160,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="analysing-several-factors-together.html#s9-2"><span class="code">S9.2</span> Distinguish confounding from effect modification</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
+
+::: {#m-s9-4 .skill-materials}
+:::
 
 ## S9.5 Explain what a logistic regression model does {#s9-5}
 
@@ -73,6 +173,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="analysing-several-factors-together.html#s9-6"><span class="code">S9.6</span> Interpret crude and adjusted odds ratios</a></li></ul></div></div></div>
 ```
 
+::: {#m-s9-5 .skill-materials}
+:::
+
 ## S9.6 Interpret crude and adjusted odds ratios {#s9-6}
 
 ```{=html}
@@ -81,6 +184,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="analysing-several-factors-together.html#s9-5"><span class="code">S9.5</span> Explain what a logistic regression model does</a></li><li><a href="comparing-groups-and-association.html#s8-6"><span class="code">S8.6</span> Interpret the precision of a measure of association</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="analysing-several-factors-together.html#s9-7"><span class="code">S9.7</span> Run a logistic regression on prepared data</a></li><li><a href="appraising-analytical-reports.html#s10-3"><span class="code">S10.3</span> Judge how a report handled confounding</a></li></ul></div></div></div>
 ```
+
+::: {#m-s9-6 .skill-materials}
+:::
 
 ## S9.7 Run a logistic regression on prepared data {#s9-7}
 
@@ -91,11 +197,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C9 appear here when they are published.
-
-::: {#materials}
+::: {#m-s9-7 .skill-materials}
 :::
 
 ```{=html}

@@ -3,16 +3,146 @@ title: "C2. Population, unit, and case"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C2"
+  - id: m-s2-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.1"
+  - id: m-s2-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.2"
+  - id: m-s2-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.3"
+  - id: m-s2-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.4"
+  - id: m-s2-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.5"
+  - id: m-s2-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.6"
+  - id: m-s2-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.7"
+  - id: m-s2-8
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.8"
+  - id: m-s2-9
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.9"
+  - id: m-s2-10
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S2.10"
 ---
 
 ```{=html}
@@ -37,6 +167,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Distinguish the epidemiological, observation, and analysis units</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Distinguish target, source, and study populations</a></li><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Describe the structure and turnover of a population</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Define the health event, exposure, and outcome</a></li><li><a href="data-sources-and-sampling.html#s3-1"><span class="code">S3.1</span> Distinguish approaches to population health information</a></li></ul></div></div></div>
 ```
 
+::: {#m-s2-1 .skill-materials}
+:::
+
 ## S2.2 Distinguish the epidemiological, observation, and analysis units {#s2-2}
 
 ```{=html}
@@ -45,6 +178,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="data-sources-and-sampling.html#s3-10"><span class="code">S3.10</span> Adjust a sample size for cluster sampling</a></li></ul></div></div></div>
 ```
+
+::: {#m-s2-2 .skill-materials}
+:::
 
 ## S2.3 Distinguish target, source, and study populations {#s2-3}
 
@@ -55,6 +191,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="data-sources-and-sampling.html#s3-5"><span class="code">S3.5</span> Assess a sampling frame</a></li><li><a href="data-sources-and-sampling.html#s3-12"><span class="code">S3.12</span> State to whom survey results apply</a></li></ul></div></div></div>
 ```
 
+::: {#m-s2-3 .skill-materials}
+:::
+
 ## S2.4 Describe the structure and turnover of a population {#s2-4}
 
 ```{=html}
@@ -63,6 +202,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Define the population at risk</a></li><li><a href="occurrence-and-burden.html#s5-2"><span class="code">S5.2</span> Calculate incidence risk and incidence rate</a></li><li><a href="disease-spread-and-models.html#s13-1"><span class="code">S13.1</span> Describe a population as compartments</a></li></ul></div></div></div>
 ```
+
+::: {#m-s2-4 .skill-materials}
+:::
 
 ## S2.5 Define the population at risk {#s2-5}
 
@@ -73,6 +215,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-10"><span class="code">S2.10</span> Calculate a prevalence</a></li><li><a href="occurrence-and-burden.html#s5-2"><span class="code">S5.2</span> Calculate incidence risk and incidence rate</a></li></ul></div></div></div>
 ```
 
+::: {#m-s2-5 .skill-materials}
+:::
+
 ## S2.6 Define the health event, exposure, and outcome {#s2-6}
 
 ```{=html}
@@ -81,6 +226,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-7"><span class="code">S2.7</span> Describe the natural history of a disease</a></li><li><a href="population-unit-and-case.html#s2-8"><span class="code">S2.8</span> Write a case definition</a></li><li><a href="diagnostic-test-quality.html#s4-1"><span class="code">S4.1</span> Distinguish validity, reliability, and precision</a></li><li><a href="comparing-groups-and-association.html#s8-3"><span class="code">S8.3</span> Choose comparison groups for a question</a></li><li><a href="designing-observational-studies.html#s11-2"><span class="code">S11.2</span> Draft a data collection instrument</a></li></ul></div></div></div>
 ```
+
+::: {#m-s2-6 .skill-materials}
+:::
 
 ## S2.7 Describe the natural history of a disease {#s2-7}
 
@@ -91,6 +239,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-8"><span class="code">S2.8</span> Write a case definition</a></li><li><a href="diagnostic-test-quality.html#s4-9"><span class="code">S4.9</span> Link test timing to natural history</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-5"><span class="code">S6.5</span> Classify the shape of an epidemic curve</a></li><li><a href="disease-spread-and-models.html#s13-1"><span class="code">S13.1</span> Describe a population as compartments</a></li></ul></div></div></div>
 ```
 
+::: {#m-s2-7 .skill-materials}
+:::
+
 ## S2.8 Write a case definition {#s2-8}
 
 ```{=html}
@@ -99,6 +250,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Define the health event, exposure, and outcome</a></li><li><a href="population-unit-and-case.html#s2-7"><span class="code">S2.7</span> Describe the natural history of a disease</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-9"><span class="code">S2.9</span> Predict how a case definition changes the case count</a></li><li><a href="diagnostic-test-quality.html#s4-2"><span class="code">S4.2</span> Build a diagnostic two-by-two table</a></li><li><a href="outbreak-investigation.html#s12-1"><span class="code">S12.1</span> Verify that an outbreak exists</a></li><li><a href="outbreak-investigation.html#s12-2"><span class="code">S12.2</span> Write a working case definition for an outbreak</a></li></ul></div></div></div>
 ```
+
+::: {#m-s2-8 .skill-materials}
+:::
 
 ## S2.9 Predict how a case definition changes the case count {#s2-9}
 
@@ -109,6 +263,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s2-9 .skill-materials}
+:::
+
 ## S2.10 Calculate a prevalence {#s2-10}
 
 ```{=html}
@@ -118,11 +275,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="data-sources-and-sampling.html#s3-8"><span class="code">S3.8</span> Calculate sample size to estimate a prevalence</a></li><li><a href="data-sources-and-sampling.html#s3-9"><span class="code">S3.9</span> Calculate sample size to detect disease</a></li><li><a href="diagnostic-test-quality.html#s4-4"><span class="code">S4.4</span> Calculate and interpret predictive values</a></li><li><a href="diagnostic-test-quality.html#s4-5"><span class="code">S4.5</span> Estimate true prevalence from apparent prevalence</a></li><li><a href="occurrence-and-burden.html#s5-1"><span class="code">S5.1</span> Distinguish point and period prevalence</a></li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C2 appear here when they are published.
-
-::: {#materials}
+::: {#m-s2-10 .skill-materials}
 :::
 
 ```{=html}

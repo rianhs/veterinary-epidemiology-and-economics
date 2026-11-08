@@ -11,6 +11,10 @@ The site is built with [Quarto](https://quarto.org) and published with GitHub Pa
 | `encyclopedia/` | Encyclopedia articles, one Markdown file per concept |
 | `guides/` | Guides, one Markdown file per procedure |
 | `slides/` | Interactive slide decks, one HTML file per deck |
+| `glossary.md` | Glossary page, made from the course glossary |
+| `competencies/` | One page per competency, with the materials listed under each skill (generated) |
+| `templates/` | Slide shell template |
+| `tools/` | Script that makes the generated pages |
 
 ## Coordinator
 

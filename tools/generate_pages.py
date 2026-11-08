@@ -114,6 +114,7 @@ toc: false
 <div class="org-notes">
 <p><strong>Codes.</strong> Each item has a code. D marks a domain, C a competency, and S a skill. S4.3 is the third skill of competency C4.</p>
 <p><strong>Order.</strong> Some skills need other skills first. These are prerequisites. Each competency page shows them.</p>
+<p><strong>Loop.</strong> The five questions form a loop. You observe a population, interpret the information, decide, act, and observe again. Domain 0 explains the loop.</p>
 <p><strong>Start.</strong> Begin with Domain 0. Then follow the domains in order.</p>
 </div>
 </section>
@@ -175,9 +176,11 @@ for i,c in enumerate(clist):
     ext_next = sorted({S[q]['comp'] for v in mine for q in dependents[v['code']] if S[q]['comp']!=c['code']}, key=lambda x:int(x[1:]))
     def clinks(lst): return ''.join(f'<li><a href="{comp_url(x,"comp")}"><span class="code">{x}</span> {e(C[x]["name"])}</a></li>' for x in lst) or '<li>None</li>'
     xl = ''.join(f'<li><a href="../skills.html#x-skills"><span class="code">{x}</span> {e(X[x])}</a></li>' for x in ext_x)
-    lines = ['---', f'title: "{c["code"]}. {c["name"]}"', 'toc: true', 'toc-title: Skills',
-             'listing:', '  id: materials', '  contents:', '    - "../encyclopedia/*.md"', '    - "../guides/*.md"', '    - "../slides/decks.yml"',
-             '  type: table', '  fields: [title, categories]', '  sort: title', '  include:', f'    categories: "{c["code"]}"', '---', '',
+    lines = ['---', f'title: "{c["code"]}. {c["name"]}"', 'toc: true', 'toc-title: Skills', 'listing:']
+    for v in mine:
+        lines += [f'  - id: m-{anc(v["code"])}', '    contents:', '      - "../encyclopedia/*.md"', '      - "../guides/*.md"', '      - "../slides/decks.yml"',
+                  '    type: table', '    fields: [type, title]', '    field-display-names:', '      type: Type', '    sort: type', '    sort-ui: false', '    filter-ui: false', '    include:', f'      categories: "{v["code"]}"']
+    lines += ['---', '',
              '```{=html}',
              f'<div class="comp-intro" style="--dc:var({DV[c["dom"]]})">',
              f'<p class="comp-domain"><a href="../index.html#{c["dom"].lower()}"><span class="dot"></span>{d[1]}: {d[2]}</a></p>',
@@ -198,8 +201,7 @@ for i,c in enumerate(clist):
                   f'<div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-{v["depth"].lower()}">{v["depth"]}</p></div>',
                   f'<div><h3 class="mini-title">Needs first</h3><ul>{pre}</ul></div>',
                   f'<div><h3 class="mini-title">Leads to</h3><ul>{nxt}</ul></div></div></div>',
-                  '```', '']
-    lines += ['## Materials {#materials-section}', '', f'Articles, guides, and slide decks for {c["code"]} appear here when they are published.', '', '::: {#materials}', ':::', '']
+                  '```', '', f'::: {{#m-{anc(v["code"])} .skill-materials}}', ':::', '']
     prev = clist[i-1] if i>0 else None; nxt = clist[i+1] if i<len(clist)-1 else None
     nav = '<nav class="comp-pager">'
     nav += f'<a class="prev" href="{prev["slug"]}.html"><span>Previous</span><strong>{prev["code"]} {e(prev["name"])}</strong></a>' if prev else '<span></span>'

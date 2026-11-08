@@ -3,16 +3,62 @@ title: "C19. Integrated strategy"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C19"
+  - id: m-s19-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S19.1"
+  - id: m-s19-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S19.2"
+  - id: m-s19-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S19.3"
+  - id: m-s19-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S19.4"
 ---
 
 ```{=html}
@@ -37,6 +83,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="integrated-strategy.html#s19-2"><span class="code">S19.2</span> Check a strategy with the evidence rubric</a></li><li><a href="integrated-strategy.html#s19-3"><span class="code">S19.3</span> Write for a specific decision maker</a></li></ul></div></div></div>
 ```
 
+::: {#m-s19-1 .skill-materials}
+:::
+
 ## S19.2 Check a strategy with the evidence rubric {#s19-2}
 
 ```{=html}
@@ -45,6 +94,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="integrated-strategy.html#s19-1"><span class="code">S19.1</span> Combine evidence into a strategy document</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="integrated-strategy.html#s19-4"><span class="code">S19.4</span> Defend a recommendation under questioning</a></li></ul></div></div></div>
 ```
+
+::: {#m-s19-2 .skill-materials}
+:::
 
 ## S19.3 Write for a specific decision maker {#s19-3}
 
@@ -55,6 +107,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s19-3 .skill-materials}
+:::
+
 ## S19.4 Defend a recommendation under questioning {#s19-4}
 
 ```{=html}
@@ -64,11 +119,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C19 appear here when they are published.
-
-::: {#materials}
+::: {#m-s19-4 .skill-materials}
 :::
 
 ```{=html}

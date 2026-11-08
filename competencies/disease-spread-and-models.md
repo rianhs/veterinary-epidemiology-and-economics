@@ -3,16 +3,104 @@ title: "C13. Disease spread and models"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C13"
+  - id: m-s13-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S13.1"
+  - id: m-s13-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S13.2"
+  - id: m-s13-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S13.3"
+  - id: m-s13-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S13.4"
+  - id: m-s13-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S13.5"
+  - id: m-s13-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S13.6"
+  - id: m-s13-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S13.7"
 ---
 
 ```{=html}
@@ -37,6 +125,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="disease-spread-and-models.html#s13-2"><span class="code">S13.2</span> Explain and calculate the basic reproduction number</a></li></ul></div></div></div>
 ```
 
+::: {#m-s13-1 .skill-materials}
+:::
+
 ## S13.2 Explain and calculate the basic reproduction number {#s13-2}
 
 ```{=html}
@@ -45,6 +136,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="disease-spread-and-models.html#s13-1"><span class="code">S13.1</span> Describe a population as compartments</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="disease-spread-and-models.html#s13-3"><span class="code">S13.3</span> Distinguish R0 and Re</a></li><li><a href="disease-spread-and-models.html#s13-4"><span class="code">S13.4</span> Explore parameters in a prepared SIR model</a></li><li><a href="disease-spread-and-models.html#s13-5"><span class="code">S13.5</span> Calculate the herd immunity threshold</a></li><li><a href="risk-of-introduction-and-spread.html#s14-5"><span class="code">S14.5</span> Assess the consequences of introduction</a></li></ul></div></div></div>
 ```
+
+::: {#m-s13-2 .skill-materials}
+:::
 
 ## S13.3 Distinguish R0 and Re {#s13-3}
 
@@ -55,6 +149,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="evaluating-interventions.html#s18-5"><span class="code">S18.5</span> Use incidence trends and Re to evaluate</a></li></ul></div></div></div>
 ```
 
+::: {#m-s13-3 .skill-materials}
+:::
+
 ## S13.4 Explore parameters in a prepared SIR model {#s13-4}
 
 ```{=html}
@@ -63,6 +160,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="disease-spread-and-models.html#s13-2"><span class="code">S13.2</span> Explain and calculate the basic reproduction number</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="disease-spread-and-models.html#s13-6"><span class="code">S13.6</span> Build a scenario table for a decision</a></li><li><a href="disease-spread-and-models.html#s13-7"><span class="code">S13.7</span> State when a compartmental model fails</a></li></ul></div></div></div>
 ```
+
+::: {#m-s13-4 .skill-materials}
+:::
 
 ## S13.5 Calculate the herd immunity threshold {#s13-5}
 
@@ -73,6 +173,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="disease-spread-and-models.html#s13-6"><span class="code">S13.6</span> Build a scenario table for a decision</a></li></ul></div></div></div>
 ```
 
+::: {#m-s13-5 .skill-materials}
+:::
+
 ## S13.6 Build a scenario table for a decision {#s13-6}
 
 ```{=html}
@@ -81,6 +184,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="disease-spread-and-models.html#s13-4"><span class="code">S13.4</span> Explore parameters in a prepared SIR model</a></li><li><a href="disease-spread-and-models.html#s13-5"><span class="code">S13.5</span> Calculate the herd immunity threshold</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="intervention-options.html#s15-3"><span class="code">S15.3</span> Estimate the expected effect of each option</a></li><li><a href="integrated-strategy.html#s19-1"><span class="code">S19.1</span> Combine evidence into a strategy document</a></li></ul></div></div></div>
 ```
+
+::: {#m-s13-6 .skill-materials}
+:::
 
 ## S13.7 State when a compartmental model fails {#s13-7}
 
@@ -91,11 +197,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C13 appear here when they are published.
-
-::: {#materials}
+::: {#m-s13-7 .skill-materials}
 :::
 
 ```{=html}

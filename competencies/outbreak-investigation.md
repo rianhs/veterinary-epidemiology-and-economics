@@ -3,16 +3,132 @@ title: "C12. Outbreak investigation"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C12"
+  - id: m-s12-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.1"
+  - id: m-s12-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.2"
+  - id: m-s12-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.3"
+  - id: m-s12-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.4"
+  - id: m-s12-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.5"
+  - id: m-s12-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.6"
+  - id: m-s12-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.7"
+  - id: m-s12-8
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.8"
+  - id: m-s12-9
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S12.9"
 ---
 
 ```{=html}
@@ -37,6 +153,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s12-1 .skill-materials}
+:::
+
 ## S12.2 Write a working case definition for an outbreak {#s12-2}
 
 ```{=html}
@@ -45,6 +164,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-8"><span class="code">S2.8</span> Write a case definition</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-3"><span class="code">S12.3</span> Build and update a line list</a></li></ul></div></div></div>
 ```
+
+::: {#m-s12-2 .skill-materials}
+:::
 
 ## S12.3 Build and update a line list {#s12-3}
 
@@ -55,6 +177,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-4"><span class="code">S12.4</span> Describe an outbreak by animal, place, and time</a></li></ul></div></div></div>
 ```
 
+::: {#m-s12-3 .skill-materials}
+:::
+
 ## S12.4 Describe an outbreak by animal, place, and time {#s12-4}
 
 ```{=html}
@@ -63,6 +188,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="outbreak-investigation.html#s12-3"><span class="code">S12.3</span> Build and update a line list</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-2"><span class="code">S6.2</span> Map cases by place</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-5"><span class="code">S6.5</span> Classify the shape of an epidemic curve</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-5"><span class="code">S12.5</span> Generate hypotheses about source and transmission</a></li></ul></div></div></div>
 ```
+
+::: {#m-s12-4 .skill-materials}
+:::
 
 ## S12.5 Generate hypotheses about source and transmission {#s12-5}
 
@@ -73,6 +201,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-6"><span class="code">S12.6</span> Test outbreak hypotheses with attack rates</a></li><li><a href="outbreak-investigation.html#s12-7"><span class="code">S12.7</span> Recommend immediate control measures</a></li></ul></div></div></div>
 ```
 
+::: {#m-s12-5 .skill-materials}
+:::
+
 ## S12.6 Test outbreak hypotheses with attack rates {#s12-6}
 
 ```{=html}
@@ -81,6 +212,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="outbreak-investigation.html#s12-5"><span class="code">S12.5</span> Generate hypotheses about source and transmission</a></li><li><a href="comparing-groups-and-association.html#s8-4"><span class="code">S8.4</span> Calculate risk ratio, odds ratio, and risk difference</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-8"><span class="code">S12.8</span> Report and communicate outbreak findings</a></li></ul></div></div></div>
 ```
+
+::: {#m-s12-6 .skill-materials}
+:::
 
 ## S12.7 Recommend immediate control measures {#s12-7}
 
@@ -91,6 +225,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-8"><span class="code">S12.8</span> Report and communicate outbreak findings</a></li><li><a href="outbreak-investigation.html#s12-9"><span class="code">S12.9</span> Plan surveillance to confirm the end of an outbreak</a></li></ul></div></div></div>
 ```
 
+::: {#m-s12-7 .skill-materials}
+:::
+
 ## S12.8 Report and communicate outbreak findings {#s12-8}
 
 ```{=html}
@@ -99,6 +236,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="outbreak-investigation.html#s12-6"><span class="code">S12.6</span> Test outbreak hypotheses with attack rates</a></li><li><a href="outbreak-investigation.html#s12-7"><span class="code">S12.7</span> Recommend immediate control measures</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
+
+::: {#m-s12-8 .skill-materials}
+:::
 
 ## S12.9 Plan surveillance to confirm the end of an outbreak {#s12-9}
 
@@ -109,11 +249,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C12 appear here when they are published.
-
-::: {#materials}
+::: {#m-s12-9 .skill-materials}
 :::
 
 ```{=html}

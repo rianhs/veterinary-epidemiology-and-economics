@@ -148,6 +148,11 @@ h2.domain-title::before { content: ""; width: 0.8rem; height: 0.8rem; border-rad
 .comp-pager span { display: block; font-size: 0.85rem; color: var(--muted); }
 .comp-pager strong { font-weight: 600; }
 
+/* ---------- Materials under each skill ---------- */
+.skill-materials { margin: 0.8rem 0 0; }
+.skill-materials:not(:has(tbody tr)) { display: none; }
+.skill-materials table { font-size: 0.94rem; margin-bottom: 0; }
+
 @media (max-width: 900px) {
   .home-hero { grid-template-columns: 1fr; padding-top: 2.2rem; }
   .home .hero-loop { display: none; }

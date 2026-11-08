@@ -3,16 +3,104 @@ title: "C5. Occurrence and burden"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C5"
+  - id: m-s5-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S5.1"
+  - id: m-s5-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S5.2"
+  - id: m-s5-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S5.3"
+  - id: m-s5-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S5.4"
+  - id: m-s5-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S5.5"
+  - id: m-s5-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S5.6"
+  - id: m-s5-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S5.7"
 ---
 
 ```{=html}
@@ -37,6 +125,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="occurrence-and-burden.html#s5-3"><span class="code">S5.3</span> Relate prevalence, incidence, and duration</a></li><li><a href="occurrence-and-burden.html#s5-5"><span class="code">S5.5</span> Calculate a confidence interval for a frequency measure</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-1"><span class="code">S6.1</span> Describe occurrence by animal characteristics</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-2"><span class="code">S6.2</span> Map cases by place</a></li><li><a href="risk-of-introduction-and-spread.html#s14-3"><span class="code">S14.3</span> Assess the likelihood of release</a></li></ul></div></div></div>
 ```
 
+::: {#m-s5-1 .skill-materials}
+:::
+
 ## S5.2 Calculate incidence risk and incidence rate {#s5-2}
 
 ```{=html}
@@ -45,6 +136,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Describe the structure and turnover of a population</a></li><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Define the population at risk</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="occurrence-and-burden.html#s5-3"><span class="code">S5.3</span> Relate prevalence, incidence, and duration</a></li><li><a href="occurrence-and-burden.html#s5-4"><span class="code">S5.4</span> Calculate mortality measures</a></li><li><a href="occurrence-and-burden.html#s5-5"><span class="code">S5.5</span> Calculate a confidence interval for a frequency measure</a></li><li><a href="occurrence-and-burden.html#s5-6"><span class="code">S5.6</span> Express disease burden as production loss</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-4"><span class="code">S6.4</span> Draw an epidemic curve</a></li><li><a href="comparing-groups-and-association.html#s8-4"><span class="code">S8.4</span> Calculate risk ratio, odds ratio, and risk difference</a></li></ul></div></div></div>
 ```
+
+::: {#m-s5-2 .skill-materials}
+:::
 
 ## S5.3 Relate prevalence, incidence, and duration {#s5-3}
 
@@ -55,6 +149,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="occurrence-and-burden.html#s5-7"><span class="code">S5.7</span> Choose a measure of occurrence for a question</a></li></ul></div></div></div>
 ```
 
+::: {#m-s5-3 .skill-materials}
+:::
+
 ## S5.4 Calculate mortality measures {#s5-4}
 
 ```{=html}
@@ -63,6 +160,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="occurrence-and-burden.html#s5-2"><span class="code">S5.2</span> Calculate incidence risk and incidence rate</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="occurrence-and-burden.html#s5-6"><span class="code">S5.6</span> Express disease burden as production loss</a></li><li><a href="occurrence-and-burden.html#s5-7"><span class="code">S5.7</span> Choose a measure of occurrence for a question</a></li></ul></div></div></div>
 ```
+
+::: {#m-s5-4 .skill-materials}
+:::
 
 ## S5.5 Calculate a confidence interval for a frequency measure {#s5-5}
 
@@ -73,6 +173,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s5-5 .skill-materials}
+:::
+
 ## S5.6 Express disease burden as production loss {#s5-6}
 
 ```{=html}
@@ -81,6 +184,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="occurrence-and-burden.html#s5-2"><span class="code">S5.2</span> Calculate incidence risk and incidence rate</a></li><li><a href="occurrence-and-burden.html#s5-4"><span class="code">S5.4</span> Calculate mortality measures</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="economic-impact-of-disease.html#s16-1"><span class="code">S16.1</span> Explain how disease changes the value of production</a></li></ul></div></div></div>
 ```
+
+::: {#m-s5-6 .skill-materials}
+:::
 
 ## S5.7 Choose a measure of occurrence for a question {#s5-7}
 
@@ -91,11 +197,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C5 appear here when they are published.
-
-::: {#materials}
+::: {#m-s5-7 .skill-materials}
 :::
 
 ```{=html}

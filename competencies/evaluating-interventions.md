@@ -3,16 +3,104 @@ title: "C18. Evaluating interventions"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C18"
+  - id: m-s18-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S18.1"
+  - id: m-s18-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S18.2"
+  - id: m-s18-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S18.3"
+  - id: m-s18-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S18.4"
+  - id: m-s18-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S18.5"
+  - id: m-s18-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S18.6"
+  - id: m-s18-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S18.7"
 ---
 
 ```{=html}
@@ -37,6 +125,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="evaluating-interventions.html#s18-2"><span class="code">S18.2</span> Choose an evaluation design</a></li><li><a href="evaluating-interventions.html#s18-5"><span class="code">S18.5</span> Use incidence trends and Re to evaluate</a></li><li><a href="evaluating-interventions.html#s18-6"><span class="code">S18.6</span> Compare actual and planned costs and effects</a></li></ul></div></div></div>
 ```
 
+::: {#m-s18-1 .skill-materials}
+:::
+
 ## S18.2 Choose an evaluation design {#s18-2}
 
 ```{=html}
@@ -45,6 +136,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="evaluating-interventions.html#s18-1"><span class="code">S18.1</span> Define evaluation objectives and indicators</a></li><li><a href="appraising-analytical-reports.html#s10-1"><span class="code">S10.1</span> Identify the study design of a report</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="evaluating-interventions.html#s18-3"><span class="code">S18.3</span> Identify alternative explanations for a change</a></li><li><a href="evaluating-interventions.html#s18-4"><span class="code">S18.4</span> Judge whether disease or detection changed</a></li></ul></div></div></div>
 ```
+
+::: {#m-s18-2 .skill-materials}
+:::
 
 ## S18.3 Identify alternative explanations for a change {#s18-3}
 
@@ -55,6 +149,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s18-3 .skill-materials}
+:::
+
 ## S18.4 Judge whether disease or detection changed {#s18-4}
 
 ```{=html}
@@ -63,6 +160,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="surveillance-systems.html#s7-5"><span class="code">S7.5</span> Distinguish a change in disease from a change in detection</a></li><li><a href="evaluating-interventions.html#s18-2"><span class="code">S18.2</span> Choose an evaluation design</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="evaluating-interventions.html#s18-7"><span class="code">S18.7</span> Decide to continue, adjust, or stop an intervention</a></li></ul></div></div></div>
 ```
+
+::: {#m-s18-4 .skill-materials}
+:::
 
 ## S18.5 Use incidence trends and Re to evaluate {#s18-5}
 
@@ -73,6 +173,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s18-5 .skill-materials}
+:::
+
 ## S18.6 Compare actual and planned costs and effects {#s18-6}
 
 ```{=html}
@@ -81,6 +184,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="economic-comparison-and-decision.html#s17-2"><span class="code">S17.2</span> Calculate net benefit and benefit-cost ratio</a></li><li><a href="evaluating-interventions.html#s18-1"><span class="code">S18.1</span> Define evaluation objectives and indicators</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="evaluating-interventions.html#s18-7"><span class="code">S18.7</span> Decide to continue, adjust, or stop an intervention</a></li></ul></div></div></div>
 ```
+
+::: {#m-s18-6 .skill-materials}
+:::
 
 ## S18.7 Decide to continue, adjust, or stop an intervention {#s18-7}
 
@@ -91,11 +197,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="integrated-strategy.html#s19-1"><span class="code">S19.1</span> Combine evidence into a strategy document</a></li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C18 appear here when they are published.
-
-::: {#materials}
+::: {#m-s18-7 .skill-materials}
 :::
 
 ```{=html}

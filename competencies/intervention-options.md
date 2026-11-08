@@ -3,16 +3,90 @@ title: "C15. Intervention options"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C15"
+  - id: m-s15-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S15.1"
+  - id: m-s15-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S15.2"
+  - id: m-s15-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S15.3"
+  - id: m-s15-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S15.4"
+  - id: m-s15-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S15.5"
+  - id: m-s15-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S15.6"
 ---
 
 ```{=html}
@@ -37,6 +111,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="intervention-options.html#s15-2"><span class="code">S15.2</span> List intervention options for a problem</a></li></ul></div></div></div>
 ```
 
+::: {#m-s15-1 .skill-materials}
+:::
+
 ## S15.2 List intervention options for a problem {#s15-2}
 
 ```{=html}
@@ -45,6 +122,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="intervention-options.html#s15-1"><span class="code">S15.1</span> Identify intervention points</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Match the population status of a disease to an objective</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="intervention-options.html#s15-3"><span class="code">S15.3</span> Estimate the expected effect of each option</a></li><li><a href="intervention-options.html#s15-4"><span class="code">S15.4</span> Screen options against constraints</a></li><li><a href="intervention-options.html#s15-5"><span class="code">S15.5</span> Map stakeholders and their interests</a></li><li><a href="evaluating-interventions.html#s18-1"><span class="code">S18.1</span> Define evaluation objectives and indicators</a></li></ul></div></div></div>
 ```
+
+::: {#m-s15-2 .skill-materials}
+:::
 
 ## S15.3 Estimate the expected effect of each option {#s15-3}
 
@@ -55,6 +135,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="economic-comparison-and-decision.html#s17-1"><span class="code">S17.1</span> Build a partial budget</a></li><li><a href="economic-comparison-and-decision.html#s17-4"><span class="code">S17.4</span> Calculate cost per case averted</a></li></ul></div></div></div>
 ```
 
+::: {#m-s15-3 .skill-materials}
+:::
+
 ## S15.4 Screen options against constraints {#s15-4}
 
 ```{=html}
@@ -63,6 +146,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="intervention-options.html#s15-2"><span class="code">S15.2</span> List intervention options for a problem</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="intervention-options.html#s15-6"><span class="code">S15.6</span> Identify value judgments behind a choice</a></li></ul></div></div></div>
 ```
+
+::: {#m-s15-4 .skill-materials}
+:::
 
 ## S15.5 Map stakeholders and their interests {#s15-5}
 
@@ -73,6 +159,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="intervention-options.html#s15-6"><span class="code">S15.6</span> Identify value judgments behind a choice</a></li></ul></div></div></div>
 ```
 
+::: {#m-s15-5 .skill-materials}
+:::
+
 ## S15.6 Identify value judgments behind a choice {#s15-6}
 
 ```{=html}
@@ -82,11 +171,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="economic-comparison-and-decision.html#s17-7"><span class="code">S17.7</span> Recommend an option with its uncertainty</a></li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C15 appear here when they are published.
-
-::: {#materials}
+::: {#m-s15-6 .skill-materials}
 :::
 
 ```{=html}

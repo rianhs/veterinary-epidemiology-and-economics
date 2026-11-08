@@ -31,6 +31,7 @@ toc: false
 <div class="org-notes">
 <p><strong>Codes.</strong> Each item has a code. D marks a domain, C a competency, and S a skill. S4.3 is the third skill of competency C4.</p>
 <p><strong>Order.</strong> Some skills need other skills first. These are prerequisites. Each competency page shows them.</p>
+<p><strong>Loop.</strong> The five questions form a loop. You observe a population, interpret the information, decide, act, and observe again. Domain 0 explains the loop.</p>
 <p><strong>Start.</strong> Begin with Domain 0. Then follow the domains in order.</p>
 </div>
 </section>

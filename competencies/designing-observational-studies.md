@@ -3,16 +3,90 @@ title: "C11. Designing observational studies"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C11"
+  - id: m-s11-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S11.1"
+  - id: m-s11-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S11.2"
+  - id: m-s11-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S11.3"
+  - id: m-s11-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S11.4"
+  - id: m-s11-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S11.5"
+  - id: m-s11-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S11.6"
 ---
 
 ```{=html}
@@ -37,6 +111,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="designing-observational-studies.html#s11-2"><span class="code">S11.2</span> Draft a data collection instrument</a></li><li><a href="designing-observational-studies.html#s11-3"><span class="code">S11.3</span> Plan bias control in a study design</a></li><li><a href="designing-observational-studies.html#s11-5"><span class="code">S11.5</span> Identify ethical requirements of a study</a></li></ul></div></div></div>
 ```
 
+::: {#m-s11-1 .skill-materials}
+:::
+
 ## S11.2 Draft a data collection instrument {#s11-2}
 
 ```{=html}
@@ -45,6 +122,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="designing-observational-studies.html#s11-1"><span class="code">S11.1</span> Match a research question to a study design</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Define the health event, exposure, and outcome</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="designing-observational-studies.html#s11-6"><span class="code">S11.6</span> Write a study protocol outline</a></li></ul></div></div></div>
 ```
+
+::: {#m-s11-2 .skill-materials}
+:::
 
 ## S11.3 Plan bias control in a study design {#s11-3}
 
@@ -55,6 +135,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="designing-observational-studies.html#s11-6"><span class="code">S11.6</span> Write a study protocol outline</a></li></ul></div></div></div>
 ```
 
+::: {#m-s11-3 .skill-materials}
+:::
+
 ## S11.4 Estimate sample size to compare two groups {#s11-4}
 
 ```{=html}
@@ -63,6 +146,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="data-sources-and-sampling.html#s3-8"><span class="code">S3.8</span> Calculate sample size to estimate a prevalence</a></li><li><a href="comparing-groups-and-association.html#s8-4"><span class="code">S8.4</span> Calculate risk ratio, odds ratio, and risk difference</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="designing-observational-studies.html#s11-6"><span class="code">S11.6</span> Write a study protocol outline</a></li></ul></div></div></div>
 ```
+
+::: {#m-s11-4 .skill-materials}
+:::
 
 ## S11.5 Identify ethical requirements of a study {#s11-5}
 
@@ -73,6 +159,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="designing-observational-studies.html#s11-6"><span class="code">S11.6</span> Write a study protocol outline</a></li></ul></div></div></div>
 ```
 
+::: {#m-s11-5 .skill-materials}
+:::
+
 ## S11.6 Write a study protocol outline {#s11-6}
 
 ```{=html}
@@ -82,11 +171,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C11 appear here when they are published.
-
-::: {#materials}
+::: {#m-s11-6 .skill-materials}
 :::
 
 ```{=html}

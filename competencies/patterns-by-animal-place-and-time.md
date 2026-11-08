@@ -3,16 +3,118 @@ title: "C6. Patterns by animal, place, and time"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C6"
+  - id: m-s6-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.1"
+  - id: m-s6-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.2"
+  - id: m-s6-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.3"
+  - id: m-s6-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.4"
+  - id: m-s6-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.5"
+  - id: m-s6-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.6"
+  - id: m-s6-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.7"
+  - id: m-s6-8
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S6.8"
 ---
 
 ```{=html}
@@ -37,6 +139,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-8"><span class="code">S6.8</span> Write a descriptive summary of a disease pattern</a></li></ul></div></div></div>
 ```
 
+::: {#m-s6-1 .skill-materials}
+:::
+
 ## S6.2 Map cases by place {#s6-2}
 
 ```{=html}
@@ -45,6 +150,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="occurrence-and-burden.html#s5-1"><span class="code">S5.1</span> Distinguish point and period prevalence</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-3"><span class="code">S6.3</span> Recognize spatial clustering</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-8"><span class="code">S6.8</span> Write a descriptive summary of a disease pattern</a></li><li><a href="outbreak-investigation.html#s12-4"><span class="code">S12.4</span> Describe an outbreak by animal, place, and time</a></li></ul></div></div></div>
 ```
+
+::: {#m-s6-2 .skill-materials}
+:::
 
 ## S6.3 Recognize spatial clustering {#s6-3}
 
@@ -55,6 +163,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s6-3 .skill-materials}
+:::
+
 ## S6.4 Draw an epidemic curve {#s6-4}
 
 ```{=html}
@@ -63,6 +174,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="occurrence-and-burden.html#s5-2"><span class="code">S5.2</span> Calculate incidence risk and incidence rate</a></li><li><a href="../skills.html#x-skills"><span class="code">X6</span> Make and read basic tables and graphs</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-5"><span class="code">S6.5</span> Classify the shape of an epidemic curve</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-7"><span class="code">S6.7</span> Describe trend and seasonality</a></li></ul></div></div></div>
 ```
+
+::: {#m-s6-4 .skill-materials}
+:::
 
 ## S6.5 Classify the shape of an epidemic curve {#s6-5}
 
@@ -73,6 +187,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-6"><span class="code">S6.6</span> Estimate an exposure window from incubation periods</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-8"><span class="code">S6.8</span> Write a descriptive summary of a disease pattern</a></li><li><a href="outbreak-investigation.html#s12-4"><span class="code">S12.4</span> Describe an outbreak by animal, place, and time</a></li></ul></div></div></div>
 ```
 
+::: {#m-s6-5 .skill-materials}
+:::
+
 ## S6.6 Estimate an exposure window from incubation periods {#s6-6}
 
 ```{=html}
@@ -81,6 +198,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-5"><span class="code">S6.5</span> Classify the shape of an epidemic curve</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
+
+::: {#m-s6-6 .skill-materials}
+:::
 
 ## S6.7 Describe trend and seasonality {#s6-7}
 
@@ -91,6 +211,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-4"><span class="code">S7.4</span> Set a baseline and an alert threshold</a></li><li><a href="disease-spread-and-models.html#s13-3"><span class="code">S13.3</span> Distinguish R0 and Re</a></li></ul></div></div></div>
 ```
 
+::: {#m-s6-7 .skill-materials}
+:::
+
 ## S6.8 Write a descriptive summary of a disease pattern {#s6-8}
 
 ```{=html}
@@ -100,11 +223,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="comparing-groups-and-association.html#s8-1"><span class="code">S8.1</span> List possible determinants of a health event</a></li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C6 appear here when they are published.
-
-::: {#materials}
+::: {#m-s6-8 .skill-materials}
 :::
 
 ```{=html}

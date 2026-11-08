@@ -3,16 +3,146 @@ title: "C4. Diagnostic test quality"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C4"
+  - id: m-s4-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.1"
+  - id: m-s4-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.2"
+  - id: m-s4-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.3"
+  - id: m-s4-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.4"
+  - id: m-s4-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.5"
+  - id: m-s4-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.6"
+  - id: m-s4-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.7"
+  - id: m-s4-8
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.8"
+  - id: m-s4-9
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.9"
+  - id: m-s4-10
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S4.10"
 ---
 
 ```{=html}
@@ -37,6 +167,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-2"><span class="code">S4.2</span> Build a diagnostic two-by-two table</a></li></ul></div></div></div>
 ```
 
+::: {#m-s4-1 .skill-materials}
+:::
+
 ## S4.2 Build a diagnostic two-by-two table {#s4-2}
 
 ```{=html}
@@ -45,6 +178,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-1"><span class="code">S4.1</span> Distinguish validity, reliability, and precision</a></li><li><a href="population-unit-and-case.html#s2-8"><span class="code">S2.8</span> Write a case definition</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li><li><a href="diagnostic-test-quality.html#s4-6"><span class="code">S4.6</span> Calculate and interpret kappa</a></li></ul></div></div></div>
 ```
+
+::: {#m-s4-2 .skill-materials}
+:::
 
 ## S4.3 Calculate and interpret sensitivity and specificity {#s4-3}
 
@@ -55,6 +191,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-4"><span class="code">S4.4</span> Calculate and interpret predictive values</a></li><li><a href="diagnostic-test-quality.html#s4-5"><span class="code">S4.5</span> Estimate true prevalence from apparent prevalence</a></li><li><a href="diagnostic-test-quality.html#s4-7"><span class="code">S4.7</span> Predict the effect of serial and parallel testing</a></li><li><a href="diagnostic-test-quality.html#s4-9"><span class="code">S4.9</span> Link test timing to natural history</a></li><li><a href="diagnostic-test-quality.html#s4-10"><span class="code">S4.10</span> Adjust a detection sample size for an imperfect test</a></li><li><a href="surveillance-systems.html#s7-3"><span class="code">S7.3</span> Assess the attributes of a surveillance system</a></li><li><a href="appraising-analytical-reports.html#s10-2"><span class="code">S10.2</span> Identify selection bias and information bias</a></li></ul></div></div></div>
 ```
 
+::: {#m-s4-3 .skill-materials}
+:::
+
 ## S4.4 Calculate and interpret predictive values {#s4-4}
 
 ```{=html}
@@ -63,6 +202,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li><li><a href="population-unit-and-case.html#s2-10"><span class="code">S2.10</span> Calculate a prevalence</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-8"><span class="code">S4.8</span> Choose a testing strategy for a purpose</a></li></ul></div></div></div>
 ```
+
+::: {#m-s4-4 .skill-materials}
+:::
 
 ## S4.5 Estimate true prevalence from apparent prevalence {#s4-5}
 
@@ -73,6 +215,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-3"><span class="code">S14.3</span> Assess the likelihood of release</a></li></ul></div></div></div>
 ```
 
+::: {#m-s4-5 .skill-materials}
+:::
+
 ## S4.6 Calculate and interpret kappa {#s4-6}
 
 ```{=html}
@@ -81,6 +226,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-2"><span class="code">S4.2</span> Build a diagnostic two-by-two table</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
+
+::: {#m-s4-6 .skill-materials}
+:::
 
 ## S4.7 Predict the effect of serial and parallel testing {#s4-7}
 
@@ -91,6 +239,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-8"><span class="code">S4.8</span> Choose a testing strategy for a purpose</a></li></ul></div></div></div>
 ```
 
+::: {#m-s4-7 .skill-materials}
+:::
+
 ## S4.8 Choose a testing strategy for a purpose {#s4-8}
 
 ```{=html}
@@ -99,6 +250,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-4"><span class="code">S4.4</span> Calculate and interpret predictive values</a></li><li><a href="diagnostic-test-quality.html#s4-7"><span class="code">S4.7</span> Predict the effect of serial and parallel testing</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-7"><span class="code">S14.7</span> Propose risk management measures</a></li></ul></div></div></div>
 ```
+
+::: {#m-s4-8 .skill-materials}
+:::
 
 ## S4.9 Link test timing to natural history {#s4-9}
 
@@ -109,6 +263,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s4-9 .skill-materials}
+:::
+
 ## S4.10 Adjust a detection sample size for an imperfect test {#s4-10}
 
 ```{=html}
@@ -118,11 +275,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-6"><span class="code">S7.6</span> Interpret a freedom-from-disease claim</a></li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C4 appear here when they are published.
-
-::: {#materials}
+::: {#m-s4-10 .skill-materials}
 :::
 
 ```{=html}

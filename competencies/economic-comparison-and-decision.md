@@ -3,16 +3,104 @@ title: "C17. Economic comparison and decision"
 toc: true
 toc-title: Skills
 listing:
-  id: materials
-  contents:
-    - "../encyclopedia/*.md"
-    - "../guides/*.md"
-    - "../slides/decks.yml"
-  type: table
-  fields: [title, categories]
-  sort: title
-  include:
-    categories: "C17"
+  - id: m-s17-1
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S17.1"
+  - id: m-s17-2
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S17.2"
+  - id: m-s17-3
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S17.3"
+  - id: m-s17-4
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S17.4"
+  - id: m-s17-5
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S17.5"
+  - id: m-s17-6
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S17.6"
+  - id: m-s17-7
+    contents:
+      - "../encyclopedia/*.md"
+      - "../guides/*.md"
+      - "../slides/decks.yml"
+    type: table
+    fields: [type, title]
+    field-display-names:
+      type: Type
+    sort: type
+    sort-ui: false
+    filter-ui: false
+    include:
+      categories: "S17.7"
 ---
 
 ```{=html}
@@ -37,6 +125,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="economic-comparison-and-decision.html#s17-2"><span class="code">S17.2</span> Calculate net benefit and benefit-cost ratio</a></li></ul></div></div></div>
 ```
 
+::: {#m-s17-1 .skill-materials}
+:::
+
 ## S17.2 Calculate net benefit and benefit-cost ratio {#s17-2}
 
 ```{=html}
@@ -45,6 +136,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="economic-comparison-and-decision.html#s17-1"><span class="code">S17.1</span> Build a partial budget</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="economic-comparison-and-decision.html#s17-3"><span class="code">S17.3</span> Explain discounting</a></li><li><a href="economic-comparison-and-decision.html#s17-4"><span class="code">S17.4</span> Calculate cost per case averted</a></li><li><a href="economic-comparison-and-decision.html#s17-5"><span class="code">S17.5</span> Test an economic result with sensitivity analysis</a></li><li><a href="economic-comparison-and-decision.html#s17-6"><span class="code">S17.6</span> Explain how perspective changes an economic result</a></li><li><a href="evaluating-interventions.html#s18-6"><span class="code">S18.6</span> Compare actual and planned costs and effects</a></li></ul></div></div></div>
 ```
+
+::: {#m-s17-2 .skill-materials}
+:::
 
 ## S17.3 Explain discounting {#s17-3}
 
@@ -55,6 +149,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
+::: {#m-s17-3 .skill-materials}
+:::
+
 ## S17.4 Calculate cost per case averted {#s17-4}
 
 ```{=html}
@@ -63,6 +160,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="economic-comparison-and-decision.html#s17-2"><span class="code">S17.2</span> Calculate net benefit and benefit-cost ratio</a></li><li><a href="intervention-options.html#s15-3"><span class="code">S15.3</span> Estimate the expected effect of each option</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
+
+::: {#m-s17-4 .skill-materials}
+:::
 
 ## S17.5 Test an economic result with sensitivity analysis {#s17-5}
 
@@ -73,6 +173,9 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="economic-comparison-and-decision.html#s17-7"><span class="code">S17.7</span> Recommend an option with its uncertainty</a></li></ul></div></div></div>
 ```
 
+::: {#m-s17-5 .skill-materials}
+:::
+
 ## S17.6 Explain how perspective changes an economic result {#s17-6}
 
 ```{=html}
@@ -81,6 +184,9 @@ listing:
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="economic-comparison-and-decision.html#s17-2"><span class="code">S17.2</span> Calculate net benefit and benefit-cost ratio</a></li><li><a href="economic-impact-of-disease.html#s16-8"><span class="code">S16.8</span> Describe economic effects beyond the farm</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
+
+::: {#m-s17-6 .skill-materials}
+:::
 
 ## S17.7 Recommend an option with its uncertainty {#s17-7}
 
@@ -91,11 +197,7 @@ listing:
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="integrated-strategy.html#s19-1"><span class="code">S19.1</span> Combine evidence into a strategy document</a></li></ul></div></div></div>
 ```
 
-## Materials {#materials-section}
-
-Articles, guides, and slide decks for C17 appear here when they are published.
-
-::: {#materials}
+::: {#m-s17-7 .skill-materials}
 :::
 
 ```{=html}

@@ -1,5 +1,7 @@
 # Register of slide decks. Add one entry per deck.
+# The first skill after the competency code in categories is the primary skill.
 # - title: Correct an apparent prevalence
+#   type: slides
 #   path: /slides/correct-apparent-prevalence.html
 #   description: Use test sensitivity and specificity to estimate the true prevalence.
 #   categories: [C4, S4.5, S4.4]
