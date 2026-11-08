@@ -18,6 +18,9 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     SVG figure classes (.fig), and a Reset button that also resets inputs made later.
+     Add ?steps=all to the URL to show all steps (for review and printing).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -28,7 +31,7 @@
   "domain": "D1",
   "competency": "C4",
   "skills": { "primary": "S4.5", "secondary": ["S4.4"] },
-  "minutes": 15,
+  "minutes": 20,
   "articles": ["apparent-and-true-prevalence"],
   "guides": [],
   "status": "draft",
@@ -126,6 +129,43 @@ a { color: var(--accent); }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
 
+/* Reveal steps */
+.step-hidden { visibility: hidden; opacity: 0; }
+.slide [data-step] { transition: opacity 0.2s; }
+.step-btn { margin-top: auto; align-self: flex-start; }
+.step-btn[hidden] { display: none; }
+
+/* Card sorter */
+.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
+.sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
+.sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
+.sort-card:hover { border-color: var(--muted); }
+.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); }
+.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.sort-card.is-wrong { border-color: var(--bad); }
+.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* SVG figures */
+.fig { display: block; width: 100%; height: auto; max-height: 100%; }
+.fig text { fill: var(--ink); font-family: inherit; font-size: 15px; }
+.fig .t-muted { fill: var(--muted); }
+.fig .t-strong { font-weight: 600; }
+.fig .f-box { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-soft { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .f-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-arrow { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+.fig .f-accent { fill: var(--accent); }
+.fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
+.fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -198,6 +238,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .card { overflow: visible; }
   .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
   [data-detail]::after { display: none; }
+  .step-hidden { visibility: visible; opacity: 1; }
+  .step-btn { display: none; }
 }
 </style>
 
@@ -233,6 +275,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </header>
 
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker></defs></svg>
+
 <main class="stage" id="stage">
   <div class="card" id="card">
 
@@ -246,14 +290,20 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <ul class="meta-list">
     <li><span class="code">S4.5</span><span>Estimate true prevalence from apparent prevalence</span></li>
     <li><span class="code">S4.4</span><span>Calculate and interpret predictive values</span></li>
-    <li><span class="code">Time</span><span>About 15 minutes</span></li>
-    <!-- Optional: when decks of the prerequisite skills exist, add this line.
+    <li><span class="code">Time</span><span>About 20 minutes</span></li>
+    <!-- Always include the Before line. Use the slug of the planned deck, even when the deck does not exist yet. -->
     <li><span class="code">Before</span><span><a href="./previous-deck-slug.html">Title of the previous deck</a></span></li>
-    -->
   </ul>
 </section>
 
-<!-- Slide 2: Question -->
+<!-- Slide 2: Case recap (anchor case of the competency, two sentences, one graduate profile) -->
+<section class="slide" data-type="recap" data-title="The case">
+  <h2>The case so far</h2>
+  <p>A technical service consultant (GP3.1) visits a layer farm after a rise in mortality.</p>
+  <p>The consultant sends samples to the laboratory and waits for the test results.</p>
+</section>
+
+<!-- Slide 3: Question (predict before the explanation) -->
 <section class="slide" data-type="question" data-title="Predict first">
   <h2>A test finds 12% positive cattle. What is the true prevalence?</h2>
   <p>The test has a sensitivity of 0.80 and a specificity of 0.95. Choose your prediction.</p>
@@ -264,13 +314,32 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </ul>
 </section>
 
-<!-- Slide 3: Concept -->
+<!-- Slide 4: Concept with reveal steps and an SVG figure. One idea per slide. -->
+<section class="slide" data-type="concept" data-title="Positive result and infection">
+  <h2>A positive result and an infection are two different things</h2>
+  <div class="ap-layout">
+    <svg class="fig" viewBox="0 0 420 260" role="img" aria-label="Two overlapping circles. The left circle holds infected animals. The right circle holds animals with a positive test. The overlap holds true positives.">
+      <circle class="s-d1" cx="165" cy="130" r="100" data-step="1"/>
+      <text x="95" y="135" class="t-strong" data-step="1">Infected</text>
+      <circle class="s-d5" cx="255" cy="130" r="100" data-step="2"/>
+      <text x="270" y="135" class="t-strong" data-step="2">Test positive</text>
+      <text x="190" y="250" data-step="3" class="t-muted">The overlap is the true positives</text>
+    </svg>
+    <div>
+      <p data-step="1">The <span class="term" data-tip="An animal that carries the infection, whatever the test says.">infected</span> animals form one group.</p>
+      <p data-step="2">The animals with a positive test form another group. The two groups only partly overlap.</p>
+      <p data-step="3">Animals outside the overlap are test errors. They are false positives or false negatives.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: Concept -->
 <section class="slide" data-type="concept" data-title="Two kinds of test error">
   <h2>A positive result is not always a true case</h2>
   <div class="ap-layout">
     <div class="grid100" id="grid100" data-detail="d-grid" tabindex="0" aria-label="Grid of 200 animals. Select for details."></div>
     <div>
-      <p>The <span class="term" data-tip="The proportion of tested animals with a positive test result.">apparent prevalence</span> counts all positive results. It includes false positives. It misses false negatives.</p>
+      <p>The <span class="term" data-tip="The proportion of tested animals with a positive test result.">apparent prevalence</span> counts all positive results. It includes false positives. It misses the false negatives.</p>
       <ul class="legend" style="margin-top:1rem">
         <li><span class="sw" style="background:var(--d1)"></span>True positive</li>
         <li><span class="sw" style="background:var(--d5)"></span>False positive</li>
@@ -280,7 +349,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </section>
 
-<!-- Slide 4: Explore -->
+<!-- Slide 6: Explore -->
 <section class="slide" data-type="explore" data-title="Explore the correction" data-panel="controls">
   <h2>Change the test. Watch the apparent prevalence.</h2>
   <div class="bars" data-detail="d-formula" tabindex="0" aria-label="Bars for true and apparent prevalence. Select for details.">
@@ -291,18 +360,45 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="notes">Ask students to call out the apparent prevalence before you move each slider. Then set Sp to 1.00 and ask why the gap shrinks.</div>
 </section>
 
-<!-- Slide 5: Check -->
-<section class="slide" data-type="check" data-title="Check">
-  <h2>Apparent prevalence is 12%. Se is 0.80 and Sp is 0.95. What is the true prevalence?</h2>
-  <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
-    <li><button class="choice" data-value="a"><span class="key">A</span>About 15%</button></li>
-    <li><button class="choice" data-value="b"><span class="key">B</span>About 9%</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>About 12%</button></li>
-  </ul>
-  <p class="verdict" aria-live="polite"></p>
+<!-- Slide 7: Practice with the card sorter. Each card has data-target, the value of the right box. -->
+<section class="slide" data-type="practice" data-title="Sort the results">
+  <h2>Sort each result into the right box</h2>
+  <div class="sorter" data-sorter data-explain="d-sort">
+    <div class="sorter-pool" aria-label="Cards to sort">
+      <button class="sort-card" data-target="fp">Positive test, animal not infected</button>
+      <button class="sort-card" data-target="tp">Positive test, animal infected</button>
+      <button class="sort-card" data-target="fn">Negative test, animal infected</button>
+      <button class="sort-card" data-target="tn">Negative test, animal not infected</button>
+    </div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="tp"><h3>True positive</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="fp"><h3>False positive</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="fn"><h3>False negative</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="tn"><h3>True negative</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <p>Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
 </section>
 
-<!-- Slide 6: Summary -->
+<!-- Slide 8: Check. Each question has its own div and its own verdict. The last question is the transfer item. -->
+<section class="slide" data-type="check" data-title="Check">
+  <div>
+    <h2>Apparent prevalence is 12%. Se is 0.80 and Sp is 0.95. What is the true prevalence?</h2>
+    <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>About 15%</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>About 9%</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>About 12%</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 9: Summary -->
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
@@ -314,9 +410,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="links">
     <a class="btn" href="../encyclopedia/apparent-and-true-prevalence.html">Read the article: Apparent and true prevalence</a>
     <a class="btn" href="../competencies/diagnostic-test-quality.html#s4-5">Open skill S4.5</a>
-    <!-- Optional: when a next deck exists in the learning path, add this button.
+    <!-- Always include the next-deck button. Use the slug of the planned deck, even when the deck does not exist yet. -->
     <a class="btn" href="./next-deck-slug.html">Open the next deck: Title of the next deck</a>
-    -->
   </div>
 </section>
 
@@ -333,6 +428,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <p class="num">TP = (AP + Sp − 1) / (Se + Sp − 1)</p>
   <p>TP is the proportion of animals that are truly infected. AP is the proportion with a positive test. Se is the test sensitivity. Sp is the test specificity.</p>
   <details class="acc"><summary>When the correction fails</summary><div><p>If AP is lower than 1 − Sp, the formula gives a negative value. The data then do not fit the stated Se and Sp.</p></div></details>
+</template>
+<template id="d-sort">
+  <h3>How to tell the four results apart</h3>
+  <p>First read the test result: positive or negative. Then read the infection status of the animal.</p>
+  <p>A false result is a result that disagrees with the infection status.</p>
 </template>
 <template id="d-q1">
   <h3>Answer: about 9%</h3>
@@ -359,7 +459,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </aside>
 
 <!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
-<div class="controls" data-for-slide="4" hidden>
+<div class="controls" data-for-slide="6" hidden>
   <div class="control"><label for="in-tp">True prevalence <output id="out-tp"></output></label><input type="range" id="in-tp" min="0" max="0.5" step="0.01" value="0.10"></div>
   <div class="control"><label for="in-se">Test sensitivity (Se) <output id="out-se"></output></label><input type="range" id="in-se" min="0.5" max="1" step="0.01" value="0.80"></div>
   <div class="control"><label for="in-sp">Test specificity (Sp) <output id="out-sp"></output></label><input type="range" id="in-sp" min="0.5" max="1" step="0.01" value="0.95"></div>
@@ -463,13 +563,43 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $('#counter').textContent = (current + 1) + ' / ' + slides.length;
-    $('#btn-prev').disabled = current === 0; $('#btn-next').disabled = current === slides.length - 1;
+    $('#btn-prev').disabled = current === 0; updateNav();
     if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
     hideTip(); updatePanel();
     document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
   }
   $('#btn-prev').addEventListener('click', () => go(current - 1));
-  $('#btn-next').addEventListener('click', () => go(current + 1));
+  $('#btn-next').addEventListener('click', () => next());
+
+  // Reveal steps: elements with data-step="n" appear one number at a time
+  const showAll = new URLSearchParams(location.search).get('steps') === 'all';
+  slides.forEach(s => {
+    const els = $$('[data-step]', s);
+    if (!els.length) return;
+    s._steps = Array.from(new Set(els.map(e => Number(e.dataset.step)))).sort((a, b) => a - b);
+    s._shown = showAll ? s._steps.length : 0;
+    els.forEach(e => { if (!showAll) e.classList.add('step-hidden'); });
+    const b = document.createElement('button'); b.className = 'btn step-btn'; b.type = 'button';
+    b.addEventListener('click', () => revealNext(s)); s.appendChild(b); s._btn = b;
+    refreshStep(s);
+  });
+  function refreshStep(s) {
+    if (!s._steps) return;
+    const left = s._steps.length - s._shown;
+    s._btn.hidden = left <= 0;
+    s._btn.textContent = 'Show the next step (' + (s._shown + 1) + ' of ' + s._steps.length + ')';
+  }
+  function revealNext(s) {
+    if (!s._steps || s._shown >= s._steps.length) return false;
+    const n = s._steps[s._shown]; s._shown++;
+    $$('[data-step="' + n + '"]', s).forEach(e => e.classList.remove('step-hidden'));
+    refreshStep(s); updateNav(); return true;
+  }
+  function next() { if (!revealNext(slides[current])) go(current + 1); }
+  function updateNav() {
+    const s = slides[current];
+    $('#btn-next').disabled = current === slides.length - 1 && !(s._steps && s._shown < s._steps.length);
+  }
 
   // Panel
   $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
@@ -498,6 +628,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     const b = e.target.closest('[data-reset]'); if (!b) return;
     const c = b.closest('.controls'); if (!c) return;
     c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    // Inputs made after load: use the attribute defaults
+    $$('input, select', c).forEach(el => {
+      if (c._defaults.some(d => d[0] === el)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+      else if (el.tagName === 'SELECT') { const o = Array.from(el.options).findIndex(x => x.defaultSelected); el.selectedIndex = o < 0 ? 0 : o; }
+      else el.value = el.defaultValue;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    c.dispatchEvent(new CustomEvent('deckreset', { bubbles: true }));
   });
 
   // Choices (predictions) and checks
@@ -514,6 +653,52 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         if (list.dataset.explain) openDetail(list);
       }
     }));
+  });
+
+  // Card sorter: drag a card into a box, or select a card and then select a box
+  $$('[data-sorter]').forEach(sr => {
+    const pool = $('.sorter-pool', sr), bins = $$('.sort-bin', sr), cardsAll = $$('.sort-card', sr);
+    const verdict = $('.verdict', sr); let sel = null, dragged = null;
+    const zoneOf = el => el.classList.contains('sorter-pool') ? el : $('.sort-drop', el);
+    const cap = el => Number(el.dataset.capacity || 0);
+    function clearMarks() { cardsAll.forEach(c => c.classList.remove('is-correct', 'is-wrong')); verdict.textContent = ''; verdict.className = 'verdict'; }
+    function unselect() { if (sel) { sel.classList.remove('is-selected'); sel.setAttribute('aria-pressed', 'false'); } sel = null; }
+    function place(card, box) {
+      const z = zoneOf(box);
+      if (cap(box) && z.children.length >= cap(box) && card.parentElement !== z) { const old = z.children[0]; pool.appendChild(old); }
+      z.appendChild(card); clearMarks(); unselect();
+    }
+    cardsAll.forEach(c => {
+      c.type = 'button'; c.draggable = true; c.setAttribute('aria-pressed', 'false');
+      c.addEventListener('dragstart', e => { dragged = c; try { e.dataTransfer.setData('text/plain', c.textContent); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+      c.addEventListener('dragend', () => { dragged = null; $$('.is-over', sr).forEach(x => x.classList.remove('is-over')); });
+      c.addEventListener('click', e => {
+        e.stopPropagation();
+        if (sel && sel !== c) { place(sel, c.closest('.sort-bin') || pool); return; }
+        if (sel === c) { unselect(); return; }
+        sel = c; c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true');
+      });
+    });
+    [pool].concat(bins).forEach(box => {
+      box.addEventListener('click', () => { if (sel) place(sel, box); });
+      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('is-over'); });
+      box.addEventListener('dragleave', () => box.classList.remove('is-over'));
+      box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('is-over'); if (dragged) place(dragged, box); });
+    });
+    $('[data-sorter-check]', sr).addEventListener('click', () => {
+      if (cardsAll.some(c => c.parentElement === pool)) { verdict.textContent = 'Place every card in a box first.'; verdict.className = 'verdict bad'; return; }
+      let ok = 0;
+      cardsAll.forEach(c => {
+        const bin = c.closest('.sort-bin').dataset.bin;
+        const right = (c.dataset.target || '').split(' ').includes(bin);
+        c.classList.toggle('is-correct', right); c.classList.toggle('is-wrong', !right); if (right) ok++;
+      });
+      const all = ok === cardsAll.length;
+      verdict.textContent = all ? 'All ' + ok + ' cards are in the right box.' : ok + ' of ' + cardsAll.length + ' cards are in the right box. Move the cards marked ✗ and check again.';
+      verdict.className = 'verdict ' + (all ? 'ok' : 'bad');
+      if (sr.dataset.explain && (all || sr.dataset.explainAlways)) openDetail(sr);
+    });
+    $('[data-sorter-reset]', sr).addEventListener('click', () => { unselect(); cardsAll.forEach(c => pool.appendChild(c)); clearMarks(); });
   });
 
   // Tooltips
@@ -556,7 +741,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const k = e.key;
-    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); go(current + 1); }
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
     else if (k === 'Home') go(0);
     else if (k === 'End') go(slides.length - 1);
@@ -589,7 +774,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     rng: seed => mulberry32(Number(seed) || 1),
     newSeed: () => Math.floor(Math.random() * 1e6),
     seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
-    current: () => current, go,
+    current: () => current, go, next,
     onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
   };
 
@@ -602,7 +787,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- ===================== DECK SCRIPT (edit for each deck) ===================== -->
 <script id="deck-script">
 (function () {
-  // Slide 3: grid of 200 animals, true prevalence 10%, Se 0.80, Sp 0.95
+  // Slide 5: grid of 200 animals, true prevalence 10%, Se 0.80, Sp 0.95
   const grid = document.getElementById('grid100');
   const cells = [];
   for (let i = 0; i < 16; i++) cells.push('tp');
@@ -613,7 +798,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   for (let i = cells.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [cells[i], cells[j]] = [cells[j], cells[i]]; }
   grid.innerHTML = cells.map(c => '<span class="' + c + '"></span>').join('');
 
-  // Slide 4: apparent prevalence from true prevalence, Se, and Sp
+  // Slide 6: apparent prevalence from true prevalence, Se, and Sp
   const tp = document.getElementById('in-tp'), se = document.getElementById('in-se'), sp = document.getElementById('in-sp');
   const pct = v => (v * 100).toFixed(1) + '%';
   function update() {
