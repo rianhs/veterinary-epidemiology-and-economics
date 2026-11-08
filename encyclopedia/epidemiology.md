@@ -4,7 +4,7 @@ type: encyclopedia
 parent:
 categories: [C1, S1.1, S1.2]
 related: [approaches-of-epidemiology, level-of-analysis, population-status-of-disease, veterinary-economics]
-status: verified
+status: draft
 updated: 2026-11-08
 ---
 
@@ -52,11 +52,11 @@ Health-related states or events cover more than infectious disease. A veterinary
 
 ## Application example
 
-A production animal veterinarian graduated two years ago and now works as the technical veterinarian of a layer company in South Sulawesi. One morning a farm manager calls to report that 120 of 8,000 hens died in the past week in a flock that normally loses about 10 hens a week.
+A veterinarian works as the technical veterinarian of a layer company in South Sulawesi. This role is one of the graduate profiles of the study program: the production animal veterinarian. One morning a farm manager calls to report that 120 of 8,000 hens died in the past week in a flock that normally loses about 10 hens a week.
 
 The veterinarian visits the farm the next day. She starts with the clinical question: she necropsies five hens and sends samples to a laboratory to find the cause of death.
 
-She then turns to population questions and asks for the daily mortality record and the layout of the house. She finds that 90 of the 120 deaths came from the two pens next to the water inlet. Mortality in these pens began 4 days before her visit, and egg production there had already fallen in the week before the first deaths.
+She then turns to population questions and asks for the daily mortality record and the layout of the house. She finds that 90 of the 120 deaths came from the two pens next to the water inlet. Mortality in these pens began on the third day of the week, and egg production there had already fallen in the week before the first deaths.
 
 These facts change her decision. The laboratory result is still pending, but she knows that the problem is concentrated in two pens and began at a known time. She asks the manager to separate the pens, to record deaths daily by pen, and to check the water supply. In terms of the definition, she described the distribution by animal, place, and time, proposed determinants to test, and applied the first findings to action.
 
@@ -74,7 +74,7 @@ Most epidemiological studies are observational. The investigator often cannot as
 
 ## Issues and debates
 
-Textbooks word the definition in slightly different ways. Some describe the application as the prevention and control of health problems, and the wording of the other elements also differs between sources. The six elements above are common to most versions.
+Textbooks word the definition in slightly different ways. Some sources write "prevention and control" for the application, and the wording of the other elements also differs between sources. The six elements above are common to most versions.
 
 ## See also
 
@@ -85,4 +85,4 @@ Textbooks word the definition in slightly different ways. Some describe the appl
 
 ## References
 
-Last, J. M. (Ed.). (2001). *A dictionary of epidemiology* (4th ed.). Oxford University Press. [verify] Edition and wording of the definition need a check.
+Last, J. M. (Ed.). (2001). *A dictionary of epidemiology* (4th ed.). Oxford University Press. [verify] Edition and exact wording of the definition need a check.

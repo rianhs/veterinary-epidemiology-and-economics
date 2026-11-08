@@ -18,6 +18,9 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     SVG figure classes (.fig), and a Reset button that also resets inputs made later.
+     Add ?steps=all to the URL to show all steps (for review and printing).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -30,7 +33,7 @@
   "skills": {
     "primary": "S1.1",
     "secondary": [
-      "S1.3"
+      "S1.2"
     ]
   },
   "minutes": 15,
@@ -133,6 +136,43 @@ a { color: var(--accent); }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
 
+/* Reveal steps */
+.step-hidden { visibility: hidden; opacity: 0; }
+.slide [data-step] { transition: opacity 0.2s; }
+.step-btn { margin-top: auto; align-self: flex-start; }
+.step-btn[hidden] { display: none; }
+
+/* Card sorter */
+.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
+.sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
+.sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
+.sort-card:hover { border-color: var(--muted); }
+.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); }
+.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.sort-card.is-wrong { border-color: var(--bad); }
+.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* SVG figures */
+.fig { display: block; width: 100%; height: auto; max-height: 100%; }
+.fig text { fill: var(--ink); font-family: inherit; font-size: 15px; }
+.fig .t-muted { fill: var(--muted); }
+.fig .t-strong { font-weight: 600; }
+.fig .f-box { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-soft { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .f-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-arrow { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+.fig .f-accent { fill: var(--accent); }
+.fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
+.fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -205,13 +245,16 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .card { overflow: visible; }
   .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
   [data-detail]::after { display: none; }
+  .step-hidden { visibility: visible; opacity: 1; }
+  .step-btn { display: none; }
 }
 </style>
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 1rem; }
-.case-layout p + p { margin-top: 0.8rem; }
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
+.case-layout p + p { margin-top: 0.9rem; }
+.case-layout p { font-size: 1.15rem; }
 .small-note { color: var(--muted); font-size: 0.9rem; }
 .penfig { margin: 0; padding: 0.4rem; display: grid; gap: 0.6rem; }
 .penfig figcaption { color: var(--muted); font-size: 0.9rem; }
@@ -223,32 +266,56 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .pen-id { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
 .pen-n { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
 
-.cmp { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
-.cmp th, .cmp td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.fig-wrap { flex: 1; min-height: 0; display: flex; }
+.fig-wrap .fig { height: 100%; width: 100%; }
+.fig .bar-hot { fill: var(--d2); }
+.fig .bar-n { fill: var(--muted); }
+.fig .hen { fill: var(--surface); stroke: var(--muted); stroke-width: 2; }
+.fig .hen-comb { fill: var(--d2); }
+.fig .hen-beak { fill: var(--d5); }
+
+.vcenter { justify-content: center; }
+.big-def { font-size: 2.5rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin-top: 0.6rem; }
+.def-case { display: grid; gap: 0.5rem; margin-top: 1.4rem; font-size: 1.4rem; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); max-width: 46rem; }
+.def-full { font-size: 1.95rem; line-height: 1.5; font-weight: 500; margin-top: 0.4rem; }
+.def-labels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+.def-labels div { border-top: 2px solid var(--muted); padding-top: 0.5rem; color: var(--muted); font-weight: 600; font-size: 1.1rem; }
+
+.cmp { border-collapse: collapse; width: 100%; font-size: 1.2rem; }
+.cmp th, .cmp td { text-align: left; padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
 .cmp thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.cmp tbody th { font-weight: 600; color: var(--muted); width: 7.5rem; }
+.cmp tbody th { font-weight: 600; color: var(--muted); width: 8rem; }
+.cmp.ex tbody th { width: 17rem; }
+.after-table { font-size: 1.25rem; margin-top: 0.6rem; }
 
-.sorter { display: grid; gap: 0.9rem; align-content: start; }
-.sort-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
-.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; }
-.sort-hint { color: var(--muted); }
-.sort-btns { display: flex; gap: 0.7rem; flex-wrap: wrap; }
-.sort-btn { padding: 0.75rem 1.2rem; font-size: 1.05rem; }
-.sort-btn:disabled { cursor: default; }
-.sort-btn.is-correct { border: 2px solid var(--ok); }
-.sort-btn.is-wrong { border: 2px solid var(--bad); }
-.sort-why { color: var(--muted); min-height: 3rem; }
+.qsort { display: grid; gap: 0.9rem; align-content: start; }
+.qsort [hidden] { display: none !important; }
+.qs-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
+.qs-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; }
+.qs-hint { color: var(--muted); }
+.qs-btns { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.qs-btn { padding: 0.75rem 1.2rem; font-size: 1.05rem; }
+.qs-btn:disabled { cursor: default; }
+.qs-btn.is-correct { border: 2px solid var(--ok); }
+.qs-btn.is-wrong { border: 2px solid var(--bad); }
+.qs-why { color: var(--muted); min-height: 3rem; }
 
-.elements { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; margin-top: 0.4rem; }
-.el { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 0.8rem 1rem; display: grid; gap: 0.2rem; align-content: start; min-height: 5.6rem; }
-.el strong { font-size: 1.02rem; line-height: 1.3; }
-.el span { color: var(--muted); font-size: 0.9rem; }
-.el .seen { display: none; font-size: 0.78rem; font-weight: 600; color: var(--ok); }
-.el.is-seen .seen { display: block; }
+.build { font-size: 1.5rem; line-height: 2.3; margin-top: 0.4rem; }
+.build select { font: inherit; font-size: 1.15rem; padding: 0.3rem 0.5rem; border: 1.5px solid var(--muted); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
+.build select.is-correct { border-color: var(--ok); }
+.build select.is-wrong { border-color: var(--bad); }
+.build select#b1 { width: 18.5rem; } .build select#b2 { width: 15rem; } .build select#b3 { width: 10.5rem; }
+.map-why { font-size: 1.05rem; color: var(--muted); }
+.map-why[hidden] { display: none; }
+.build-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.build-why { display: grid; gap: 0.35rem; color: var(--muted); }
+.q-label { font-weight: 600; font-size: 1.15rem; }
+.quote { font-size: 1.3rem; line-height: 1.45; }
+.practice-note { color: var(--muted); font-size: 0.95rem; }
 
 @media (max-width: 900px) {
   .case-layout { grid-template-columns: 1fr; }
-  .elements { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .def-labels { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -265,6 +332,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </header>
 
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker></defs></svg>
+
 <main class="stage" id="stage">
   <div class="card" id="card">
 
@@ -274,24 +343,24 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide" data-type="title" data-title="Explain epidemiology">
   <p class="code">C1 Epidemiological and economic thinking</p>
   <h1>Explain epidemiology</h1>
-  <p class="lead">Why does a veterinarian need to look at the whole flock when one hen is sick?</p>
+  <p class="lead">Why does a veterinarian look at the whole <span class="term" data-tip="A group of birds, such as hens, kept together.">flock</span> when one <span class="term" data-tip="An adult female chicken.">hen</span> is sick?</p>
   <ul class="meta-list">
     <li><span class="code">S1.1</span><span>Explain the definition of epidemiology</span></li>
-    <li><span class="code">S1.3</span><span>Distinguish clinical questions from population questions</span></li>
+    <li><span class="code">S1.2</span><span>Distinguish clinical questions from population questions</span></li>
     <li><span class="code">Time</span><span>About 15 minutes</span></li>
   </ul>
+  <div class="notes">Read the guiding question aloud. Ask the class for a first answer in one sentence. Students will return to this answer at the end of the deck.</div>
 </section>
-
-<!-- Slide 2: Anchor case recap -->
-<section class="slide" data-type="concept" data-title="The anchor case">
-  <h2>The case: a layer farm in South Sulawesi</h2>
+<!-- Slide 2: Recap of the anchor case -->
+<section class="slide" data-type="recap" data-title="The case">
+  <h2>The case: Salmonella on a layer farm</h2>
   <div class="case-layout">
     <div>
-      <p>The farm loses 120 of its 8,000 hens in one week, mostly in two pens next to the water inlet. The laboratory later finds Salmonella in the hens, and eggs from the same pens have already reached buyers.</p>
-      <p>Your role: production animal veterinarian (GP1.2), two years after graduation.</p>
-      <p class="small-note">These numbers are synthetic and are for teaching.</p>
+      <p data-step="1">In one week, a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> loses 120 of its 8,000 hens, mostly in the two <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> next to the <span class="term" data-tip="The place where water enters the house, for example from a pipe or a tank.">water inlet</span>.</p>
+      <p data-step="2">The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the hens, and eggs from these pens have already reached buyers.</p>
+      <p data-step="3">You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian protects the health and production of farm animals, for example on poultry or dairy farms.">production animal veterinarian</span> of this farm.</p>
     </div>
-    <figure class="penfig" data-detail="d-pens" tabindex="0" aria-label="Deaths in one week by pen. Pens A1 and B1, next to the water inlet, had 90 of the 120 deaths. Select for details.">
+    <figure class="penfig" data-step="1" data-detail="d-pens" tabindex="0" aria-label="Deaths in one week by pen. Pens A1 and B1, next to the water inlet, had 90 of the 120 deaths. Select for details.">
       <div class="penmap">
         <div class="inlet">Water inlet</div>
         <div class="pens">
@@ -308,12 +377,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <figcaption>Deaths in one week, by pen</figcaption>
     </figure>
   </div>
-  <div class="notes">Read the two sentences aloud. Ask the class what they would do first. Most students will name the necropsy. Use that answer on the next slide.</div>
+  <div class="notes">Show the three steps one at a time. After step 3, ask the class what they would do first. Most students name the necropsy. Use that answer on the next slide.</div>
 </section>
-
-<!-- Slide 3: Question -->
+<!-- Slide 3: Question, predict -->
 <section class="slide" data-type="question" data-title="Predict first">
-  <h2>You necropsy five hens. Does the result tell the farm what to do?</h2>
+  <h2>You do a <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> on five hens. Does this tell the farm what to do?</h2>
   <p>Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
     <li><button class="choice" data-value="a"><span class="key">A</span>Yes. Five necropsies are enough to explain the problem in the whole flock.</button></li>
@@ -322,148 +390,300 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </ul>
   <p class="verdict" id="predict-note" aria-live="polite"></p>
 </section>
-
-<!-- Slide 4: Concept, two kinds of question -->
-<section class="slide" data-type="concept" data-title="Two kinds of question">
-  <h2>One disease raises two kinds of question</h2>
-  <p>A clinical question concerns one animal. A population question concerns a group of animals and the pattern of health events in it.</p>
-  <table class="cmp">
-    <thead><tr><th scope="col">Comparison</th><th scope="col">Clinician</th><th scope="col">Epidemiologist</th></tr></thead>
+<!-- Slide 4: Concept, the simple definition -->
+<section class="slide vcenter" data-type="concept" data-title="The simple definition">
+  <h2>The simple definition</h2>
+  <p class="big-def">Epidemiology is the study of <span class="term" data-tip="Anything that happens to the health of animals: a disease, a death, an injury, an accident, or a pregnancy.">health-related events</span> in <span class="term" data-tip="Groups of animals that share a place or a system, such as all hens on one farm or all dogs in one village.">populations</span>.</p>
+  <div class="def-case" data-step="1">
+    <p>In the layer farm, the health-related events are the deaths of hens.</p>
+    <p>The population is the <span class="term" data-tip="A group of birds, such as hens, kept together.">flock</span> of 8,000 hens.</p>
+  </div>
+  <div class="notes">Hover over the two dotted terms. Ask: which other health-related events could the veterinarian count on this farm? Accept answers such as a fall in egg production.</div>
+</section>
+<!-- Slide 5: Concept, one hen and a flock -->
+<section class="slide" data-type="concept" data-title="One hen and a flock">
+  <h2>The same disease raises two kinds of question</h2>
+  <div class="fig-wrap">
+    <svg class="fig" viewBox="0 0 720 300" role="img" aria-label="Left: one hen with the clinical questions about her illness. Right: a bar chart of deaths in one week by pen, with the population questions about the flock. Pens A1 and B1 have 50 and 40 deaths. The other six pens have 5 each.">
+      <g data-step="1">
+        <rect class="f-soft" x="10" y="8" width="340" height="284" rx="12"/>
+        <text x="30" y="40" class="t-strong">Clinical question: one animal</text>
+        <ellipse class="hen" cx="150" cy="140" rx="52" ry="38"/>
+        <circle class="hen" cx="212" cy="104" r="22"/>
+        <polygon class="hen-beak" points="232,100 252,108 232,114"/>
+        <circle class="hen-comb" cx="212" cy="80" r="7"/>
+        <line class="f-line" x1="140" y1="178" x2="140" y2="204"/>
+        <line class="f-line" x1="166" y1="178" x2="166" y2="204"/>
+        <text x="150" y="226" text-anchor="middle" class="t-muted">One hen</text>
+        <text x="30" y="258">What is wrong with her?</text>
+        <text x="30" y="280">Which treatment does she need?</text>
+      </g>
+      <g data-step="2">
+        <rect class="f-soft" x="370" y="8" width="340" height="284" rx="12"/>
+        <text x="390" y="40" class="t-strong">Population question: a group</text>
+        <rect class="bar-hot" x="392" y="84" width="28" height="100" rx="3"/>
+        <text x="406.0" y="78" text-anchor="middle">50</text>
+        <text x="406.0" y="204" text-anchor="middle" class="t-muted">A1</text>
+        <rect class="bar-n" x="428" y="174" width="28" height="10" rx="3"/>
+        <text x="442.0" y="168" text-anchor="middle">5</text>
+        <text x="442.0" y="204" text-anchor="middle" class="t-muted">A2</text>
+        <rect class="bar-n" x="464" y="174" width="28" height="10" rx="3"/>
+        <text x="478.0" y="168" text-anchor="middle">5</text>
+        <text x="478.0" y="204" text-anchor="middle" class="t-muted">A3</text>
+        <rect class="bar-n" x="500" y="174" width="28" height="10" rx="3"/>
+        <text x="514.0" y="168" text-anchor="middle">5</text>
+        <text x="514.0" y="204" text-anchor="middle" class="t-muted">A4</text>
+        <rect class="bar-hot" x="536" y="104" width="28" height="80" rx="3"/>
+        <text x="550.0" y="98" text-anchor="middle">40</text>
+        <text x="550.0" y="204" text-anchor="middle" class="t-muted">B1</text>
+        <rect class="bar-n" x="572" y="174" width="28" height="10" rx="3"/>
+        <text x="586.0" y="168" text-anchor="middle">5</text>
+        <text x="586.0" y="204" text-anchor="middle" class="t-muted">B2</text>
+        <rect class="bar-n" x="608" y="174" width="28" height="10" rx="3"/>
+        <text x="622.0" y="168" text-anchor="middle">5</text>
+        <text x="622.0" y="204" text-anchor="middle" class="t-muted">B3</text>
+        <rect class="bar-n" x="644" y="174" width="28" height="10" rx="3"/>
+        <text x="658.0" y="168" text-anchor="middle">5</text>
+        <text x="658.0" y="204" text-anchor="middle" class="t-muted">B4</text>
+        <line class="f-line" x1="386" y1="184" x2="678" y2="184"/>
+        <text x="540" y="230" text-anchor="middle" class="t-muted">Deaths in one week, by pen</text>
+        <text x="390" y="258">How many hens died, and where?</text>
+        <text x="390" y="280">What do the sick hens share?</text>
+      </g>
+    </svg>
+  </div>
+  <p data-step="3">A <span class="term" data-tip="A question about the diagnosis and treatment of one sick animal.">clinical question</span> concerns one animal. A population question concerns a group of animals. The veterinarian needs both.</p>
+  <div class="notes">Reveal the left panel, then the right panel. Ask which panel the necropsy belongs to. Then ask which panel tells the farm where to act first.</div>
+</section>
+<!-- Slide 6: Concept, the full definition in three steps -->
+<section class="slide vcenter" data-type="concept" data-title="The full definition">
+  <h2>The full definition</h2>
+  <p class="def-full">
+    <span data-step="1">Epidemiology is the <span class="term" data-tip="Careful work with a clear method that uses data.">study</span> of the <span class="term" data-tip="How often a health event occurs, and where, when, and in which animals it occurs.">distribution</span> and <span class="term" data-tip="Factors that change how often a health event occurs, such as the feed, the water, or the management.">determinants</span> of <span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">health-related states or events</span></span>
+    <span data-step="2">in <span class="term" data-tip="Groups of animals that the investigator defines clearly: which animals, in which place, and in which period.">specified populations</span>,</span>
+    <span data-step="3">and the <span class="term" data-tip="Using the results of the study in practice to prevent and control health problems.">application</span> of this study to the control of health problems.</span>
+  </p>
+  <div class="def-labels">
+    <div data-step="1">What the study looks at</div>
+    <div data-step="2">Which animals</div>
+    <div data-step="3">What the study is for</div>
+  </div>
+  <p class="small-note">Hover over or tap a dotted word. Definition after Last (2001).</p>
+  <div class="notes">Reveal the definition in three parts. After each part, ask a student to explain it in simple words. Point out that the simple definition on the last slide is a short form of this sentence.</div>
+</section>
+<!-- Slide 7: Example, elements in the case, part 1 -->
+<section class="slide" data-type="example" data-title="The elements in the case (1)">
+  <h2>The elements in the layer farm, part 1</h2>
+  <table class="cmp ex">
+    <thead><tr><th scope="col">Element</th><th scope="col">In the layer farm</th></tr></thead>
     <tbody>
-      <tr><th scope="row">Focus</th><td>Individuals</td><td>Populations</td></tr>
-      <tr><th scope="row">Objective</th><td>Curing the sick individual</td><td>Preventing and controlling disease in populations</td></tr>
-      <tr><th scope="row">Diagnosis</th><td>Based on <span class="term" data-tip="Anamnesis is the history of the animal, given by the owner or keeper.">anamnesis</span>, physical examination, and diagnostic imaging</td><td>Based on statistical analysis and epidemiological studies</td></tr>
-      <tr><th scope="row">Treatment</th><td>Giving medical or surgical treatment and care</td><td>Implementing animal health and public health interventions and policies</td></tr>
+      <tr data-step="1"><th scope="row"><span class="term" data-tip="Careful work with a clear method that uses data.">Study</span></th><td>The veterinarian works from records and counts.</td></tr>
+      <tr data-step="2"><th scope="row"><span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">Health-related states or events</span></th><td>Deaths of hens and a fall in egg production.</td></tr>
+      <tr data-step="3"><th scope="row"><span class="term" data-tip="Groups of animals that the investigator defines clearly: which animals, in which place, and in which period.">Specified populations</span></th><td>The 8,000 hens in 8 pens.</td></tr>
+      <tr data-step="4"><th scope="row"><span class="term" data-tip="How often a health event occurs, and where, when, and in which animals it occurs.">Distribution</span></th><td>90 of the 120 deaths were in pens A1 and B1, in one week.</td></tr>
     </tbody>
   </table>
-  <p>In the layer house, the necropsy suggests a cause. The count by pen shows where to act.</p>
+  <div class="notes">Reveal one row at a time. For each row, ask the class where they saw this on the case slide.</div>
 </section>
-
-<!-- Slide 5: Explore, sort six statements -->
-<section class="slide" data-type="explore" data-title="Sort the questions" data-panel="controls">
+<!-- Slide 8: Example, elements in the case, part 2 -->
+<section class="slide" data-type="example" data-title="The elements in the case (2)">
+  <h2>The elements in the layer farm, part 2</h2>
+  <table class="cmp ex">
+    <thead><tr><th scope="col">Element</th><th scope="col">In the layer farm</th></tr></thead>
+    <tbody>
+      <tr data-step="1"><th scope="row"><span class="term" data-tip="Factors that change how often a health event occurs, such as the feed, the water, or the management.">Determinants</span></th><td>The pens next to the water inlet point to the water as a factor to test. The laboratory finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span>.</td></tr>
+      <tr data-step="2"><th scope="row"><span class="term" data-tip="Using the results of the study in practice to prevent and control health problems.">Application</span></th><td>The veterinarian separates the two pens, asks for daily records of deaths by pen, and finds the buyers of the eggs.</td></tr>
+    </tbody>
+  </table>
+  <div class="fig-wrap">
+    <svg class="fig" viewBox="0 0 760 110" role="img" aria-label="Four steps of an investigation in order: define the population, describe the distribution, look for determinants, apply the findings." data-step="3">
+      <rect class="f-box" x="10" y="15" width="160" height="70" rx="10"/>
+      <text x="90" y="46" text-anchor="middle">Define the</text><text x="90" y="66" text-anchor="middle">population</text>
+      <path class="f-arrow" d="M174 50 L206 50"/>
+      <rect class="f-box" x="210" y="15" width="160" height="70" rx="10"/>
+      <text x="290" y="46" text-anchor="middle">Describe the</text><text x="290" y="66" text-anchor="middle">distribution</text>
+      <path class="f-arrow" d="M374 50 L406 50"/>
+      <rect class="f-box" x="410" y="15" width="160" height="70" rx="10"/>
+      <text x="490" y="46" text-anchor="middle">Look for</text><text x="490" y="66" text-anchor="middle">determinants</text>
+      <path class="f-arrow" d="M574 50 L606 50"/>
+      <rect class="f-box" x="610" y="15" width="140" height="70" rx="10"/>
+      <text x="680" y="46" text-anchor="middle">Apply the</text><text x="680" y="66" text-anchor="middle">findings</text>
+    </svg>
+  </div>
+  <p data-step="3">The elements follow the steps of an investigation, from the first count to the action.</p>
+  <div class="notes">Ask the class which element the manager had already used before the veterinarian arrived. A good answer is distribution, because the manager had counted the deaths.</div>
+</section>
+<!-- Slide 9: Concept, clinician and epidemiologist -->
+<section class="slide" data-type="concept" data-title="Two ways of working">
+  <h2>Two ways of working with the same disease</h2>
+  <table class="cmp">
+    <thead><tr><th scope="col">Comparison</th><th scope="col"><span class="term" data-tip="A veterinarian who examines and treats sick animals.">Clinician</span></th><th scope="col"><span class="term" data-tip="A scientist who studies health events in groups of animals.">Epidemiologist</span></th></tr></thead>
+    <tbody>
+      <tr data-step="1"><th scope="row">Focus</th><td>Individuals</td><td>Populations</td></tr>
+      <tr data-step="2"><th scope="row">Objective</th><td>Curing the sick individual</td><td>Preventing and controlling disease in populations</td></tr>
+      <tr data-step="3"><th scope="row">Diagnosis</th><td>Based on <span class="term" data-tip="The history of the sick animal, told by the owner or keeper.">anamnesis</span>, physical examination, and <span class="term" data-tip="Tests that help find the cause of a disease, such as blood tests or X-rays.">diagnostic tests</span></td><td>Based on <span class="term" data-tip="Using numbers and calculations to find patterns in data.">statistical analysis</span> and <span class="term" data-tip="Planned investigations that count health events in groups of animals and compare the groups.">epidemiological studies</span></td></tr>
+      <tr data-step="4"><th scope="row">Treatment</th><td>Giving medical or surgical treatment and care</td><td>Implementing animal health and public health <span class="term" data-tip="Actions that aim to prevent or control a disease, such as vaccination or separating sick animals.">interventions</span> and <span class="term" data-tip="Rules or plans made by an authority, such as a rule that sick animals must not be sold.">policies</span></td></tr>
+    </tbody>
+  </table>
+  <p class="after-table" data-step="5">In the layer house, the <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> suggests a cause. The count by pen shows where to act.</p>
+  <div class="notes">Reveal one row at a time. After the last row, ask which row describes the necropsy and which row describes the count by pen.</div>
+</section>
+<!-- Slide 10: Practice with support, build the definition -->
+<section class="slide" data-type="practice" data-title="Build the definition">
+  <h2>Build the definition</h2>
+  <p class="practice-note">Choose one phrase for each gap. Think about the layer farm: what did the veterinarian describe, explain, and do?</p>
+  <p class="build">Epidemiology is the study of the <select id="b1" aria-label="Part 1 of the definition"><option value="">Choose</option><option value="x">history and examination</option><option value="c">distribution and determinants</option><option value="y">diagnosis and treatment</option></select> of <span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">health-related states or events</span> in <select id="b2" aria-label="Part 2 of the definition"><option value="">Choose</option><option value="x">individual patients</option><option value="y">sick animals</option><option value="c">specified populations</option></select>, and the <select id="b3" aria-label="Part 3 of the definition"><option value="">Choose</option><option value="c">application</option><option value="x">publication</option><option value="y">calculation</option></select> of this study to the control of health problems.</p>
+  <div class="build-actions">
+    <button class="btn btn-main" id="b-check">Check the sentence</button>
+    <button class="btn" id="b-reset">Start again</button>
+    <span class="verdict" id="b-verdict" aria-live="polite"></span>
+  </div>
+  <div class="build-why" id="b-why"></div>
+  <div class="notes">Let students choose alone first, then compare with a neighbour. Ask them to say the correct sentence aloud.</div>
+</section>
+<!-- Slide 11: Practice with support, clinical or population question -->
+<section class="slide" data-type="practice" data-title="Clinical or population?" data-panel="controls">
   <h2>Is it a clinical question or a population question?</h2>
-  <div class="sorter">
-    <div class="sort-top"><span class="num" id="sort-pos"></span><span class="num" id="sort-score"></span></div>
-    <p class="sort-q" id="sort-q"></p>
-    <p class="sort-hint" id="sort-hint" hidden>Ask: does the question concern one animal or a group of animals?</p>
-    <div class="sort-btns" id="sort-btns">
-      <button class="btn sort-btn" data-answer="C">Clinical question</button>
-      <button class="btn sort-btn" data-answer="P">Population question</button>
+  <div class="qsort">
+    <div class="qs-top"><span class="num" id="qs-pos"></span><span class="num" id="qs-score"></span></div>
+    <p class="qs-q" id="qs-q"></p>
+    <p class="qs-hint" id="qs-hint" hidden>Ask: does the question concern one animal or a group of animals?</p>
+    <div class="qs-btns" id="qs-btns">
+      <button class="btn qs-btn" data-answer="C">Clinical question</button>
+      <button class="btn qs-btn" data-answer="P">Population question</button>
     </div>
-    <p class="verdict" id="sort-verdict" aria-live="polite"></p>
-    <p class="sort-why" id="sort-why"></p>
-    <div><button class="btn btn-main" id="sort-next" hidden>Show the next statement</button></div>
+    <p class="verdict" id="qs-verdict" aria-live="polite"></p>
+    <p class="qs-why" id="qs-why"></p>
+    <div><button class="btn btn-main" id="qs-next" hidden>Show the next statement</button></div>
   </div>
   <div class="notes">Read each statement aloud and ask the class to vote before you reveal the answer. Statement 5 about the buyers of eggs is the one that students often place wrongly. Ask why eggs belong to the population.</div>
 </section>
-
-<!-- Slide 6: Concept, six elements of the definition -->
-<section class="slide" data-type="concept" data-title="The definition">
-  <h2>The definition has six elements</h2>
-  <p>Epidemiology is the study of the distribution and <span class="term" data-tip="Any factor that changes the frequency of a health event in a population.">determinants</span> of health-related states or events in specified populations, and the application of this study to the control of health problems.</p>
-  <p>Select each element to see what it means in the layer farm case. <span class="num" id="el-count">Elements opened: 0 of 6</span></p>
-  <div class="elements">
-    <div class="el" data-detail="d-el-study" data-el="study" role="button"><strong>Study</strong><span>Systematic and based on data</span><small class="seen">Opened</small></div>
-    <div class="el" data-detail="d-el-events" data-el="events" role="button"><strong>Health-related states or events</strong><span>What is counted</span><small class="seen">Opened</small></div>
-    <div class="el" data-detail="d-el-populations" data-el="populations" role="button"><strong>Specified populations</strong><span>Who is counted</span><small class="seen">Opened</small></div>
-    <div class="el" data-detail="d-el-distribution" data-el="distribution" role="button"><strong>Distribution</strong><span>By animal, place, and time</span><small class="seen">Opened</small></div>
-    <div class="el" data-detail="d-el-determinants" data-el="determinants" role="button"><strong>Determinants</strong><span>Factors that change frequency</span><small class="seen">Opened</small></div>
-    <div class="el" data-detail="d-el-application" data-el="application" role="button"><strong>Application</strong><span>Use of the results</span><small class="seen">Opened</small></div>
+<!-- Slide 12: Practice without support, match the case to the elements -->
+<section class="slide" data-type="practice" data-title="Match the case to the elements">
+  <h2>Put each fact from the case under the right element</h2>
+  <div class="sorter" data-sorter id="map-sorter">
+    <div class="sorter-pool" aria-label="Cards to sort">
+      <button class="sort-card" data-target="events">Hens die and egg production falls</button>
+      <button class="sort-card" data-target="populations">The 8,000 hens in 8 pens</button>
+      <button class="sort-card" data-target="distribution">90 of 120 deaths in pens A1 and B1</button>
+      <button class="sort-card" data-target="determinants">The water may be a factor</button>
+      <button class="sort-card" data-target="application">The two pens are separated</button>
+      <button class="sort-card" data-target="study">Records and counts, with a clear method</button>
+    </div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="study" data-capacity="1"><h3>Study</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="events" data-capacity="1"><h3>Health-related states or events</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="populations" data-capacity="1"><h3>Specified populations</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="distribution" data-capacity="1"><h3>Distribution</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="determinants" data-capacity="1"><h3>Determinants</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="application" data-capacity="1"><h3>Application</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
   </div>
-  <div class="notes">Let each student open one element and explain it to a neighbour using the layer farm case. Then ask which element the farm manager has already used without knowing it.</div>
+  <p class="map-why" id="map-why" hidden>Each fact matches one element. The elements follow the steps of an investigation: define the population, describe the distribution, look for determinants, and apply the findings.</p>
+  <p class="practice-note">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
+  <div class="notes">Students work in pairs. If a pair places a card wrongly, ask them to read the definition of the element on slide 6 and decide again.</div>
 </section>
-
-<!-- Slide 7: Check, the elements -->
-<section class="slide" data-type="check" data-title="Check: the elements">
-  <h2>The veterinarian separates the two affected pens to protect the other pens. Which element of the definition is this?</h2>
+<!-- Slide 13: Practice, find the error -->
+<section class="slide" data-type="practice" data-title="Find the error">
+  <h2>Find the error</h2>
+  <p>A student summarises the farm case in one note.</p>
+  <p class="quote">"The veterinarian did a <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> on five hens and found Salmonella. This completes the epidemiology of the problem."</p>
+  <p class="q-label">What is missing from the note?</p>
   <div>
-    <ul class="choices" data-check="q1" data-answer="a" data-explain="d-q1">
-      <li><button class="choice" data-value="a"><span class="key">A</span>Application</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Distribution</button></li>
+    <ul class="choices" data-check="q0" data-answer="c" data-explain="d-q0">
+      <li><button class="choice" data-value="a"><span class="key">A</span>A second necropsy of the same five hens</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>A dose of medicine for every hen in the flock</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>The deaths by pen, and action based on the findings</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+  <div class="notes">The note describes the cause in five hens. It has no distribution, no determinants, and no application.</div>
+</section>
+<!-- Slide 14: Check, element of the definition -->
+<section class="slide" data-type="check" data-title="Check: the element">
+  <h2>The veterinarian separates the two pens with many deaths from the other pens. Which element of the definition is this?</h2>
+  <div>
+    <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Distribution</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Application</button></li>
       <li><button class="choice" data-value="c"><span class="key">C</span>Determinants</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 8: Check, transfer to a new case -->
+<!-- Slide 15: Check, health-related event -->
+<section class="slide" data-type="check" data-title="Check: the event">
+  <h2>Which of these is a <span class="term" data-tip="Anything that happens to the health of animals: a disease, a death, an injury, an accident, or a pregnancy.">health-related event</span> in a layer <span class="term" data-tip="A group of birds, such as hens, kept together.">flock</span>?</h2>
+  <div>
+    <ul class="choices" data-check="q2" data-answer="a" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>A fall in egg production</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>A rise in the price of eggs</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>A change in the number of pens</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+<!-- Slide 16: Check, transfer to a new case -->
 <section class="slide" data-type="check" data-title="Check: a new case">
   <h2>A new case: sick dogs in one neighbourhood</h2>
-  <p>Several dogs in one neighbourhood of Makassar develop vomiting and bloody diarrhoea in one week. A clinic veterinarian (GP1.1) treats each dog. This scenario is synthetic and is for teaching.</p>
-  <p><strong>Which question is a population question?</strong></p>
+  <p>Several dogs in one <span class="term" data-tip="A part of a town where people live close to each other.">neighbourhood</span> of Makassar have vomiting and bloody <span class="term" data-tip="Frequent loose and watery stool.">diarrhoea</span> in one week. A <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian gives medical care and surgery to pets such as dogs and cats, for example in a clinic or an animal hospital.">companion animal veterinarian</span> in a clinic treats each dog.</p>
+  <p class="q-label">Which question is a population question?</p>
   <div>
-    <ul class="choices" data-check="q2" data-answer="c" data-explain="d-q2">
+    <ul class="choices" data-check="q3" data-answer="c" data-explain="d-q3">
       <li><button class="choice" data-value="a"><span class="key">A</span>Which diagnosis fits the vomiting and bloody diarrhoea of the first dog?</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Which drug and dose should the clinic give to the first dog?</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Which medicine and dose should the clinic give to the first dog?</button></li>
       <li><button class="choice" data-value="c"><span class="key">C</span>How many dogs are sick, and in which streets do they live?</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 9: Summary -->
+<!-- Slide 17: Summary -->
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
-    <li>Epidemiology studies the distribution and determinants of health-related events in specified populations, and applies the results to control health problems.</li>
+    <li>Epidemiology is the study of health-related events in populations.</li>
+    <li>The full definition adds what the study looks at, which is distribution and determinants, and what it is for, which is the control of health problems.</li>
     <li>A clinical question concerns one animal. A population question concerns a group of animals or the animal products that come from it.</li>
     <li>The same disease raises both kinds of question, and the veterinarian needs both.</li>
     <li>The six elements of the definition follow the steps of an investigation, from the first count to the action.</li>
   </ul>
   <div class="links">
     <a class="btn" href="../encyclopedia/epidemiology.html">Read the article: Epidemiology</a>
-    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-1">Open skill S1.1</a>
-    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-3">Open skill S1.3</a>
-    <a class="btn btn-main" href="./explain-veterinary-economics.html">Open the next deck: Explain veterinary economics</a>
+    <a class="btn btn-main" href="./match-population-status-to-objective.html">Open the next deck: Match population status to objective</a>
   </div>
 </section>
 
 <!-- Details: one template per element with data-detail or data-explain -->
 <template id="d-pens">
   <h3>About these data</h3>
-  <p>These numbers are synthetic and are for teaching. The flock has 8,000 hens in 8 pens. A flock of this size normally loses about 10 hens a week.</p>
+  <p>The flock has 8,000 hens in 8 pens. A flock of this size normally loses about 10 hens a week.</p>
   <p>Pens A1 and B1 are next to the water inlet. They had 90 of the 120 deaths. The other six pens had 5 deaths each.</p>
-  <p>The necropsy of five hens tells the veterinarian what killed those hens. The table of deaths by pen tells her where the problem is.</p>
+  <p>The necropsy of five hens tells the veterinarian what killed those hens. The count of deaths by pen tells her where the problem is.</p>
 </template>
-<template id="d-el-study">
-  <h3>Study</h3>
-  <p>A scientific and systematic activity based on data.</p>
-  <p>In the case, the veterinarian counts deaths by pen and by day. The decision rests on records, so the impression of the manager does not decide.</p>
-</template>
-<template id="d-el-events">
-  <h3>Health-related states or events</h3>
-  <p>Diseases, infections, deaths, injuries, production problems, welfare states, and food safety hazards.</p>
-  <p>In the case, the events are the deaths of hens, the fall in egg production, and Salmonella in the eggs.</p>
-</template>
-<template id="d-el-populations">
-  <h3>Specified populations</h3>
-  <p>Defined groups of animals, such as herds, flocks, kennels, and village populations, and the animal products that come from them.</p>
-  <p>In the case, the populations are the 8,000 hens of the flock and the eggs that left the farm.</p>
-</template>
-<template id="d-el-distribution">
-  <h3>Distribution</h3>
-  <p>The frequency and pattern of health events by animal, place, and time.</p>
-  <p>In the case, 90 of the 120 deaths came from two pens next to the water inlet. Mortality began 4 days before the visit of the veterinarian.</p>
-</template>
-<template id="d-el-determinants">
-  <h3>Determinants</h3>
-  <p>Factors that change the frequency of health events: agent, host, environment, management, and economic and social factors.</p>
-  <p>In the case, the water supply, the position of the pens, and the management of the flock are factors to test.</p>
-</template>
-<template id="d-el-application">
-  <h3>Application</h3>
-  <p>Use of the results to prevent and control health problems, and to check whether the measures worked.</p>
-  <p>In the case, the veterinarian separates the two pens and asks for daily records by pen. The company traces the buyers of the eggs.</p>
+<template id="d-q0">
+  <h3>Answer: C</h3>
+  <p>The necropsy gives a cause of death for five hens. The note has no count of deaths by pen, so it does not describe the distribution in the flock.</p>
+  <p>The note also has no action. The veterinarian must use the findings, for example by separating the pens.</p>
 </template>
 <template id="d-q1">
-  <h3>Answer: Application</h3>
+  <h3>Answer: B, Application</h3>
   <p>Application means using the results to prevent and control a health problem. Separating the pens protects the other hens.</p>
-  <p>Counting the deaths by pen describes the distribution. Testing the water supply looks for a determinant.</p>
+  <p>Counting the deaths by pen describes the distribution. Testing the water looks for a determinant.</p>
 </template>
 <template id="d-q2">
+  <h3>Answer: A</h3>
+  <p>A fall in egg production is a production problem in the hens. It is a health-related event.</p>
+  <p>The price of eggs and the number of pens are not events in the health of the hens.</p>
+</template>
+<template id="d-q3">
   <h3>Answer: C</h3>
   <p>Question C concerns the group of dogs. It asks for the number of sick dogs and the places where they live.</p>
-  <p>Questions A and B concern one dog. The clinic veterinarian still treats each dog, so both kinds of question are needed.</p>
+  <p>Questions A and B concern one dog. The veterinarian still treats each dog, so both kinds of question are needed.</p>
 </template>
 
   </div><!-- /card -->
@@ -485,9 +705,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </aside>
 
 <!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
-<div class="controls" data-for-slide="5" hidden>
+<div class="controls" data-for-slide="11" hidden>
   <div class="control"><label for="in-hint">Show a hint <input type="checkbox" id="in-hint"></label></div>
-  <button class="btn" id="sort-reset" data-reset>Reset the sorting</button>
+  <button class="btn" id="qs-reset" data-reset>Reset the sorting</button>
 </div>
 
 <!-- ===================== END OF CONTENT ===================== -->
@@ -587,13 +807,43 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $('#counter').textContent = (current + 1) + ' / ' + slides.length;
-    $('#btn-prev').disabled = current === 0; $('#btn-next').disabled = current === slides.length - 1;
+    $('#btn-prev').disabled = current === 0; updateNav();
     if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
     hideTip(); updatePanel();
     document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
   }
   $('#btn-prev').addEventListener('click', () => go(current - 1));
-  $('#btn-next').addEventListener('click', () => go(current + 1));
+  $('#btn-next').addEventListener('click', () => next());
+
+  // Reveal steps: elements with data-step="n" appear one number at a time
+  const showAll = new URLSearchParams(location.search).get('steps') === 'all';
+  slides.forEach(s => {
+    const els = $$('[data-step]', s);
+    if (!els.length) return;
+    s._steps = Array.from(new Set(els.map(e => Number(e.dataset.step)))).sort((a, b) => a - b);
+    s._shown = showAll ? s._steps.length : 0;
+    els.forEach(e => { if (!showAll) e.classList.add('step-hidden'); });
+    const b = document.createElement('button'); b.className = 'btn step-btn'; b.type = 'button';
+    b.addEventListener('click', () => revealNext(s)); s.appendChild(b); s._btn = b;
+    refreshStep(s);
+  });
+  function refreshStep(s) {
+    if (!s._steps) return;
+    const left = s._steps.length - s._shown;
+    s._btn.hidden = left <= 0;
+    s._btn.textContent = 'Show the next step (' + (s._shown + 1) + ' of ' + s._steps.length + ')';
+  }
+  function revealNext(s) {
+    if (!s._steps || s._shown >= s._steps.length) return false;
+    const n = s._steps[s._shown]; s._shown++;
+    $$('[data-step="' + n + '"]', s).forEach(e => e.classList.remove('step-hidden'));
+    refreshStep(s); updateNav(); return true;
+  }
+  function next() { if (!revealNext(slides[current])) go(current + 1); }
+  function updateNav() {
+    const s = slides[current];
+    $('#btn-next').disabled = current === slides.length - 1 && !(s._steps && s._shown < s._steps.length);
+  }
 
   // Panel
   $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
@@ -622,6 +872,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     const b = e.target.closest('[data-reset]'); if (!b) return;
     const c = b.closest('.controls'); if (!c) return;
     c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    // Inputs made after load: use the attribute defaults
+    $$('input, select', c).forEach(el => {
+      if (c._defaults.some(d => d[0] === el)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+      else if (el.tagName === 'SELECT') { const o = Array.from(el.options).findIndex(x => x.defaultSelected); el.selectedIndex = o < 0 ? 0 : o; }
+      else el.value = el.defaultValue;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    c.dispatchEvent(new CustomEvent('deckreset', { bubbles: true }));
   });
 
   // Choices (predictions) and checks
@@ -638,6 +897,52 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         if (list.dataset.explain) openDetail(list);
       }
     }));
+  });
+
+  // Card sorter: drag a card into a box, or select a card and then select a box
+  $$('[data-sorter]').forEach(sr => {
+    const pool = $('.sorter-pool', sr), bins = $$('.sort-bin', sr), cardsAll = $$('.sort-card', sr);
+    const verdict = $('.verdict', sr); let sel = null, dragged = null;
+    const zoneOf = el => el.classList.contains('sorter-pool') ? el : $('.sort-drop', el);
+    const cap = el => Number(el.dataset.capacity || 0);
+    function clearMarks() { cardsAll.forEach(c => c.classList.remove('is-correct', 'is-wrong')); verdict.textContent = ''; verdict.className = 'verdict'; }
+    function unselect() { if (sel) { sel.classList.remove('is-selected'); sel.setAttribute('aria-pressed', 'false'); } sel = null; }
+    function place(card, box) {
+      const z = zoneOf(box);
+      if (cap(box) && z.children.length >= cap(box) && card.parentElement !== z) { const old = z.children[0]; pool.appendChild(old); }
+      z.appendChild(card); clearMarks(); unselect();
+    }
+    cardsAll.forEach(c => {
+      c.type = 'button'; c.draggable = true; c.setAttribute('aria-pressed', 'false');
+      c.addEventListener('dragstart', e => { dragged = c; try { e.dataTransfer.setData('text/plain', c.textContent); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+      c.addEventListener('dragend', () => { dragged = null; $$('.is-over', sr).forEach(x => x.classList.remove('is-over')); });
+      c.addEventListener('click', e => {
+        e.stopPropagation();
+        if (sel && sel !== c) { place(sel, c.closest('.sort-bin') || pool); return; }
+        if (sel === c) { unselect(); return; }
+        sel = c; c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true');
+      });
+    });
+    [pool].concat(bins).forEach(box => {
+      box.addEventListener('click', () => { if (sel) place(sel, box); });
+      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('is-over'); });
+      box.addEventListener('dragleave', () => box.classList.remove('is-over'));
+      box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('is-over'); if (dragged) place(dragged, box); });
+    });
+    $('[data-sorter-check]', sr).addEventListener('click', () => {
+      if (cardsAll.some(c => c.parentElement === pool)) { verdict.textContent = 'Place every card in a box first.'; verdict.className = 'verdict bad'; return; }
+      let ok = 0;
+      cardsAll.forEach(c => {
+        const bin = c.closest('.sort-bin').dataset.bin;
+        const right = (c.dataset.target || '').split(' ').includes(bin);
+        c.classList.toggle('is-correct', right); c.classList.toggle('is-wrong', !right); if (right) ok++;
+      });
+      const all = ok === cardsAll.length;
+      verdict.textContent = all ? 'All ' + ok + ' cards are in the right box.' : ok + ' of ' + cardsAll.length + ' cards are in the right box. Move the cards marked ✗ and check again.';
+      verdict.className = 'verdict ' + (all ? 'ok' : 'bad');
+      if (sr.dataset.explain && (all || sr.dataset.explainAlways)) openDetail(sr);
+    });
+    $('[data-sorter-reset]', sr).addEventListener('click', () => { unselect(); cardsAll.forEach(c => pool.appendChild(c)); clearMarks(); });
   });
 
   // Tooltips
@@ -680,7 +985,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const k = e.key;
-    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); go(current + 1); }
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
     else if (k === 'Home') go(0);
     else if (k === 'End') go(slides.length - 1);
@@ -713,7 +1018,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     rng: seed => mulberry32(Number(seed) || 1),
     newSeed: () => Math.floor(Math.random() * 1e6),
     seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
-    current: () => current, go,
+    current: () => current, go, next,
     onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
   };
 
@@ -735,19 +1040,52 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     note.textContent = 'Option B is the best answer. A necropsy answers a clinical question about five hens. It gives no count for the flock.';
   }));
 
-  // Slide 5: sort six statements
+  // Slide 10: build the definition
+  const sels = [$('b1'), $('b2'), $('b3')];
+  const bWhy = {
+    1: 'Part 1: epidemiology describes how often health events occur (distribution) and what changes it (determinants). Diagnosis and treatment belong to the clinician.',
+    2: 'Part 2: epidemiology studies groups of animals that the investigator defines clearly. These are specified populations.',
+    3: 'Part 3: the study is used in practice to prevent and control problems. This use is the application.'
+  };
+  function bClear() {
+    sels.forEach(s => s.classList.remove('is-correct', 'is-wrong'));
+    $('b-verdict').textContent = ''; $('b-verdict').className = 'verdict'; $('b-why').innerHTML = '';
+  }
+  sels.forEach(s => s.addEventListener('change', bClear));
+  $('b-check').addEventListener('click', () => {
+    if (sels.some(s => !s.value)) { $('b-verdict').textContent = 'Choose a phrase for every gap first.'; $('b-verdict').className = 'verdict bad'; return; }
+    let ok = 0; const why = $('b-why'); why.innerHTML = '';
+    sels.forEach((s, i) => {
+      const right = s.value === 'c';
+      s.classList.toggle('is-correct', right); s.classList.toggle('is-wrong', !right);
+      if (right) ok++; else { const p = document.createElement('p'); p.textContent = bWhy[i + 1]; why.appendChild(p); }
+    });
+    const all = ok === 3;
+    $('b-verdict').textContent = all ? 'All 3 parts are correct.' : ok + ' of 3 parts are correct. Change the parts marked in red and check again.';
+    $('b-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
+  });
+  $('b-reset').addEventListener('click', () => { sels.forEach(s => { s.value = ''; }); bClear(); });
+
+  // Slide 12: show the summary after a correct sorting
+  const ms = $('map-sorter'), mw = $('map-why');
+  ms.querySelector('[data-sorter-check]').addEventListener('click', () => {
+    mw.hidden = !ms.querySelector('.verdict').classList.contains('ok');
+  });
+  ms.querySelector('[data-sorter-reset]').addEventListener('click', () => { mw.hidden = true; });
+
+  // Slide 11: sort six statements
   const items = [
-    { q: 'Hen 14 breathes with difficulty and has a swollen head. What is wrong with her?', a: 'C', why: 'The question concerns one hen. The answer comes from her examination and tests.' },
+    { q: 'Hen 14 breathes with difficulty and her head is swollen. What is wrong with her?', a: 'C', why: 'The question concerns one hen. The answer comes from her examination and tests.' },
     { q: 'How many hens died in each pen this week?', a: 'P', why: 'The question counts events in a group of animals, pen by pen. This describes the distribution of deaths.' },
     { q: 'Do the pens next to the water inlet lose more hens than the other pens?', a: 'P', why: 'The question compares groups of pens. It looks for a determinant of the deaths.' },
-    { q: 'Which drug should the veterinarian give to this sick hen?', a: 'C', why: 'The decision concerns the treatment of one animal.' },
-    { q: 'Which buyers received eggs from the affected pens?', a: 'P', why: 'Eggs are animal products of the specified population. The question concerns the egg chain, which reaches beyond one hen.' },
-    { q: 'Does the liver lesion explain why this hen died?', a: 'C', why: 'The question concerns the cause of death of one animal.' }
+    { q: 'Which medicine should the veterinarian give to this sick hen?', a: 'C', why: 'The decision concerns the treatment of one animal.' },
+    { q: 'Which buyers received eggs from the pens with many deaths?', a: 'P', why: 'Eggs are animal products of the specified population. The question concerns the egg chain, which reaches beyond one hen.' },
+    { q: 'Does the damage in the liver explain why this hen died?', a: 'C', why: 'The question concerns the cause of death of one animal.' }
   ];
   const label = { C: 'clinical question', P: 'population question' };
-  const qEl = $('sort-q'), posEl = $('sort-pos'), scoreEl = $('sort-score'), verdict = $('sort-verdict'),
-        why = $('sort-why'), next = $('sort-next'), btns = $('sort-btns'), hint = $('sort-hint'), hintBox = $('in-hint');
-  const buttons = Array.from(btns.querySelectorAll('.sort-btn'));
+  const qEl = $('qs-q'), posEl = $('qs-pos'), scoreEl = $('qs-score'), verdict = $('qs-verdict'),
+        why = $('qs-why'), next = $('qs-next'), btns = $('qs-btns'), hint = $('qs-hint'), hintBox = $('in-hint');
+  const buttons = Array.from(btns.querySelectorAll('.qs-btn'));
   let idx = 0, score = 0, answered = false, finished = false;
 
   function render() {
@@ -790,21 +1128,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     if (idx === items.length - 1) { showResult(); return; }
     idx++; render();
   });
-  $('sort-reset').addEventListener('click', reset);
+  $('qs-reset').addEventListener('click', reset);
   function syncHint() { hint.hidden = !hintBox.checked; }
   hintBox.addEventListener('input', syncHint); hintBox.addEventListener('change', syncHint);
   render(); syncHint();
-
-  // Slide 6: count the elements that the student has opened
-  const seen = new Set(), countEl = $('el-count');
-  function mark(el) {
-    seen.add(el.dataset.el); el.classList.add('is-seen');
-    countEl.textContent = seen.size === 6 ? 'All 6 elements opened.' : 'Elements opened: ' + seen.size + ' of 6';
-  }
-  document.querySelectorAll('.el').forEach(el => {
-    el.addEventListener('click', () => mark(el));
-    el.addEventListener('keydown', e => { if (e.key === 'Enter') mark(el); });
-  });
 })();
 </script>
 </body>
