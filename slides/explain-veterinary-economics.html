@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explain veterinary economics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!--
+  SLIDE SHELL TEMPLATE
+  Veterinary Epidemiology and Economics
+
+  How to make a new deck:
+  1. Copy this file to slides/<slug>.html.
+  2. Edit the deck-meta block below.
+  3. Replace the example slides, details, and controls in the CONTENT area.
+  4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
+     <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+  5. Register the deck in slides/decks.yml.
+  Rules: 05-slide-deck-guide.md.
+-->
+
+<script type="application/json" id="deck-meta">
+{
+  "title": "Explain veterinary economics",
+  "domain": "D0",
+  "competency": "C1",
+  "skills": {
+    "primary": "S1.2",
+    "secondary": []
+  },
+  "minutes": 15,
+  "articles": [
+    "veterinary-economics"
+  ],
+  "guides": [],
+  "status": "draft",
+  "updated": "2026-11-08"
+}
+</script>
+
+<!-- ===================== SHELL STYLES (do not edit) ===================== -->
+<style id="shell-styles">
+:root {
+  --bg: #FFFFFF; --surface: #F5F7F9; --surface-2: #EDF1F4; --line: #E1E6EB;
+  --ink: #18222F; --muted: #5A6573; --accent: #0B7A6E; --accent-ink: #FFFFFF;
+  --ok: #0B7A6E; --bad: #B4441C;
+  --d0: #6B7480; --d1: #0072B2; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #18222F;
+  --panel-w: 400px; --bar-h: 52px; --radius: 12px;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0D1526; --surface: #131D31; --surface-2: #18243B; --line: #243250;
+  --ink: #E6EBF2; --muted: #9AA6B8; --accent: #2DD4BF; --accent-ink: #062A26;
+  --ok: #2DD4BF; --bad: #F08A5D;
+  --d0: #9AA6B8; --d1: #56B4E9; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #E6EBF2;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+:root:fullscreen, :root.is-full { font-size: 20px; }
+body {
+  margin: 0; height: 100vh; height: 100dvh; overflow: hidden;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5;
+  background: var(--bg); color: var(--ink);
+  display: grid; grid-template-rows: var(--bar-h) 1fr var(--bar-h);
+}
+button { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.code { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
+.dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--dc, var(--d0)); display: inline-block; flex: none; }
+
+/* Top bar */
+.topbar { display: flex; align-items: center; gap: 0.75rem; padding: 0 1rem; border-bottom: 1px solid var(--line); min-width: 0; }
+.deck-id { display: flex; align-items: center; gap: 0.55rem; min-width: 0; flex: 1; }
+.deck-id .code { font-size: 0.85rem; white-space: nowrap; }
+.deck-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tools { display: flex; gap: 0.25rem; }
+.icon-btn { width: 2.25rem; height: 2.25rem; border: 1px solid transparent; background: transparent; border-radius: 8px; display: grid; place-items: center; cursor: pointer; color: var(--muted); }
+.icon-btn:hover { background: var(--surface); color: var(--ink); }
+.icon-btn[aria-pressed="true"] { color: var(--ink); background: var(--surface-2); }
+.icon-btn svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn[hidden] { display: none; }
+
+/* Stage */
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+.stage.has-panel { grid-template-columns: minmax(0, 1fr) var(--panel-w); }
+.card { position: relative; min-height: 0; overflow: hidden; }
+.slide { position: absolute; inset: 0; padding: 2.2rem clamp(1.2rem, 4vw, 3.2rem); display: none; flex-direction: column; gap: 1rem; overflow: hidden; }
+.slide.is-active { display: flex; }
+.slide h1 { font-size: 2.6rem; line-height: 1.08; letter-spacing: -0.03em; margin: 0; font-weight: 700; }
+.slide h2 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0; font-weight: 650; }
+.slide p { margin: 0; }
+.slide .lead { font-size: 1.2rem; color: var(--muted); }
+.slide ul { margin: 0; padding-left: 1.2rem; }
+.slide li + li { margin-top: 0.35rem; }
+.notes { display: none; }
+
+/* Slide types */
+.slide[data-type="title"] { justify-content: center; }
+.slide[data-type="title"] .meta-list { display: grid; gap: 0.4rem; margin-top: 1rem; padding: 0; list-style: none; }
+.slide[data-type="title"] .meta-list li { display: flex; gap: 0.6rem; align-items: baseline; }
+.slide[data-type="question"] { justify-content: center; }
+.slide[data-type="summary"] .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; text-decoration: none; color: var(--ink); }
+.btn:hover { border-color: var(--muted); }
+.btn-main { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* Interactive markers */
+.term { border-bottom: 1.5px dotted var(--muted); cursor: help; }
+[data-detail] { position: relative; cursor: pointer; border-radius: var(--radius); outline: 1px solid transparent; transition: outline-color 0.15s; }
+[data-detail]:hover, [data-detail]:focus-visible { outline: 1px solid var(--muted); outline-offset: 4px; }
+[data-detail]::after { content: "i"; position: absolute; top: -0.55rem; right: -0.55rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: 600 0.72rem/1.1rem "Inter", sans-serif; text-align: center; font-style: italic; }
+[data-detail].is-open { outline: 2px solid var(--accent); outline-offset: 4px; }
+.tooltip { position: fixed; z-index: 50; max-width: 18rem; padding: 0.5rem 0.7rem; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 0.85rem; line-height: 1.4; pointer-events: none; opacity: 0; transition: opacity 0.12s; }
+.tooltip.is-on { opacity: 1; }
+
+/* Choice and check components */
+.choices { display: grid; gap: 0.5rem; padding: 0; margin: 0.4rem 0 0; list-style: none; }
+.choice { text-align: left; width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; display: flex; gap: 0.7rem; align-items: baseline; }
+.choice:hover { border-color: var(--muted); }
+.choice .key { font-weight: 600; color: var(--muted); }
+.choice[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); }
+.choice.is-correct { border-color: var(--ok); }
+.choice.is-wrong { border-color: var(--bad); }
+.verdict { min-height: 1.5rem; font-weight: 600; }
+.verdict.ok { color: var(--ok); }
+.verdict.bad { color: var(--bad); }
+
+/* Panel */
+.panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
+.stage.has-panel .panel { display: flex; }
+.panel-head { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.6rem 0 0.8rem; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 0.25rem; flex: 1; }
+.tab { border: none; background: none; padding: 0.55rem 0.7rem; cursor: pointer; color: var(--muted); font-weight: 600; font-size: 0.92rem; border-bottom: 2px solid transparent; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab[hidden] { display: none; }
+.panel-body { overflow: auto; padding: 1.1rem 1.2rem 1.5rem; flex: 1; font-size: 0.95rem; }
+.panel-body h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
+.panel-body p { margin: 0 0 0.75rem; }
+.panel-section[hidden] { display: none; }
+.empty-note { color: var(--muted); }
+.control { display: grid; gap: 0.35rem; margin-bottom: 1.1rem; }
+.control label { font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; gap: 1rem; }
+.control output { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 500; }
+.control input[type="range"] { width: 100%; accent-color: var(--accent); }
+details.acc { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); margin: 0 0 0.75rem; }
+details.acc > summary { list-style: none; cursor: pointer; padding: 0.6rem 0.8rem; font-weight: 600; display: flex; gap: 0.5rem; }
+details.acc > summary::-webkit-details-marker { display: none; }
+details.acc > summary::before { content: "▶"; font-size: 0.7rem; color: var(--muted); line-height: 1.6rem; }
+details.acc[open] > summary::before { content: "▼"; }
+details.acc > div { padding: 0 0.8rem 0.7rem; }
+
+/* Bottom bar */
+.bottombar { position: relative; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; gap: 0.75rem; border-top: 1px solid var(--line); padding: 0 1rem; }
+.nav-btn { width: 2.3rem; height: 2.3rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.25rem; line-height: 1; display: grid; place-items: center; }
+.nav-btn:disabled { opacity: 0.4; cursor: default; }
+.dots { display: flex; gap: 0.35rem; align-items: center; }
+.dots button { width: 0.6rem; height: 0.6rem; padding: 0; border-radius: 50%; border: 1px solid var(--muted); background: transparent; cursor: pointer; }
+.dots button[aria-current="step"] { background: var(--ink); border-color: var(--ink); }
+.counter { border: none; background: none; cursor: pointer; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 6px; }
+.counter:hover { background: var(--surface); color: var(--ink); }
+
+/* Overlays */
+.overlay { position: fixed; inset: var(--bar-h) 0 var(--bar-h); background: var(--bg); z-index: 40; overflow: auto; padding: 2rem clamp(1rem, 4vw, 3rem); display: none; }
+.overlay.is-on { display: block; }
+.overlay h2 { margin: 0 0 1rem; font-size: 1.4rem; }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.75rem; }
+.ov-grid button { text-align: left; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); cursor: pointer; display: grid; gap: 0.2rem; }
+.ov-grid button:hover { border-color: var(--muted); }
+.ov-grid button[aria-current="step"] { border-color: var(--accent); }
+.ov-grid .ov-type { font-size: 0.82rem; color: var(--muted); }
+.help-list { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.2rem; max-width: 40rem; margin: 0 0 1.5rem; }
+.help-list dt { font-weight: 600; }
+.help-list dd { margin: 0; color: var(--muted); }
+.kbd { display: inline-block; border: 1px solid var(--line); border-radius: 5px; padding: 0 0.35rem; font-size: 0.85rem; background: var(--surface); }
+.demo-term { border-bottom: 1.5px dotted var(--muted); }
+.demo-detail { display: inline-block; position: relative; padding: 0.1rem 0.5rem; border: 1px solid var(--line); border-radius: 8px; }
+.demo-detail::after { content: "i"; position: absolute; top: -0.5rem; right: -0.5rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: italic 600 0.7rem/1rem "Inter", sans-serif; text-align: center; }
+
+/* Narrow screens: panel becomes a bottom sheet */
+@media (max-width: 1099px) {
+  .stage.has-panel { grid-template-columns: minmax(0, 1fr); }
+  .panel { position: fixed; left: 0; right: 0; bottom: var(--bar-h); height: 62vh; z-index: 30; border-left: none; border-top: 1px solid var(--line); border-radius: 16px 16px 0 0; transform: translateY(105%); transition: transform 0.2s ease; display: flex; }
+  .panel { visibility: hidden; }
+  .stage.has-panel.sheet-open .panel { transform: translateY(0); visibility: visible; }
+  .stage:not(.has-panel) .panel { display: none; }
+}
+@media (max-width: 700px) and (orientation: portrait) {
+  .slide { overflow-y: auto; padding: 1.4rem 1.1rem 2rem; }
+  .slide h1 { font-size: 2rem; }
+  .slide h2 { font-size: 1.4rem; }
+  .dots { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media print {
+  body { display: block; height: auto; overflow: visible; }
+  .topbar, .bottombar, .panel, .overlay, .tooltip { display: none !important; }
+  .card { overflow: visible; }
+  .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
+  [data-detail]::after { display: none; }
+}
+</style>
+
+<!-- ===================== DECK STYLES (edit for each deck) ===================== -->
+<style id="deck-styles">
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 1rem; }
+.case-layout p + p { margin-top: 0.8rem; }
+.small-note { color: var(--muted); font-size: 0.9rem; }
+.facts { margin: 0; display: grid; gap: 0.5rem; }
+.facts > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.facts dt { color: var(--muted); font-size: 0.9rem; }
+.facts dd { margin: 0; font-weight: 600; text-align: right; }
+
+.cmp { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+.cmp th, .cmp td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cmp thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
+.cmp tbody th { font-weight: 600; color: var(--muted); width: 8rem; }
+
+.oc-bars { display: grid; gap: 0.9rem; padding: 0.6rem; }
+.oc-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3rem; gap: 0.8rem; align-items: center; }
+.oc-label { display: grid; gap: 0.1rem; }
+.oc-name { font-weight: 600; }
+.oc-status { color: var(--muted); font-size: 0.82rem; min-height: 1.1rem; }
+.oc-row .bar-track { height: 1.6rem; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
+.oc-row .bar-fill { height: 100%; border-radius: 6px; background: var(--muted); }
+.oc-row.is-chosen .bar-fill { background: var(--d1); }
+.oc-row.is-given-up .bar-fill { background: var(--d5); }
+.axis-note { color: var(--muted); font-size: 0.85rem; }
+.oc-result { font-weight: 600; min-height: 3.2rem; }
+
+.sorter { display: grid; gap: 0.9rem; align-content: start; }
+.sort-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
+.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; }
+.sort-hint { color: var(--muted); }
+.sort-btns { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.sort-btn { padding: 0.75rem 1.2rem; font-size: 1.05rem; }
+.sort-btn:disabled { cursor: default; }
+.sort-btn.is-correct { border: 2px solid var(--ok); }
+.sort-btn.is-wrong { border: 2px solid var(--bad); }
+.sort-why { color: var(--muted); min-height: 3rem; }
+
+.control select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 0.5rem 0.6rem; width: 100%; }
+
+@media (max-width: 900px) {
+  .case-layout { grid-template-columns: 1fr; }
+  .oc-row { grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SHELL MARKUP (do not edit) ===================== -->
+<header class="topbar">
+  <div class="deck-id"><span class="dot" id="deck-dot"></span><span class="code" id="deck-code"></span><span class="deck-title" id="deck-title"></span></div>
+  <div class="tools">
+    <button class="icon-btn" id="btn-panel" aria-label="Show or hide the panel" title="Panel" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+    <button class="icon-btn" id="btn-help" aria-label="Help" title="Help (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg></button>
+    <button class="icon-btn" id="btn-theme" aria-label="Switch light or dark mode" title="Light or dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    <button class="icon-btn" id="btn-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+</header>
+
+<main class="stage" id="stage">
+  <div class="card" id="card">
+
+<!-- ===================== CONTENT (edit for each deck) ===================== -->
+
+<!-- Slide 1: Title -->
+<section class="slide" data-type="title" data-title="Explain veterinary economics">
+  <p class="code">C1 Epidemiological and economic thinking</p>
+  <h1>Explain veterinary economics</h1>
+  <p class="lead">A farm has a limited budget and three useful measures. How should the owner choose?</p>
+  <ul class="meta-list">
+    <li><span class="code">S1.2</span><span>Explain what veterinary economics is</span></li>
+    <li><span class="code">Time</span><span>About 15 minutes</span></li>
+    <li><span class="code">Before</span><span><a href="./explain-epidemiology.html">Explain epidemiology</a></span></li>
+  </ul>
+</section>
+
+<!-- Slide 2: Anchor case recap -->
+<section class="slide" data-type="concept" data-title="The anchor case">
+  <h2>The case: a layer farm in South Sulawesi</h2>
+  <div class="case-layout">
+    <div>
+      <p>The farm loses 120 of its 8,000 hens in one week, mostly in two pens next to the water inlet. The laboratory later finds Salmonella in the hens, and eggs from the same pens have already reached buyers.</p>
+      <p>Your role: technical consultant (GP3.1), two years after graduation. The owner asks what the problem costs and what to do with a limited budget.</p>
+      <p class="small-note">These numbers are synthetic and are for teaching.</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Hens in the flock</dt><dd class="num">8,000</dd></div>
+      <div><dt>Deaths in one week</dt><dd class="num">120</dd></div>
+      <div><dt>Pens most affected</dt><dd class="num">2</dd></div>
+      <div><dt>Laboratory result</dt><dd>Salmonella in the hens</dd></div>
+      <div><dt>Budget left this month</dt><dd class="num">IDR 15,000,000</dd></div>
+    </dl>
+  </div>
+  <div class="notes">Read the two sentences aloud. Then ask the class who is affected by this problem besides the owner. List the answers on the board. Use the list on slide 6.</div>
+</section>
+
+<!-- Slide 3: Question -->
+<section class="slide" data-type="question" data-title="Predict first">
+  <h2>The budget pays for one measure. Which one do you choose first?</h2>
+  <p>Each measure costs IDR 15,000,000. Choose your prediction.</p>
+  <ul class="choices" data-choice="predict">
+    <li><button class="choice" data-value="a"><span class="key">A</span>Test eggs from the two pens for Salmonella</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>Repair the water line and disinfect the two pens</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>Vaccinate the next flock against Salmonella</button></li>
+  </ul>
+  <p class="verdict" id="predict-note" aria-live="polite"></p>
+</section>
+
+<!-- Slide 4: Explore, opportunity cost -->
+<section class="slide" data-type="explore" data-title="Choose and see what you give up" data-panel="controls">
+  <h2>Every choice gives up the best alternative</h2>
+  <div class="oc-bars" data-detail="d-values" tabindex="0" aria-label="Estimated loss avoided by each measure. Select for details.">
+    <div class="oc-row" id="oc-a"><span class="oc-label"><span class="oc-name">A. Test eggs for Salmonella</span><small class="oc-status"></small></span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="num oc-val">20</span></div>
+    <div class="oc-row" id="oc-b"><span class="oc-label"><span class="oc-name">B. Repair the water line</span><small class="oc-status"></small></span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="num oc-val">45</span></div>
+    <div class="oc-row" id="oc-c"><span class="oc-label"><span class="oc-name">C. Vaccinate the next flock</span><small class="oc-status"></small></span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="num oc-val">30</span></div>
+  </div>
+  <p class="axis-note">Estimated loss avoided, in IDR million</p>
+  <p class="oc-result" id="oc-result" aria-live="polite">Choose a measure in the panel.</p>
+  <div class="notes">Ask a student to choose A, then B, then C. Each time, ask which alternative the farm gives up and what that is worth. Then ask why the cost of the measure is the same in all three cases and the opportunity cost is not.</div>
+</section>
+
+<!-- Slide 5: Concept, value of animal health -->
+<section class="slide" data-type="concept" data-title="The value at risk">
+  <h2>Disease takes value away, and control protects it</h2>
+  <p>The analysis must say which values it counts. The case touches five of them.</p>
+  <table class="cmp">
+    <thead><tr><th scope="col">Value</th><th scope="col">What disease takes away</th><th scope="col">In the case</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Production</th><td>Meat, milk, or eggs</td><td>Dead hens and fewer eggs from the two pens</td></tr>
+      <tr><th scope="row">Product quality</th><td>Quality and safety of the product</td><td>Salmonella in the eggs</td></tr>
+      <tr><th scope="row">Trade</th><td>Access to markets</td><td>Buyers can stop buying eggs from the farm</td></tr>
+      <tr><th scope="row">Welfare</th><td>Good states of the animals</td><td>Sick hens suffer before they die</td></tr>
+      <tr><th scope="row">Public health</th><td>Health of people</td><td>People can fall ill from eggs with Salmonella</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 6: Explore, private and public benefits -->
+<section class="slide" data-type="explore" data-title="Who receives the benefit" data-panel="controls">
+  <h2>Who receives the benefit of control?</h2>
+  <div class="sorter">
+    <div class="sort-top"><span class="num" id="s6-pos"></span><span class="num" id="s6-score"></span></div>
+    <p class="sort-q" id="s6-q"></p>
+    <p class="sort-hint" id="s6-hint" hidden>Ask: does the benefit go to the owner who pays, or to people who do not take part in the decision?</p>
+    <div class="sort-btns" id="s6-btns">
+      <button class="btn sort-btn" data-answer="O">Mostly the owner</button>
+      <button class="btn sort-btn" data-answer="P">Mostly other people</button>
+    </div>
+    <p class="verdict" id="s6-verdict" aria-live="polite"></p>
+    <p class="sort-why" id="s6-why"></p>
+    <div><button class="btn btn-main" id="s6-next" hidden>Show the next statement</button></div>
+  </div>
+  <div class="notes">Ask the class to vote before you reveal each answer. Link statement 3 to the word externality. Ask who should pay for a measure whose benefit goes mostly to other people.</div>
+</section>
+
+<!-- Slide 7: Concept, epidemiology and economics together -->
+<section class="slide" data-type="concept" data-title="Two answers, one decision">
+  <h2>A decision needs an epidemiological and an economic answer</h2>
+  <table class="cmp">
+    <thead><tr><th scope="col">Comparison</th><th scope="col">Epidemiology</th><th scope="col">Economics</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Question</th><td>What happens to the disease with and without the measure?</td><td>What is the change worth, what does the measure cost, and who benefits?</td></tr>
+      <tr><th scope="row">In the case</th><td>Repairing the water line may stop the deaths in the two pens.</td><td>The farm avoids a loss of IDR 45,000,000 for a cost of IDR 15,000,000.</td></tr>
+      <tr><th scope="row">Result</th><td>Fewer cases of disease</td><td>A comparison of value, cost, and benefit between measures</td></tr>
+    </tbody>
+  </table>
+  <p>A measure can work and still cost more than it saves. The decision maker needs both answers.</p>
+</section>
+
+<!-- Slide 8: Check, opportunity cost -->
+<section class="slide" data-type="check" data-title="Check: opportunity cost">
+  <h2>The owner uses one free day of her own labour to repair the water line. What is the opportunity cost?</h2>
+  <div>
+    <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>The price of the pipes and tools used for the repair</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>The value of the best other use of that day of labour</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>The total amount that the farm spent during the month</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 9: Check, transfer to dairy cattle -->
+<section class="slide" data-type="check" data-title="Check: a new case">
+  <h2>A new case: a dairy cooperative</h2>
+  <p>A cooperative of dairy farmers can pay for one measure this year. The options are milking hygiene to lower mastitis, or testing and removal of cattle with brucellosis. This scenario is synthetic and is for teaching.</p>
+  <p><strong>Which benefit of brucellosis control is a public benefit?</strong></p>
+  <div>
+    <ul class="choices" data-check="q2" data-answer="c" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>More milk and fewer abortions in the herds that are tested</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Fewer cows that the owner must replace each year</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Fewer human cases among people who handle raw milk</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 10: Summary -->
+<section class="slide" data-type="summary" data-title="Summary">
+  <h2>Key points</h2>
+  <ul>
+    <li>Veterinary economics applies economic principles to animal health, to decide how to use scarce resources.</li>
+    <li>The opportunity cost of a choice is the value of the best alternative that the choice gives up.</li>
+    <li>Disease takes away production, product quality, trade, welfare, and public health, and control protects these values.</li>
+    <li>Some benefits of control go to the owner and others go to other people. The person who pays is not always the person who gains.</li>
+    <li>Epidemiology estimates what happens to disease, and economics estimates what it is worth and what it costs.</li>
+  </ul>
+  <div class="links">
+    <a class="btn" href="../encyclopedia/veterinary-economics.html">Read the article: Veterinary economics</a>
+    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-2">Open skill S1.2</a>
+  </div>
+</section>
+
+<!-- Details -->
+<template id="d-values">
+  <h3>About these values</h3>
+  <p>These numbers are synthetic and are for teaching. Each measure costs IDR 15,000,000.</p>
+  <p>The bars show the estimated loss that each measure avoids, in IDR million. Measure B avoids the most loss, and measure A avoids the least.</p>
+  <p>The opportunity cost of a choice is the value of the best alternative that you give up. It differs from the cost of the measure.</p>
+</template>
+<template id="d-q1">
+  <h3>Answer: B</h3>
+  <p>The opportunity cost is the value of the best alternative use of a resource. Here the resource is one day of labour.</p>
+  <p>The price of the pipes is a financial cost. The total spending of the month does not describe the alternative use of this day.</p>
+</template>
+<template id="d-q2">
+  <h3>Answer: C</h3>
+  <p>People who handle raw milk are not part of the decision of the cooperative. Their benefit is a public benefit.</p>
+  <p>Options A and B describe gains for the owner of the herd, so they are private benefits.</p>
+</template>
+
+  </div><!-- /card -->
+
+  <aside class="panel" id="panel" aria-label="Panel">
+    <div class="panel-head">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tab-controls" aria-selected="true" data-tab="controls">Controls</button>
+        <button class="tab" role="tab" id="tab-details" aria-selected="false" data-tab="details">Details</button>
+        <button class="tab" role="tab" id="tab-notes" aria-selected="false" data-tab="notes" hidden>Notes</button>
+      </div>
+      <button class="icon-btn" id="btn-close" aria-label="Close the panel" title="Close (Esc)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-section" id="sec-controls"></div>
+      <div class="panel-section" id="sec-details" hidden><p class="empty-note">Select an element marked with "i" on the slide to see details here.</p></div>
+      <div class="panel-section" id="sec-notes" hidden></div>
+    </div>
+  </aside>
+
+<!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
+<div class="controls" data-for-slide="4" hidden>
+  <div class="control"><label for="oc-select">Measure that you choose</label>
+    <select id="oc-select">
+      <option value="">Select a measure</option>
+      <option value="a">A. Test eggs for Salmonella</option>
+      <option value="b">B. Repair the water line</option>
+      <option value="c">C. Vaccinate the next flock</option>
+    </select>
+  </div>
+  <button class="btn" data-reset>Reset the controls</button>
+</div>
+<div class="controls" data-for-slide="6" hidden>
+  <div class="control"><label for="in-hint6">Show a hint <input type="checkbox" id="in-hint6"></label></div>
+  <button class="btn" id="s6-reset" data-reset>Reset the sorting</button>
+</div>
+
+<!-- ===================== END OF CONTENT ===================== -->
+</main>
+
+<footer class="bottombar">
+  <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="counter" id="counter" aria-label="Open the overview"></button>
+  <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+</footer>
+
+<div class="overlay" id="overview" role="dialog" aria-label="Overview"><h2>All slides</h2><div class="ov-grid" id="ov-grid"></div></div>
+<div class="overlay" id="help" role="dialog" aria-label="Help">
+  <h2>How to use these slides</h2>
+  <dl class="help-list">
+    <dt><span class="demo-term">Dotted text</span></dt><dd>A term with a short definition. Hover or tap it.</dd>
+    <dt><span class="demo-detail">Box</span></dt><dd>An element with an "i" opens details in the panel. Click it or press Enter.</dd>
+    <dt><span class="kbd">→</span> <span class="kbd">Space</span> <span class="kbd">Page Down</span></dt><dd>Next slide</dd>
+    <dt><span class="kbd">←</span> <span class="kbd">Page Up</span></dt><dd>Previous slide</dd>
+    <dt><span class="kbd">Home</span> <span class="kbd">End</span></dt><dd>First or last slide</dd>
+    <dt><span class="kbd">F</span></dt><dd>Full screen</dd>
+    <dt><span class="kbd">O</span></dt><dd>Overview of all slides</dd>
+    <dt><span class="kbd">N</span></dt><dd>Lecturer notes</dd>
+    <dt><span class="kbd">Esc</span></dt><dd>Close the panel or this screen</dd>
+  </dl>
+  <button class="btn" id="btn-help-close">Close</button>
+</div>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+
+<!-- ===================== SHELL SCRIPT (do not edit) ===================== -->
+<script id="shell-script">
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const root = document.documentElement;
+  const meta = JSON.parse($('#deck-meta').textContent);
+  const domVar = { D0: '--d0', D1: '--d1', D2: '--d2', D3: '--d3', D4: '--d4', D5: '--d5', Integration: '--dint' };
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+  // Theme
+  const saved = store.get('eev-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+  $('#btn-theme').addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; store.set('eev-theme', root.dataset.theme); });
+
+  // Top bar
+  $('#deck-title').textContent = meta.title;
+  $('#deck-code').textContent = meta.domain === 'Integration' ? meta.competency : meta.domain + ' ' + meta.competency;
+  $('#deck-dot').style.background = 'var(' + (domVar[meta.domain] || '--d0') + ')';
+
+  // Slides and navigation
+  const slides = $$('.slide');
+  const stage = $('#stage');
+  let current = 0, notesMode = false, panelClosed = false;
+  const dots = $('#dots'), ovGrid = $('#ov-grid');
+  slides.forEach((s, i) => {
+    const t = s.dataset.title || ('Slide ' + (i + 1));
+    const d = document.createElement('button'); d.title = (i + 1) + '. ' + t; d.setAttribute('aria-label', 'Slide ' + (i + 1) + ': ' + t);
+    d.addEventListener('click', () => go(i)); dots.appendChild(d);
+    const o = document.createElement('button'); o.innerHTML = '<span class="ov-type"></span><strong></strong>';
+    o.querySelector('.ov-type').textContent = (i + 1) + '. ' + (s.dataset.type || '');
+    o.querySelector('strong').textContent = t;
+    o.addEventListener('click', () => { closeOverlays(); go(i); }); ovGrid.appendChild(o);
+  });
+  const controlsByslide = {};
+  const store2 = document.createElement('div'); store2.hidden = true; document.body.appendChild(store2);
+  $$('.controls').forEach(c => { controlsByslide[c.dataset.forSlide] = c; c.hidden = false; store2.appendChild(c); c._defaults = $$('input, select', c).map(el => [el, el.type === 'checkbox' ? el.checked : el.value]); });
+  const secControls = $('#sec-controls'), secDetails = $('#sec-details'), secNotes = $('#sec-notes');
+  const detailEmpty = secDetails.innerHTML;
+
+  function setTab(name) {
+    ['controls', 'details', 'notes'].forEach(n => { $('#tab-' + n).setAttribute('aria-selected', String(n === name)); $('#sec-' + n).hidden = n !== name; });
+  }
+  function hasPanelContent(s) { return s.dataset.panel === 'controls' || s.querySelector('[data-detail]') || s.querySelector('[data-explain]') || (notesMode && s.querySelector('.notes')); }
+  function updatePanel() {
+    const s = slides[current];
+    const ctl = controlsByslide[String(current + 1)];
+    Array.from(secControls.children).forEach(ch => store2.appendChild(ch)); if (ctl) secControls.appendChild(ctl);
+    $('#tab-controls').hidden = !ctl;
+    const note = s.querySelector('.notes');
+    $('#tab-notes').hidden = !(notesMode && note);
+    secNotes.innerHTML = note ? '<h3>Lecturer notes</h3><p></p>' : ''; if (note) secNotes.querySelector('p').textContent = note.textContent.trim();
+    secDetails.innerHTML = detailEmpty;
+    $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
+    const show = hasPanelContent(s);
+    $('#btn-panel').hidden = !show;
+    stage.classList.toggle('has-panel', show && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(show && !panelClosed));
+    stage.classList.remove('sheet-open');
+    setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
+  }
+  function go(i, fromHash) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    panelClosed = false;
+    slides.forEach((s, k) => s.classList.toggle('is-active', k === current));
+    $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $('#counter').textContent = (current + 1) + ' / ' + slides.length;
+    $('#btn-prev').disabled = current === 0; $('#btn-next').disabled = current === slides.length - 1;
+    if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
+    hideTip(); updatePanel();
+    document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
+  }
+  $('#btn-prev').addEventListener('click', () => go(current - 1));
+  $('#btn-next').addEventListener('click', () => go(current + 1));
+
+  // Panel
+  $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
+  $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
+  $('#btn-panel').addEventListener('click', () => {
+    if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
+    panelClosed = stage.classList.contains('has-panel'); updatePanel();
+  });
+  function openDetail(el) {
+    const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
+    secDetails.innerHTML = ''; secDetails.appendChild(tpl.content.cloneNode(true));
+    $$('[data-detail].is-open').forEach(x => x.classList.remove('is-open'));
+    if (el.dataset.detail) el.classList.add('is-open');
+    panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').hidden = false;
+    if (window.innerWidth < 1100) stage.classList.add('sheet-open');
+    setTab('details');
+  }
+  $$('[data-detail]').forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.tabIndex = 0;
+    el.addEventListener('click', () => openDetail(el));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); openDetail(el); } });
+  });
+
+  // Reset buttons
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-reset]'); if (!b) return;
+    const c = b.closest('.controls'); if (!c) return;
+    c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+  });
+
+  // Choices (predictions) and checks
+  $$('[data-choice], [data-check]').forEach(list => {
+    $$('.choice', list).forEach(btn => btn.addEventListener('click', () => {
+      $$('.choice', list).forEach(b => { b.setAttribute('aria-pressed', 'false'); b.classList.remove('is-correct', 'is-wrong'); });
+      btn.setAttribute('aria-pressed', 'true');
+      if (list.dataset.check) {
+        const ok = btn.dataset.value === list.dataset.answer;
+        const right = $('.choice[data-value="' + list.dataset.answer + '"]', list);
+        btn.classList.add(ok ? 'is-correct' : 'is-wrong'); right.classList.add('is-correct');
+        const v = list.parentElement.querySelector('.verdict');
+        if (v) { v.textContent = ok ? 'Correct.' : 'Not correct. The answer is ' + right.querySelector('.key').textContent + '.'; v.className = 'verdict ' + (ok ? 'ok' : 'bad'); }
+        if (list.dataset.explain) openDetail(list);
+      }
+    }));
+  });
+
+  // Tooltips
+  const tip = $('#tooltip'); let tipFor = null;
+  function showTip(el) {
+    tip.textContent = el.dataset.tip; tip.classList.add('is-on'); tipFor = el;
+    const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect();
+    let x = Math.min(Math.max(8, r.left + r.width / 2 - t.width / 2), window.innerWidth - t.width - 8);
+    let y = r.top - t.height - 8; if (y < 8) y = r.bottom + 8;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip() { tip.classList.remove('is-on'); tipFor = null; }
+  $$('.term[data-tip]').forEach(el => {
+    el.tabIndex = 0;
+    el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('focus', () => showTip(el)); el.addEventListener('blur', hideTip);
+    el.addEventListener('click', e => { e.stopPropagation(); tipFor === el ? hideTip() : showTip(el); });
+  });
+  document.addEventListener('click', e => { if (tipFor && !e.target.closest('.term')) hideTip(); });
+
+  // Overlays
+  function closeOverlays() { $$('.overlay').forEach(o => o.classList.remove('is-on')); }
+  function toggleOverlay(id) { const o = $('#' + id); const on = !o.classList.contains('is-on'); closeOverlays(); o.classList.toggle('is-on', on); }
+  $('#counter').addEventListener('click', () => toggleOverlay('overview'));
+  $('#btn-help').addEventListener('click', () => toggleOverlay('help'));
+  $('#btn-help-close').addEventListener('click', closeOverlays);
+
+  // Full screen
+  function toggleFull() {
+    const el = document.documentElement;
+    if (document.fullscreenElement || document.webkitFullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+    else if (el.requestFullscreen || el.webkitRequestFullscreen) { (el.requestFullscreen || el.webkitRequestFullscreen).call(el); }
+    else { root.classList.toggle('is-full'); }
+  }
+  $('#btn-full').addEventListener('click', toggleFull);
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const k = e.key;
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); go(current + 1); }
+    else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else if (k === 'f' || k === 'F') toggleFull();
+    else if (k === 'o' || k === 'O') toggleOverlay('overview');
+    else if (k === '?') toggleOverlay('help');
+    else if (k === 'n' || k === 'N') { notesMode = !notesMode; panelClosed = false; updatePanel(); if (notesMode && slides[current].querySelector('.notes')) setTab('notes'); }
+    else if (k === 'Escape') { if ($('.overlay.is-on')) closeOverlays(); else if (tipFor) hideTip(); else if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); } }
+  });
+
+  // Swipe on the main card
+  let sx = null, sy = null;
+  const card = $('#card');
+  card.addEventListener('touchstart', e => {
+    if (e.target.closest('input, select, textarea, button, svg, canvas, [data-noswipe]')) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  card.addEventListener('touchend', e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(current + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+
+  // Seeded random numbers and URL parameters for deck scripts
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const params = new URLSearchParams(location.search);
+  window.Deck = {
+    meta, params,
+    rng: seed => mulberry32(Number(seed) || 1),
+    newSeed: () => Math.floor(Math.random() * 1e6),
+    seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
+    current: () => current, go,
+    onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
+  };
+
+  window.addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if (n) go(n - 1, true); });
+  const start = parseInt(location.hash.slice(1), 10);
+  go(start ? start - 1 : 0, true);
+})();
+</script>
+
+<!-- ===================== DECK SCRIPT (edit for each deck) ===================== -->
+<script id="deck-script">
+(function () {
+  const $ = id => document.getElementById(id);
+
+  // Slide 3: reveal a note after a prediction
+  const note = $('predict-note');
+  document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
+    note.className = 'verdict';
+    note.textContent = 'No option is correct yet. Each measure protects a different value, and the next slides show how to compare them.';
+  }));
+
+  // Slide 4: opportunity cost of a choice
+  const opts = { a: { name: 'A', v: 20 }, b: { name: 'B', v: 45 }, c: { name: 'C', v: 30 } };
+  const sel = $('oc-select'), result = $('oc-result');
+  function renderOc() {
+    const pick = sel.value;
+    Object.keys(opts).forEach(k => {
+      const row = $('oc-' + k); row.classList.remove('is-chosen', 'is-given-up');
+      row.querySelector('.oc-status').textContent = '';
+    });
+    if (!pick) { result.textContent = 'Choose a measure in the panel.'; return; }
+    const others = Object.keys(opts).filter(k => k !== pick);
+    const best = others.reduce((m, k) => opts[k].v > opts[m].v ? k : m, others[0]);
+    $('oc-' + pick).classList.add('is-chosen');
+    $('oc-' + pick).querySelector('.oc-status').textContent = 'Chosen';
+    $('oc-' + best).classList.add('is-given-up');
+    $('oc-' + best).querySelector('.oc-status').textContent = 'Best alternative given up';
+    result.textContent = 'You chose measure ' + opts[pick].name + ' and avoid a loss of IDR ' + opts[pick].v + ' million. The opportunity cost is IDR ' + opts[best].v + ' million, the value of measure ' + opts[best].name + '.';
+  }
+  sel.addEventListener('input', renderOc); sel.addEventListener('change', renderOc);
+  renderOc();
+
+  // Slide 6: sort four statements
+  function makeSorter(p, items, hintBoxId, resetId, texts) {
+    const qEl = $(p + '-q'), posEl = $(p + '-pos'), scoreEl = $(p + '-score'), verdict = $(p + '-verdict'),
+          why = $(p + '-why'), next = $(p + '-next'), btns = $(p + '-btns'), hint = $(p + '-hint'), hintBox = $(hintBoxId);
+    const buttons = Array.from(btns.querySelectorAll('.sort-btn'));
+    let idx = 0, score = 0, answered = false, finished = false;
+    function render() {
+      finished = false; answered = false;
+      qEl.textContent = items[idx].q;
+      posEl.textContent = 'Statement ' + (idx + 1) + ' of ' + items.length;
+      scoreEl.textContent = 'Correct so far: ' + score;
+      verdict.textContent = ''; verdict.className = 'verdict'; why.textContent = '';
+      next.hidden = true; btns.hidden = false;
+      buttons.forEach(b => { b.disabled = false; b.classList.remove('is-correct', 'is-wrong'); });
+    }
+    function reset() { idx = 0; score = 0; render(); }
+    function showResult() {
+      finished = true;
+      posEl.textContent = 'Result'; scoreEl.textContent = '';
+      qEl.textContent = 'You sorted ' + score + ' of ' + items.length + ' statements correctly.';
+      verdict.textContent = ''; verdict.className = 'verdict';
+      why.textContent = texts.summary;
+      btns.hidden = true; next.textContent = 'Reset the sorting'; next.hidden = false;
+    }
+    buttons.forEach(b => b.addEventListener('click', () => {
+      if (answered) return;
+      answered = true;
+      const item = items[idx], ok = b.dataset.answer === item.a;
+      if (ok) score++;
+      buttons.forEach(x => { x.disabled = true; });
+      b.classList.add(ok ? 'is-correct' : 'is-wrong');
+      if (!ok) buttons.find(x => x.dataset.answer === item.a).classList.add('is-correct');
+      verdict.textContent = ok ? 'Correct.' : 'Not correct. This benefit goes mostly to ' + texts.label[item.a] + '.';
+      verdict.className = 'verdict ' + (ok ? 'ok' : 'bad');
+      why.textContent = item.why;
+      scoreEl.textContent = 'Correct so far: ' + score;
+      next.textContent = idx === items.length - 1 ? 'Show the result' : 'Show the next statement';
+      next.hidden = false;
+    }));
+    next.addEventListener('click', () => {
+      if (finished) { reset(); return; }
+      if (idx === items.length - 1) { showResult(); return; }
+      idx++; render();
+    });
+    $(resetId).addEventListener('click', reset);
+    function syncHint() { hint.hidden = !hintBox.checked; }
+    hintBox.addEventListener('input', syncHint); hintBox.addEventListener('change', syncHint);
+    render(); syncHint();
+  }
+  makeSorter('s6', [
+    { q: 'The farm keeps selling eggs to its regular buyers.', a: 'O', why: 'The income of the farm is protected. This is a private benefit.' },
+    { q: 'Buyers avoid illness from eggs that carry Salmonella.', a: 'P', why: 'These people do not take part in the decision of the owner. Their benefit is public.' },
+    { q: 'Neighbouring farms avoid the spread of the infection.', a: 'P', why: 'The effect reaches farms that did not take part in the decision. Economists call this an externality.' },
+    { q: 'The owner avoids the loss of the next flock.', a: 'O', why: 'The loss would fall on the owner, so the benefit is private.' }
+  ], 'in-hint6', 's6-reset', {
+    label: { O: 'the owner', P: 'other people' },
+    summary: 'A benefit is private when it goes to the owner who pays for the measure. A benefit is public when it reaches other people.'
+  });
+})();
+</script>
+</body>
+</html>
