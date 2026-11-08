@@ -15,3 +15,8 @@
   path: /slides/explain-veterinary-economics.html
   description: Explain scarcity, opportunity cost, the value of animal health, and private and public benefits.
   categories: [C1, S1.2]
+- title: Link approaches to domains
+  type: slides
+  path: /slides/link-approaches-to-domains.html
+  description: Link each approach of epidemiology to a domain and place a problem in the five questions and the information-to-action loop.
+  categories: [C1, S1.4, S1.7]
