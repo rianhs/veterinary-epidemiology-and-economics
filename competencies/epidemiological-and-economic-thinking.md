@@ -162,13 +162,13 @@ listing:
 <div class="skill-body"><p class="skill-scope">One animal versus a population. The same disease seen at two levels.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-1"><span class="code">S1.1</span> Explain the definition of epidemiology</a></li></ul></div>
-<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Match the population status of a disease to an objective</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Identify the levels of analysis in a problem</a></li></ul></div></div></div>
+<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Match the disease status of a population to an objective</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Identify the levels of analysis in a problem</a></li></ul></div></div></div>
 ```
 
 ::: {#m-s1-2 .skill-materials}
 :::
 
-## S1.3 Match the population status of a disease to an objective {#s1-3}
+## S1.3 Match the disease status of a population to an objective {#s1-3}
 
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Status: free, exposed, sporadic, endemic, outbreak, epidemic, pandemic, under control, eliminated. Objective: reduce the problem or keep it out.</p>
@@ -233,7 +233,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Population, outcome, decision, decision maker, and objective.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Match the population status of a disease to an objective</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-4"><span class="code">S1.4</span> Explain what veterinary economics is</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Identify the levels of analysis in a problem</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-7"><span class="code">S1.7</span> Place a problem in the five questions</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Match the disease status of a population to an objective</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-4"><span class="code">S1.4</span> Explain what veterinary economics is</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Identify the levels of analysis in a problem</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-7"><span class="code">S1.7</span> Place a problem in the five questions</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-9"><span class="code">S1.9</span> List the information that a decision needs</a></li><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li><li><a href="evaluating-interventions.html#s18-1"><span class="code">S18.1</span> Define evaluation objectives and indicators</a></li></ul></div></div></div>
 ```
 
