@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Match population status to objective</title>
+<title>Match the disease status of a population to an objective</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,26 +18,29 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     SVG figure classes (.fig), and a Reset button that also resets inputs made later.
+     Add ?steps=all to the URL to show all steps (for review and printing).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
 
 <script type="application/json" id="deck-meta">
 {
-  "title": "Match population status to objective",
+  "title": "Match the disease status of a population to an objective",
   "domain": "D0",
   "competency": "C1",
   "skills": {
-    "primary": "S1.5",
+    "primary": "S1.3",
     "secondary": []
   },
-  "minutes": 15,
+  "minutes": 20,
   "articles": [
     "population-status-of-disease"
   ],
   "guides": [],
   "status": "draft",
-  "updated": "2026-11-08"
+  "updated": "2026-11-09"
 }
 </script>
 
@@ -131,6 +134,43 @@ a { color: var(--accent); }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
 
+/* Reveal steps */
+.step-hidden { visibility: hidden; opacity: 0; }
+.slide [data-step] { transition: opacity 0.2s; }
+.step-btn { margin-top: auto; align-self: flex-start; }
+.step-btn[hidden] { display: none; }
+
+/* Card sorter */
+.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
+.sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
+.sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
+.sort-card:hover { border-color: var(--muted); }
+.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); }
+.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.sort-card.is-wrong { border-color: var(--bad); }
+.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* SVG figures */
+.fig { display: block; width: 100%; height: auto; max-height: 100%; }
+.fig text { fill: var(--ink); font-family: inherit; font-size: 15px; }
+.fig .t-muted { fill: var(--muted); }
+.fig .t-strong { font-weight: 600; }
+.fig .f-box { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-soft { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .f-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-arrow { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+.fig .f-accent { fill: var(--accent); }
+.fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
+.fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -203,63 +243,89 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .card { overflow: visible; }
   .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
   [data-detail]::after { display: none; }
+  .step-hidden { visibility: visible; opacity: 1; }
+  .step-btn { display: none; }
 }
 </style>
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 1rem; }
-.case-layout p + p { margin-top: 0.8rem; }
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
+.case-layout p + p { margin-top: 0.9rem; }
+.case-layout p { font-size: 1.15rem; }
 .small-note { color: var(--muted); font-size: 0.9rem; }
-.facts { margin: 0; display: grid; gap: 0.5rem; }
-.facts > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
-.facts dt { color: var(--muted); font-size: 0.9rem; }
-.facts dd { margin: 0; font-weight: 600; text-align: right; }
+.penfig { margin: 0; padding: 0.4rem; display: grid; gap: 0.6rem; }
+.penfig figcaption { color: var(--muted); font-size: 0.9rem; }
+.penmap { display: grid; grid-template-columns: auto 1fr; gap: 0.6rem; align-items: stretch; }
+.inlet { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; padding: 0.5rem 0.4rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); font-weight: 600; font-size: 0.85rem; }
+.pens { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; }
+.pen { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 0.5rem 0.6rem; display: grid; gap: 0.1rem; }
+.pen.hot { border: 2px solid var(--d2); background: var(--surface-2); }
+.pen-id { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+.pen-n { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
 
-.cmp { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
-.cmp th, .cmp td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.cmp thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.cmp tbody th { font-weight: 600; color: var(--muted); width: 5.5rem; white-space: nowrap; }
-.ddot { display: inline-block; width: 0.65rem; height: 0.65rem; border-radius: 50%; margin-right: 0.45rem; }
+.fig-wrap { flex: 1; min-height: 0; display: flex; }
+.fig-wrap .fig { height: 100%; width: 100%; }
+.fig .dot-non { fill: var(--d1); }
+.fig .dot-case { fill: var(--d2); stroke: var(--ink); stroke-width: 2; }
+.fig .box-on { fill: var(--surface); stroke: var(--ink); stroke-width: 4; }
+.fig .box-off { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .bar-hot { fill: var(--d2); stroke: var(--ink); stroke-width: 2; }
+.fig .bar-n { fill: var(--d1); }
+.fig .exp-line { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 6 5; }
+.fig .dim { opacity: 0.38; }
 
-.sorter { display: grid; gap: 0.9rem; align-content: start; }
-.sort-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
-.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; }
-.sort-hint { color: var(--muted); }
-.sort-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.sort-btn { padding: 0.65rem 1rem; font-size: 1rem; }
-.sort-btn:disabled { cursor: default; }
-.sort-btn.is-correct { border: 2px solid var(--ok); }
-.sort-btn.is-wrong { border: 2px solid var(--bad); }
-.sort-why { color: var(--muted); min-height: 3rem; }
+.vcenter { justify-content: center; }
+.big-def { font-size: 2.5rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin-top: 0.6rem; }
+.under-fig { font-size: 1.15rem; }
 
-.loop-fig { width: 100%; height: auto; max-height: 15rem; }
-.loop-fig .lnode { cursor: pointer; }
-.loop-fig .lnode rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1; }
-.loop-fig .lnode text { fill: var(--ink); font-family: "Inter", system-ui, sans-serif; }
-.loop-fig .lnode .l1 { font-size: 14px; font-weight: 600; }
-.loop-fig .lnode .l2 { font-size: 12px; fill: var(--muted); }
-.loop-fig .lnode.is-active rect { fill: var(--accent); stroke: var(--accent); stroke-width: 2; }
-.loop-fig .lnode.is-active text { fill: var(--accent-ink); }
-.loop-fig .lnode.is-active .l2 { fill: var(--accent-ink); }
-.loop-fig .lnode:focus-visible rect { outline: 2px solid var(--accent); outline-offset: 2px; }
-.loop-fig .arrows { color: var(--muted); }
-.loop-text { padding: 0.2rem 0.4rem; min-height: 7.5rem; }
-.loop-text h3 { margin: 0 0 0.3rem; font-size: 1.15rem; }
-.loop-text p { margin: 0 0 0.4rem; }
-.loop-q { color: var(--muted); }
+.st-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
+.st-row > div { border-top: 2px solid var(--muted); padding-top: 0.5rem; display: grid; gap: 0.25rem; align-content: start; }
+.st-row h3 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+.st-row p { font-size: 1.05rem; }
 
-.control output { margin-left: 0.5rem; }
-@media (max-width: 900px) { .case-layout { grid-template-columns: 1fr; } }
+.ex-layout { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr); gap: 1.6rem; flex: 1; min-height: 0; align-items: start; }
+.ex-layout .fig { width: 100%; height: auto; max-height: 100%; }
+.ex-table { border-collapse: collapse; width: 100%; font-size: 1.02rem; }
+.ex-table th, .ex-table td { text-align: left; padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
+.ex-table tbody th { font-weight: 600; color: var(--muted); width: 7.2rem; }
 
-.cmp-tight { font-size: 0.82rem; }
-.cmp-tight th, .cmp-tight td { padding: 0.28rem 0.7rem; }
-.cmp-tight tbody th { width: 9rem; }
-.cmp .grp th { background: var(--surface); color: var(--muted); font-size: 0.75rem; text-transform: none; letter-spacing: 0; padding: 0.22rem 0.7rem; border-bottom: 1px solid var(--line); }
-.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0 1rem; }
-.chip { padding: 0.5rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 0.9rem; cursor: pointer; }
-.chip.is-active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
-.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.practice-note { color: var(--muted); font-size: 0.95rem; }
+.sorter { flex: none; }
+.sorter-pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sorter-pool .sort-card { font-size: 0.9rem; }
+.sort-why { font-size: 1.02rem; color: var(--muted); }
+
+.bd-rows { display: grid; gap: 0.9rem; }
+.bd-row { display: grid; gap: 0.35rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--line); }
+.bd-row p { font-size: 1.1rem; }
+.bd-fill { line-height: 2.2; }
+.bd-fill select { font: inherit; font-size: 1.05rem; padding: 0.25rem 0.5rem; border: 1.5px solid var(--muted); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
+.bd-fill select.is-correct { border-color: var(--ok); }
+.bd-fill select.is-wrong { border-color: var(--bad); }
+.bd-given { font-weight: 600; }
+.bd-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.bd-why { display: grid; gap: 0.35rem; color: var(--muted); font-size: 1rem; }
+.quote { font-size: 1.3rem; line-height: 1.45; }
+.q-label { font-weight: 600; font-size: 1.15rem; }
+
+.xp-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 1.8rem; flex: 1; min-height: 0; align-items: center; }
+.xp-layout .fig { width: 100%; height: auto; max-height: 100%; }
+.xp-read { display: grid; gap: 0.8rem; align-content: center; }
+.xp-chips { display: grid; gap: 0.4rem; }
+.xp-chip { border: 1.5px solid var(--line); border-radius: 8px; padding: 0.35rem 0.7rem; color: var(--muted); font-size: 0.98rem; }
+.xp-chip.is-on { border: 3px solid var(--ink); color: var(--ink); font-weight: 600; padding: 0.3rem 0.65rem; }
+.xp-stage { color: var(--muted); font-size: 0.95rem; }
+.xp-status { font-size: 2rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+.xp-line { font-size: 1.1rem; }
+.xp-label { font-weight: 600; }
+.xp-work { color: var(--muted); font-size: 1rem; }
+
+@media (max-width: 900px) {
+  .case-layout, .ex-layout, .xp-layout { grid-template-columns: 1fr; }
+  .st-row { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -275,178 +341,338 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </header>
 
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker></defs></svg>
+
 <main class="stage" id="stage">
   <div class="card" id="card">
 
 <!-- ===================== CONTENT (edit for each deck) ===================== -->
 
 <!-- Slide 1: Title -->
-<section class="slide" data-type="title" data-title="Match population status to objective">
+<section class="slide" data-type="title" data-title="Match the disease status of a population to an objective">
   <p class="code">C1 Epidemiological and economic thinking</p>
-  <h1>Match population status to objective</h1>
-  <p class="lead">What is the state of a disease in a population, and which objective does that state point to?</p>
+  <h1>Match the disease status of a population to an objective</h1>
+  <p class="lead">What should a veterinarian do when a disease is present in a <span class="term" data-tip="A defined group of animals that share a place or a system, such as all hens on one farm or all dogs in one village.">population</span>, and when that disease is absent?</p>
   <ul class="meta-list">
-    <li><span class="code">S1.5</span><span>Match the population status of a disease to an objective</span></li>
+    <li><span class="code">S1.3</span><span>Match the disease status of a population to an objective</span></li>
     <li><span class="code">Time</span><span>About 15 minutes</span></li>
-    <li><span class="code">Before</span><span><a href="./link-approaches-to-domains.html">Link approaches to domains</a></span></li>
+    <li><span class="code">Before</span><span><a href="./explain-epidemiology.html">Explain epidemiology</a></span></li>
   </ul>
+  <div class="notes">Read the guiding question aloud. Ask for a first answer in one sentence. Students return to this answer at the end of the deck.</div>
 </section>
-
-<!-- Slide 2: Anchor case recap -->
-<section class="slide" data-type="concept" data-title="The anchor case">
-  <h2>The case: Salmonella in the egg chain of a district</h2>
+<!-- Slide 2: Recap of the anchor case -->
+<section class="slide" data-type="recap" data-title="The case">
+  <h2>The case: Salmonella on a layer farm</h2>
   <div class="case-layout">
     <div>
-      <p>A district in South Sulawesi has 60 layer farms that sell eggs to local markets. One farm lost 120 hens in a week, and the laboratory found Salmonella in the hens and in eggs that had already reached buyers.</p>
-      <p>Your role: program coordinator at the district livestock service (GP4.1), two years after graduation. The head of the service asks what the district should aim for.</p>
-      <p class="small-note">These numbers are synthetic and are for teaching.</p>
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, which are located near the water inlet.</p>
+      <p>The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the hens. Eggs from these pens have already reached buyers.</p>
+      <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian plans and runs animal health programs, for example for a regency government or a company.">program coordinator</span> at the animal health office in this <span class="term" data-tip="An area of a province with its own local government. Most regencies are rural with many farms.">regency</span>.</p>
     </div>
-    <dl class="facts">
-      <div><dt>Layer farms in the district</dt><dd class="num">60</dd></div>
-      <div><dt>Farms with a positive result so far</dt><dd class="num">1</dd></div>
-      <div><dt>Positive farms in earlier years</dt><dd>None found</dd></div>
-      <div><dt>Question from the head of service</dt><dd>What is our aim?</dd></div>
-    </dl>
+    <figure class="penfig" data-detail="d-pens" tabindex="0" aria-label="Deaths in one week by pen. Pens A1 and B1, next to the water inlet, had 90 of the 120 deaths. Select for details.">
+      <div class="penmap">
+        <div class="inlet">Water inlet</div>
+        <div class="pens">
+          <div class="pen hot"><span class="pen-id">Pen A1</span><span class="pen-n">50</span></div>
+          <div class="pen"><span class="pen-id">Pen A2</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen A3</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen A4</span><span class="pen-n">5</span></div>
+          <div class="pen hot"><span class="pen-id">Pen B1</span><span class="pen-n">40</span></div>
+          <div class="pen"><span class="pen-id">Pen B2</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen B3</span><span class="pen-n">5</span></div>
+          <div class="pen"><span class="pen-id">Pen B4</span><span class="pen-n">5</span></div>
+        </div>
+      </div>
+      <figcaption>Deaths in one week, by pen</figcaption>
+    </figure>
   </div>
-  <div class="notes">Read the two sentences aloud. Ask the class what they would need to know before they can name an aim. Return to the case on slide 5.</div>
+  <div class="notes">Ask what the coordinator should work toward on the farm. Keep the answers for the next slide.</div>
 </section>
-
-<!-- Slide 3: Question -->
+<!-- Slide 3: Question, predict -->
 <section class="slide" data-type="question" data-title="Predict first">
-  <h2>Before you choose an aim for a disease in a population, what do you need to know first?</h2>
+  <h2>Salmonella is now on the farm. Which <span class="term" data-tip="What someone wants to achieve.">objective</span> fits the farm?</h2>
   <p>Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
-    <li><button class="choice" data-value="a"><span class="key">A</span>How much each measure would cost</button></li>
-    <li><button class="choice" data-value="b"><span class="key">B</span>How many veterinarians are available</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>The state of the disease in the population</button></li>
+    <li><button class="choice" data-value="a"><span class="key">A</span>Prevent any case of Salmonella on the farm</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>Reduce the cases and stop the spread to other pens</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>Show with tests that the farm is free of Salmonella</button></li>
   </ul>
   <p class="verdict" id="predict-note" aria-live="polite"></p>
+  <div class="notes">Let students choose, then ask a student to explain the choice. Options A and C are the two usual mistakes: they treat a farm with the disease like a farm without it.</div>
 </section>
-
-<!-- Slide 4: Concept, table of nine statuses -->
-<section class="slide" data-type="concept" data-title="Nine statuses, two objectives">
-  <h2>The status points to one of two objectives</h2>
-  <p>If the disease is present in the population, the objective is to <strong>reduce the problem</strong>. If the disease is absent, the objective is to <strong>keep it out</strong>.</p>
-  <table class="cmp cmp-tight">
-    <thead><tr><th scope="col">Population status</th><th scope="col">What it means</th><th scope="col">Typical objective</th></tr></thead>
-    <tbody>
-      <tr class="grp"><th colspan="3" scope="colgroup">Absent or not established</th></tr>
-      <tr><th scope="row"><span class="term" data-tip="The status of a population in which a disease is absent, shown by evidence at a stated design prevalence and confidence.">Free</span></th><td>Absent, with evidence</td><td>Prevent introduction, maintain freedom</td></tr>
-      <tr><th scope="row">Exposed</th><td>The agent entered, the disease does not maintain itself</td><td>Prevent establishment</td></tr>
-      <tr><th scope="row"><span class="term" data-tip="The removal of a disease from a defined area, so that no cases occur there. Measures continue to prevent reintroduction.">Eliminated</span></th><td>Removed from a defined area</td><td>Prevent reintroduction</td></tr>
-      <tr class="grp"><th colspan="3" scope="colgroup">Present at an expected or low level</th></tr>
-      <tr><th scope="row"><span class="term" data-tip="Describes a disease that occurs irregularly, in single cases or small groups.">Sporadic</span></th><td>Single cases or small groups, irregular</td><td>Reduce, find the source</td></tr>
-      <tr><th scope="row"><span class="term" data-tip="Describes a disease that is constantly present in a population at an expected level.">Endemic</span></th><td>Constantly present at an expected level</td><td>Reduce, control, work toward elimination</td></tr>
-      <tr><th scope="row">Under control</th><td>Kept low by measures</td><td>Keep the gains, complete elimination</td></tr>
-      <tr class="grp"><th colspan="3" scope="colgroup">Above the expected level</th></tr>
-      <tr><th scope="row"><span class="term" data-tip="The occurrence of cases above the expected level in a limited place and time, or a group of linked cases. More local than an epidemic.">Outbreak</span></th><td>Above expected, limited place and time</td><td>Contain, find the source, stop spread</td></tr>
-      <tr><th scope="row"><span class="term" data-tip="Describes the occurrence of a disease clearly above the expected level in a wider area or population.">Epidemic</span></th><td>Clearly above expected, wider area</td><td>Control spread, reduce impact</td></tr>
-      <tr><th scope="row"><span class="term" data-tip="An epidemic that spreads across several countries or continents.">Pandemic</span></th><td>An epidemic across countries or continents</td><td>Control spread, coordinate across countries</td></tr>
-    </tbody>
-  </table>
+<!-- Slide 4: Concept, the definition -->
+<section class="slide vcenter" data-type="concept" data-title="Population status">
+  <h2>Disease status</h2>
+  <p class="big-def">The disease status within a population is the <span class="term" data-tip="How things are at one moment, for example whether a disease is present or absent.">state</span> of that disease in a <span class="term" data-tip="A defined group of animals that share a place or a system, such as all hens on one farm or all dogs in one village.">population</span> at a specific point in time.</p>
+  <div class="notes">Read the definition aloud. The next slides show what a state can be, using boxes of animals.</div>
 </section>
-
-<!-- Slide 5: Explore, the range -->
-<section class="slide" data-type="explore" data-title="Walk along the range" data-panel="controls">
-  <h2>Walk along the range of statuses</h2>
-  <div class="chips" id="st-chips" role="group" aria-label="Nine population statuses. Select one to see it in the layer-farm case."></div>
-  <div class="loop-text" id="st-card" data-detail="d-range" tabindex="0" aria-label="Description of the selected status. Select for details.">
-    <h3 id="st-h"></h3>
-    <p id="st-ex"></p>
-    <p id="st-obj" class="loop-q"></p>
+<!-- Slide 5: Concept, two boxes -->
+<section class="slide" data-type="concept" data-title="Absent or present">
+  <h2>A disease is absent or present in a population</h2>
+  <div class="fig-wrap"><svg class="fig" viewBox="0 0 720 292" role="img" aria-label="Two boxes of circles. Each circle is one animal. Left box, disease absent: no animal is a case. Right box, disease present: some animals are cases."><g class=""><rect class="f-soft" x="0" y="54" width="340" height="190" rx="12"/><circle class="dot-non" cx="30.0" cy="79.0" r="9"/><circle class="dot-non" cx="58.0" cy="79.0" r="9"/><circle class="dot-non" cx="86.0" cy="79.0" r="9"/><circle class="dot-non" cx="114.0" cy="79.0" r="9"/><circle class="dot-non" cx="142.0" cy="79.0" r="9"/><circle class="dot-non" cx="170.0" cy="79.0" r="9"/><circle class="dot-non" cx="198.0" cy="79.0" r="9"/><circle class="dot-non" cx="226.0" cy="79.0" r="9"/><circle class="dot-non" cx="254.0" cy="79.0" r="9"/><circle class="dot-non" cx="282.0" cy="79.0" r="9"/><circle class="dot-non" cx="310.0" cy="79.0" r="9"/><circle class="dot-non" cx="30.0" cy="107.0" r="9"/><circle class="dot-non" cx="58.0" cy="107.0" r="9"/><circle class="dot-non" cx="86.0" cy="107.0" r="9"/><circle class="dot-non" cx="114.0" cy="107.0" r="9"/><circle class="dot-non" cx="142.0" cy="107.0" r="9"/><circle class="dot-non" cx="170.0" cy="107.0" r="9"/><circle class="dot-non" cx="198.0" cy="107.0" r="9"/><circle class="dot-non" cx="226.0" cy="107.0" r="9"/><circle class="dot-non" cx="254.0" cy="107.0" r="9"/><circle class="dot-non" cx="282.0" cy="107.0" r="9"/><circle class="dot-non" cx="310.0" cy="107.0" r="9"/><circle class="dot-non" cx="30.0" cy="135.0" r="9"/><circle class="dot-non" cx="58.0" cy="135.0" r="9"/><circle class="dot-non" cx="86.0" cy="135.0" r="9"/><circle class="dot-non" cx="114.0" cy="135.0" r="9"/><circle class="dot-non" cx="142.0" cy="135.0" r="9"/><circle class="dot-non" cx="170.0" cy="135.0" r="9"/><circle class="dot-non" cx="198.0" cy="135.0" r="9"/><circle class="dot-non" cx="226.0" cy="135.0" r="9"/><circle class="dot-non" cx="254.0" cy="135.0" r="9"/><circle class="dot-non" cx="282.0" cy="135.0" r="9"/><circle class="dot-non" cx="310.0" cy="135.0" r="9"/><circle class="dot-non" cx="30.0" cy="163.0" r="9"/><circle class="dot-non" cx="58.0" cy="163.0" r="9"/><circle class="dot-non" cx="86.0" cy="163.0" r="9"/><circle class="dot-non" cx="114.0" cy="163.0" r="9"/><circle class="dot-non" cx="142.0" cy="163.0" r="9"/><circle class="dot-non" cx="170.0" cy="163.0" r="9"/><circle class="dot-non" cx="198.0" cy="163.0" r="9"/><circle class="dot-non" cx="226.0" cy="163.0" r="9"/><circle class="dot-non" cx="254.0" cy="163.0" r="9"/><circle class="dot-non" cx="282.0" cy="163.0" r="9"/><circle class="dot-non" cx="310.0" cy="163.0" r="9"/><circle class="dot-non" cx="30.0" cy="191.0" r="9"/><circle class="dot-non" cx="58.0" cy="191.0" r="9"/><circle class="dot-non" cx="86.0" cy="191.0" r="9"/><circle class="dot-non" cx="114.0" cy="191.0" r="9"/><circle class="dot-non" cx="142.0" cy="191.0" r="9"/><circle class="dot-non" cx="170.0" cy="191.0" r="9"/><circle class="dot-non" cx="198.0" cy="191.0" r="9"/><circle class="dot-non" cx="226.0" cy="191.0" r="9"/><circle class="dot-non" cx="254.0" cy="191.0" r="9"/><circle class="dot-non" cx="282.0" cy="191.0" r="9"/><circle class="dot-non" cx="310.0" cy="191.0" r="9"/><circle class="dot-non" cx="30.0" cy="219.0" r="9"/><circle class="dot-non" cx="58.0" cy="219.0" r="9"/><circle class="dot-non" cx="86.0" cy="219.0" r="9"/><circle class="dot-non" cx="114.0" cy="219.0" r="9"/><circle class="dot-non" cx="142.0" cy="219.0" r="9"/><circle class="dot-non" cx="170.0" cy="219.0" r="9"/><circle class="dot-non" cx="198.0" cy="219.0" r="9"/><circle class="dot-non" cx="226.0" cy="219.0" r="9"/><circle class="dot-non" cx="254.0" cy="219.0" r="9"/><circle class="dot-non" cx="282.0" cy="219.0" r="9"/><circle class="dot-non" cx="310.0" cy="219.0" r="9"/></g><text x="170.0" y="36" text-anchor="middle" class="t-strong">Disease absent</text><g class=""><rect class="f-soft" x="380" y="54" width="340" height="190" rx="12"/><circle class="dot-case" cx="410.0" cy="79.0" r="9"/><circle class="dot-non" cx="438.0" cy="79.0" r="9"/><circle class="dot-non" cx="466.0" cy="79.0" r="9"/><circle class="dot-non" cx="494.0" cy="79.0" r="9"/><circle class="dot-non" cx="522.0" cy="79.0" r="9"/><circle class="dot-non" cx="550.0" cy="79.0" r="9"/><circle class="dot-non" cx="578.0" cy="79.0" r="9"/><circle class="dot-non" cx="606.0" cy="79.0" r="9"/><circle class="dot-non" cx="634.0" cy="79.0" r="9"/><circle class="dot-case" cx="662.0" cy="79.0" r="9"/><circle class="dot-non" cx="690.0" cy="79.0" r="9"/><circle class="dot-non" cx="410.0" cy="107.0" r="9"/><circle class="dot-non" cx="438.0" cy="107.0" r="9"/><circle class="dot-non" cx="466.0" cy="107.0" r="9"/><circle class="dot-non" cx="494.0" cy="107.0" r="9"/><circle class="dot-non" cx="522.0" cy="107.0" r="9"/><circle class="dot-non" cx="550.0" cy="107.0" r="9"/><circle class="dot-case" cx="578.0" cy="107.0" r="9"/><circle class="dot-non" cx="606.0" cy="107.0" r="9"/><circle class="dot-non" cx="634.0" cy="107.0" r="9"/><circle class="dot-non" cx="662.0" cy="107.0" r="9"/><circle class="dot-non" cx="690.0" cy="107.0" r="9"/><circle class="dot-non" cx="410.0" cy="135.0" r="9"/><circle class="dot-case" cx="438.0" cy="135.0" r="9"/><circle class="dot-case" cx="466.0" cy="135.0" r="9"/><circle class="dot-non" cx="494.0" cy="135.0" r="9"/><circle class="dot-non" cx="522.0" cy="135.0" r="9"/><circle class="dot-non" cx="550.0" cy="135.0" r="9"/><circle class="dot-non" cx="578.0" cy="135.0" r="9"/><circle class="dot-case" cx="606.0" cy="135.0" r="9"/><circle class="dot-case" cx="634.0" cy="135.0" r="9"/><circle class="dot-non" cx="662.0" cy="135.0" r="9"/><circle class="dot-non" cx="690.0" cy="135.0" r="9"/><circle class="dot-non" cx="410.0" cy="163.0" r="9"/><circle class="dot-case" cx="438.0" cy="163.0" r="9"/><circle class="dot-non" cx="466.0" cy="163.0" r="9"/><circle class="dot-non" cx="494.0" cy="163.0" r="9"/><circle class="dot-non" cx="522.0" cy="163.0" r="9"/><circle class="dot-case" cx="550.0" cy="163.0" r="9"/><circle class="dot-non" cx="578.0" cy="163.0" r="9"/><circle class="dot-non" cx="606.0" cy="163.0" r="9"/><circle class="dot-case" cx="634.0" cy="163.0" r="9"/><circle class="dot-non" cx="662.0" cy="163.0" r="9"/><circle class="dot-non" cx="690.0" cy="163.0" r="9"/><circle class="dot-case" cx="410.0" cy="191.0" r="9"/><circle class="dot-non" cx="438.0" cy="191.0" r="9"/><circle class="dot-non" cx="466.0" cy="191.0" r="9"/><circle class="dot-non" cx="494.0" cy="191.0" r="9"/><circle class="dot-non" cx="522.0" cy="191.0" r="9"/><circle class="dot-non" cx="550.0" cy="191.0" r="9"/><circle class="dot-non" cx="578.0" cy="191.0" r="9"/><circle class="dot-case" cx="606.0" cy="191.0" r="9"/><circle class="dot-non" cx="634.0" cy="191.0" r="9"/><circle class="dot-non" cx="662.0" cy="191.0" r="9"/><circle class="dot-non" cx="690.0" cy="191.0" r="9"/><circle class="dot-non" cx="410.0" cy="219.0" r="9"/><circle class="dot-non" cx="438.0" cy="219.0" r="9"/><circle class="dot-non" cx="466.0" cy="219.0" r="9"/><circle class="dot-non" cx="494.0" cy="219.0" r="9"/><circle class="dot-non" cx="522.0" cy="219.0" r="9"/><circle class="dot-case" cx="550.0" cy="219.0" r="9"/><circle class="dot-non" cx="578.0" cy="219.0" r="9"/><circle class="dot-non" cx="606.0" cy="219.0" r="9"/><circle class="dot-case" cx="634.0" cy="219.0" r="9"/><circle class="dot-non" cx="662.0" cy="219.0" r="9"/><circle class="dot-non" cx="690.0" cy="219.0" r="9"/></g><text x="550.0" y="36" text-anchor="middle" class="t-strong">Disease present</text><circle class="dot-case" cx="12" cy="271" r="9"/><text x="28" y="276">Case</text><circle class="dot-non" cx="100" cy="271" r="9"/><text x="116" y="276">Non-case</text></svg></div>
+  <p class="under-fig">Each box represents a <span class="term" data-tip="A defined group of animals that share a place or a system, such as all hens on one farm or all dogs in one village.">population</span>, and each circle represents an animal.<br>In the left box, no animal is a <span class="term" data-tip="An animal that has the disease or health problem that you count.">case</span>. In the right box, some animals are cases.</p>
+  <div class="notes">Point to the two kinds of circle in the key. Ask which box looks like the farm on the case slide.</div>
+</section>
+<!-- Slide 6: Concept, the two objectives -->
+<section class="slide" data-type="concept" data-title="Two objectives">
+  <h2>The objective depends on whether the disease is there</h2>
+  <div class="fig-wrap"><svg class="fig" viewBox="0 0 720 350" role="img" aria-label="The same two boxes as before, with an objective under each box. Disease absent: prevent any case. Disease present: reduce the cases, and eliminate the disease if possible."><g class=""><rect class="f-soft" x="0" y="54" width="340" height="190" rx="12"/><circle class="dot-non" cx="30.0" cy="79.0" r="9"/><circle class="dot-non" cx="58.0" cy="79.0" r="9"/><circle class="dot-non" cx="86.0" cy="79.0" r="9"/><circle class="dot-non" cx="114.0" cy="79.0" r="9"/><circle class="dot-non" cx="142.0" cy="79.0" r="9"/><circle class="dot-non" cx="170.0" cy="79.0" r="9"/><circle class="dot-non" cx="198.0" cy="79.0" r="9"/><circle class="dot-non" cx="226.0" cy="79.0" r="9"/><circle class="dot-non" cx="254.0" cy="79.0" r="9"/><circle class="dot-non" cx="282.0" cy="79.0" r="9"/><circle class="dot-non" cx="310.0" cy="79.0" r="9"/><circle class="dot-non" cx="30.0" cy="107.0" r="9"/><circle class="dot-non" cx="58.0" cy="107.0" r="9"/><circle class="dot-non" cx="86.0" cy="107.0" r="9"/><circle class="dot-non" cx="114.0" cy="107.0" r="9"/><circle class="dot-non" cx="142.0" cy="107.0" r="9"/><circle class="dot-non" cx="170.0" cy="107.0" r="9"/><circle class="dot-non" cx="198.0" cy="107.0" r="9"/><circle class="dot-non" cx="226.0" cy="107.0" r="9"/><circle class="dot-non" cx="254.0" cy="107.0" r="9"/><circle class="dot-non" cx="282.0" cy="107.0" r="9"/><circle class="dot-non" cx="310.0" cy="107.0" r="9"/><circle class="dot-non" cx="30.0" cy="135.0" r="9"/><circle class="dot-non" cx="58.0" cy="135.0" r="9"/><circle class="dot-non" cx="86.0" cy="135.0" r="9"/><circle class="dot-non" cx="114.0" cy="135.0" r="9"/><circle class="dot-non" cx="142.0" cy="135.0" r="9"/><circle class="dot-non" cx="170.0" cy="135.0" r="9"/><circle class="dot-non" cx="198.0" cy="135.0" r="9"/><circle class="dot-non" cx="226.0" cy="135.0" r="9"/><circle class="dot-non" cx="254.0" cy="135.0" r="9"/><circle class="dot-non" cx="282.0" cy="135.0" r="9"/><circle class="dot-non" cx="310.0" cy="135.0" r="9"/><circle class="dot-non" cx="30.0" cy="163.0" r="9"/><circle class="dot-non" cx="58.0" cy="163.0" r="9"/><circle class="dot-non" cx="86.0" cy="163.0" r="9"/><circle class="dot-non" cx="114.0" cy="163.0" r="9"/><circle class="dot-non" cx="142.0" cy="163.0" r="9"/><circle class="dot-non" cx="170.0" cy="163.0" r="9"/><circle class="dot-non" cx="198.0" cy="163.0" r="9"/><circle class="dot-non" cx="226.0" cy="163.0" r="9"/><circle class="dot-non" cx="254.0" cy="163.0" r="9"/><circle class="dot-non" cx="282.0" cy="163.0" r="9"/><circle class="dot-non" cx="310.0" cy="163.0" r="9"/><circle class="dot-non" cx="30.0" cy="191.0" r="9"/><circle class="dot-non" cx="58.0" cy="191.0" r="9"/><circle class="dot-non" cx="86.0" cy="191.0" r="9"/><circle class="dot-non" cx="114.0" cy="191.0" r="9"/><circle class="dot-non" cx="142.0" cy="191.0" r="9"/><circle class="dot-non" cx="170.0" cy="191.0" r="9"/><circle class="dot-non" cx="198.0" cy="191.0" r="9"/><circle class="dot-non" cx="226.0" cy="191.0" r="9"/><circle class="dot-non" cx="254.0" cy="191.0" r="9"/><circle class="dot-non" cx="282.0" cy="191.0" r="9"/><circle class="dot-non" cx="310.0" cy="191.0" r="9"/><circle class="dot-non" cx="30.0" cy="219.0" r="9"/><circle class="dot-non" cx="58.0" cy="219.0" r="9"/><circle class="dot-non" cx="86.0" cy="219.0" r="9"/><circle class="dot-non" cx="114.0" cy="219.0" r="9"/><circle class="dot-non" cx="142.0" cy="219.0" r="9"/><circle class="dot-non" cx="170.0" cy="219.0" r="9"/><circle class="dot-non" cx="198.0" cy="219.0" r="9"/><circle class="dot-non" cx="226.0" cy="219.0" r="9"/><circle class="dot-non" cx="254.0" cy="219.0" r="9"/><circle class="dot-non" cx="282.0" cy="219.0" r="9"/><circle class="dot-non" cx="310.0" cy="219.0" r="9"/></g><text x="170.0" y="36" text-anchor="middle" class="t-strong">Disease absent</text><g class=""><rect class="f-soft" x="380" y="54" width="340" height="190" rx="12"/><circle class="dot-case" cx="410.0" cy="79.0" r="9"/><circle class="dot-non" cx="438.0" cy="79.0" r="9"/><circle class="dot-non" cx="466.0" cy="79.0" r="9"/><circle class="dot-non" cx="494.0" cy="79.0" r="9"/><circle class="dot-non" cx="522.0" cy="79.0" r="9"/><circle class="dot-non" cx="550.0" cy="79.0" r="9"/><circle class="dot-non" cx="578.0" cy="79.0" r="9"/><circle class="dot-non" cx="606.0" cy="79.0" r="9"/><circle class="dot-non" cx="634.0" cy="79.0" r="9"/><circle class="dot-case" cx="662.0" cy="79.0" r="9"/><circle class="dot-non" cx="690.0" cy="79.0" r="9"/><circle class="dot-non" cx="410.0" cy="107.0" r="9"/><circle class="dot-non" cx="438.0" cy="107.0" r="9"/><circle class="dot-non" cx="466.0" cy="107.0" r="9"/><circle class="dot-non" cx="494.0" cy="107.0" r="9"/><circle class="dot-non" cx="522.0" cy="107.0" r="9"/><circle class="dot-non" cx="550.0" cy="107.0" r="9"/><circle class="dot-case" cx="578.0" cy="107.0" r="9"/><circle class="dot-non" cx="606.0" cy="107.0" r="9"/><circle class="dot-non" cx="634.0" cy="107.0" r="9"/><circle class="dot-non" cx="662.0" cy="107.0" r="9"/><circle class="dot-non" cx="690.0" cy="107.0" r="9"/><circle class="dot-non" cx="410.0" cy="135.0" r="9"/><circle class="dot-case" cx="438.0" cy="135.0" r="9"/><circle class="dot-case" cx="466.0" cy="135.0" r="9"/><circle class="dot-non" cx="494.0" cy="135.0" r="9"/><circle class="dot-non" cx="522.0" cy="135.0" r="9"/><circle class="dot-non" cx="550.0" cy="135.0" r="9"/><circle class="dot-non" cx="578.0" cy="135.0" r="9"/><circle class="dot-case" cx="606.0" cy="135.0" r="9"/><circle class="dot-case" cx="634.0" cy="135.0" r="9"/><circle class="dot-non" cx="662.0" cy="135.0" r="9"/><circle class="dot-non" cx="690.0" cy="135.0" r="9"/><circle class="dot-non" cx="410.0" cy="163.0" r="9"/><circle class="dot-case" cx="438.0" cy="163.0" r="9"/><circle class="dot-non" cx="466.0" cy="163.0" r="9"/><circle class="dot-non" cx="494.0" cy="163.0" r="9"/><circle class="dot-non" cx="522.0" cy="163.0" r="9"/><circle class="dot-case" cx="550.0" cy="163.0" r="9"/><circle class="dot-non" cx="578.0" cy="163.0" r="9"/><circle class="dot-non" cx="606.0" cy="163.0" r="9"/><circle class="dot-case" cx="634.0" cy="163.0" r="9"/><circle class="dot-non" cx="662.0" cy="163.0" r="9"/><circle class="dot-non" cx="690.0" cy="163.0" r="9"/><circle class="dot-case" cx="410.0" cy="191.0" r="9"/><circle class="dot-non" cx="438.0" cy="191.0" r="9"/><circle class="dot-non" cx="466.0" cy="191.0" r="9"/><circle class="dot-non" cx="494.0" cy="191.0" r="9"/><circle class="dot-non" cx="522.0" cy="191.0" r="9"/><circle class="dot-non" cx="550.0" cy="191.0" r="9"/><circle class="dot-non" cx="578.0" cy="191.0" r="9"/><circle class="dot-case" cx="606.0" cy="191.0" r="9"/><circle class="dot-non" cx="634.0" cy="191.0" r="9"/><circle class="dot-non" cx="662.0" cy="191.0" r="9"/><circle class="dot-non" cx="690.0" cy="191.0" r="9"/><circle class="dot-non" cx="410.0" cy="219.0" r="9"/><circle class="dot-non" cx="438.0" cy="219.0" r="9"/><circle class="dot-non" cx="466.0" cy="219.0" r="9"/><circle class="dot-non" cx="494.0" cy="219.0" r="9"/><circle class="dot-non" cx="522.0" cy="219.0" r="9"/><circle class="dot-case" cx="550.0" cy="219.0" r="9"/><circle class="dot-non" cx="578.0" cy="219.0" r="9"/><circle class="dot-non" cx="606.0" cy="219.0" r="9"/><circle class="dot-case" cx="634.0" cy="219.0" r="9"/><circle class="dot-non" cx="662.0" cy="219.0" r="9"/><circle class="dot-non" cx="690.0" cy="219.0" r="9"/></g><text x="550.0" y="36" text-anchor="middle" class="t-strong">Disease present</text><path class="f-line" d="M0 252 V260 H340 V252"/><text x="170" y="283" text-anchor="middle" class="">Objective: prevent any case</text><path class="f-line" d="M380 252 V260 H720 V252"/><text x="550" y="283" text-anchor="middle" class="">Objective: reduce the cases,</text><text x="550" y="303" text-anchor="middle" class="">and eliminate the disease if possible</text><circle class="dot-case" cx="12" cy="333" r="9"/><text x="28" y="338">Case</text><circle class="dot-non" cx="100" cy="333" r="9"/><text x="116" y="338">Non-case</text></svg></div>
+  <p class="under-fig">The <span class="term" data-tip="What the veterinarian wants to achieve for the animals of this population.">objective for a population</span> depends on its disease status. There are two types of objectives: preventing cases and reducing cases.</p>
+  <div class="notes">Ask students to say each objective aloud in their own words. Return to the prediction on slide 3 and ask which box the farm belongs to.</div>
+</section>
+<!-- Slide 7: Concept, present splits in two -->
+<section class="slide" data-type="concept" data-title="Present: two kinds">
+  <h2>Present at the expected level, or above it</h2>
+  <div class="fig-wrap"><svg class="fig" viewBox="0 0 720 350" role="img" aria-label="Three boxes of circles. Each circle is one animal. Left box: no animal is a case. Middle box: a few animals are cases. Right box: many animals are cases. Under the left box: prevent any case. Under the other two boxes: reduce the cases, and eliminate the disease if possible."><g class=""><rect class="f-soft" x="0" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="29.0" cy="79.0" r="9"/><circle class="dot-non" cx="57.0" cy="79.0" r="9"/><circle class="dot-non" cx="85.0" cy="79.0" r="9"/><circle class="dot-non" cx="113.0" cy="79.0" r="9"/><circle class="dot-non" cx="141.0" cy="79.0" r="9"/><circle class="dot-non" cx="169.0" cy="79.0" r="9"/><circle class="dot-non" cx="197.0" cy="79.0" r="9"/><circle class="dot-non" cx="29.0" cy="107.0" r="9"/><circle class="dot-non" cx="57.0" cy="107.0" r="9"/><circle class="dot-non" cx="85.0" cy="107.0" r="9"/><circle class="dot-non" cx="113.0" cy="107.0" r="9"/><circle class="dot-non" cx="141.0" cy="107.0" r="9"/><circle class="dot-non" cx="169.0" cy="107.0" r="9"/><circle class="dot-non" cx="197.0" cy="107.0" r="9"/><circle class="dot-non" cx="29.0" cy="135.0" r="9"/><circle class="dot-non" cx="57.0" cy="135.0" r="9"/><circle class="dot-non" cx="85.0" cy="135.0" r="9"/><circle class="dot-non" cx="113.0" cy="135.0" r="9"/><circle class="dot-non" cx="141.0" cy="135.0" r="9"/><circle class="dot-non" cx="169.0" cy="135.0" r="9"/><circle class="dot-non" cx="197.0" cy="135.0" r="9"/><circle class="dot-non" cx="29.0" cy="163.0" r="9"/><circle class="dot-non" cx="57.0" cy="163.0" r="9"/><circle class="dot-non" cx="85.0" cy="163.0" r="9"/><circle class="dot-non" cx="113.0" cy="163.0" r="9"/><circle class="dot-non" cx="141.0" cy="163.0" r="9"/><circle class="dot-non" cx="169.0" cy="163.0" r="9"/><circle class="dot-non" cx="197.0" cy="163.0" r="9"/><circle class="dot-non" cx="29.0" cy="191.0" r="9"/><circle class="dot-non" cx="57.0" cy="191.0" r="9"/><circle class="dot-non" cx="85.0" cy="191.0" r="9"/><circle class="dot-non" cx="113.0" cy="191.0" r="9"/><circle class="dot-non" cx="141.0" cy="191.0" r="9"/><circle class="dot-non" cx="169.0" cy="191.0" r="9"/><circle class="dot-non" cx="197.0" cy="191.0" r="9"/><circle class="dot-non" cx="29.0" cy="219.0" r="9"/><circle class="dot-non" cx="57.0" cy="219.0" r="9"/><circle class="dot-non" cx="85.0" cy="219.0" r="9"/><circle class="dot-non" cx="113.0" cy="219.0" r="9"/><circle class="dot-non" cx="141.0" cy="219.0" r="9"/><circle class="dot-non" cx="169.0" cy="219.0" r="9"/><circle class="dot-non" cx="197.0" cy="219.0" r="9"/></g><text x="113.0" y="36" text-anchor="middle" class="t-strong">Disease absent</text><g class=""><rect class="f-soft" x="247" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="276.0" cy="79.0" r="9"/><circle class="dot-non" cx="304.0" cy="79.0" r="9"/><circle class="dot-non" cx="332.0" cy="79.0" r="9"/><circle class="dot-non" cx="360.0" cy="79.0" r="9"/><circle class="dot-non" cx="388.0" cy="79.0" r="9"/><circle class="dot-non" cx="416.0" cy="79.0" r="9"/><circle class="dot-non" cx="444.0" cy="79.0" r="9"/><circle class="dot-non" cx="276.0" cy="107.0" r="9"/><circle class="dot-non" cx="304.0" cy="107.0" r="9"/><circle class="dot-non" cx="332.0" cy="107.0" r="9"/><circle class="dot-non" cx="360.0" cy="107.0" r="9"/><circle class="dot-non" cx="388.0" cy="107.0" r="9"/><circle class="dot-non" cx="416.0" cy="107.0" r="9"/><circle class="dot-non" cx="444.0" cy="107.0" r="9"/><circle class="dot-non" cx="276.0" cy="135.0" r="9"/><circle class="dot-non" cx="304.0" cy="135.0" r="9"/><circle class="dot-non" cx="332.0" cy="135.0" r="9"/><circle class="dot-case" cx="360.0" cy="135.0" r="9"/><circle class="dot-non" cx="388.0" cy="135.0" r="9"/><circle class="dot-non" cx="416.0" cy="135.0" r="9"/><circle class="dot-non" cx="444.0" cy="135.0" r="9"/><circle class="dot-non" cx="276.0" cy="163.0" r="9"/><circle class="dot-case" cx="304.0" cy="163.0" r="9"/><circle class="dot-non" cx="332.0" cy="163.0" r="9"/><circle class="dot-non" cx="360.0" cy="163.0" r="9"/><circle class="dot-non" cx="388.0" cy="163.0" r="9"/><circle class="dot-non" cx="416.0" cy="163.0" r="9"/><circle class="dot-non" cx="444.0" cy="163.0" r="9"/><circle class="dot-non" cx="276.0" cy="191.0" r="9"/><circle class="dot-non" cx="304.0" cy="191.0" r="9"/><circle class="dot-case" cx="332.0" cy="191.0" r="9"/><circle class="dot-non" cx="360.0" cy="191.0" r="9"/><circle class="dot-non" cx="388.0" cy="191.0" r="9"/><circle class="dot-case" cx="416.0" cy="191.0" r="9"/><circle class="dot-non" cx="444.0" cy="191.0" r="9"/><circle class="dot-non" cx="276.0" cy="219.0" r="9"/><circle class="dot-non" cx="304.0" cy="219.0" r="9"/><circle class="dot-non" cx="332.0" cy="219.0" r="9"/><circle class="dot-non" cx="360.0" cy="219.0" r="9"/><circle class="dot-non" cx="388.0" cy="219.0" r="9"/><circle class="dot-non" cx="416.0" cy="219.0" r="9"/><circle class="dot-non" cx="444.0" cy="219.0" r="9"/></g><text x="360.0" y="20" text-anchor="middle" class="t-strong">Disease present at an expected</text><text x="360.0" y="40" text-anchor="middle" class="t-strong">or low level</text><g class=""><rect class="f-soft" x="494" y="54" width="226" height="190" rx="12"/><circle class="dot-case" cx="523.0" cy="79.0" r="9"/><circle class="dot-non" cx="551.0" cy="79.0" r="9"/><circle class="dot-non" cx="579.0" cy="79.0" r="9"/><circle class="dot-non" cx="607.0" cy="79.0" r="9"/><circle class="dot-case" cx="635.0" cy="79.0" r="9"/><circle class="dot-non" cx="663.0" cy="79.0" r="9"/><circle class="dot-non" cx="691.0" cy="79.0" r="9"/><circle class="dot-non" cx="523.0" cy="107.0" r="9"/><circle class="dot-case" cx="551.0" cy="107.0" r="9"/><circle class="dot-case" cx="579.0" cy="107.0" r="9"/><circle class="dot-non" cx="607.0" cy="107.0" r="9"/><circle class="dot-case" cx="635.0" cy="107.0" r="9"/><circle class="dot-non" cx="663.0" cy="107.0" r="9"/><circle class="dot-case" cx="691.0" cy="107.0" r="9"/><circle class="dot-case" cx="523.0" cy="135.0" r="9"/><circle class="dot-non" cx="551.0" cy="135.0" r="9"/><circle class="dot-case" cx="579.0" cy="135.0" r="9"/><circle class="dot-non" cx="607.0" cy="135.0" r="9"/><circle class="dot-case" cx="635.0" cy="135.0" r="9"/><circle class="dot-case" cx="663.0" cy="135.0" r="9"/><circle class="dot-non" cx="691.0" cy="135.0" r="9"/><circle class="dot-case" cx="523.0" cy="163.0" r="9"/><circle class="dot-non" cx="551.0" cy="163.0" r="9"/><circle class="dot-non" cx="579.0" cy="163.0" r="9"/><circle class="dot-non" cx="607.0" cy="163.0" r="9"/><circle class="dot-non" cx="635.0" cy="163.0" r="9"/><circle class="dot-case" cx="663.0" cy="163.0" r="9"/><circle class="dot-non" cx="691.0" cy="163.0" r="9"/><circle class="dot-case" cx="523.0" cy="191.0" r="9"/><circle class="dot-non" cx="551.0" cy="191.0" r="9"/><circle class="dot-case" cx="579.0" cy="191.0" r="9"/><circle class="dot-non" cx="607.0" cy="191.0" r="9"/><circle class="dot-case" cx="635.0" cy="191.0" r="9"/><circle class="dot-case" cx="663.0" cy="191.0" r="9"/><circle class="dot-case" cx="691.0" cy="191.0" r="9"/><circle class="dot-non" cx="523.0" cy="219.0" r="9"/><circle class="dot-non" cx="551.0" cy="219.0" r="9"/><circle class="dot-non" cx="579.0" cy="219.0" r="9"/><circle class="dot-case" cx="607.0" cy="219.0" r="9"/><circle class="dot-case" cx="635.0" cy="219.0" r="9"/><circle class="dot-case" cx="663.0" cy="219.0" r="9"/><circle class="dot-non" cx="691.0" cy="219.0" r="9"/></g><text x="607.0" y="20" text-anchor="middle" class="t-strong">Disease present above the</text><text x="607.0" y="40" text-anchor="middle" class="t-strong">expected level</text><path class="f-line" d="M0 252 V260 H226 V252"/><text x="113" y="283" text-anchor="middle" class="">Objective:</text><text x="113" y="303" text-anchor="middle" class="">prevent any case</text><path class="f-line" d="M247 252 V260 H720 V252"/><text x="483" y="283" text-anchor="middle" class="">Objective: reduce the cases,</text><text x="483" y="303" text-anchor="middle" class="">and eliminate the disease if possible</text><circle class="dot-case" cx="12" cy="333" r="9"/><text x="28" y="338">Case</text><circle class="dot-non" cx="100" cy="333" r="9"/><text x="116" y="338">Non-case</text></svg></div>
+  <p class="under-fig">The "disease present" group can be further classified based on the number of cases. Cases may occur at an <span class="term" data-tip="The usual level of disease in this population, based on earlier weeks or years. It is also called the baseline.">expected level</span> or exceed the expected level.</p>
+  <div class="notes">Ask: which box is the farm in the week with 120 deaths? Why does the expected level matter for the answer?</div>
+</section>
+<!-- Slide 8: Concept, group 1 -->
+<section class="slide" data-type="concept" data-title="Statuses: disease absent">
+  <h2>Statuses: disease absent or not established</h2>
+  <div class="fig-wrap" data-detail="d-g1"><svg class="fig" viewBox="0 0 720 350" role="img" aria-label="Three boxes of circles. Each circle is one animal. Left box: no animal is a case. Middle box: a few animals are cases. Right box: many animals are cases. One box has a thick border and shows the group of this slide. The left box is the group of this slide. Select for details."><g class=""><rect class="box-on" x="0" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="29.0" cy="79.0" r="9"/><circle class="dot-non" cx="57.0" cy="79.0" r="9"/><circle class="dot-non" cx="85.0" cy="79.0" r="9"/><circle class="dot-non" cx="113.0" cy="79.0" r="9"/><circle class="dot-non" cx="141.0" cy="79.0" r="9"/><circle class="dot-non" cx="169.0" cy="79.0" r="9"/><circle class="dot-non" cx="197.0" cy="79.0" r="9"/><circle class="dot-non" cx="29.0" cy="107.0" r="9"/><circle class="dot-non" cx="57.0" cy="107.0" r="9"/><circle class="dot-non" cx="85.0" cy="107.0" r="9"/><circle class="dot-non" cx="113.0" cy="107.0" r="9"/><circle class="dot-non" cx="141.0" cy="107.0" r="9"/><circle class="dot-non" cx="169.0" cy="107.0" r="9"/><circle class="dot-non" cx="197.0" cy="107.0" r="9"/><circle class="dot-non" cx="29.0" cy="135.0" r="9"/><circle class="dot-non" cx="57.0" cy="135.0" r="9"/><circle class="dot-non" cx="85.0" cy="135.0" r="9"/><circle class="dot-non" cx="113.0" cy="135.0" r="9"/><circle class="dot-non" cx="141.0" cy="135.0" r="9"/><circle class="dot-non" cx="169.0" cy="135.0" r="9"/><circle class="dot-non" cx="197.0" cy="135.0" r="9"/><circle class="dot-non" cx="29.0" cy="163.0" r="9"/><circle class="dot-non" cx="57.0" cy="163.0" r="9"/><circle class="dot-non" cx="85.0" cy="163.0" r="9"/><circle class="dot-non" cx="113.0" cy="163.0" r="9"/><circle class="dot-non" cx="141.0" cy="163.0" r="9"/><circle class="dot-non" cx="169.0" cy="163.0" r="9"/><circle class="dot-non" cx="197.0" cy="163.0" r="9"/><circle class="dot-non" cx="29.0" cy="191.0" r="9"/><circle class="dot-non" cx="57.0" cy="191.0" r="9"/><circle class="dot-non" cx="85.0" cy="191.0" r="9"/><circle class="dot-non" cx="113.0" cy="191.0" r="9"/><circle class="dot-non" cx="141.0" cy="191.0" r="9"/><circle class="dot-non" cx="169.0" cy="191.0" r="9"/><circle class="dot-non" cx="197.0" cy="191.0" r="9"/><circle class="dot-non" cx="29.0" cy="219.0" r="9"/><circle class="dot-non" cx="57.0" cy="219.0" r="9"/><circle class="dot-non" cx="85.0" cy="219.0" r="9"/><circle class="dot-non" cx="113.0" cy="219.0" r="9"/><circle class="dot-non" cx="141.0" cy="219.0" r="9"/><circle class="dot-non" cx="169.0" cy="219.0" r="9"/><circle class="dot-non" cx="197.0" cy="219.0" r="9"/></g><text x="113.0" y="36" text-anchor="middle" class="t-strong">Disease absent</text><g class="dim"><rect class="box-off" x="247" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="276.0" cy="79.0" r="9"/><circle class="dot-non" cx="304.0" cy="79.0" r="9"/><circle class="dot-non" cx="332.0" cy="79.0" r="9"/><circle class="dot-non" cx="360.0" cy="79.0" r="9"/><circle class="dot-non" cx="388.0" cy="79.0" r="9"/><circle class="dot-non" cx="416.0" cy="79.0" r="9"/><circle class="dot-non" cx="444.0" cy="79.0" r="9"/><circle class="dot-non" cx="276.0" cy="107.0" r="9"/><circle class="dot-non" cx="304.0" cy="107.0" r="9"/><circle class="dot-non" cx="332.0" cy="107.0" r="9"/><circle class="dot-non" cx="360.0" cy="107.0" r="9"/><circle class="dot-non" cx="388.0" cy="107.0" r="9"/><circle class="dot-non" cx="416.0" cy="107.0" r="9"/><circle class="dot-non" cx="444.0" cy="107.0" r="9"/><circle class="dot-non" cx="276.0" cy="135.0" r="9"/><circle class="dot-non" cx="304.0" cy="135.0" r="9"/><circle class="dot-non" cx="332.0" cy="135.0" r="9"/><circle class="dot-case" cx="360.0" cy="135.0" r="9"/><circle class="dot-non" cx="388.0" cy="135.0" r="9"/><circle class="dot-non" cx="416.0" cy="135.0" r="9"/><circle class="dot-non" cx="444.0" cy="135.0" r="9"/><circle class="dot-non" cx="276.0" cy="163.0" r="9"/><circle class="dot-case" cx="304.0" cy="163.0" r="9"/><circle class="dot-non" cx="332.0" cy="163.0" r="9"/><circle class="dot-non" cx="360.0" cy="163.0" r="9"/><circle class="dot-non" cx="388.0" cy="163.0" r="9"/><circle class="dot-non" cx="416.0" cy="163.0" r="9"/><circle class="dot-non" cx="444.0" cy="163.0" r="9"/><circle class="dot-non" cx="276.0" cy="191.0" r="9"/><circle class="dot-non" cx="304.0" cy="191.0" r="9"/><circle class="dot-case" cx="332.0" cy="191.0" r="9"/><circle class="dot-non" cx="360.0" cy="191.0" r="9"/><circle class="dot-non" cx="388.0" cy="191.0" r="9"/><circle class="dot-case" cx="416.0" cy="191.0" r="9"/><circle class="dot-non" cx="444.0" cy="191.0" r="9"/><circle class="dot-non" cx="276.0" cy="219.0" r="9"/><circle class="dot-non" cx="304.0" cy="219.0" r="9"/><circle class="dot-non" cx="332.0" cy="219.0" r="9"/><circle class="dot-non" cx="360.0" cy="219.0" r="9"/><circle class="dot-non" cx="388.0" cy="219.0" r="9"/><circle class="dot-non" cx="416.0" cy="219.0" r="9"/><circle class="dot-non" cx="444.0" cy="219.0" r="9"/></g><text x="360.0" y="20" text-anchor="middle" class="t-strong">Present at an expected</text><text x="360.0" y="40" text-anchor="middle" class="t-strong">or low level</text><g class="dim"><rect class="box-off" x="494" y="54" width="226" height="190" rx="12"/><circle class="dot-case" cx="523.0" cy="79.0" r="9"/><circle class="dot-non" cx="551.0" cy="79.0" r="9"/><circle class="dot-non" cx="579.0" cy="79.0" r="9"/><circle class="dot-non" cx="607.0" cy="79.0" r="9"/><circle class="dot-case" cx="635.0" cy="79.0" r="9"/><circle class="dot-non" cx="663.0" cy="79.0" r="9"/><circle class="dot-non" cx="691.0" cy="79.0" r="9"/><circle class="dot-non" cx="523.0" cy="107.0" r="9"/><circle class="dot-case" cx="551.0" cy="107.0" r="9"/><circle class="dot-case" cx="579.0" cy="107.0" r="9"/><circle class="dot-non" cx="607.0" cy="107.0" r="9"/><circle class="dot-case" cx="635.0" cy="107.0" r="9"/><circle class="dot-non" cx="663.0" cy="107.0" r="9"/><circle class="dot-case" cx="691.0" cy="107.0" r="9"/><circle class="dot-case" cx="523.0" cy="135.0" r="9"/><circle class="dot-non" cx="551.0" cy="135.0" r="9"/><circle class="dot-case" cx="579.0" cy="135.0" r="9"/><circle class="dot-non" cx="607.0" cy="135.0" r="9"/><circle class="dot-case" cx="635.0" cy="135.0" r="9"/><circle class="dot-case" cx="663.0" cy="135.0" r="9"/><circle class="dot-non" cx="691.0" cy="135.0" r="9"/><circle class="dot-case" cx="523.0" cy="163.0" r="9"/><circle class="dot-non" cx="551.0" cy="163.0" r="9"/><circle class="dot-non" cx="579.0" cy="163.0" r="9"/><circle class="dot-non" cx="607.0" cy="163.0" r="9"/><circle class="dot-non" cx="635.0" cy="163.0" r="9"/><circle class="dot-case" cx="663.0" cy="163.0" r="9"/><circle class="dot-non" cx="691.0" cy="163.0" r="9"/><circle class="dot-case" cx="523.0" cy="191.0" r="9"/><circle class="dot-non" cx="551.0" cy="191.0" r="9"/><circle class="dot-case" cx="579.0" cy="191.0" r="9"/><circle class="dot-non" cx="607.0" cy="191.0" r="9"/><circle class="dot-case" cx="635.0" cy="191.0" r="9"/><circle class="dot-case" cx="663.0" cy="191.0" r="9"/><circle class="dot-case" cx="691.0" cy="191.0" r="9"/><circle class="dot-non" cx="523.0" cy="219.0" r="9"/><circle class="dot-non" cx="551.0" cy="219.0" r="9"/><circle class="dot-non" cx="579.0" cy="219.0" r="9"/><circle class="dot-case" cx="607.0" cy="219.0" r="9"/><circle class="dot-case" cx="635.0" cy="219.0" r="9"/><circle class="dot-case" cx="663.0" cy="219.0" r="9"/><circle class="dot-non" cx="691.0" cy="219.0" r="9"/></g><text x="607.0" y="20" text-anchor="middle" class="t-strong">Present above the</text><text x="607.0" y="40" text-anchor="middle" class="t-strong">expected level</text><path class="f-line" d="M0 252 V260 H226 V252"/><text x="113" y="283" text-anchor="middle" class="">Objective:</text><text x="113" y="303" text-anchor="middle" class="">prevent any case</text><path class="f-line" d="M247 252 V260 H720 V252"/><text x="483" y="283" text-anchor="middle" class="">Objective: reduce the cases,</text><text x="483" y="303" text-anchor="middle" class="">and eliminate the disease if possible</text><circle class="dot-case" cx="12" cy="333" r="9"/><text x="28" y="338">Case</text><circle class="dot-non" cx="100" cy="333" r="9"/><text x="116" y="338">Non-case</text></svg></div>
+  <div class="st-row">
+    <div><h3>Free</h3><p>The disease is absent, and <span class="term" data-tip="Facts that show that something is true. For a disease, this is often a set of laboratory test results.">evidence</span> shows it.</p></div>
+    <div><h3>Exposed, disease not established</h3><p>The <span class="term" data-tip="Something that causes disease, such as a bacterium or a virus.">agent</span> has entered the population, but the disease is not yet present.</p></div>
+    <div><h3>Eliminated</h3><p>The disease is removed from a <span class="term" data-tip="A place with clear borders, such as a farm, a regency, or a country.">defined area</span>. <span class="term" data-tip="Actions that prevent or control a disease, such as vaccination or separating sick animals.">Interventions</span> are implemented to prevent its return.</p></div>
   </div>
-  <div class="notes">Move from left to right. At each status, ask which of the two objectives applies. Point out the three groups in the table on the previous slide.</div>
+  <div class="notes">Ask which of the three statuses needs the most evidence. Free and eliminated both need tests that would find the disease.</div>
 </section>
-
-<!-- Slide 6: Explore, matcher -->
-<section class="slide" data-type="explore" data-title="Match the objective" data-panel="controls">
-  <h2>Which objective does the situation call for?</h2>
-  <div class="sorter">
-    <div class="sort-top"><span class="num" id="m-pos"></span><span class="num" id="m-score"></span></div>
-    <p class="sort-q" id="m-q"></p>
-    <p class="sort-hint" id="m-hint" hidden>Ask: is the disease present in the population now?</p>
-    <div class="sort-btns" id="m-btns">
-      <button class="btn sort-btn" data-answer="1">Objective 1: Reduce the problem</button>
-      <button class="btn sort-btn" data-answer="2">Objective 2: Keep it out</button>
+<!-- Slide 9: Concept, group 2 -->
+<section class="slide" data-type="concept" data-title="Statuses: expected or low level">
+  <h2>Statuses: present at an expected or low level</h2>
+  <div class="fig-wrap" data-detail="d-g2"><svg class="fig" viewBox="0 0 720 350" role="img" aria-label="Three boxes of circles. Each circle is one animal. Left box: no animal is a case. Middle box: a few animals are cases. Right box: many animals are cases. One box has a thick border and shows the group of this slide. The middle box is the group of this slide. Select for details."><g class="dim"><rect class="box-off" x="0" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="29.0" cy="79.0" r="9"/><circle class="dot-non" cx="57.0" cy="79.0" r="9"/><circle class="dot-non" cx="85.0" cy="79.0" r="9"/><circle class="dot-non" cx="113.0" cy="79.0" r="9"/><circle class="dot-non" cx="141.0" cy="79.0" r="9"/><circle class="dot-non" cx="169.0" cy="79.0" r="9"/><circle class="dot-non" cx="197.0" cy="79.0" r="9"/><circle class="dot-non" cx="29.0" cy="107.0" r="9"/><circle class="dot-non" cx="57.0" cy="107.0" r="9"/><circle class="dot-non" cx="85.0" cy="107.0" r="9"/><circle class="dot-non" cx="113.0" cy="107.0" r="9"/><circle class="dot-non" cx="141.0" cy="107.0" r="9"/><circle class="dot-non" cx="169.0" cy="107.0" r="9"/><circle class="dot-non" cx="197.0" cy="107.0" r="9"/><circle class="dot-non" cx="29.0" cy="135.0" r="9"/><circle class="dot-non" cx="57.0" cy="135.0" r="9"/><circle class="dot-non" cx="85.0" cy="135.0" r="9"/><circle class="dot-non" cx="113.0" cy="135.0" r="9"/><circle class="dot-non" cx="141.0" cy="135.0" r="9"/><circle class="dot-non" cx="169.0" cy="135.0" r="9"/><circle class="dot-non" cx="197.0" cy="135.0" r="9"/><circle class="dot-non" cx="29.0" cy="163.0" r="9"/><circle class="dot-non" cx="57.0" cy="163.0" r="9"/><circle class="dot-non" cx="85.0" cy="163.0" r="9"/><circle class="dot-non" cx="113.0" cy="163.0" r="9"/><circle class="dot-non" cx="141.0" cy="163.0" r="9"/><circle class="dot-non" cx="169.0" cy="163.0" r="9"/><circle class="dot-non" cx="197.0" cy="163.0" r="9"/><circle class="dot-non" cx="29.0" cy="191.0" r="9"/><circle class="dot-non" cx="57.0" cy="191.0" r="9"/><circle class="dot-non" cx="85.0" cy="191.0" r="9"/><circle class="dot-non" cx="113.0" cy="191.0" r="9"/><circle class="dot-non" cx="141.0" cy="191.0" r="9"/><circle class="dot-non" cx="169.0" cy="191.0" r="9"/><circle class="dot-non" cx="197.0" cy="191.0" r="9"/><circle class="dot-non" cx="29.0" cy="219.0" r="9"/><circle class="dot-non" cx="57.0" cy="219.0" r="9"/><circle class="dot-non" cx="85.0" cy="219.0" r="9"/><circle class="dot-non" cx="113.0" cy="219.0" r="9"/><circle class="dot-non" cx="141.0" cy="219.0" r="9"/><circle class="dot-non" cx="169.0" cy="219.0" r="9"/><circle class="dot-non" cx="197.0" cy="219.0" r="9"/></g><text x="113.0" y="36" text-anchor="middle" class="t-strong">Disease absent</text><g class=""><rect class="box-on" x="247" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="276.0" cy="79.0" r="9"/><circle class="dot-non" cx="304.0" cy="79.0" r="9"/><circle class="dot-non" cx="332.0" cy="79.0" r="9"/><circle class="dot-non" cx="360.0" cy="79.0" r="9"/><circle class="dot-non" cx="388.0" cy="79.0" r="9"/><circle class="dot-non" cx="416.0" cy="79.0" r="9"/><circle class="dot-non" cx="444.0" cy="79.0" r="9"/><circle class="dot-non" cx="276.0" cy="107.0" r="9"/><circle class="dot-non" cx="304.0" cy="107.0" r="9"/><circle class="dot-non" cx="332.0" cy="107.0" r="9"/><circle class="dot-non" cx="360.0" cy="107.0" r="9"/><circle class="dot-non" cx="388.0" cy="107.0" r="9"/><circle class="dot-non" cx="416.0" cy="107.0" r="9"/><circle class="dot-non" cx="444.0" cy="107.0" r="9"/><circle class="dot-non" cx="276.0" cy="135.0" r="9"/><circle class="dot-non" cx="304.0" cy="135.0" r="9"/><circle class="dot-non" cx="332.0" cy="135.0" r="9"/><circle class="dot-case" cx="360.0" cy="135.0" r="9"/><circle class="dot-non" cx="388.0" cy="135.0" r="9"/><circle class="dot-non" cx="416.0" cy="135.0" r="9"/><circle class="dot-non" cx="444.0" cy="135.0" r="9"/><circle class="dot-non" cx="276.0" cy="163.0" r="9"/><circle class="dot-case" cx="304.0" cy="163.0" r="9"/><circle class="dot-non" cx="332.0" cy="163.0" r="9"/><circle class="dot-non" cx="360.0" cy="163.0" r="9"/><circle class="dot-non" cx="388.0" cy="163.0" r="9"/><circle class="dot-non" cx="416.0" cy="163.0" r="9"/><circle class="dot-non" cx="444.0" cy="163.0" r="9"/><circle class="dot-non" cx="276.0" cy="191.0" r="9"/><circle class="dot-non" cx="304.0" cy="191.0" r="9"/><circle class="dot-case" cx="332.0" cy="191.0" r="9"/><circle class="dot-non" cx="360.0" cy="191.0" r="9"/><circle class="dot-non" cx="388.0" cy="191.0" r="9"/><circle class="dot-case" cx="416.0" cy="191.0" r="9"/><circle class="dot-non" cx="444.0" cy="191.0" r="9"/><circle class="dot-non" cx="276.0" cy="219.0" r="9"/><circle class="dot-non" cx="304.0" cy="219.0" r="9"/><circle class="dot-non" cx="332.0" cy="219.0" r="9"/><circle class="dot-non" cx="360.0" cy="219.0" r="9"/><circle class="dot-non" cx="388.0" cy="219.0" r="9"/><circle class="dot-non" cx="416.0" cy="219.0" r="9"/><circle class="dot-non" cx="444.0" cy="219.0" r="9"/></g><text x="360.0" y="20" text-anchor="middle" class="t-strong">Present at an expected</text><text x="360.0" y="40" text-anchor="middle" class="t-strong">or low level</text><g class="dim"><rect class="box-off" x="494" y="54" width="226" height="190" rx="12"/><circle class="dot-case" cx="523.0" cy="79.0" r="9"/><circle class="dot-non" cx="551.0" cy="79.0" r="9"/><circle class="dot-non" cx="579.0" cy="79.0" r="9"/><circle class="dot-non" cx="607.0" cy="79.0" r="9"/><circle class="dot-case" cx="635.0" cy="79.0" r="9"/><circle class="dot-non" cx="663.0" cy="79.0" r="9"/><circle class="dot-non" cx="691.0" cy="79.0" r="9"/><circle class="dot-non" cx="523.0" cy="107.0" r="9"/><circle class="dot-case" cx="551.0" cy="107.0" r="9"/><circle class="dot-case" cx="579.0" cy="107.0" r="9"/><circle class="dot-non" cx="607.0" cy="107.0" r="9"/><circle class="dot-case" cx="635.0" cy="107.0" r="9"/><circle class="dot-non" cx="663.0" cy="107.0" r="9"/><circle class="dot-case" cx="691.0" cy="107.0" r="9"/><circle class="dot-case" cx="523.0" cy="135.0" r="9"/><circle class="dot-non" cx="551.0" cy="135.0" r="9"/><circle class="dot-case" cx="579.0" cy="135.0" r="9"/><circle class="dot-non" cx="607.0" cy="135.0" r="9"/><circle class="dot-case" cx="635.0" cy="135.0" r="9"/><circle class="dot-case" cx="663.0" cy="135.0" r="9"/><circle class="dot-non" cx="691.0" cy="135.0" r="9"/><circle class="dot-case" cx="523.0" cy="163.0" r="9"/><circle class="dot-non" cx="551.0" cy="163.0" r="9"/><circle class="dot-non" cx="579.0" cy="163.0" r="9"/><circle class="dot-non" cx="607.0" cy="163.0" r="9"/><circle class="dot-non" cx="635.0" cy="163.0" r="9"/><circle class="dot-case" cx="663.0" cy="163.0" r="9"/><circle class="dot-non" cx="691.0" cy="163.0" r="9"/><circle class="dot-case" cx="523.0" cy="191.0" r="9"/><circle class="dot-non" cx="551.0" cy="191.0" r="9"/><circle class="dot-case" cx="579.0" cy="191.0" r="9"/><circle class="dot-non" cx="607.0" cy="191.0" r="9"/><circle class="dot-case" cx="635.0" cy="191.0" r="9"/><circle class="dot-case" cx="663.0" cy="191.0" r="9"/><circle class="dot-case" cx="691.0" cy="191.0" r="9"/><circle class="dot-non" cx="523.0" cy="219.0" r="9"/><circle class="dot-non" cx="551.0" cy="219.0" r="9"/><circle class="dot-non" cx="579.0" cy="219.0" r="9"/><circle class="dot-case" cx="607.0" cy="219.0" r="9"/><circle class="dot-case" cx="635.0" cy="219.0" r="9"/><circle class="dot-case" cx="663.0" cy="219.0" r="9"/><circle class="dot-non" cx="691.0" cy="219.0" r="9"/></g><text x="607.0" y="20" text-anchor="middle" class="t-strong">Present above the</text><text x="607.0" y="40" text-anchor="middle" class="t-strong">expected level</text><path class="f-line" d="M0 252 V260 H226 V252"/><text x="113" y="283" text-anchor="middle" class="">Objective:</text><text x="113" y="303" text-anchor="middle" class="">prevent any case</text><path class="f-line" d="M247 252 V260 H720 V252"/><text x="483" y="283" text-anchor="middle" class="">Objective: reduce the cases,</text><text x="483" y="303" text-anchor="middle" class="">and eliminate the disease if possible</text><circle class="dot-case" cx="12" cy="333" r="9"/><text x="28" y="338">Case</text><circle class="dot-non" cx="100" cy="333" r="9"/><text x="116" y="338">Non-case</text></svg></div>
+  <div class="st-row">
+    <div><h3>Sporadic</h3><p>Single cases or small groups of cases occur <span class="term" data-tip="Not in a fixed pattern. The cases appear and disappear from time to time.">irregularly</span>.</p></div>
+    <div><h3><span class="term" data-tip="A disease that is always present at an expected level. Some texts about animals call this enzootic.">Endemic</span></h3><p>The disease is always present at the expected level.</p></div>
+    <div><h3>Under control</h3><p><span class="term" data-tip="Actions that prevent or control a disease, such as vaccination or separating sick animals.">Interventions</span> keep the cases at a low level. The work goes on until the disease is eliminated.</p></div>
+  </div>
+  <div class="notes">Sporadic and endemic describe a pattern of occurrence. Under control describes the result of interventions.</div>
+</section>
+<!-- Slide 10: Concept, group 3 -->
+<section class="slide" data-type="concept" data-title="Statuses: above the expected level">
+  <h2>Statuses: present above the expected level</h2>
+  <div class="fig-wrap" data-detail="d-g3"><svg class="fig" viewBox="0 0 720 350" role="img" aria-label="Three boxes of circles. Each circle is one animal. Left box: no animal is a case. Middle box: a few animals are cases. Right box: many animals are cases. One box has a thick border and shows the group of this slide. The right box is the group of this slide. Select for details."><g class="dim"><rect class="box-off" x="0" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="29.0" cy="79.0" r="9"/><circle class="dot-non" cx="57.0" cy="79.0" r="9"/><circle class="dot-non" cx="85.0" cy="79.0" r="9"/><circle class="dot-non" cx="113.0" cy="79.0" r="9"/><circle class="dot-non" cx="141.0" cy="79.0" r="9"/><circle class="dot-non" cx="169.0" cy="79.0" r="9"/><circle class="dot-non" cx="197.0" cy="79.0" r="9"/><circle class="dot-non" cx="29.0" cy="107.0" r="9"/><circle class="dot-non" cx="57.0" cy="107.0" r="9"/><circle class="dot-non" cx="85.0" cy="107.0" r="9"/><circle class="dot-non" cx="113.0" cy="107.0" r="9"/><circle class="dot-non" cx="141.0" cy="107.0" r="9"/><circle class="dot-non" cx="169.0" cy="107.0" r="9"/><circle class="dot-non" cx="197.0" cy="107.0" r="9"/><circle class="dot-non" cx="29.0" cy="135.0" r="9"/><circle class="dot-non" cx="57.0" cy="135.0" r="9"/><circle class="dot-non" cx="85.0" cy="135.0" r="9"/><circle class="dot-non" cx="113.0" cy="135.0" r="9"/><circle class="dot-non" cx="141.0" cy="135.0" r="9"/><circle class="dot-non" cx="169.0" cy="135.0" r="9"/><circle class="dot-non" cx="197.0" cy="135.0" r="9"/><circle class="dot-non" cx="29.0" cy="163.0" r="9"/><circle class="dot-non" cx="57.0" cy="163.0" r="9"/><circle class="dot-non" cx="85.0" cy="163.0" r="9"/><circle class="dot-non" cx="113.0" cy="163.0" r="9"/><circle class="dot-non" cx="141.0" cy="163.0" r="9"/><circle class="dot-non" cx="169.0" cy="163.0" r="9"/><circle class="dot-non" cx="197.0" cy="163.0" r="9"/><circle class="dot-non" cx="29.0" cy="191.0" r="9"/><circle class="dot-non" cx="57.0" cy="191.0" r="9"/><circle class="dot-non" cx="85.0" cy="191.0" r="9"/><circle class="dot-non" cx="113.0" cy="191.0" r="9"/><circle class="dot-non" cx="141.0" cy="191.0" r="9"/><circle class="dot-non" cx="169.0" cy="191.0" r="9"/><circle class="dot-non" cx="197.0" cy="191.0" r="9"/><circle class="dot-non" cx="29.0" cy="219.0" r="9"/><circle class="dot-non" cx="57.0" cy="219.0" r="9"/><circle class="dot-non" cx="85.0" cy="219.0" r="9"/><circle class="dot-non" cx="113.0" cy="219.0" r="9"/><circle class="dot-non" cx="141.0" cy="219.0" r="9"/><circle class="dot-non" cx="169.0" cy="219.0" r="9"/><circle class="dot-non" cx="197.0" cy="219.0" r="9"/></g><text x="113.0" y="36" text-anchor="middle" class="t-strong">Disease absent</text><g class="dim"><rect class="box-off" x="247" y="54" width="226" height="190" rx="12"/><circle class="dot-non" cx="276.0" cy="79.0" r="9"/><circle class="dot-non" cx="304.0" cy="79.0" r="9"/><circle class="dot-non" cx="332.0" cy="79.0" r="9"/><circle class="dot-non" cx="360.0" cy="79.0" r="9"/><circle class="dot-non" cx="388.0" cy="79.0" r="9"/><circle class="dot-non" cx="416.0" cy="79.0" r="9"/><circle class="dot-non" cx="444.0" cy="79.0" r="9"/><circle class="dot-non" cx="276.0" cy="107.0" r="9"/><circle class="dot-non" cx="304.0" cy="107.0" r="9"/><circle class="dot-non" cx="332.0" cy="107.0" r="9"/><circle class="dot-non" cx="360.0" cy="107.0" r="9"/><circle class="dot-non" cx="388.0" cy="107.0" r="9"/><circle class="dot-non" cx="416.0" cy="107.0" r="9"/><circle class="dot-non" cx="444.0" cy="107.0" r="9"/><circle class="dot-non" cx="276.0" cy="135.0" r="9"/><circle class="dot-non" cx="304.0" cy="135.0" r="9"/><circle class="dot-non" cx="332.0" cy="135.0" r="9"/><circle class="dot-case" cx="360.0" cy="135.0" r="9"/><circle class="dot-non" cx="388.0" cy="135.0" r="9"/><circle class="dot-non" cx="416.0" cy="135.0" r="9"/><circle class="dot-non" cx="444.0" cy="135.0" r="9"/><circle class="dot-non" cx="276.0" cy="163.0" r="9"/><circle class="dot-case" cx="304.0" cy="163.0" r="9"/><circle class="dot-non" cx="332.0" cy="163.0" r="9"/><circle class="dot-non" cx="360.0" cy="163.0" r="9"/><circle class="dot-non" cx="388.0" cy="163.0" r="9"/><circle class="dot-non" cx="416.0" cy="163.0" r="9"/><circle class="dot-non" cx="444.0" cy="163.0" r="9"/><circle class="dot-non" cx="276.0" cy="191.0" r="9"/><circle class="dot-non" cx="304.0" cy="191.0" r="9"/><circle class="dot-case" cx="332.0" cy="191.0" r="9"/><circle class="dot-non" cx="360.0" cy="191.0" r="9"/><circle class="dot-non" cx="388.0" cy="191.0" r="9"/><circle class="dot-case" cx="416.0" cy="191.0" r="9"/><circle class="dot-non" cx="444.0" cy="191.0" r="9"/><circle class="dot-non" cx="276.0" cy="219.0" r="9"/><circle class="dot-non" cx="304.0" cy="219.0" r="9"/><circle class="dot-non" cx="332.0" cy="219.0" r="9"/><circle class="dot-non" cx="360.0" cy="219.0" r="9"/><circle class="dot-non" cx="388.0" cy="219.0" r="9"/><circle class="dot-non" cx="416.0" cy="219.0" r="9"/><circle class="dot-non" cx="444.0" cy="219.0" r="9"/></g><text x="360.0" y="20" text-anchor="middle" class="t-strong">Present at an expected</text><text x="360.0" y="40" text-anchor="middle" class="t-strong">or low level</text><g class=""><rect class="box-on" x="494" y="54" width="226" height="190" rx="12"/><circle class="dot-case" cx="523.0" cy="79.0" r="9"/><circle class="dot-non" cx="551.0" cy="79.0" r="9"/><circle class="dot-non" cx="579.0" cy="79.0" r="9"/><circle class="dot-non" cx="607.0" cy="79.0" r="9"/><circle class="dot-case" cx="635.0" cy="79.0" r="9"/><circle class="dot-non" cx="663.0" cy="79.0" r="9"/><circle class="dot-non" cx="691.0" cy="79.0" r="9"/><circle class="dot-non" cx="523.0" cy="107.0" r="9"/><circle class="dot-case" cx="551.0" cy="107.0" r="9"/><circle class="dot-case" cx="579.0" cy="107.0" r="9"/><circle class="dot-non" cx="607.0" cy="107.0" r="9"/><circle class="dot-case" cx="635.0" cy="107.0" r="9"/><circle class="dot-non" cx="663.0" cy="107.0" r="9"/><circle class="dot-case" cx="691.0" cy="107.0" r="9"/><circle class="dot-case" cx="523.0" cy="135.0" r="9"/><circle class="dot-non" cx="551.0" cy="135.0" r="9"/><circle class="dot-case" cx="579.0" cy="135.0" r="9"/><circle class="dot-non" cx="607.0" cy="135.0" r="9"/><circle class="dot-case" cx="635.0" cy="135.0" r="9"/><circle class="dot-case" cx="663.0" cy="135.0" r="9"/><circle class="dot-non" cx="691.0" cy="135.0" r="9"/><circle class="dot-case" cx="523.0" cy="163.0" r="9"/><circle class="dot-non" cx="551.0" cy="163.0" r="9"/><circle class="dot-non" cx="579.0" cy="163.0" r="9"/><circle class="dot-non" cx="607.0" cy="163.0" r="9"/><circle class="dot-non" cx="635.0" cy="163.0" r="9"/><circle class="dot-case" cx="663.0" cy="163.0" r="9"/><circle class="dot-non" cx="691.0" cy="163.0" r="9"/><circle class="dot-case" cx="523.0" cy="191.0" r="9"/><circle class="dot-non" cx="551.0" cy="191.0" r="9"/><circle class="dot-case" cx="579.0" cy="191.0" r="9"/><circle class="dot-non" cx="607.0" cy="191.0" r="9"/><circle class="dot-case" cx="635.0" cy="191.0" r="9"/><circle class="dot-case" cx="663.0" cy="191.0" r="9"/><circle class="dot-case" cx="691.0" cy="191.0" r="9"/><circle class="dot-non" cx="523.0" cy="219.0" r="9"/><circle class="dot-non" cx="551.0" cy="219.0" r="9"/><circle class="dot-non" cx="579.0" cy="219.0" r="9"/><circle class="dot-case" cx="607.0" cy="219.0" r="9"/><circle class="dot-case" cx="635.0" cy="219.0" r="9"/><circle class="dot-case" cx="663.0" cy="219.0" r="9"/><circle class="dot-non" cx="691.0" cy="219.0" r="9"/></g><text x="607.0" y="20" text-anchor="middle" class="t-strong">Present above the</text><text x="607.0" y="40" text-anchor="middle" class="t-strong">expected level</text><path class="f-line" d="M0 252 V260 H226 V252"/><text x="113" y="283" text-anchor="middle" class="">Objective:</text><text x="113" y="303" text-anchor="middle" class="">prevent any case</text><path class="f-line" d="M247 252 V260 H720 V252"/><text x="483" y="283" text-anchor="middle" class="">Objective: reduce the cases,</text><text x="483" y="303" text-anchor="middle" class="">and eliminate the disease if possible</text><circle class="dot-case" cx="12" cy="333" r="9"/><text x="28" y="338">Case</text><circle class="dot-non" cx="100" cy="333" r="9"/><text x="116" y="338">Non-case</text></svg></div>
+  <div class="st-row">
+    <div><h3>Outbreak</h3><p>Cases are above the <span class="term" data-tip="The usual level of disease in this population, based on earlier weeks or years. It is also called the baseline.">expected level</span> in a limited place and a limited time.</p></div>
+    <div><h3><span class="term" data-tip="Many more cases than expected in a wide area. Some texts about animals call this an epizootic.">Epidemic</span></h3><p>Cases are clearly above the expected level in a wider area or a larger population.</p></div>
+    <div><h3><span class="term" data-tip="An epidemic that spreads across several countries or continents. Some texts about animals call this a panzootic.">Pandemic</span></h3><p>An epidemic spreads across several countries or continents.</p></div>
+  </div>
+  <div class="notes">The three statuses differ in the size of the place and the time. All three need a comparison with the expected level.</div>
+</section>
+<!-- Slide 11: Example -->
+<section class="slide" data-type="example" data-title="Work through the farm case">
+  <h2>Work through the farm case</h2>
+  <div class="ex-layout">
+    <svg class="fig" viewBox="0 0 360 300" role="img" aria-label="Bar chart of deaths per week on the layer farm. Weeks 1 to 6 have between 8 and 12 deaths, close to the expected level of about 10. Week 7 has 120 deaths."><rect class="bar-n" x="40" y="235.6" width="34" height="14.4" rx="3"/><text x="57.0" y="270" text-anchor="middle" class="t-muted">1</text><rect class="bar-n" x="82" y="232.4" width="34" height="17.6" rx="3"/><text x="99.0" y="270" text-anchor="middle" class="t-muted">2</text><rect class="bar-n" x="124" y="234.0" width="34" height="16.0" rx="3"/><text x="141.0" y="270" text-anchor="middle" class="t-muted">3</text><rect class="bar-n" x="166" y="237.2" width="34" height="12.8" rx="3"/><text x="183.0" y="270" text-anchor="middle" class="t-muted">4</text><rect class="bar-n" x="208" y="230.8" width="34" height="19.2" rx="3"/><text x="225.0" y="270" text-anchor="middle" class="t-muted">5</text><rect class="bar-n" x="250" y="234.0" width="34" height="16.0" rx="3"/><text x="267.0" y="270" text-anchor="middle" class="t-muted">6</text><rect class="bar-hot" x="292" y="58.0" width="34" height="192.0" rx="3"/><text x="309.0" y="52.0" text-anchor="middle">120</text><text x="309.0" y="270" text-anchor="middle" class="t-muted">7</text><line class="f-line" x1="34" y1="250" x2="332" y2="250"/><line class="exp-line" x1="34" y1="234.0" x2="332" y2="234.0"/><text x="40" y="222.0" class="t-strong">Expected level: about 10</text><text x="183.0" y="294" text-anchor="middle" class="t-muted">Deaths per week, weeks 1 to 7</text></svg>
+    <table class="ex-table">
+      <thead><tr><th scope="col">Step</th><th scope="col">What the coordinator does, and why</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Population</th><td>The hens of the layer farm in the last week. A status belongs to one population and one time.</td></tr>
+        <tr><th scope="row">Comparison</th><td>120 hens die, and the <span class="term" data-tip="The usual level of disease in this population, based on earlier weeks or years. It is also called the baseline.">expected level</span> is about 10. A status compares the present with the expected level.</td></tr>
+        <tr><th scope="row">Status</th><td>Outbreak. The cases are above the expected level, in one farm and one week.</td></tr>
+        <tr><th scope="row">Objective</th><td>Reduce the cases: <span class="term" data-tip="To keep something inside a limit so that it cannot spread.">contain</span> the disease and find the source.</td></tr>
+        <tr><th scope="row">Other farms</th><td>Their status remains unknown until the laboratory tests them. The absence of reports does not mean they are free.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="notes">Go through the six rows from top to bottom. At row 2, point to week 7 in the chart and to the dashed line. A reliable expected level needs several years of good data from the same population.</div>
+</section>
+<!-- Slide 12: Practice with support, sort scenarios into three groups -->
+<section class="slide" data-type="practice" data-title="Sort the scenarios">
+  <h2>Drag each scenario into the right box</h2>
+  <div class="sorter" data-sorter data-explain="d-sort" data-explain-always="1">
+    <div class="sorter-pool" aria-label="Cards to sort">
+      <button class="sort-card" data-target="c2">Laboratory tests find Salmonella in hens of Regency B every year, at about the same level.</button>
+      <button class="sort-card" data-target="c3">In one farm of Regency C, 100 hens die in a week. The expected number is 10.</button>
+      <button class="sort-card" data-target="c1">In Regency A, veterinarians test layer farms every year. For five years, all results are negative.</button>
+      <button class="sort-card" data-target="c3">Salmonella spreads to farms in many parts of Regency F. Deaths are clearly above the expected number.</button>
+      <button class="sort-card" data-target="c2">Two farms in Regency D had several Salmonella cases in two years. The cases are far apart and have no link.</button>
+      <button class="sort-card" data-target="c1">Many farms in Regency E had Salmonella. After a control program, no case has occurred for five years, and veterinarians continue to test.</button>
     </div>
-    <p class="verdict" id="m-verdict" aria-live="polite"></p>
-    <p class="sort-why" id="m-why"></p>
-    <div><button class="btn btn-main" id="m-next" hidden>Show the next situation</button></div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="c1"><h3>Disease absent or not established</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="c2"><h3>Disease present at an expected or low level</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="c3"><h3>Disease present above the expected level</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
   </div>
-  <div class="notes">Ask the class to vote with a show of hands. The exposed status and the under-control status are the two that students most often place under the wrong objective.</div>
+  <div class="notes">Students work in pairs. If a pair places a card wrongly, ask them to read the box title and the card again, and to look for the expected level.</div>
 </section>
-
-<!-- Slide 7: Explore, evidence for freedom -->
-<section class="slide" data-type="explore" data-title="Free or unknown?" data-panel="controls">
-  <h2>No reports for five years: is the district free?</h2>
-  <p>In all three settings, no farm has reported Salmonella in five years. Choose the surveillance that the district has.</p>
-  <div class="loop-text" id="ev-card" tabindex="0" aria-live="polite">
-    <h3 id="ev-h">Select a surveillance setting in the controls.</h3>
-    <p id="ev-p"></p>
-    <p id="ev-q" class="loop-q"></p>
+<!-- Slide 13: Practice, complete the statements -->
+<section class="slide" data-type="practice" data-title="Complete the statements">
+  <h2>Complete each statement</h2>
+  <div class="bd-rows">
+    <div class="bd-row">
+      <p>1. Laboratory tests find Salmonella in chicks that arrive at one farm of Regency G. The farm owner removes all the chicks at once, and no hen gets the disease.</p>
+      <p class="bd-fill">The status is <span class="bd-given">exposed, disease not established</span>. The objective is <select id="r1o" aria-label="Objective for statement 1"><option value="">Choose</option><option value="prevent">Prevent any case</option><option value="reduce">Reduce the cases</option></select>.</p>
+    </div>
+    <div class="bd-row">
+      <p>2. The number of Salmonella cases in Regency H stays low because of a control program. Cases still occur.</p>
+      <p class="bd-fill">The status is <select id="r2s" aria-label="Status for statement 2"><option value="">Choose</option><option value="free">Free</option><option value="exposed">Exposed, disease not established</option><option value="sporadic">Sporadic</option><option value="endemic">Endemic</option><option value="outbreak">Outbreak</option><option value="epidemic">Epidemic</option><option value="pandemic">Pandemic</option><option value="under">Under control</option><option value="elim">Eliminated</option></select>. The objective is <select id="r2o" aria-label="Objective for statement 2"><option value="">Choose</option><option value="prevent">Prevent any case</option><option value="reduce">Reduce the cases</option></select>.</p>
+    </div>
+    <div class="bd-row">
+      <p>3. Veterinarians removed Salmonella from all layer farms of Regency K three years ago. Tests continue, and all results are negative.</p>
+      <p class="bd-fill">The status is <select id="r3s" aria-label="Status for statement 3"><option value="">Choose</option><option value="free">Free</option><option value="exposed">Exposed, disease not established</option><option value="sporadic">Sporadic</option><option value="endemic">Endemic</option><option value="outbreak">Outbreak</option><option value="epidemic">Epidemic</option><option value="pandemic">Pandemic</option><option value="under">Under control</option><option value="elim">Eliminated</option></select>. The objective is <select id="r3o" aria-label="Objective for statement 3"><option value="">Choose</option><option value="prevent">Prevent any case</option><option value="reduce">Reduce the cases</option></select>.</p>
+    </div>
   </div>
-  <div class="notes">Ask: what does silence mean? The same silence supports freedom under active testing and supports nothing when no one looks.</div>
+  <div class="bd-actions">
+    <button class="btn btn-main" id="bd-check">Check the statements</button>
+    <button class="btn" id="bd-reset">Start again</button>
+    <span class="verdict" id="bd-verdict" aria-live="polite"></span>
+  </div>
+  <div class="bd-why" id="bd-why"></div>
+  <div class="notes">In statement 1 the status is given, so students only choose the objective. In statements 2 and 3 they choose both. Statement 2 is the usual mistake: the disease is present, so the objective is to reduce the cases.</div>
 </section>
-
-<!-- Slide 8: Check 1 -->
-<section class="slide" data-type="check" data-title="Check: the layer farms">
-  <h2>In the district, 25 of the 60 layer farms test positive for Salmonella every year, at about the same level. What is the typical objective?</h2>
+<!-- Slide 14: Practice, find the error -->
+<section class="slide" data-type="practice" data-title="Find the error">
+  <h2>Find the error</h2>
+  <p>A student writes a note about Regency C.</p>
+  <p class="quote">"No farm of Regency C has reported Salmonella in five years. The status of Regency C is free."</p>
+  <p class="q-label">What does the student need before writing that the status is free?</p>
   <div>
-    <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
-      <li><button class="choice" data-value="a"><span class="key">A</span>Prevent introduction and maintain freedom of the district</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Reduce, control, and work toward elimination</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>Contain the spread and find one source</button></li>
+    <ul class="choices" data-check="q0" data-answer="a" data-explain="d-q0">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Tests that would find Salmonella if it were present</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Reports from farm owners that their hens look healthy</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>A list of farms that bought chicks from other regencies</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+  <div class="notes">The note takes a lack of reports as evidence. Ask students who would report if no one tests.</div>
+</section>
+<!-- Slide 15: Explore, one farm in five stages -->
+<section class="slide" data-type="explore" data-title="Follow one farm" data-panel="controls">
+  <h2>Follow one farm through five stages</h2>
+  <div class="xp-layout">
+    <svg class="fig" id="xp-fig" viewBox="0 0 420 300" role="img" aria-label="A box of circles that shows one layer farm. Each circle is one animal. The number of cases changes with the stage."></svg>
+    <div class="xp-read" aria-live="polite">
+      <div class="xp-chips" id="xp-chips">
+        <span class="xp-chip" data-g="0">Disease absent</span>
+        <span class="xp-chip" data-g="1">Present at an expected or low level</span>
+        <span class="xp-chip" data-g="2">Present above the expected level</span>
+      </div>
+      <p class="xp-stage" id="xp-stage"></p>
+      <p class="xp-status" id="xp-status"></p>
+      <p class="xp-line"><span class="xp-label">Objective: </span><span id="xp-obj"></span></p>
+      <p class="xp-work" id="xp-work"></p>
+      <p class="xp-line" id="xp-text"></p>
+    </div>
+  </div>
+  <p class="practice-note">Move the slider in the panel. Before you read the status, say the objective.</p>
+  <div class="notes">Move the slider one stage at a time. At each stage, ask the class for the status and the objective first. Point out that the status goes up and then down.</div>
+</section>
+<!-- Slide 16: Check 1 -->
+<section class="slide" data-type="check" data-title="Check: the status">
+  <div>
+    <h2>Salmonella spreads from the farm. Deaths are far above the expected number on 12 farms in many regencies and provinces. Which status fits?</h2>
+    <ul class="choices" data-check="q1" data-answer="c" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Outbreak</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Endemic</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Epidemic</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 9: Check 2, transfer to shelter -->
+<!-- Slide 17: Check 2 -->
+<section class="slide" data-type="check" data-title="Check: the objective">
+  <div>
+    <h2>Regency C is free of Salmonella, and test results show it. A truck brings chicks from Regency A, where Salmonella is <span class="term" data-tip="A disease that is always present at an expected level. Some texts about animals call this enzootic.">endemic</span>. Which objective fits Regency C?</h2>
+    <ul class="choices" data-check="q2" data-answer="a" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Prevent any case of Salmonella in Regency C</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Reduce the cases of Salmonella in Regency C</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Find the source of the cases in Regency C</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+<!-- Slide 18: Check 3, transfer -->
 <section class="slide" data-type="check" data-title="Check: a new case">
   <h2>A new case: an animal shelter</h2>
-  <p>A shelter has had no case of canine distemper for two years. Within four days, 6 of its 50 dogs show signs and 3 test positive. This scenario is synthetic and is for teaching.</p>
-  <p><strong>Which status and objective fit best?</strong></p>
+  <p>A <span class="term" data-tip="A place that cares for stray or unwanted animals until they find a home.">shelter</span> has had no case of <span class="term" data-tip="A virus disease of dogs. It affects the lungs, the gut, and the nerves.">canine distemper</span> for two years. In four days, 6 of its 50 dogs show <span class="term" data-tip="What an observer can see or measure in a sick animal, such as fever or a cough.">signs</span> of the disease, and 3 <span class="term" data-tip="The test result shows that the agent is present.">test positive</span>.</p>
+  <p class="q-label">Which status and objective fit best?</p>
   <div>
-    <ul class="choices" data-check="q2" data-answer="a" data-explain="d-q2">
-      <li><button class="choice" data-value="a"><span class="key">A</span>Outbreak, with the objective to contain the spread</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Free, with the objective to keep the disease out</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>Endemic, with the objective to reduce and control</button></li>
+    <ul class="choices" data-check="q3" data-answer="b" data-explain="d-q3">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Free. Prevent any case of the disease in the shelter.</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Outbreak. Contain the disease and find the source.</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Endemic. Reduce the cases over the next few years.</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 10: Summary -->
+<!-- Slide 19: Summary -->
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
-    <li>The population status is the state of a disease in a defined population at a given time. It runs from free to eliminated.</li>
-    <li>If the disease is present, the objective is to reduce the problem. If the disease is absent, the objective is to keep it out.</li>
-    <li>The status can change, and the objective changes with it. An outbreak in a free population moves the aim from keeping out to containing.</li>
-    <li>A claim of freedom needs evidence. Silence from a population with no surveillance leaves the status unknown.</li>
+    <li>The disease status within a population is the state of that disease in a population at a specific point in time.</li>
+    <li>When the disease is absent, the objective is to prevent any case. When it is present, the objective is to reduce the cases and, where possible, to eliminate the disease.</li>
+    <li>A disease that is present is at an expected or low level, or above the expected level. The nine statuses give each group more exact names.</li>
+    <li>A lack of reports does not show that a disease is absent. Free status needs evidence from tests.</li>
   </ul>
   <div class="links">
     <a class="btn" href="../encyclopedia/population-status-of-disease.html">Read the article: Population status of disease</a>
-    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-5">Open skill S1.5</a>
-    <a class="btn btn-main" href="./identify-levels-of-analysis.html">Open the next deck: Identify levels of analysis</a>
+    <a class="btn btn-main" href="./explain-veterinary-economics.html">Open the next deck: Explain veterinary economics</a>
   </div>
 </section>
 
-<!-- Details -->
-<template id="d-range">
-  <h3>About the range</h3>
-  <p>The nine statuses form a range from the absence of disease to its widest spread. The range is a working convention of the course. Real situations overlap, and no fixed number separates sporadic from endemic or outbreak from epidemic.</p>
-  <p>The status is stated for a defined population and a period. The same disease can be endemic in one district and absent from another.</p>
+<!-- Details: one template per element with data-detail or data-explain -->
+<template id="d-pens">
+  <h3>About these data</h3>
+  <p>The flock has 8,000 hens in 8 pens. In a flock of this size, about 10 hens normally die in one week.</p>
+  <p>Pens A1 and B1 are next to the water inlet. They had 90 of the 120 deaths. The other six pens had 5 deaths each.</p>
+</template>
+<template id="d-g1">
+  <h3>Typical work for each status</h3>
+  <p>Free: prevent the introduction of the disease and keep the population free.</p>
+  <p>Exposed, disease not established: prevent the disease from becoming established.</p>
+  <p>Eliminated: prevent the disease from coming back.</p>
+  <p>In all three statuses the disease is absent or not established, so the objective is to prevent any case.</p>
+</template>
+<template id="d-g2">
+  <h3>Typical work for each status</h3>
+  <p>Sporadic: reduce the cases and find the source of each case.</p>
+  <p>Endemic: reduce the cases, control the disease, and work toward elimination.</p>
+  <p>Under control: keep the gains and complete the elimination.</p>
+  <p>Sporadic and endemic describe a pattern of occurrence. Under control describes the result of interventions.</p>
+</template>
+<template id="d-g3">
+  <h3>Typical work for each status</h3>
+  <p>Outbreak: contain the disease, find the source, and stop the spread.</p>
+  <p>Epidemic: control the spread and reduce the impact.</p>
+  <p>Pandemic: control the spread and coordinate the work across countries.</p>
+  <p>Outbreak and epidemic describe a change from the expected level. The words for animals, epizootic and panzootic, have the same meaning.</p>
+</template>
+<template id="d-sort">
+  <h3>The status of each scenario</h3>
+  <p>Regency A: free. The test results are negative, so the disease is absent.</p>
+  <p>Regency E: eliminated. The disease is removed, and the tests continue to find any return.</p>
+  <p>Regency B: endemic. The disease is always present at the expected level.</p>
+  <p>Regency D: sporadic. The cases are single and have no link.</p>
+  <p>Regency C: outbreak. The deaths are above the expected number in one farm and one week.</p>
+  <p>Regency F: epidemic. The deaths are above the expected number in many parts of the regency.</p>
+</template>
+<template id="d-q0">
+  <h3>Answer: A</h3>
+  <p>A status of free needs evidence. A lack of reports can mean that no farm has the disease, or that no one tests and no one reports.</p>
+  <p>Only tests that would find Salmonella if it were present show that the disease is absent.</p>
 </template>
 <template id="d-q1">
-  <h3>Answer: B</h3>
-  <p>The disease is constantly present at an expected level, so the status is endemic. The typical objective is to reduce, control, and work toward elimination.</p>
-  <p>Preventing introduction fits a free population. Containing one source fits an outbreak.</p>
+  <h3>Answer: C, Epidemic</h3>
+  <p>The cases are above the expected level in a wide area. An outbreak has a limited place and time.</p>
+  <p>Endemic means that the disease is always present at the expected level. That does not fit deaths far above the expected number.</p>
 </template>
 <template id="d-q2">
   <h3>Answer: A</h3>
-  <p>Cases above the expected level in one place and time make an outbreak. The shelter was free before, and the status has now changed.</p>
-  <p>The objective moves from keeping the disease out to containing it, finding the source, and stopping the spread.</p>
+  <p>Regency C is free, so the disease is absent. The objective is to prevent any case, for example by checking the chicks that arrive.</p>
+  <p>Reducing the cases and finding the source of cases fit a population in which the disease is present.</p>
+</template>
+<template id="d-q3">
+  <h3>Answer: B, Outbreak</h3>
+  <p>The shelter was free for two years, so the expected level was zero. Now cases appear in one place and one week, which is an outbreak.</p>
+  <p>The disease is present, so the objective is to reduce the cases: contain the disease and find the source. Free and endemic do not fit.</p>
 </template>
 
   </div><!-- /card -->
@@ -468,23 +694,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </aside>
 
 <!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
-<div class="controls" data-for-slide="5" hidden>
-  <div class="control"><label for="st-step">Status on the range <output id="st-out"></output></label><input type="range" id="st-step" min="1" max="9" step="1" value="1"></div>
-  <button class="btn" data-reset>Reset the controls</button>
-</div>
-<div class="controls" data-for-slide="6" hidden>
-  <div class="control"><label for="in-hint6">Show a hint <input type="checkbox" id="in-hint6"></label></div>
-  <button class="btn" id="m-reset" data-reset>Reset the sorting</button>
-</div>
-<div class="controls" data-for-slide="7" hidden>
-  <div class="control"><label for="ev-select">Surveillance in the district</label>
-    <select id="ev-select">
-      <option value="">Select a setting</option>
-      <option value="a">Active testing of sampled farms</option>
-      <option value="b">Reports from farmers only</option>
-      <option value="c">No surveillance at all</option>
-    </select>
-  </div>
+<div class="controls" data-for-slide="15" hidden>
+  <div class="control"><label for="in-stage">Stage <output id="out-stage">1</output></label><input type="range" id="in-stage" min="1" max="5" step="1" value="1"></div>
   <button class="btn" data-reset>Reset the controls</button>
 </div>
 
@@ -585,13 +796,43 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $('#counter').textContent = (current + 1) + ' / ' + slides.length;
-    $('#btn-prev').disabled = current === 0; $('#btn-next').disabled = current === slides.length - 1;
+    $('#btn-prev').disabled = current === 0; updateNav();
     if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
     hideTip(); updatePanel();
     document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
   }
   $('#btn-prev').addEventListener('click', () => go(current - 1));
-  $('#btn-next').addEventListener('click', () => go(current + 1));
+  $('#btn-next').addEventListener('click', () => next());
+
+  // Reveal steps: elements with data-step="n" appear one number at a time
+  const showAll = new URLSearchParams(location.search).get('steps') === 'all';
+  slides.forEach(s => {
+    const els = $$('[data-step]', s);
+    if (!els.length) return;
+    s._steps = Array.from(new Set(els.map(e => Number(e.dataset.step)))).sort((a, b) => a - b);
+    s._shown = showAll ? s._steps.length : 0;
+    els.forEach(e => { if (!showAll) e.classList.add('step-hidden'); });
+    const b = document.createElement('button'); b.className = 'btn step-btn'; b.type = 'button';
+    b.addEventListener('click', () => revealNext(s)); s.appendChild(b); s._btn = b;
+    refreshStep(s);
+  });
+  function refreshStep(s) {
+    if (!s._steps) return;
+    const left = s._steps.length - s._shown;
+    s._btn.hidden = left <= 0;
+    s._btn.textContent = 'Show the next step (' + (s._shown + 1) + ' of ' + s._steps.length + ')';
+  }
+  function revealNext(s) {
+    if (!s._steps || s._shown >= s._steps.length) return false;
+    const n = s._steps[s._shown]; s._shown++;
+    $$('[data-step="' + n + '"]', s).forEach(e => e.classList.remove('step-hidden'));
+    refreshStep(s); updateNav(); return true;
+  }
+  function next() { if (!revealNext(slides[current])) go(current + 1); }
+  function updateNav() {
+    const s = slides[current];
+    $('#btn-next').disabled = current === slides.length - 1 && !(s._steps && s._shown < s._steps.length);
+  }
 
   // Panel
   $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
@@ -620,6 +861,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     const b = e.target.closest('[data-reset]'); if (!b) return;
     const c = b.closest('.controls'); if (!c) return;
     c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    // Inputs made after load: use the attribute defaults
+    $$('input, select', c).forEach(el => {
+      if (c._defaults.some(d => d[0] === el)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+      else if (el.tagName === 'SELECT') { const o = Array.from(el.options).findIndex(x => x.defaultSelected); el.selectedIndex = o < 0 ? 0 : o; }
+      else el.value = el.defaultValue;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    c.dispatchEvent(new CustomEvent('deckreset', { bubbles: true }));
   });
 
   // Choices (predictions) and checks
@@ -636,6 +886,52 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         if (list.dataset.explain) openDetail(list);
       }
     }));
+  });
+
+  // Card sorter: drag a card into a box, or select a card and then select a box
+  $$('[data-sorter]').forEach(sr => {
+    const pool = $('.sorter-pool', sr), bins = $$('.sort-bin', sr), cardsAll = $$('.sort-card', sr);
+    const verdict = $('.verdict', sr); let sel = null, dragged = null;
+    const zoneOf = el => el.classList.contains('sorter-pool') ? el : $('.sort-drop', el);
+    const cap = el => Number(el.dataset.capacity || 0);
+    function clearMarks() { cardsAll.forEach(c => c.classList.remove('is-correct', 'is-wrong')); verdict.textContent = ''; verdict.className = 'verdict'; }
+    function unselect() { if (sel) { sel.classList.remove('is-selected'); sel.setAttribute('aria-pressed', 'false'); } sel = null; }
+    function place(card, box) {
+      const z = zoneOf(box);
+      if (cap(box) && z.children.length >= cap(box) && card.parentElement !== z) { const old = z.children[0]; pool.appendChild(old); }
+      z.appendChild(card); clearMarks(); unselect();
+    }
+    cardsAll.forEach(c => {
+      c.type = 'button'; c.draggable = true; c.setAttribute('aria-pressed', 'false');
+      c.addEventListener('dragstart', e => { dragged = c; try { e.dataTransfer.setData('text/plain', c.textContent); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+      c.addEventListener('dragend', () => { dragged = null; $$('.is-over', sr).forEach(x => x.classList.remove('is-over')); });
+      c.addEventListener('click', e => {
+        e.stopPropagation();
+        if (sel && sel !== c) { place(sel, c.closest('.sort-bin') || pool); return; }
+        if (sel === c) { unselect(); return; }
+        sel = c; c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true');
+      });
+    });
+    [pool].concat(bins).forEach(box => {
+      box.addEventListener('click', () => { if (sel) place(sel, box); });
+      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('is-over'); });
+      box.addEventListener('dragleave', () => box.classList.remove('is-over'));
+      box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('is-over'); if (dragged) place(dragged, box); });
+    });
+    $('[data-sorter-check]', sr).addEventListener('click', () => {
+      if (cardsAll.some(c => c.parentElement === pool)) { verdict.textContent = 'Place every card in a box first.'; verdict.className = 'verdict bad'; return; }
+      let ok = 0;
+      cardsAll.forEach(c => {
+        const bin = c.closest('.sort-bin').dataset.bin;
+        const right = (c.dataset.target || '').split(' ').includes(bin);
+        c.classList.toggle('is-correct', right); c.classList.toggle('is-wrong', !right); if (right) ok++;
+      });
+      const all = ok === cardsAll.length;
+      verdict.textContent = all ? 'All ' + ok + ' cards are in the right box.' : ok + ' of ' + cardsAll.length + ' cards are in the right box. Move the cards marked ✗ and check again.';
+      verdict.className = 'verdict ' + (all ? 'ok' : 'bad');
+      if (sr.dataset.explain && (all || sr.dataset.explainAlways)) openDetail(sr);
+    });
+    $('[data-sorter-reset]', sr).addEventListener('click', () => { unselect(); cardsAll.forEach(c => pool.appendChild(c)); clearMarks(); });
   });
 
   // Tooltips
@@ -678,7 +974,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const k = e.key;
-    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); go(current + 1); }
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
     else if (k === 'Home') go(0);
     else if (k === 'End') go(slides.length - 1);
@@ -711,7 +1007,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     rng: seed => mulberry32(Number(seed) || 1),
     newSeed: () => Math.floor(Math.random() * 1e6),
     seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
-    current: () => current, go,
+    current: () => current, go, next,
     onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
   };
 
@@ -726,111 +1022,81 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 (function () {
   const $ = id => document.getElementById(id);
 
-  // Slide 3
+  // Slide 3: explain the best answer after a prediction
   const note = $('predict-note');
   document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
     note.className = 'verdict';
-    note.textContent = 'Option C is the best answer. The state of the disease decides which aim makes sense. The next slides show the nine statuses.';
+    note.textContent = 'Option B is the best answer. Salmonella is already on the farm, so the work is to reduce the cases and stop the spread. Options A and C fit a population in which the disease is absent.';
   }));
 
-  // Slide 5: the range of statuses
-  const st = [
-    { n: 'Free', g: 'Absent or not established', ex: 'No layer farm has tested positive for five years, and testing of sampled farms would have found Salmonella if it were present.', o: 'Objective 2, keep it out: prevent introduction and maintain freedom.' },
-    { n: 'Exposed', g: 'Absent or not established', ex: 'Salmonella is found in a batch of imported day-old chicks. The farm removes the batch before the infection spreads to other flocks.', o: 'Objective 2, keep it out: prevent establishment.' },
-    { n: 'Sporadic', g: 'Present at an expected or low level', ex: 'Three farms that have no link to each other test positive over two years.', o: 'Objective 1, reduce the problem: reduce, and find the source of each case.' },
-    { n: 'Endemic', g: 'Present at an expected or low level', ex: 'About 25 of the 60 farms test positive every year, at a similar level.', o: 'Objective 1, reduce the problem: reduce, control, and work toward elimination.' },
-    { n: 'Outbreak', g: 'Above the expected level', ex: 'Six farms in one sub-district test positive within one month, and all of them bought pullets from one hatchery.', o: 'Objective 1, reduce the problem: contain, find the source, and stop the spread.' },
-    { n: 'Epidemic', g: 'Above the expected level', ex: 'Positive farms appear in several sub-districts, clearly above the usual number.', o: 'Objective 1, reduce the problem: control the spread and reduce the impact.' },
-    { n: 'Pandemic', g: 'Above the expected level', ex: 'This status does not fit the Salmonella case. It would describe a poultry disease that spreads across several countries or continents.', o: 'Objective 1, reduce the problem: control the spread and coordinate across countries.' },
-    { n: 'Under control', g: 'Present at an expected or low level', ex: 'After better hygiene and vaccination, positive farms fall to two or three per year and stay at that level.', o: 'Objective 1, reduce the problem: keep the gains and complete the elimination.' },
-    { n: 'Eliminated', g: 'Absent or not established', ex: 'The program removes the target Salmonella type from the layer farms of the district, and measures continue.', o: 'Objective 2, keep it out: prevent reintroduction.' }
+  // Slide 13: complete the statements
+  const rows = [
+    { sel: ['r1o'], ans: ['prevent'], why: 'Statement 1: Salmonella has entered, but no hen has the disease and it does not spread. The disease is absent or not established, so the objective is to prevent any case.' },
+    { sel: ['r2s', 'r2o'], ans: ['under', 'reduce'], why: 'Statement 2: the status is under control. Cases still occur at a low level, so the disease is present. The objective is to reduce the cases until the disease is eliminated.' },
+    { sel: ['r3s', 'r3o'], ans: ['elim', 'prevent'], why: 'Statement 3: the status is eliminated. The disease is removed and the tests continue, so the disease is absent. The objective is to prevent it from coming back.' }
   ];
-  const chips = $('st-chips'), slider = $('st-step'), out = $('st-out');
-  st.forEach((s, i) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'chip'; b.dataset.step = i + 1; b.textContent = s.n;
-    b.addEventListener('click', () => { slider.value = i + 1; renderSt(); });
-    chips.appendChild(b);
-  });
-  function renderSt() {
-    const k = Number(slider.value) - 1, s = st[k];
-    out.textContent = (k + 1) + ' of 9';
-    Array.from(chips.children).forEach((c, i) => c.classList.toggle('is-active', i === k));
-    $('st-h').textContent = s.n + ' (' + s.g.toLowerCase() + ')';
-    $('st-ex').textContent = 'Layer-farm example, synthetic: ' + s.ex;
-    $('st-obj').textContent = s.o;
+  const allSel = rows.flatMap(r => r.sel.map($));
+  function bdClear() {
+    allSel.forEach(s => s.classList.remove('is-correct', 'is-wrong'));
+    $('bd-verdict').textContent = ''; $('bd-verdict').className = 'verdict'; $('bd-why').innerHTML = '';
   }
-  slider.addEventListener('input', renderSt);
-  renderSt();
+  allSel.forEach(s => s.addEventListener('change', bdClear));
+  $('bd-check').addEventListener('click', () => {
+    if (allSel.some(s => !s.value)) { $('bd-verdict').textContent = 'Choose an answer for every gap first.'; $('bd-verdict').className = 'verdict bad'; return; }
+    const why = $('bd-why'); why.innerHTML = ''; let okRows = 0;
+    rows.forEach(r => {
+      let rowOk = true;
+      r.sel.forEach((id, i) => {
+        const el = $(id), right = el.value === r.ans[i];
+        el.classList.toggle('is-correct', right); el.classList.toggle('is-wrong', !right);
+        if (!right) rowOk = false;
+      });
+      if (rowOk) okRows++; else { const p = document.createElement('p'); p.textContent = r.why; why.appendChild(p); }
+    });
+    const all = okRows === rows.length;
+    $('bd-verdict').textContent = all ? 'All 3 statements are correct.' : okRows + ' of 3 statements are correct. Change the gaps marked in red and check again.';
+    $('bd-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
+  });
+  $('bd-reset').addEventListener('click', () => { allSel.forEach(s => { s.value = ''; }); bdClear(); });
 
-  // Slide 6: match situations to the two objectives
-  const items = [
-    { q: 'No farm in the district has had Salmonella, and sampled farms test negative every year.', a: '2', why: 'The status is free. The objective is to prevent introduction and maintain freedom.' },
-    { q: 'About a third of the farms test positive every year, at a similar level.', a: '1', why: 'The status is endemic. The objective is to reduce, control, and work toward elimination.' },
-    { q: 'Six farms test positive within one month after they bought pullets from the same hatchery.', a: '1', why: 'The status is outbreak. The objective is to contain, find the source, and stop the spread.' },
-    { q: 'The program has removed the target Salmonella type from the district, and no farm has tested positive for years.', a: '2', why: 'The status is eliminated. The objective is to prevent reintroduction.' },
-    { q: 'Salmonella has entered the district in imported chicks. It has not spread to other flocks.', a: '2', why: 'The status is exposed, with the disease not established. The objective is to prevent establishment, which keeps the disease out.' },
-    { q: 'Positive farms fell to two per year after new measures, and the number stays low.', a: '1', why: 'The status is under control. The disease is still present, so the objective is to keep the gains and complete the elimination.' }
+  // Slide 15: one farm in five stages
+  const stages = [
+    { status: 'Free', g: 0, obj: 'Prevent any case', work: 'Typical work: prevent the entry of the disease and keep the farm free.', n: 0, text: 'Tests of the farm are all negative. No hen has Salmonella.' },
+    { status: 'Exposed, disease not established', g: 0, obj: 'Prevent any case', work: 'Typical work: prevent the disease from becoming established.', n: 1, text: 'Salmonella enters with new chicks. One hen is a case, and the disease does not keep spreading.' },
+    { status: 'Outbreak', g: 2, obj: 'Reduce the cases', work: 'Typical work: contain the disease, find the source, and stop the spread.', n: 20, text: 'Many hens are cases. The number of cases is far above the expected level.' },
+    { status: 'Under control', g: 1, obj: 'Reduce the cases', work: 'Typical work: keep the gains and complete the elimination.', n: 4, text: 'Interventions bring the cases down to a low level and keep them there.' },
+    { status: 'Eliminated', g: 0, obj: 'Prevent any case', work: 'Typical work: prevent the disease from coming back.', n: 0, text: 'No case occurs. Veterinarians continue to test to find any return of Salmonella.' }
   ];
-  const lab = { '1': 'Objective 1, reduce the problem', '2': 'Objective 2, keep it out' };
-  const qEl = $('m-q'), posEl = $('m-pos'), scoreEl = $('m-score'), verdict = $('m-verdict'), why = $('m-why'),
-        next = $('m-next'), btns = $('m-btns'), hint = $('m-hint'), hintBox = $('in-hint6');
-  const buttons = Array.from(btns.querySelectorAll('.sort-btn'));
-  let idx = 0, score = 0, answered = false, finished = false;
-  function render() {
-    finished = false; answered = false;
-    qEl.textContent = items[idx].q;
-    posEl.textContent = 'Situation ' + (idx + 1) + ' of ' + items.length;
-    scoreEl.textContent = 'Correct so far: ' + score;
-    verdict.textContent = ''; verdict.className = 'verdict'; why.textContent = '';
-    next.hidden = true; btns.hidden = false;
-    buttons.forEach(b => { b.disabled = false; b.classList.remove('is-correct', 'is-wrong'); });
+  function rng(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const COLS = 12, ROWS = 7, N = COLS * ROWS, order = Array.from({ length: N }, (_, i) => i);
+  const rand = rng(7);
+  for (let i = N - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  const fig = $('xp-fig'), inStage = $('in-stage');
+  function drawFarm(n) {
+    const cases = new Set(order.slice(0, n)), sp = 28, r = 9, bw = 400, bh = 234, x = 10, y = 50;
+    const gw = (COLS - 1) * sp + 2 * r, gh = (ROWS - 1) * sp + 2 * r, x0 = x + (bw - gw) / 2, y0 = y + (bh - gh) / 2;
+    let s = '<rect class="f-soft" x="' + x + '" y="' + y + '" width="' + bw + '" height="' + bh + '" rx="12"/>';
+    s += '<text x="' + (x + bw / 2) + '" y="34" text-anchor="middle" class="t-strong">One layer farm</text>';
+    for (let i = 0; i < N; i++) {
+      s += '<circle class="' + (cases.has(i) ? 'dot-case' : 'dot-non') + '" cx="' + (x0 + r + (i % COLS) * sp) + '" cy="' + (y0 + r + Math.floor(i / COLS) * sp) + '" r="' + r + '"/>';
+    }
+    s += '<circle class="dot-case" cx="22" cy="291" r="9"/><text x="38" y="296">Case</text><circle class="dot-non" cx="110" cy="291" r="9"/><text x="126" y="296">Non-case</text>';
+    fig.innerHTML = s;
   }
-  function reset() { idx = 0; score = 0; render(); }
-  function showResult() {
-    finished = true;
-    posEl.textContent = 'Result'; scoreEl.textContent = '';
-    qEl.textContent = 'You matched ' + score + ' of ' + items.length + ' situations correctly.';
-    verdict.textContent = ''; verdict.className = 'verdict';
-    why.textContent = 'The question to ask each time is whether the disease is present in the population now.';
-    btns.hidden = true; next.textContent = 'Reset the sorting'; next.hidden = false;
+  function renderStage() {
+    const i = Number(inStage.value) - 1, st = stages[i];
+    drawFarm(st.n);
+    $('out-stage').textContent = String(i + 1);
+    $('xp-stage').textContent = 'Stage ' + (i + 1) + ' of 5';
+    $('xp-status').textContent = st.status;
+    $('xp-obj').textContent = st.obj;
+    $('xp-work').textContent = st.work;
+    $('xp-text').textContent = st.text;
+    document.querySelectorAll('#xp-chips .xp-chip').forEach(c => c.classList.toggle('is-on', Number(c.dataset.g) === st.g));
   }
-  buttons.forEach(b => b.addEventListener('click', () => {
-    if (answered) return;
-    answered = true;
-    const item = items[idx], ok = b.dataset.answer === item.a;
-    if (ok) score++;
-    buttons.forEach(x => { x.disabled = true; });
-    b.classList.add(ok ? 'is-correct' : 'is-wrong');
-    if (!ok) buttons.find(x => x.dataset.answer === item.a).classList.add('is-correct');
-    verdict.textContent = ok ? 'Correct.' : 'Not correct. This situation calls for ' + lab[item.a] + '.';
-    verdict.className = 'verdict ' + (ok ? 'ok' : 'bad');
-    why.textContent = item.why;
-    scoreEl.textContent = 'Correct so far: ' + score;
-    next.textContent = idx === items.length - 1 ? 'Show the result' : 'Show the next situation';
-    next.hidden = false;
-  }));
-  next.addEventListener('click', () => {
-    if (finished) { reset(); return; }
-    if (idx === items.length - 1) { showResult(); return; }
-    idx++; render();
-  });
-  $('m-reset').addEventListener('click', reset);
-  function syncHint() { hint.hidden = !hintBox.checked; }
-  hintBox.addEventListener('input', syncHint); hintBox.addEventListener('change', syncHint);
-  render(); syncHint();
-
-  // Slide 7: free or unknown
-  const ev = {
-    '': { h: 'Select a surveillance setting in the controls.', p: '', q: '' },
-    a: { h: 'Status: free, with evidence', p: 'Sampled farms were tested on a plan and all results were negative. This evidence can support a claim of freedom.', q: 'How strong the claim is depends on how many farms were tested and how well the test finds infected flocks.' },
-    b: { h: 'Status: not known', p: 'Many Salmonella infections in hens cause no clear signs, so farmers have little to report. Silence from farmers is weak evidence.', q: 'The first task is to collect better evidence, for example by testing a sample of farms.' },
-    c: { h: 'Status: not known', p: 'No data exist, so the district can claim neither freedom nor presence of the disease.', q: 'The first task is to start collecting data. Until then, the objective cannot be set with confidence.' }
-  };
-  const sel = $('ev-select');
-  function renderEv() { const e = ev[sel.value] || ev['']; $('ev-h').textContent = e.h; $('ev-p').textContent = e.p; $('ev-q').textContent = e.q; }
-  sel.addEventListener('input', renderEv); sel.addEventListener('change', renderEv);
-  renderEv();
+  inStage.addEventListener('input', renderStage);
+  document.addEventListener('deckreset', () => setTimeout(renderStage, 0));
+  renderStage();
 })();
 </script>
 </body>
