@@ -18,6 +18,9 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     SVG figure classes (.fig), and a Reset button that also resets inputs made later.
+     Add ?steps=all to the URL to show all steps (for review and printing).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -28,16 +31,16 @@
   "domain": "D0",
   "competency": "C1",
   "skills": {
-    "primary": "S1.2",
+    "primary": "S1.4",
     "secondary": []
   },
-  "minutes": 15,
+  "minutes": 20,
   "articles": [
     "veterinary-economics"
   ],
   "guides": [],
   "status": "draft",
-  "updated": "2026-11-08"
+  "updated": "2026-11-11"
 }
 </script>
 
@@ -128,8 +131,48 @@ a { color: var(--accent); }
 .choice.is-correct { border-color: var(--ok); }
 .choice.is-wrong { border-color: var(--bad); }
 .verdict { min-height: 1.5rem; font-weight: 600; }
+.slide[data-type="check"] > div { display: grid; gap: 1.3rem; align-content: start; }
+.slide[data-type="check"] .choice { font-size: 1.1rem; }
+.slide .choices { padding-left: 0; }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
+
+/* Reveal steps */
+.step-hidden { visibility: hidden; opacity: 0; }
+.slide [data-step] { transition: opacity 0.2s; }
+.step-btn { margin-top: auto; align-self: flex-start; }
+.step-btn[hidden] { display: none; }
+
+/* Card sorter */
+.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
+.sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
+.sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
+.sort-card:hover { border-color: var(--muted); }
+.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); }
+.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.sort-card.is-wrong { border-color: var(--bad); }
+.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* SVG figures */
+.fig { display: block; width: 100%; height: auto; max-height: 100%; }
+.fig text { fill: var(--ink); font-family: inherit; font-size: 15px; }
+.fig .t-muted { fill: var(--muted); }
+.fig .t-strong { font-weight: 600; }
+.fig .f-box { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-soft { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .f-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-arrow { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+.fig .f-accent { fill: var(--accent); }
+.fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
+.fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
 
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
@@ -203,53 +246,92 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .card { overflow: visible; }
   .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
   [data-detail]::after { display: none; }
+  .step-hidden { visibility: visible; opacity: 1; }
+  .step-btn { display: none; }
 }
 </style>
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 1rem; }
-.case-layout p + p { margin-top: 0.8rem; }
-.small-note { color: var(--muted); font-size: 0.9rem; }
-.facts { margin: 0; display: grid; gap: 0.5rem; }
-.facts > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
-.facts dt { color: var(--muted); font-size: 0.9rem; }
-.facts dd { margin: 0; font-weight: 600; text-align: right; }
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
+.case-layout p + p { margin-top: 0.9rem; }
+.case-layout p { font-size: 1.15rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
 
-.cmp { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
-.cmp th, .cmp td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.cmp thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.cmp tbody th { font-weight: 600; color: var(--muted); width: 8rem; }
+.vcenter { justify-content: center; }
+.big-def { font-size: 2.5rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin-top: 0.6rem; }
+.under-fig { font-size: 1.15rem; }
+.fig-wrap { flex: 1; min-height: 0; display: flex; }
+.fig-wrap { align-items: flex-start; }
+.fig-wrap .fig { height: auto; width: 100%; max-width: 46rem; overflow: visible; }
+.fig-wrap[data-detail] { flex: none; align-self: flex-start; max-width: 46rem; width: 100%; }
+.fig .exp-line { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 6 5; }
+.fig .f-d1 { stroke: none; }
 
-.oc-bars { display: grid; gap: 0.9rem; padding: 0.6rem; }
-.oc-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3rem; gap: 0.8rem; align-items: center; }
-.oc-label { display: grid; gap: 0.1rem; }
-.oc-name { font-weight: 600; }
-.oc-status { color: var(--muted); font-size: 0.82rem; min-height: 1.1rem; }
-.oc-row .bar-track { height: 1.6rem; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
-.oc-row .bar-fill { height: 100%; border-radius: 6px; background: var(--muted); }
-.oc-row.is-chosen .bar-fill { background: var(--d1); }
-.oc-row.is-given-up .bar-fill { background: var(--d5); }
-.axis-note { color: var(--muted); font-size: 0.85rem; }
-.oc-result { font-weight: 600; min-height: 3.2rem; }
+.st-list { display: grid; gap: 0.7rem; margin: 0; padding-left: 1.3rem; font-size: 1.2rem; line-height: 1.4; }
+.st-list li + li { margin-top: 0; }
+.eg { font-size: 1.15rem; color: var(--muted); }
 
-.sorter { display: grid; gap: 0.9rem; align-content: start; }
-.sort-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
-.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; }
-.sort-hint { color: var(--muted); }
-.sort-btns { display: flex; gap: 0.7rem; flex-wrap: wrap; }
-.sort-btn { padding: 0.75rem 1.2rem; font-size: 1.05rem; }
-.sort-btn:disabled { cursor: default; }
-.sort-btn.is-correct { border: 2px solid var(--ok); }
-.sort-btn.is-wrong { border: 2px solid var(--bad); }
-.sort-why { color: var(--muted); min-height: 3rem; }
+.pv-layout { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 2rem; align-items: center; flex: 1; min-height: 0; }
+.pv-layout .fig { width: min(100%, max(20rem, 58vh)); height: auto; justify-self: center; }
 
-.control select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 0.5rem 0.6rem; width: 100%; }
+.ex-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr); gap: 1.8rem; flex: 1; min-height: 0; align-items: start; }
+.ex-table { border-collapse: collapse; width: 100%; font-size: 1.05rem; }
+.ex-table th, .ex-table td { text-align: left; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
+.ex-table tbody th { font-weight: 600; color: var(--muted); width: 8.2rem; }
+
+.v-rows { display: grid; gap: 0.9rem; padding: 0.3rem; align-content: start; }
+.v-row { display: grid; gap: 0.25rem; }
+.v-top { display: flex; justify-content: space-between; gap: 1rem; font-size: 1.02rem; }
+.v-top > span:last-child { white-space: nowrap; }
+.v-tag { color: var(--muted); font-weight: 600; font-size: 0.92rem; }
+.v-track { height: 1.5rem; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
+.v-fill { height: 100%; border-radius: 6px; background: var(--muted); }
+.v-row.is-chosen .v-fill, .xo-row.is-chosen .v-fill { background: var(--d1); }
+.v-row.is-given .v-fill, .xo-row.is-given .v-fill { background: var(--d2); }
+.v-axis { color: var(--muted); font-size: 0.92rem; }
+
+.practice-note { color: var(--muted); font-size: 0.98rem; }
+.sorter { flex: none; }
+.sorter-pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sorter-bins { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sort-card { font-size: 0.95rem; }
+
+.bd-rows { display: grid; gap: 0.8rem; }
+.bd-row { display: grid; gap: 0.3rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); }
+.bd-row p { font-size: 1.08rem; }
+.bd-fill { line-height: 2.1; }
+.bd-fill select { font: inherit; font-size: 1.02rem; padding: 0.2rem 0.5rem; border: 1.5px solid var(--muted); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
+.bd-fill select.is-correct { border-color: var(--ok); }
+.bd-fill select.is-wrong { border-color: var(--bad); }
+.bd-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.bd-why { display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.98rem; }
+.quote { font-size: 1.3rem; line-height: 1.45; }
+.q-label { font-weight: 600; font-size: 1.15rem; }
+
+.xo-rows { display: grid; gap: 0.6rem; }
+.xo-row { display: grid; grid-template-columns: 17rem minmax(0, 1fr) 2.6rem 6rem; gap: 0.9rem; align-items: center; width: 100%; text-align: left; padding: 0.55rem 0.9rem; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; }
+.xo-row:hover { border-color: var(--muted); }
+.xo-row.is-chosen { border: 3px solid var(--ink); padding: calc(0.55rem - 1.5px) calc(0.9rem - 1.5px); }
+.xo-row.is-given { border: 3px dashed var(--d2); padding: calc(0.55rem - 1.5px) calc(0.9rem - 1.5px); }
+.xo-row .v-track { height: 1.3rem; }
+.xo-val { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.xo-tag { color: var(--muted); font-weight: 600; font-size: 0.92rem; }
+.xo-read { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.6rem; }
+.xo-read p { font-size: 1.08rem; }
+.xo-label { font-weight: 600; }
+.xo-actions { display: flex; gap: 0.6rem; align-items: center; }
 
 @media (max-width: 900px) {
-  .case-layout { grid-template-columns: 1fr; }
-  .oc-row { grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) 2.5rem; }
+  .case-layout, .pv-layout, .ex-layout, .xo-read { grid-template-columns: 1fr; }
+  .xo-row { grid-template-columns: 1fr 2.6rem; }
+  .xo-row .v-track, .xo-tag { grid-column: 1 / -1; }
 }
+</style>
 </style>
 </head>
 <body>
@@ -265,6 +347,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </header>
 
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker></defs></svg>
+
 <main class="stage" id="stage">
   <div class="card" id="card">
 
@@ -274,168 +358,346 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide" data-type="title" data-title="Explain veterinary economics">
   <p class="code">C1 Epidemiological and economic thinking</p>
   <h1>Explain veterinary economics</h1>
-  <p class="lead">A farm has a limited budget and three useful measures. How should the owner choose?</p>
+  <p class="lead">A farm owner has a limited budget and three useful options. How can a veterinarian help the owner choose?</p>
   <ul class="meta-list">
-    <li><span class="code">S1.2</span><span>Explain what veterinary economics is</span></li>
-    <li><span class="code">Time</span><span>About 15 minutes</span></li>
-    <li><span class="code">Before</span><span><a href="./explain-epidemiology.html">Explain epidemiology</a></span></li>
+    <li><span class="code">S1.4</span><span>Explain what veterinary economics is</span></li>
+    <li><span class="code">Time</span><span>About 20 minutes</span></li>
+    <li><span class="code">Before</span><span><a href="./match-population-status-to-objective.html">Match the disease status of a population to an objective</a></span></li>
   </ul>
+  <div class="notes">Read the guiding question aloud. Ask for a first answer in one sentence. Students return to this answer at the end of the deck.</div>
 </section>
-
-<!-- Slide 2: Anchor case recap -->
-<section class="slide" data-type="concept" data-title="The anchor case">
-  <h2>The case: a layer farm in South Sulawesi</h2>
+<!-- Slide 2: Recap of the anchor case -->
+<section class="slide" data-type="recap" data-title="The case">
+  <h2>The case: Salmonella on a layer farm</h2>
   <div class="case-layout">
     <div>
-      <p>The farm loses 120 of its 8,000 hens in one week, mostly in two pens next to the water inlet. The laboratory later finds Salmonella in the hens, and eggs from the same pens have already reached buyers.</p>
-      <p>Your role: technical consultant (GP3.1), two years after graduation. The owner asks what the problem costs and what to do with a limited budget.</p>
-      <p class="small-note">These numbers are synthetic and are for teaching.</p>
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, next to the water inlet.</p>
+      <p>The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the hens. Eggs from these pens have already reached buyers.</p>
+      <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian gives technical advice and product support to farms and companies, for example in a feed or poultry company.">technical service consultant</span> of a feed company. The farm owner has IDR 15,000,000 left this month and asks you what to do with it.</p>
     </div>
     <dl class="facts">
-      <div><dt>Hens in the flock</dt><dd class="num">8,000</dd></div>
-      <div><dt>Deaths in one week</dt><dd class="num">120</dd></div>
-      <div><dt>Pens most affected</dt><dd class="num">2</dd></div>
-      <div><dt>Laboratory result</dt><dd>Salmonella in the hens</dd></div>
-      <div><dt>Budget left this month</dt><dd class="num">IDR 15,000,000</dd></div>
+      <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
+      <div><dt>Deaths in one week</dt><dd>120</dd></div>
+      <div><dt>Budget this month</dt><dd>IDR 15,000,000</dd></div>
     </dl>
   </div>
-  <div class="notes">Read the two sentences aloud. Then ask the class who is affected by this problem besides the owner. List the answers on the board. Use the list on slide 6.</div>
+  <div class="notes">Read the three paragraphs aloud. Ask the class who is affected by this problem besides the owner. Write the answers on the board. Use the list on the slide about private and public benefits.</div>
 </section>
-
 <!-- Slide 3: Question -->
 <section class="slide" data-type="question" data-title="Predict first">
-  <h2>The budget pays for one measure. Which one do you choose first?</h2>
-  <p>Each measure costs IDR 15,000,000. Choose your prediction.</p>
+  <h2>The <span class="term" data-tip="The money that is set aside for a purpose.">budget</span> pays for one <span class="term" data-tip="An action taken by people to deal with a problem, for example a test, a vaccination, or a cleaning procedure.">measure</span>. Which measure should the owner choose first?</h2>
+  <p>Each measure costs IDR 15,000,000 (the whole budget). Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
-    <li><button class="choice" data-value="a"><span class="key">A</span>Test eggs from the two pens for Salmonella</button></li>
+    <li><button class="choice" data-value="a"><span class="key">A</span>Test the eggs from the two pens for Salmonella</button></li>
     <li><button class="choice" data-value="b"><span class="key">B</span>Repair the water line and disinfect the two pens</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>Vaccinate the next flock against Salmonella</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>Vaccinate the next flock of hens against Salmonella</button></li>
   </ul>
   <p class="verdict" id="predict-note" aria-live="polite"></p>
+  <div class="notes">Let students choose, then ask a student to explain the choice. No option is correct yet. The next slides give the tools to compare the three measures.</div>
 </section>
-
-<!-- Slide 4: Explore, opportunity cost -->
-<section class="slide" data-type="explore" data-title="Choose and see what you give up" data-panel="controls">
-  <h2>Every choice gives up the best alternative</h2>
-  <div class="oc-bars" data-detail="d-values" tabindex="0" aria-label="Estimated loss avoided by each measure. Select for details.">
-    <div class="oc-row" id="oc-a"><span class="oc-label"><span class="oc-name">A. Test eggs for Salmonella</span><small class="oc-status"></small></span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="num oc-val">20</span></div>
-    <div class="oc-row" id="oc-b"><span class="oc-label"><span class="oc-name">B. Repair the water line</span><small class="oc-status"></small></span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="num oc-val">45</span></div>
-    <div class="oc-row" id="oc-c"><span class="oc-label"><span class="oc-name">C. Vaccinate the next flock</span><small class="oc-status"></small></span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="num oc-val">30</span></div>
+<!-- Slide 4: Concept, the definition -->
+<section class="slide vcenter" data-type="concept" data-title="Veterinary economics">
+  <h2>Veterinary economics</h2>
+  <p class="big-def">Veterinary economics is the use of <span class="term" data-tip="Basic ideas about how people choose when they cannot have everything.">economic principles</span> to decide how to use <span class="term" data-tip="Not enough to meet all wants.">scarce</span> <span class="term" data-tip="Things that people use to get a result, such as money, time, labour, and vaccines.">resources</span> to protect animal health.</p>
+  <div class="notes">Read the definition aloud. The next slides explain scarce resources and the choice that follows from them.</div>
+</section>
+<!-- Slide 5: Concept, scarcity -->
+<section class="slide" data-type="concept" data-title="Scarcity and choice">
+  <h2>Resources are scarce, so someone must choose</h2>
+  <div class="fig-wrap"><svg class="fig" viewBox="0 0 720 230" role="img" aria-label="Two bars on the same scale. The budget bar is IDR 15 million. Below it, a bar for the cost of the three measures is IDR 45 million, made of three equal parts, one for each measure. The budget covers one part.">
+    <text x="0" y="47">Budget this month</text>
+    <rect class="f-d1" x="250" y="24" width="150" height="34" rx="4"/>
+    <text x="412" y="47" class="t-strong">IDR 15 million</text>
+    <text x="0" y="137">Cost of the three measures</text>
+    <rect class="f-box" x="250" y="112" width="150" height="38" rx="4"/>
+    <rect class="f-box" x="400" y="112" width="150" height="38" rx="4"/>
+    <rect class="f-box" x="550" y="112" width="150" height="38" rx="4"/>
+    <text x="325" y="137" text-anchor="middle">Measure A</text>
+    <text x="475" y="137" text-anchor="middle">Measure B</text>
+    <text x="625" y="137" text-anchor="middle">Measure C</text>
+    <text x="325" y="172" text-anchor="middle" class="t-muted">IDR 15 million</text>
+    <text x="475" y="172" text-anchor="middle" class="t-muted">IDR 15 million</text>
+    <text x="625" y="172" text-anchor="middle" class="t-muted">IDR 15 million</text>
+    <line class="exp-line" x1="400" y1="14" x2="400" y2="156"/>
+    <text x="250" y="212" class="t-strong">Total: IDR 45 million</text>
+  </svg></div>
+  <p class="under-fig">The budget pays for one measure. The three measures together cost three times the budget. This condition is called <span class="term" data-tip="The condition in which resources are not enough to meet all wants, so that choices are needed.">scarcity</span>, and it forces a choice.</p>
+  <div class="notes">Point to the dashed line: the budget ends here. Ask what the owner can do about the other two measures. Possible answers: wait for next month, borrow money, find a cheaper way. Each answer is also a choice.</div>
+</section>
+<!-- Slide 6: Concept, opportunity cost -->
+<section class="slide vcenter" data-type="concept" data-title="Opportunity cost">
+  <h2>Every choice means letting go of the best <span class="term" data-tip="Another choice that you could make instead.">alternative</span></h2>
+  <ul class="st-list">
+    <li><strong>Cost of an action:</strong> the amount of resources paid by an owner for that action.</li>
+    <li><strong><span class="term" data-tip="The value of the best alternative use of a resource.">Opportunity cost</span> of a choice:</strong> the value of the best alternative that the owner gives up.</li>
+  </ul>
+  <p class="eg">Example: The farm owner spends an entire day cleaning pens and no money is spent for that day. The day has another use: the owner could work at an egg packing station and earn money. This lost income is the opportunity cost of the day.</p>
+  <div class="notes">Ask: if no money changes hands, is the day free? The day has no cash cost. It still has an opportunity cost, because the owner cannot use the same day twice.</div>
+</section>
+<!-- Slide 7: Example, the owner chooses B -->
+<section class="slide" data-type="example" data-title="Work through the farm case">
+  <h2>The owner chooses measure B</h2>
+  <div class="ex-layout">
+    <div class="v-rows" data-detail="d-values" tabindex="0" aria-label="Estimated loss avoided by each measure, in IDR million. Measure A 20, measure B 45, measure C 30. Select for details.">
+      <p class="v-axis">Estimated <span class="term" data-tip="The money that the owner would otherwise lose. A measure avoids a loss when it stops that loss from happening.">loss avoided</span> by the owner, in IDR.</p>
+      <div class="v-row"><div class="v-top"><span>A. Test the eggs</span><span class="num">20 million</span></div><div class="v-track"><div class="v-fill" style="width:40%"></div></div></div>
+      <div class="v-row is-chosen"><div class="v-top"><span>B. Repair the water line</span><span><span class="v-tag">Chosen</span> <span class="num">45 million</span></span></div><div class="v-track"><div class="v-fill" style="width:90%"></div></div></div>
+      <div class="v-row is-given"><div class="v-top"><span>C. Vaccinate the next flock</span><span><span class="v-tag">Given up</span> <span class="num">30 million</span></span></div><div class="v-track"><div class="v-fill" style="width:60%"></div></div></div>
+    </div>
+    <table class="ex-table">
+      <thead><tr><th scope="col">Step</th><th scope="col">Description</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Choices</th><td>Measures A, B, and C. Each costs IDR 15 million, and the budget pays for one.</td></tr>
+        <tr><th scope="row">Choice</th><td>The owner chooses B, because B has the highest value (45 million).</td></tr>
+        <tr><th scope="row">Given up</th><td>The best alternative to B is C (30 million). Measure A (20 million) is worth less.</td></tr>
+        <tr><th scope="row">Opportunity cost</th><td>IDR 30 million (the value of C). It differs from the IDR 15 million that B costs.</td></tr>
+      </tbody>
+    </table>
   </div>
-  <p class="axis-note">Estimated loss avoided, in IDR million</p>
-  <p class="oc-result" id="oc-result" aria-live="polite">Choose a measure in the panel.</p>
-  <div class="notes">Ask a student to choose A, then B, then C. Each time, ask which alternative the farm gives up and what that is worth. Then ask why the cost of the measure is the same in all three cases and the opportunity cost is not.</div>
+  <div class="notes">Go through the four rows from top to bottom. At the row Given up, ask why the answer is C and not A. Open the details to show the assumption behind measure B.</div>
 </section>
-
-<!-- Slide 5: Concept, value of animal health -->
+<!-- Slide 8: Practice, complete the statements -->
+<section class="slide" data-type="practice" data-title="Complete the statements">
+  <h2>Complete each statement</h2>
+  <p class="practice-note">Estimated value for the owner, in IDR: A 20 million, B 45 million, C 30 million. Each measure costs IDR 15 million.</p>
+  <div class="bd-rows">
+    <div class="bd-row">
+      <p>1. The owner chooses measure A.</p>
+      <p class="bd-fill">The best alternative that the owner gives up is <select id="r1m" aria-label="Alternative for statement 1"><option value="">Choose</option><option value="a">Measure A</option><option value="b">Measure B</option><option value="c">Measure C</option></select>. Its value is <select id="r1v" aria-label="Value for statement 1"><option value="">Choose</option><option value="15">IDR 15 million</option><option value="30">IDR 30 million</option><option value="45">IDR 45 million</option></select>.</p>
+    </div>
+    <div class="bd-row">
+      <p>2. The owner chooses measure C.</p>
+      <p class="bd-fill">The best alternative that the owner gives up is <select id="r2m" aria-label="Alternative for statement 2"><option value="">Choose</option><option value="a">Measure A</option><option value="b">Measure B</option><option value="c">Measure C</option></select>. Its value is <select id="r2v" aria-label="Value for statement 2"><option value="">Choose</option><option value="15">IDR 15 million</option><option value="30">IDR 30 million</option><option value="45">IDR 45 million</option></select>.</p>
+    </div>
+    <div class="bd-row">
+      <p>3. The owner cleans the pens in one free day, neither paying anyone nor receiving any payment for that day. The best other use of the day is work at an egg packing station that gives him IDR 1 million.</p>
+      <p class="bd-fill">The opportunity cost of the day is <select id="r3v" aria-label="Opportunity cost for statement 3"><option value="">Choose</option><option value="0">IDR 0</option><option value="1">IDR 1 million</option><option value="15">IDR 15 million</option></select>.</p>
+    </div>
+  </div>
+  <div class="bd-actions">
+    <button class="btn btn-main" id="bd-check">Check the statements</button>
+    <button class="btn" id="bd-reset">Start again</button>
+    <span class="verdict" id="bd-verdict" aria-live="polite"></span>
+  </div>
+  <div class="bd-why" id="bd-why"></div>
+  <div class="notes">In statements 1 and 2 the answer is the same measure, B. Ask why. In statement 3, some students choose IDR 0 because no money is paid. Return to the slide about opportunity cost.</div>
+</section>
+<!-- Slide 9: Concept, value of animal health -->
 <section class="slide" data-type="concept" data-title="The value at risk">
   <h2>Disease takes value away, and control protects it</h2>
-  <p>The analysis must say which values it counts. The case touches five of them.</p>
-  <table class="cmp">
-    <thead><tr><th scope="col">Value</th><th scope="col">What disease takes away</th><th scope="col">In the case</th></tr></thead>
-    <tbody>
-      <tr><th scope="row">Production</th><td>Meat, milk, or eggs</td><td>Dead hens and fewer eggs from the two pens</td></tr>
-      <tr><th scope="row">Product quality</th><td>Quality and safety of the product</td><td>Salmonella in the eggs</td></tr>
-      <tr><th scope="row">Trade</th><td>Access to markets</td><td>Buyers can stop buying eggs from the farm</td></tr>
-      <tr><th scope="row">Welfare</th><td>Good states of the animals</td><td>Sick hens suffer before they die</td></tr>
-      <tr><th scope="row">Public health</th><td>Health of people</td><td>People can fall ill from eggs with Salmonella</td></tr>
-    </tbody>
-  </table>
+  <div class="fig-wrap" data-detail="d-vtable" tabindex="0" aria-label="A chain from hens to eggs to buyers to people who eat the eggs. Under each link is the value that disease takes away: production and welfare for the hens, product quality for the eggs, trade for the buyers, public health for the people. Select for details."><svg class="fig" viewBox="0 0 720 200" role="img" aria-hidden="true">
+    <rect class="f-box" x="0" y="14" width="150" height="62" rx="10"/><text x="75" y="51" text-anchor="middle" class="t-strong">Hens</text>
+    <rect class="f-box" x="190" y="14" width="150" height="62" rx="10"/><text x="265" y="51" text-anchor="middle" class="t-strong">Eggs</text>
+    <rect class="f-box" x="380" y="14" width="150" height="62" rx="10"/><text x="455" y="51" text-anchor="middle" class="t-strong">Buyers</text>
+    <rect class="f-box" x="570" y="14" width="150" height="62" rx="10"/><text x="645" y="43" text-anchor="middle" class="t-strong">People who</text><text x="645" y="62" text-anchor="middle" class="t-strong">eat the eggs</text>
+    <path class="f-arrow" d="M154 45 H186"/><path class="f-arrow" d="M344 45 H376"/><path class="f-arrow" d="M534 45 H566"/>
+    <text x="75" y="118" text-anchor="middle">Production</text><text x="75" y="142" text-anchor="middle">Animal welfare</text>
+    <text x="265" y="118" text-anchor="middle">Product quality</text>
+    <text x="455" y="118" text-anchor="middle">Trade</text>
+    <text x="645" y="118" text-anchor="middle">Public health</text>
+    <text x="0" y="188" class="t-muted">Value that disease takes away, under each link of the chain</text>
+  </svg></div>
+  <p class="under-fig">The economic analysis must specify which values are taken into account. The case encompasses five values: production, animal welfare, product quality, trade, and public health.</p>
+  <div class="notes">Ask students to find the value in the case for each label. Open the details to see the answers. Ask which value is hardest to give a price.</div>
 </section>
-
-<!-- Slide 6: Explore, private and public benefits -->
-<section class="slide" data-type="explore" data-title="Who receives the benefit" data-panel="controls">
-  <h2>Who receives the benefit of control?</h2>
-  <div class="sorter">
-    <div class="sort-top"><span class="num" id="s6-pos"></span><span class="num" id="s6-score"></span></div>
-    <p class="sort-q" id="s6-q"></p>
-    <p class="sort-hint" id="s6-hint" hidden>Ask: does the benefit go to the owner who pays, or to people who do not take part in the decision?</p>
-    <div class="sort-btns" id="s6-btns">
-      <button class="btn sort-btn" data-answer="O">Mostly the owner</button>
-      <button class="btn sort-btn" data-answer="P">Mostly other people</button>
+<!-- Slide 10: Concept, private and public benefits -->
+<section class="slide" data-type="concept" data-title="Private and public benefits">
+  <h2>A benefit can go to the owner or to other people</h2>
+  <div class="pv-layout">
+    <svg class="fig" viewBox="0 0 360 300" role="img" aria-label="Two circles, one inside the other. The inner circle is the owner, who decides and pays, and receives the private benefit. The ring around it is other people, who receive the public benefit.">
+      <circle class="f-soft" cx="180" cy="150" r="140"/>
+      <circle class="f-box" cx="180" cy="168" r="82"/>
+      <text x="180" y="42" text-anchor="middle" class="t-strong">Other people</text>
+      <text x="180" y="62" text-anchor="middle" class="t-muted">public benefit</text>
+      <text x="180" y="164" text-anchor="middle" class="t-strong">Owner</text>
+      <text x="180" y="184" text-anchor="middle" class="t-muted">private benefit</text>
+    </svg>
+    <div>
+      <ul class="st-list">
+        <li><strong>Private benefit</strong> goes to the owner who decides and pays. Example: the farm keeps selling eggs.</li>
+        <li><strong>Public benefit</strong> goes to other people who do not take part in the decision. Example: buyers avoid illness from eggs that carry Salmonella.</li>
+      </ul>
+      <p class="eg" style="margin-top:1rem">An effect on people who do not take part in the decision-making is an <span class="term" data-tip="An effect of an action on people who do not take part in the decision.">externality</span>. The person who pays the costs is not always the person who gains.</p>
     </div>
-    <p class="verdict" id="s6-verdict" aria-live="polite"></p>
-    <p class="sort-why" id="s6-why"></p>
-    <div><button class="btn btn-main" id="s6-next" hidden>Show the next statement</button></div>
   </div>
-  <div class="notes">Ask the class to vote before you reveal each answer. Link statement 3 to the word externality. Ask who should pay for a measure whose benefit goes mostly to other people.</div>
+  <div class="notes">Ask the class to name the other people in the case: buyers, people who eat the eggs, neighbouring farms. Ask who should pay for a measure whose benefit goes mostly to other people.</div>
 </section>
-
-<!-- Slide 7: Concept, epidemiology and economics together -->
+<!-- Slide 11: Practice, sort cards -->
+<section class="slide" data-type="practice" data-title="Sort the benefits">
+  <h2>Drag each benefit into the right box</h2>
+  <div class="sorter" data-sorter data-explain="d-sort" data-explain-always="1">
+    <div class="sorter-pool" aria-label="Cards to sort">
+      <button class="sort-card" data-target="p">Buyers of the eggs avoid illness.</button>
+      <button class="sort-card" data-target="o">The farm keeps selling eggs to its regular buyers.</button>
+      <button class="sort-card" data-target="p">Neighbouring farms avoid the spread of the infection.</button>
+      <button class="sort-card" data-target="o">The owner avoids the death of hens in the next flock.</button>
+      <button class="sort-card" data-target="p">The district health office avoids the cost of treating sick people.</button>
+      <button class="sort-card" data-target="o">The owner avoids the cost of replacing dead hens.</button>
+    </div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="o"><h3>Mostly the owner</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="p"><h3>Mostly other people</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <p class="practice-note">Ask for each card: does the benefit go to the owner who pays, or to people who do not take part in the decision?</p>
+  <div class="notes">Students work in pairs. If a pair places a card wrongly, ask them to read the card again and to name who receives the benefit.</div>
+</section>
+<!-- Slide 12: Concept, epidemiology and economics together -->
 <section class="slide" data-type="concept" data-title="Two answers, one decision">
   <h2>A decision needs an epidemiological and an economic answer</h2>
-  <table class="cmp">
-    <thead><tr><th scope="col">Comparison</th><th scope="col">Epidemiology</th><th scope="col">Economics</th></tr></thead>
+  <table class="ex-table">
+    <thead><tr><th scope="col">Comparison</th><th scope="col"><span class="term" data-tip="The study of how disease occurs in groups of animals and what affects it.">Epidemiology</span></th><th scope="col">Economics</th></tr></thead>
     <tbody>
-      <tr><th scope="row">Question</th><td>What happens to the disease with and without the measure?</td><td>What is the change worth, what does the measure cost, and who benefits?</td></tr>
-      <tr><th scope="row">In the case</th><td>Repairing the water line may stop the deaths in the two pens.</td><td>The farm avoids a loss of IDR 45,000,000 for a cost of IDR 15,000,000.</td></tr>
+      <tr><th scope="row">Question</th><td>What happens to the disease with and without the <span class="term" data-tip="An action taken by people to deal with a problem, for example a test, a vaccination, or a cleaning procedure.">measure</span>?</td><td>What is the value of that change, what is the cost of that measure, and who gets the benefits?</td></tr>
+      <tr><th scope="row">In the case</th><td>Assume that repairing the water line stops the deaths in the two pens.</td><td>The owner avoids an estimated loss of IDR 45 million for a cost of IDR 15 million.</td></tr>
       <tr><th scope="row">Result</th><td>Fewer cases of disease</td><td>A comparison of value, cost, and benefit between measures</td></tr>
     </tbody>
   </table>
-  <p>A measure can work and still cost more than it saves. The decision maker needs both answers.</p>
+  <p class="under-fig">A measure might be effective and still cost more than it saves. The <span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">decision maker</span> needs both information.</p>
+  <div class="notes">Ask which answer the owner can get from a laboratory and which answer needs a comparison of values. Stress that the claim about the water line is an assumption of the exercise.</div>
 </section>
-
-<!-- Slide 8: Check, opportunity cost -->
-<section class="slide" data-type="check" data-title="Check: opportunity cost">
-  <h2>The owner uses one free day of her own labour to repair the water line. What is the opportunity cost?</h2>
+<!-- Slide 13: Explore, choose a measure -->
+<section class="slide" data-type="explore" data-title="Choose and see what you give up">
+  <h2>Choose a measure. See what the owner gives up and who else benefits.</h2>
+  <div class="xo-rows" id="xo-rows" role="group" aria-label="Three measures. Select one.">
+    <button class="xo-row" data-m="a" aria-pressed="false"><span>A. Test the eggs for Salmonella</span><span class="v-track"><span class="v-fill" style="display:block;width:40%"></span></span><span class="xo-val">20</span><span class="xo-tag"></span></button>
+    <button class="xo-row" data-m="b" aria-pressed="false"><span>B. Repair the water line</span><span class="v-track"><span class="v-fill" style="display:block;width:90%"></span></span><span class="xo-val">45</span><span class="xo-tag"></span></button>
+    <button class="xo-row" data-m="c" aria-pressed="false"><span>C. Vaccinate the next flock</span><span class="v-track"><span class="v-fill" style="display:block;width:60%"></span></span><span class="xo-val">30</span><span class="xo-tag"></span></button>
+  </div>
+  <p class="v-axis">Estimated loss avoided for the owner, in IDR million. Each measure costs IDR 15 million.</p>
+  <div class="xo-read" aria-live="polite">
+    <div>
+      <p><span class="xo-label">Given up: </span><span id="xo-given">Select a measure.</span></p>
+      <p><span class="xo-label">Opportunity cost: </span><span id="xo-oc"></span></p>
+    </div>
+    <div>
+      <p><span class="xo-label">Benefit to other people: </span><span id="xo-oth"></span></p>
+      <p class="v-axis" id="xo-note"></p>
+    </div>
+  </div>
+  <div class="xo-actions"><button class="btn" id="xo-reset">Start again</button><span class="practice-note">Before you read the result, say what the owner gives up.</span></div>
+  <div class="notes">Select A, then B, then C. Each time, ask which alternative the owner gives up. Then ask: the owner chooses B. Which measure would the district health office prefer, and why? The owner's numbers do not include the benefit to other people.</div>
+</section>
+<!-- Slide 14: Practice, find the error -->
+<section class="slide" data-type="practice" data-title="Find the error">
+  <h2>Find the error</h2>
+  <p>A consultant writes a note to the owner.</p>
+  <p class="quote">"Measure B costs IDR 15 million, so the opportunity cost of choosing B is IDR 15 million."</p>
+  <p class="q-label">What is the error in the note?</p>
   <div>
-    <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
-      <li><button class="choice" data-value="a"><span class="key">A</span>The price of the pipes and tools used for the repair</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>The value of the best other use of that day of labour</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>The total amount that the farm spent during the month</button></li>
+    <ul class="choices" data-check="q0" data-answer="b" data-explain="d-q0">
+      <li><button class="choice" data-value="a"><span class="key">A</span>The cost of measure B is lower than IDR 15 million</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>The cost is used in place of the opportunity cost</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>The note forgets to add the value of measure B</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+  <div class="notes">The note treats the money paid as the opportunity cost. Ask students to give the correct opportunity cost of choosing B.</div>
+</section>
+<!-- Slide 15: Check 1 -->
+<section class="slide" data-type="check" data-title="Check: opportunity cost">
+  <div>
+    <h2>A farmer spends one free day cleaning pens and pays no money for the day. The same day could earn IDR 400,000 selling vegetables at the market, or IDR 300,000 working on a neighbouring farm. What is the opportunity cost of the day?</h2>
+    <ul class="choices" data-check="q1" data-answer="c" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>IDR 700,000, the value of both other uses together</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>IDR 0, because the farmer pays no money for the day</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>IDR 400,000, the value of the best other use</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 9: Check, transfer to dairy cattle -->
+<!-- Slide 16: Check 2, transfer -->
 <section class="slide" data-type="check" data-title="Check: a new case">
   <h2>A new case: a dairy cooperative</h2>
-  <p>A cooperative of dairy farmers can pay for one measure this year. The options are milking hygiene to lower mastitis, or testing and removal of cattle with brucellosis. This scenario is synthetic and is for teaching.</p>
-  <p><strong>Which benefit of brucellosis control is a public benefit?</strong></p>
+  <p>A <span class="term" data-tip="A group of farmers who work together and share costs and benefits.">cooperative</span> of dairy farmers can pay for one measure this year. The options are milking hygiene to lower <span class="term" data-tip="Infection and swelling of the udder of a cow. It lowers milk production.">mastitis</span>, or the testing and removal of cattle with <span class="term" data-tip="A bacterial disease of cattle. It can cause abortion in cows. People can also catch it.">brucellosis</span>. Each option costs the whole budget. The estimated value for the farmers is IDR 80 million for milking hygiene and IDR 60 million for brucellosis control.</p>
   <div>
-    <ul class="choices" data-check="q2" data-answer="c" data-explain="d-q2">
-      <li><button class="choice" data-value="a"><span class="key">A</span>More milk and fewer abortions in the herds that are tested</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Fewer cows that the owner must replace each year</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>Fewer human cases among people who handle raw milk</button></li>
+    <p class="q-label">The cooperative chooses brucellosis control. What is the opportunity cost?</p>
+    <ul class="choices" data-check="q2" data-answer="b" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>IDR 60 million, the value of brucellosis control</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>IDR 80 million, the value of milking hygiene</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>IDR 20 million, the difference between the two values</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 10: Summary -->
+<!-- Slide 17: Check 3, transfer, public benefit -->
+<section class="slide" data-type="check" data-title="Check: who benefits">
+  <h2>The dairy cooperative case: brucellosis control</h2>
+  <p>The cooperative pays for the testing and removal of cattle with <span class="term" data-tip="A bacterial disease of cattle. It can cause abortion in cows. People can also catch it.">brucellosis</span>.</p>
+  <div>
+    <p class="q-label">Which group receives a public benefit of this measure?</p>
+    <ul class="choices" data-check="q3" data-answer="c" data-explain="d-q3">
+      <li><button class="choice" data-value="a"><span class="key">A</span>The farmers whose herds are tested and found free</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>The farmers who sell more milk after the control</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>People who handle raw milk from the cooperative</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+<!-- Slide 18: Summary -->
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
-    <li>Veterinary economics applies economic principles to animal health, to decide how to use scarce resources.</li>
-    <li>The opportunity cost of a choice is the value of the best alternative that the choice gives up.</li>
-    <li>Disease takes away production, product quality, trade, welfare, and public health, and control protects these values.</li>
-    <li>Some benefits of control go to the owner and others go to other people. The person who pays is not always the person who gains.</li>
-    <li>Epidemiology estimates what happens to disease, and economics estimates what it is worth and what it costs.</li>
+    <li>Veterinary economics is the use of economic principles to decide how to use scarce resources to protect animal health.</li>
+    <li>Resources are scarce, so every choice gives up something. The opportunity cost of a choice is the value of the best alternative that the choice gives up. It differs from the cost that the owner pays.</li>
+    <li>Disease takes away production, product quality, trade, welfare, and public health. Control protects these values.</li>
+    <li>A benefit is private when it goes to the owner who pays, and public when it goes to other people. The person who pays is not always the person who gains.</li>
+    <li>Epidemiology estimates what happens to disease. Economics estimates what that change is worth and what it costs. The decision maker needs both.</li>
   </ul>
   <div class="links">
     <a class="btn" href="../encyclopedia/veterinary-economics.html">Read the article: Veterinary economics</a>
-    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-2">Open skill S1.2</a>
-    <a class="btn btn-main" href="./link-approaches-to-domains.html">Open the next deck: Link approaches to domains</a>
+    <a class="btn btn-main" href="./identify-levels-of-analysis.html">Open the next deck: Identify the levels of analysis</a>
   </div>
 </section>
 
-<!-- Details -->
+<!-- Details: one template per element with data-detail or data-explain -->
 <template id="d-values">
   <h3>About these values</h3>
-  <p>These numbers are synthetic and are for teaching. Each measure costs IDR 15,000,000.</p>
-  <p>The bars show the estimated loss that each measure avoids, in IDR million. Measure B avoids the most loss, and measure A avoids the least.</p>
-  <p>The opportunity cost of a choice is the value of the best alternative that you give up. It differs from the cost of the measure.</p>
+  <p>The bar chart shows the estimated losses that an owner could avoid by implementing each measure, expressed in millions of IDR. The cost for each measure is 15 million IDR.</p>
+  <p>The estimate for measure B assumes that the water line is the source of the infection in the two pens. The case does not specify the source of infection. If the actual source is different, the estimates will change accordingly.</p>
+  <p>These numbers do not yet account for the benefits to other people, such as buyers who avoid illness. They are the topic of a later slide.</p>
+</template>
+<template id="d-vtable">
+  <h3>The five values in the case</h3>
+  <ul>
+    <li><strong>Production:</strong> meat, milk, or eggs. In the case: dead hens and fewer eggs from the two pens.</li>
+    <li><strong>Animal welfare:</strong> the good states of the animals. In the case: sick hens suffer before they die.</li>
+    <li><strong>Product quality:</strong> the quality and safety of the product. In the case: Salmonella in the eggs.</li>
+    <li><strong>Trade:</strong> access to markets. In the case: buyers can stop buying eggs from the farm.</li>
+    <li><strong>Public health:</strong> the health of people. In the case: people can become ill from eggs that carry Salmonella.</li>
+  </ul>
+  <p>Some of these values have no market price. An analysis shows which values can be estimated and the values that it cannot price.</p>
+</template>
+<template id="d-sort">
+  <h3>Who receives each benefit</h3>
+  <p>A benefit is private when it goes to the owner who pays for the measure: income from eggs, the next flock, and the cost of new hens.</p>
+  <p>A benefit is public when it reaches people who do not take part in the decision: buyers, neighbouring farms, and the health office.</p>
+  <p>The effect on neighbouring farms is an externality.</p>
+</template>
+<template id="d-q0">
+  <h3>Answer: B</h3>
+  <p>The cost of a measure is the money that the owner pays. The opportunity cost of choosing B is the value of the best alternative that the owner gives up.</p>
+  <p>The best alternative to B is measure C, with a value of IDR 30 million. The opportunity cost of choosing B is IDR 30 million.</p>
 </template>
 <template id="d-q1">
-  <h3>Answer: B</h3>
-  <p>The opportunity cost is the value of the best alternative use of a resource. Here the resource is one day of labour.</p>
-  <p>The price of the pipes is a financial cost. The total spending of the month does not describe the alternative use of this day.</p>
+  <h3>Answer: C</h3>
+  <p>The farmer pays no money, but the day has other uses. The opportunity cost is the value of the best other use of the day, which is IDR 400,000.</p>
+  <p>The farmer can use the day for only one of the two other uses, so the values are not added. IDR 0 is the cash cost of the day. The opportunity cost is a different quantity.</p>
 </template>
 <template id="d-q2">
+  <h3>Answer: B</h3>
+  <p>The cooperative gives up the best alternative, which is milking hygiene, with a value of IDR 80 million.</p>
+  <p>IDR 60 million is the value of the measure that the cooperative chooses. IDR 20 million is the difference between the two values. The difference does not measure what the cooperative gives up.</p>
+</template>
+<template id="d-q3">
   <h3>Answer: C</h3>
-  <p>People who handle raw milk are not part of the decision of the cooperative. Their benefit is a public benefit.</p>
-  <p>Options A and B describe gains for the owner of the herd, so they are private benefits.</p>
+  <p>People who handle raw milk do not take part in the decision of the cooperative. Brucellosis can pass from cattle to people, so the control protects them. This benefit is public.</p>
+  <p>The other two groups gain herd health and milk sales. These benefits are private.</p>
 </template>
 
   </div><!-- /card -->
@@ -456,22 +718,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     </div>
   </aside>
 
-<!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
-<div class="controls" data-for-slide="4" hidden>
-  <div class="control"><label for="oc-select">Measure that you choose</label>
-    <select id="oc-select">
-      <option value="">Select a measure</option>
-      <option value="a">A. Test eggs for Salmonella</option>
-      <option value="b">B. Repair the water line</option>
-      <option value="c">C. Vaccinate the next flock</option>
-    </select>
-  </div>
-  <button class="btn" data-reset>Reset the controls</button>
-</div>
-<div class="controls" data-for-slide="6" hidden>
-  <div class="control"><label for="in-hint6">Show a hint <input type="checkbox" id="in-hint6"></label></div>
-  <button class="btn" id="s6-reset" data-reset>Reset the sorting</button>
-</div>
 
 <!-- ===================== END OF CONTENT ===================== -->
 </main>
@@ -558,8 +804,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
     const show = hasPanelContent(s);
     $('#btn-panel').hidden = !show;
-    stage.classList.toggle('has-panel', show && !panelClosed);
-    $('#btn-panel').setAttribute('aria-pressed', String(show && !panelClosed));
+    const auto = !!ctl || !!(notesMode && note);
+    stage.classList.toggle('has-panel', auto && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(auto && !panelClosed));
     stage.classList.remove('sheet-open');
     setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
   }
@@ -570,20 +817,51 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $('#counter').textContent = (current + 1) + ' / ' + slides.length;
-    $('#btn-prev').disabled = current === 0; $('#btn-next').disabled = current === slides.length - 1;
+    $('#btn-prev').disabled = current === 0; updateNav();
     if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
     hideTip(); updatePanel();
     document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
   }
   $('#btn-prev').addEventListener('click', () => go(current - 1));
-  $('#btn-next').addEventListener('click', () => go(current + 1));
+  $('#btn-next').addEventListener('click', () => next());
+
+  // Reveal steps: elements with data-step="n" appear one number at a time
+  const showAll = new URLSearchParams(location.search).get('steps') === 'all';
+  slides.forEach(s => {
+    const els = $$('[data-step]', s);
+    if (!els.length) return;
+    s._steps = Array.from(new Set(els.map(e => Number(e.dataset.step)))).sort((a, b) => a - b);
+    s._shown = showAll ? s._steps.length : 0;
+    els.forEach(e => { if (!showAll) e.classList.add('step-hidden'); });
+    const b = document.createElement('button'); b.className = 'btn step-btn'; b.type = 'button';
+    b.addEventListener('click', () => revealNext(s)); s.appendChild(b); s._btn = b;
+    refreshStep(s);
+  });
+  function refreshStep(s) {
+    if (!s._steps) return;
+    const left = s._steps.length - s._shown;
+    s._btn.hidden = left <= 0;
+    s._btn.textContent = 'Show the next step (' + (s._shown + 1) + ' of ' + s._steps.length + ')';
+  }
+  function revealNext(s) {
+    if (!s._steps || s._shown >= s._steps.length) return false;
+    const n = s._steps[s._shown]; s._shown++;
+    $$('[data-step="' + n + '"]', s).forEach(e => e.classList.remove('step-hidden'));
+    refreshStep(s); updateNav(); return true;
+  }
+  function next() { if (!revealNext(slides[current])) go(current + 1); }
+  function updateNav() {
+    const s = slides[current];
+    $('#btn-next').disabled = current === slides.length - 1 && !(s._steps && s._shown < s._steps.length);
+  }
 
   // Panel
   $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
   $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
   $('#btn-panel').addEventListener('click', () => {
     if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
-    panelClosed = stage.classList.contains('has-panel'); updatePanel();
+    if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); }
+    else { panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').setAttribute('aria-pressed', 'true'); }
   });
   function openDetail(el) {
     const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
@@ -605,6 +883,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     const b = e.target.closest('[data-reset]'); if (!b) return;
     const c = b.closest('.controls'); if (!c) return;
     c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    // Inputs made after load: use the attribute defaults
+    $$('input, select', c).forEach(el => {
+      if (c._defaults.some(d => d[0] === el)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+      else if (el.tagName === 'SELECT') { const o = Array.from(el.options).findIndex(x => x.defaultSelected); el.selectedIndex = o < 0 ? 0 : o; }
+      else el.value = el.defaultValue;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    c.dispatchEvent(new CustomEvent('deckreset', { bubbles: true }));
   });
 
   // Choices (predictions) and checks
@@ -621,6 +908,52 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         if (list.dataset.explain) openDetail(list);
       }
     }));
+  });
+
+  // Card sorter: drag a card into a box, or select a card and then select a box
+  $$('[data-sorter]').forEach(sr => {
+    const pool = $('.sorter-pool', sr), bins = $$('.sort-bin', sr), cardsAll = $$('.sort-card', sr);
+    const verdict = $('.verdict', sr); let sel = null, dragged = null;
+    const zoneOf = el => el.classList.contains('sorter-pool') ? el : $('.sort-drop', el);
+    const cap = el => Number(el.dataset.capacity || 0);
+    function clearMarks() { cardsAll.forEach(c => c.classList.remove('is-correct', 'is-wrong')); verdict.textContent = ''; verdict.className = 'verdict'; }
+    function unselect() { if (sel) { sel.classList.remove('is-selected'); sel.setAttribute('aria-pressed', 'false'); } sel = null; }
+    function place(card, box) {
+      const z = zoneOf(box);
+      if (cap(box) && z.children.length >= cap(box) && card.parentElement !== z) { const old = z.children[0]; pool.appendChild(old); }
+      z.appendChild(card); clearMarks(); unselect();
+    }
+    cardsAll.forEach(c => {
+      c.type = 'button'; c.draggable = true; c.setAttribute('aria-pressed', 'false');
+      c.addEventListener('dragstart', e => { dragged = c; try { e.dataTransfer.setData('text/plain', c.textContent); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+      c.addEventListener('dragend', () => { dragged = null; $$('.is-over', sr).forEach(x => x.classList.remove('is-over')); });
+      c.addEventListener('click', e => {
+        e.stopPropagation();
+        if (sel && sel !== c) { place(sel, c.closest('.sort-bin') || pool); return; }
+        if (sel === c) { unselect(); return; }
+        sel = c; c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true');
+      });
+    });
+    [pool].concat(bins).forEach(box => {
+      box.addEventListener('click', () => { if (sel) place(sel, box); });
+      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('is-over'); });
+      box.addEventListener('dragleave', () => box.classList.remove('is-over'));
+      box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('is-over'); if (dragged) place(dragged, box); });
+    });
+    $('[data-sorter-check]', sr).addEventListener('click', () => {
+      if (cardsAll.some(c => c.parentElement === pool)) { verdict.textContent = 'Place every card in a box first.'; verdict.className = 'verdict bad'; return; }
+      let ok = 0;
+      cardsAll.forEach(c => {
+        const bin = c.closest('.sort-bin').dataset.bin;
+        const right = (c.dataset.target || '').split(' ').includes(bin);
+        c.classList.toggle('is-correct', right); c.classList.toggle('is-wrong', !right); if (right) ok++;
+      });
+      const all = ok === cardsAll.length;
+      verdict.textContent = all ? 'All ' + ok + ' cards are in the right box.' : ok + ' of ' + cardsAll.length + ' cards are in the right box. Move the cards marked ✗ and check again.';
+      verdict.className = 'verdict ' + (all ? 'ok' : 'bad');
+      if (sr.dataset.explain && (all || sr.dataset.explainAlways)) openDetail(sr);
+    });
+    $('[data-sorter-reset]', sr).addEventListener('click', () => { unselect(); cardsAll.forEach(c => pool.appendChild(c)); clearMarks(); });
   });
 
   // Tooltips
@@ -663,7 +996,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const k = e.key;
-    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); go(current + 1); }
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
     else if (k === 'Home') go(0);
     else if (k === 'End') go(slides.length - 1);
@@ -696,7 +1029,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     rng: seed => mulberry32(Number(seed) || 1),
     newSeed: () => Math.floor(Math.random() * 1e6),
     seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
-    current: () => current, go,
+    current: () => current, go, next,
     onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
   };
 
@@ -711,92 +1044,68 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 (function () {
   const $ = id => document.getElementById(id);
 
-  // Slide 3: reveal a note after a prediction
+  // Slide 3: explain after a prediction
   const note = $('predict-note');
   document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
     note.className = 'verdict';
-    note.textContent = 'No option is correct yet. Each measure protects a different value, and the next slides show how to compare them.';
+    note.textContent = 'No option is correct yet. Each measure protects a different value, and each costs the whole budget. The next slides show how to compare them.';
   }));
 
-  // Slide 4: opportunity cost of a choice
-  const opts = { a: { name: 'A', v: 20 }, b: { name: 'B', v: 45 }, c: { name: 'C', v: 30 } };
-  const sel = $('oc-select'), result = $('oc-result');
-  function renderOc() {
-    const pick = sel.value;
-    Object.keys(opts).forEach(k => {
-      const row = $('oc-' + k); row.classList.remove('is-chosen', 'is-given-up');
-      row.querySelector('.oc-status').textContent = '';
-    });
-    if (!pick) { result.textContent = 'Choose a measure in the panel.'; return; }
-    const others = Object.keys(opts).filter(k => k !== pick);
-    const best = others.reduce((m, k) => opts[k].v > opts[m].v ? k : m, others[0]);
-    $('oc-' + pick).classList.add('is-chosen');
-    $('oc-' + pick).querySelector('.oc-status').textContent = 'Chosen';
-    $('oc-' + best).classList.add('is-given-up');
-    $('oc-' + best).querySelector('.oc-status').textContent = 'Best alternative given up';
-    result.textContent = 'You chose measure ' + opts[pick].name + ' and avoid a loss of IDR ' + opts[pick].v + ' million. The opportunity cost is IDR ' + opts[best].v + ' million, the value of measure ' + opts[best].name + '.';
+  // Slide 8: complete the statements
+  const rows = [
+    { sel: ['r1m', 'r1v'], ans: ['b', '45'], why: 'Statement 1: if the owner chooses A, the best other measure is B, with a value of IDR 45 million. This is the opportunity cost.' },
+    { sel: ['r2m', 'r2v'], ans: ['b', '45'], why: 'Statement 2: if the owner chooses C, the best other measure is B, with a value of IDR 45 million. Measure A is worth less (IDR 20 million), so it is not the best alternative.' },
+    { sel: ['r3v'], ans: ['1'], why: 'Statement 3: the day costs no money, and its opportunity cost is IDR 1 million, the value of the best other use of the day. IDR 15 million is the cost of a measure. It is unrelated to the day.' }
+  ];
+  const allSel = rows.flatMap(r => r.sel.map($));
+  function bdClear() {
+    allSel.forEach(s => s.classList.remove('is-correct', 'is-wrong'));
+    $('bd-verdict').textContent = ''; $('bd-verdict').className = 'verdict'; $('bd-why').innerHTML = '';
   }
-  sel.addEventListener('input', renderOc); sel.addEventListener('change', renderOc);
-  renderOc();
-
-  // Slide 6: sort four statements
-  function makeSorter(p, items, hintBoxId, resetId, texts) {
-    const qEl = $(p + '-q'), posEl = $(p + '-pos'), scoreEl = $(p + '-score'), verdict = $(p + '-verdict'),
-          why = $(p + '-why'), next = $(p + '-next'), btns = $(p + '-btns'), hint = $(p + '-hint'), hintBox = $(hintBoxId);
-    const buttons = Array.from(btns.querySelectorAll('.sort-btn'));
-    let idx = 0, score = 0, answered = false, finished = false;
-    function render() {
-      finished = false; answered = false;
-      qEl.textContent = items[idx].q;
-      posEl.textContent = 'Statement ' + (idx + 1) + ' of ' + items.length;
-      scoreEl.textContent = 'Correct so far: ' + score;
-      verdict.textContent = ''; verdict.className = 'verdict'; why.textContent = '';
-      next.hidden = true; btns.hidden = false;
-      buttons.forEach(b => { b.disabled = false; b.classList.remove('is-correct', 'is-wrong'); });
-    }
-    function reset() { idx = 0; score = 0; render(); }
-    function showResult() {
-      finished = true;
-      posEl.textContent = 'Result'; scoreEl.textContent = '';
-      qEl.textContent = 'You sorted ' + score + ' of ' + items.length + ' statements correctly.';
-      verdict.textContent = ''; verdict.className = 'verdict';
-      why.textContent = texts.summary;
-      btns.hidden = true; next.textContent = 'Reset the sorting'; next.hidden = false;
-    }
-    buttons.forEach(b => b.addEventListener('click', () => {
-      if (answered) return;
-      answered = true;
-      const item = items[idx], ok = b.dataset.answer === item.a;
-      if (ok) score++;
-      buttons.forEach(x => { x.disabled = true; });
-      b.classList.add(ok ? 'is-correct' : 'is-wrong');
-      if (!ok) buttons.find(x => x.dataset.answer === item.a).classList.add('is-correct');
-      verdict.textContent = ok ? 'Correct.' : 'Not correct. This benefit goes mostly to ' + texts.label[item.a] + '.';
-      verdict.className = 'verdict ' + (ok ? 'ok' : 'bad');
-      why.textContent = item.why;
-      scoreEl.textContent = 'Correct so far: ' + score;
-      next.textContent = idx === items.length - 1 ? 'Show the result' : 'Show the next statement';
-      next.hidden = false;
-    }));
-    next.addEventListener('click', () => {
-      if (finished) { reset(); return; }
-      if (idx === items.length - 1) { showResult(); return; }
-      idx++; render();
+  allSel.forEach(s => s.addEventListener('change', bdClear));
+  $('bd-check').addEventListener('click', () => {
+    if (allSel.some(s => !s.value)) { $('bd-verdict').textContent = 'Choose an answer for every gap first.'; $('bd-verdict').className = 'verdict bad'; return; }
+    const why = $('bd-why'); why.innerHTML = ''; let okRows = 0;
+    rows.forEach(r => {
+      let rowOk = true;
+      r.sel.forEach((id, i) => {
+        const el = $(id), right = el.value === r.ans[i];
+        el.classList.toggle('is-correct', right); el.classList.toggle('is-wrong', !right);
+        if (!right) rowOk = false;
+      });
+      if (rowOk) okRows++; else { const p = document.createElement('p'); p.textContent = r.why; why.appendChild(p); }
     });
-    $(resetId).addEventListener('click', reset);
-    function syncHint() { hint.hidden = !hintBox.checked; }
-    hintBox.addEventListener('input', syncHint); hintBox.addEventListener('change', syncHint);
-    render(); syncHint();
-  }
-  makeSorter('s6', [
-    { q: 'The farm keeps selling eggs to its regular buyers.', a: 'O', why: 'The income of the farm is protected. This is a private benefit.' },
-    { q: 'Buyers avoid illness from eggs that carry Salmonella.', a: 'P', why: 'These people do not take part in the decision of the owner. Their benefit is public.' },
-    { q: 'Neighbouring farms avoid the spread of the infection.', a: 'P', why: 'The effect reaches farms that did not take part in the decision. Economists call this an externality.' },
-    { q: 'The owner avoids the loss of the next flock.', a: 'O', why: 'The loss would fall on the owner, so the benefit is private.' }
-  ], 'in-hint6', 's6-reset', {
-    label: { O: 'the owner', P: 'other people' },
-    summary: 'A benefit is private when it goes to the owner who pays for the measure. A benefit is public when it reaches other people.'
+    const all = okRows === rows.length;
+    $('bd-verdict').textContent = all ? 'All 3 statements are correct.' : okRows + ' of 3 statements are correct. Change the gaps marked in red and check again.';
+    $('bd-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
   });
+  $('bd-reset').addEventListener('click', () => { allSel.forEach(s => { s.value = ''; }); bdClear(); });
+
+  // Slide 13: choose a measure
+  const M = {
+    a: { label: 'A', name: 'Test the eggs', v: 20, oth: 'Eggs that carry Salmonella do not reach buyers, so people who eat the eggs stay well.' },
+    b: { label: 'B', name: 'Repair the water line', v: 45, oth: 'Fewer sick hens. Eggs that were already sold are not affected.' },
+    c: { label: 'C', name: 'Vaccinate the next flock', v: 30, oth: 'The next flock is protected. Eggs that were already sold are not affected.' }
+  };
+  const rowsEl = Array.from(document.querySelectorAll('#xo-rows .xo-row'));
+  function renderX(pick) {
+    rowsEl.forEach(r => { r.classList.remove('is-chosen', 'is-given'); r.setAttribute('aria-pressed', 'false'); r.querySelector('.xo-tag').textContent = ''; });
+    if (!pick) {
+      $('xo-given').textContent = 'Select a measure.'; $('xo-oc').textContent = ''; $('xo-oth').textContent = ''; $('xo-note').textContent = ''; return;
+    }
+    const others = Object.keys(M).filter(k => k !== pick);
+    const best = others.reduce((m, k) => M[k].v > M[m].v ? k : m, others[0]);
+    const rp = rowsEl.find(r => r.dataset.m === pick), rb = rowsEl.find(r => r.dataset.m === best);
+    rp.classList.add('is-chosen'); rp.setAttribute('aria-pressed', 'true'); rp.querySelector('.xo-tag').textContent = 'Chosen';
+    rb.classList.add('is-given'); rb.querySelector('.xo-tag').textContent = 'Given up';
+    $('xo-given').textContent = 'Measure ' + M[best].label + ', the best alternative (' + M[best].v + ').';
+    $('xo-oc').textContent = 'IDR ' + M[best].v + ' million. The cost paid for measure ' + M[pick].label + ' is IDR 15 million.';
+    $('xo-oth').textContent = M[pick].oth;
+    $('xo-note').textContent = 'The estimated values count the owner only. This benefit is not in them.';
+  }
+  rowsEl.forEach(r => r.addEventListener('click', () => renderX(r.dataset.m)));
+  $('xo-reset').addEventListener('click', () => renderX(null));
+  renderX(null);
 })();
 </script>
 </body>
