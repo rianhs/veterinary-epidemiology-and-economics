@@ -126,6 +126,9 @@ a { color: var(--accent); }
 .choice.is-correct { border-color: var(--ok); }
 .choice.is-wrong { border-color: var(--bad); }
 .verdict { min-height: 1.5rem; font-weight: 600; }
+.slide[data-type="check"] > div { display: grid; gap: 1.3rem; align-content: start; }
+.slide[data-type="check"] .choice { font-size: 1.1rem; }
+.slide .choices { padding-left: 0; }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
 
@@ -550,8 +553,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
     const show = hasPanelContent(s);
     $('#btn-panel').hidden = !show;
-    stage.classList.toggle('has-panel', show && !panelClosed);
-    $('#btn-panel').setAttribute('aria-pressed', String(show && !panelClosed));
+    const auto = !!ctl || !!(notesMode && note);
+    stage.classList.toggle('has-panel', auto && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(auto && !panelClosed));
     stage.classList.remove('sheet-open');
     setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
   }
@@ -605,7 +609,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
   $('#btn-panel').addEventListener('click', () => {
     if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
-    panelClosed = stage.classList.contains('has-panel'); updatePanel();
+    if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); }
+    else { panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').setAttribute('aria-pressed', 'true'); }
   });
   function openDetail(el) {
     const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
