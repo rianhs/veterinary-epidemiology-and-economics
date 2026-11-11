@@ -133,6 +133,9 @@ a { color: var(--accent); }
 .choice.is-correct { border-color: var(--ok); }
 .choice.is-wrong { border-color: var(--bad); }
 .verdict { min-height: 1.5rem; font-weight: 600; }
+.slide[data-type="check"] > div { display: grid; gap: 1.3rem; align-content: start; }
+.slide[data-type="check"] .choice { font-size: 1.1rem; }
+.slide .choices { padding-left: 0; }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
 
@@ -268,18 +271,30 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 .fig-wrap { flex: 1; min-height: 0; display: flex; }
 .fig-wrap .fig { height: 100%; width: 100%; }
+.hp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; flex: 1; min-height: 0; align-items: stretch; }
+.hp-panel { display: flex; flex-direction: column; gap: 0.7rem; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); min-height: 0; }
+.hp-panel h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+.hp-fig { margin: 0; flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+.hp-fig figcaption { color: var(--muted); font-size: 0.95rem; }
+.hp-fig .fig { flex: none; }
+.hp-hen { width: auto; height: max(10.5rem, 24vh); }
+.hp-bars { width: min(100%, max(21rem, 50vh)); height: auto; }
+.hp-q { margin: 0; padding-left: 1.2rem; font-size: 1.1rem; line-height: 1.45; }
 .fig .bar-hot { fill: var(--d2); }
 .fig .bar-n { fill: var(--muted); }
-.fig .hen { fill: var(--surface); stroke: var(--muted); stroke-width: 2; }
-.fig .hen-comb { fill: var(--d2); }
-.fig .hen-beak { fill: var(--d5); }
+.fig .hen-out { fill: var(--muted); stroke: var(--muted); stroke-width: 6; stroke-linejoin: round; }
+.fig .hen-fill { fill: var(--surface); stroke: none; }
+.fig .hen-wing { fill: var(--surface-2); stroke: var(--muted); stroke-width: 2.5; stroke-linejoin: round; }
+.fig .hen-wing-line { fill: none; stroke: var(--muted); stroke-width: 2.5; stroke-linecap: round; }
+.fig .hen-leg { fill: none; stroke: var(--d5); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.fig .hen-beak { fill: var(--d5); stroke: var(--muted); stroke-width: 2.5; stroke-linejoin: round; }
+.fig .hen-comb { fill: var(--d2); stroke: var(--muted); stroke-width: 2; }
+.fig .hen-eye { fill: var(--ink); }
 
 .vcenter { justify-content: center; }
 .big-def { font-size: 2.5rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin-top: 0.6rem; }
 .def-case { display: grid; gap: 0.5rem; margin-top: 1.4rem; font-size: 1.4rem; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); max-width: 46rem; }
 .def-full { font-size: 1.95rem; line-height: 1.5; font-weight: 500; margin-top: 0.4rem; }
-.def-labels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.2rem; }
-.def-labels div { border-top: 2px solid var(--muted); padding-top: 0.5rem; color: var(--muted); font-weight: 600; font-size: 1.1rem; }
 
 .cmp { border-collapse: collapse; width: 100%; font-size: 1.2rem; }
 .cmp th, .cmp td { text-align: left; padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
@@ -315,7 +330,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 @media (max-width: 900px) {
   .case-layout { grid-template-columns: 1fr; }
-  .def-labels { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -399,54 +413,56 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 5: Concept, one hen and a flock -->
 <section class="slide" data-type="concept" data-title="One hen and a flock">
   <h2>The same disease raises two kinds of question</h2>
-  <div class="fig-wrap">
-    <svg class="fig" viewBox="0 0 720 300" role="img" aria-label="Left: one hen with the clinical questions about her illness. Right: a bar chart of deaths in one week by pen, with the population questions about the flock. Pens A1 and B1 have 50 and 40 deaths. The other six pens have 5 each.">
-      <g>
-        <rect class="f-soft" x="10" y="8" width="340" height="284" rx="12"/>
-        <text x="30" y="40" class="t-strong">Clinical question: one animal</text>
-        <ellipse class="hen" cx="150" cy="140" rx="52" ry="38"/>
-        <circle class="hen" cx="212" cy="104" r="22"/>
-        <polygon class="hen-beak" points="232,100 252,108 232,114"/>
-        <circle class="hen-comb" cx="212" cy="80" r="7"/>
-        <line class="f-line" x1="140" y1="178" x2="140" y2="204"/>
-        <line class="f-line" x1="166" y1="178" x2="166" y2="204"/>
-        <text x="150" y="226" text-anchor="middle" class="t-muted">One hen</text>
-        <text x="30" y="258">What is wrong with her?</text>
-        <text x="30" y="280">Which treatment does she need?</text>
-      </g>
-      <g>
-        <rect class="f-soft" x="370" y="8" width="340" height="284" rx="12"/>
-        <text x="390" y="40" class="t-strong">Population question: a group</text>
-        <rect class="bar-hot" x="392" y="84" width="28" height="100" rx="3"/>
-        <text x="406.0" y="78" text-anchor="middle">50</text>
-        <text x="406.0" y="204" text-anchor="middle" class="t-muted">A1</text>
-        <rect class="bar-n" x="428" y="174" width="28" height="10" rx="3"/>
-        <text x="442.0" y="168" text-anchor="middle">5</text>
-        <text x="442.0" y="204" text-anchor="middle" class="t-muted">A2</text>
-        <rect class="bar-n" x="464" y="174" width="28" height="10" rx="3"/>
-        <text x="478.0" y="168" text-anchor="middle">5</text>
-        <text x="478.0" y="204" text-anchor="middle" class="t-muted">A3</text>
-        <rect class="bar-n" x="500" y="174" width="28" height="10" rx="3"/>
-        <text x="514.0" y="168" text-anchor="middle">5</text>
-        <text x="514.0" y="204" text-anchor="middle" class="t-muted">A4</text>
-        <rect class="bar-hot" x="536" y="104" width="28" height="80" rx="3"/>
-        <text x="550.0" y="98" text-anchor="middle">40</text>
-        <text x="550.0" y="204" text-anchor="middle" class="t-muted">B1</text>
-        <rect class="bar-n" x="572" y="174" width="28" height="10" rx="3"/>
-        <text x="586.0" y="168" text-anchor="middle">5</text>
-        <text x="586.0" y="204" text-anchor="middle" class="t-muted">B2</text>
-        <rect class="bar-n" x="608" y="174" width="28" height="10" rx="3"/>
-        <text x="622.0" y="168" text-anchor="middle">5</text>
-        <text x="622.0" y="204" text-anchor="middle" class="t-muted">B3</text>
-        <rect class="bar-n" x="644" y="174" width="28" height="10" rx="3"/>
-        <text x="658.0" y="168" text-anchor="middle">5</text>
-        <text x="658.0" y="204" text-anchor="middle" class="t-muted">B4</text>
-        <line class="f-line" x1="386" y1="184" x2="678" y2="184"/>
-        <text x="540" y="230" text-anchor="middle" class="t-muted">Deaths in one week, by pen</text>
-        <text x="390" y="258">How many hens died, and where?</text>
-        <text x="390" y="280">What do the sick hens share?</text>
-      </g>
-    </svg>
+  <div class="hp-grid">
+    <div class="hp-panel">
+      <h3>Clinical question: one animal</h3>
+      <figure class="hp-fig">
+      <svg class="fig hp-hen" viewBox="0 0 280 230" role="img" aria-label="A hen seen from the side, standing on the ground.">
+        <defs>
+          <g id="hen-shape">
+            <ellipse cx="130" cy="130" rx="66" ry="46" transform="rotate(-8 130 130)"/>
+            <path d="M156 112 C168 94 172 78 174 64 L204 68 C200 88 198 106 190 128 Z"/>
+            <ellipse cx="190" cy="58" rx="20" ry="18"/>
+            <path d="M80 112 C56 108 42 88 38 58 C56 64 74 74 92 92 Z"/>
+            <path d="M74 124 C48 128 30 114 22 92 C42 94 60 102 82 112 Z"/>
+            <path d="M76 138 C52 146 32 138 20 120 C40 118 60 122 84 128 Z"/>
+          </g>
+        </defs>
+        <line class="f-line" x1="10" y1="206" x2="270" y2="206"/>
+        <path class="hen-leg" d="M120 172 L118 204 M118 204 L100 204 M118 204 L110 196 M118 204 L134 204"/>
+        <path class="hen-leg" d="M148 172 L150 204 M150 204 L132 204 M150 204 L142 196 M150 204 L166 204"/>
+        <use href="#hen-shape" class="hen-out"/>
+        <use href="#hen-shape" class="hen-fill"/>
+        <path class="hen-wing" d="M96 128 C110 108 152 106 168 130 C152 154 110 154 96 128 Z"/>
+        <path class="hen-wing-line" d="M112 132 C126 126 142 126 154 132 M116 142 C128 138 142 138 150 142"/>
+        <path class="hen-beak" d="M207 52 L228 59 L207 66 Z"/>
+        <circle class="hen-comb" cx="181" cy="38" r="7"/>
+        <circle class="hen-comb" cx="191" cy="34" r="8"/>
+        <circle class="hen-comb" cx="201" cy="39" r="6.5"/>
+        <ellipse class="hen-comb" cx="204" cy="74" rx="5" ry="9"/>
+        <circle class="hen-eye" cx="196" cy="54" r="3"/>
+      </svg>
+        <figcaption>One hen</figcaption>
+      </figure>
+      <ul class="hp-q">
+        <li>What is wrong with her?</li>
+        <li>Which treatment does she need?</li>
+      </ul>
+    </div>
+    <div class="hp-panel">
+      <h3>Population question: a group</h3>
+      <figure class="hp-fig">
+        <svg class="fig hp-bars" viewBox="0 0 364 200" role="img" aria-label="Bar chart of deaths in one week, by pen. Pens A1 and B1 have 50 and 40 deaths. The other six pens have 5 each.">
+          <line class="f-line" x1="4" y1="168" x2="360" y2="168"/>
+          <rect class="bar-hot" x="12" y="38.0" width="34" height="130.0" rx="3"/><text x="29.0" y="31.0" text-anchor="middle">50</text><text x="29.0" y="192" text-anchor="middle" class="t-muted">A1</text><rect class="bar-n" x="54" y="155.0" width="34" height="13.0" rx="3"/><text x="71.0" y="148.0" text-anchor="middle">5</text><text x="71.0" y="192" text-anchor="middle" class="t-muted">A2</text><rect class="bar-n" x="96" y="155.0" width="34" height="13.0" rx="3"/><text x="113.0" y="148.0" text-anchor="middle">5</text><text x="113.0" y="192" text-anchor="middle" class="t-muted">A3</text><rect class="bar-n" x="138" y="155.0" width="34" height="13.0" rx="3"/><text x="155.0" y="148.0" text-anchor="middle">5</text><text x="155.0" y="192" text-anchor="middle" class="t-muted">A4</text><rect class="bar-hot" x="192" y="64.0" width="34" height="104.0" rx="3"/><text x="209.0" y="57.0" text-anchor="middle">40</text><text x="209.0" y="192" text-anchor="middle" class="t-muted">B1</text><rect class="bar-n" x="234" y="155.0" width="34" height="13.0" rx="3"/><text x="251.0" y="148.0" text-anchor="middle">5</text><text x="251.0" y="192" text-anchor="middle" class="t-muted">B2</text><rect class="bar-n" x="276" y="155.0" width="34" height="13.0" rx="3"/><text x="293.0" y="148.0" text-anchor="middle">5</text><text x="293.0" y="192" text-anchor="middle" class="t-muted">B3</text><rect class="bar-n" x="318" y="155.0" width="34" height="13.0" rx="3"/><text x="335.0" y="148.0" text-anchor="middle">5</text><text x="335.0" y="192" text-anchor="middle" class="t-muted">B4</text>
+        </svg>
+        <figcaption>Deaths in one week, by pen</figcaption>
+      </figure>
+      <ul class="hp-q">
+        <li>How many hens died, and where?</li>
+        <li>What do the sick hens share?</li>
+      </ul>
+    </div>
   </div>
   <p>A <span class="term" data-tip="A question about the diagnosis and treatment of one sick animal.">clinical question</span> concerns one animal. A population question concerns a group of animals. The veterinarian needs both.</p>
   <div class="notes">Point to the left panel, then to the right panel. Ask which panel the necropsy belongs to. Then ask which panel tells the farm where to act first.</div>
@@ -758,8 +774,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
     const show = hasPanelContent(s);
     $('#btn-panel').hidden = !show;
-    stage.classList.toggle('has-panel', show && !panelClosed);
-    $('#btn-panel').setAttribute('aria-pressed', String(show && !panelClosed));
+    const auto = !!ctl || !!(notesMode && note);
+    stage.classList.toggle('has-panel', auto && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(auto && !panelClosed));
     stage.classList.remove('sheet-open');
     setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
   }
@@ -813,7 +830,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
   $('#btn-panel').addEventListener('click', () => {
     if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
-    panelClosed = stage.classList.contains('has-panel'); updatePanel();
+    if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); }
+    else { panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').setAttribute('aria-pressed', 'true'); }
   });
   function openDetail(el) {
     const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
