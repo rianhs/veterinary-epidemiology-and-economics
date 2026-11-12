@@ -18,6 +18,9 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     SVG figure classes (.fig), and a Reset button that also resets inputs made later.
+     Add ?steps=all to the URL to show all steps (for review and printing).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -28,16 +31,16 @@
   "domain": "D0",
   "competency": "C1",
   "skills": {
-    "primary": "S1.6",
+    "primary": "S1.5",
     "secondary": []
   },
-  "minutes": 15,
+  "minutes": 20,
   "articles": [
     "level-of-analysis"
   ],
   "guides": [],
   "status": "draft",
-  "updated": "2026-11-08"
+  "updated": "2026-11-12"
 }
 </script>
 
@@ -128,8 +131,48 @@ a { color: var(--accent); }
 .choice.is-correct { border-color: var(--ok); }
 .choice.is-wrong { border-color: var(--bad); }
 .verdict { min-height: 1.5rem; font-weight: 600; }
+.slide[data-type="check"] > div { display: grid; gap: 1.3rem; align-content: start; }
+.slide[data-type="check"] .choice { font-size: 1.1rem; }
+.slide .choices { padding-left: 0; }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
+
+/* Reveal steps */
+.step-hidden { visibility: hidden; opacity: 0; }
+.slide [data-step] { transition: opacity 0.2s; }
+.step-btn { margin-top: auto; align-self: flex-start; }
+.step-btn[hidden] { display: none; }
+
+/* Card sorter */
+.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
+.sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
+.sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
+.sort-card:hover { border-color: var(--muted); }
+.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); }
+.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.sort-card.is-wrong { border-color: var(--bad); }
+.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* SVG figures */
+.fig { display: block; width: 100%; height: auto; max-height: 100%; }
+.fig text { fill: var(--ink); font-family: inherit; font-size: 15px; }
+.fig .t-muted { fill: var(--muted); }
+.fig .t-strong { font-weight: 600; }
+.fig .f-box { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-soft { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .f-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-arrow { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+.fig .f-accent { fill: var(--accent); }
+.fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
+.fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
 
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
@@ -203,74 +246,90 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .card { overflow: visible; }
   .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
   [data-detail]::after { display: none; }
+  .step-hidden { visibility: visible; opacity: 1; }
+  .step-btn { display: none; }
 }
 </style>
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 1rem; }
-.case-layout p + p { margin-top: 0.8rem; }
-.small-note { color: var(--muted); font-size: 0.9rem; }
-.facts { margin: 0; display: grid; gap: 0.5rem; }
-.facts > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
-.facts dt { color: var(--muted); font-size: 0.9rem; }
-.facts dd { margin: 0; font-weight: 600; text-align: right; }
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
+.case-layout p + p { margin-top: 0.9rem; }
+.case-layout p { font-size: 1.15rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
 
-.cmp { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
-.cmp th, .cmp td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.cmp thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.cmp tbody th { font-weight: 600; color: var(--muted); width: 5.5rem; white-space: nowrap; }
-.ddot { display: inline-block; width: 0.65rem; height: 0.65rem; border-radius: 50%; margin-right: 0.45rem; }
+.vcenter { justify-content: center; }
+.def-line { font-size: 1.4rem; line-height: 1.4; font-weight: 500; }
+.under-fig { font-size: 1.15rem; }
+.st-list { display: grid; gap: 0.7rem; margin: 0; padding-left: 1.3rem; font-size: 1.2rem; line-height: 1.4; }
+.st-list li + li { margin-top: 0; }
+.st-list[data-detail] { width: fit-content; max-width: 100%; padding-right: 1rem; }
+.eg { font-size: 1.15rem; color: var(--muted); }
+.fig-wrap { flex: none; display: flex; align-items: flex-start; align-self: flex-start; width: 100%; max-width: 46rem; }
+.fig-wrap .fig { height: auto; width: 100%; overflow: visible; }
 
-.sorter { display: grid; gap: 0.9rem; align-content: start; }
-.sort-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
-.sort-q { font-size: 1.5rem; font-weight: 600; line-height: 1.3; min-height: 4.2rem; }
-.sort-hint { color: var(--muted); }
-.sort-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.sort-btn { padding: 0.65rem 1rem; font-size: 1rem; }
-.sort-btn:disabled { cursor: default; }
-.sort-btn.is-correct { border: 2px solid var(--ok); }
-.sort-btn.is-wrong { border: 2px solid var(--bad); }
-.sort-why { color: var(--muted); min-height: 3rem; }
+.lv-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; align-items: center; flex: 1; min-height: 0; }
+.lv-fig { display: grid; justify-items: center; }
+.lv-layout-10 { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+.fig .lv-jump { fill: none; stroke: var(--ink); stroke-width: 3; stroke-dasharray: 8 6; }
+.fig .lv-ah { fill: var(--ink); }
+.lv-layout .fig { width: min(100%, max(26rem, 64vh)); height: auto; }
 
-.loop-fig { width: 100%; height: auto; max-height: 15rem; }
-.loop-fig .lnode { cursor: pointer; }
-.loop-fig .lnode rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1; }
-.loop-fig .lnode text { fill: var(--ink); font-family: "Inter", system-ui, sans-serif; }
-.loop-fig .lnode .l1 { font-size: 14px; font-weight: 600; }
-.loop-fig .lnode .l2 { font-size: 12px; fill: var(--muted); }
-.loop-fig .lnode.is-active rect { fill: var(--accent); stroke: var(--accent); stroke-width: 2; }
-.loop-fig .lnode.is-active text { fill: var(--accent-ink); }
-.loop-fig .lnode.is-active .l2 { fill: var(--accent-ink); }
-.loop-fig .lnode:focus-visible rect { outline: 2px solid var(--accent); outline-offset: 2px; }
-.loop-fig .arrows { color: var(--muted); }
-.loop-text { padding: 0.2rem 0.4rem; min-height: 7.5rem; }
-.loop-text h3 { margin: 0 0 0.3rem; font-size: 1.15rem; }
-.loop-text p { margin: 0 0 0.4rem; }
-.loop-q { color: var(--muted); }
+.ex-table { border-collapse: collapse; width: 100%; font-size: 1.05rem; }
+.ex-table th, .ex-table td { text-align: left; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
+.ex-table tbody th { font-weight: 600; color: var(--muted); width: 9.5rem; }
+.lv-table td { font-size: 1.1rem; }
+.lv-wrap { width: 100%; max-width: 62rem; flex: none; align-self: flex-start; }
 
-.control output { margin-left: 0.5rem; }
-@media (max-width: 900px) { .case-layout { grid-template-columns: 1fr; } }
+.practice-note { color: var(--muted); font-size: 0.98rem; }
+.sorter { flex: none; }
+.sorter-pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; padding: 0.4rem; }
+.sorter-bins { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sort-card { font-size: 0.92rem; padding: 0.35rem 0.65rem; }
+.sort-drop { min-height: 2.6rem; }
 
-.cmp-tight { font-size: 0.82rem; }
-.cmp-tight th, .cmp-tight td { padding: 0.28rem 0.7rem; }
-.cmp-tight tbody th { width: 9rem; }
-.cmp .grp th { background: var(--surface); color: var(--muted); font-size: 0.75rem; text-transform: none; letter-spacing: 0; padding: 0.22rem 0.7rem; border-bottom: 1px solid var(--line); }
-.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0 1rem; }
-.chip { padding: 0.5rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 0.9rem; cursor: pointer; }
-.chip.is-active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
-.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bd-rows { display: grid; gap: 0.8rem; }
+.bd-row { display: grid; gap: 0.3rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); }
+.quote-s { font-size: 1.1rem; }
+.bd-fill { line-height: 2.1; font-size: 1.05rem; }
+.bd-fill select { font: inherit; font-size: 1.02rem; padding: 0.2rem 0.5rem; border: 1.5px solid var(--muted); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
+.bd-fill select.is-correct { border-color: var(--ok); }
+.bd-fill select.is-wrong { border-color: var(--bad); }
+.bd-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.bd-why { display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.98rem; }
+.quote { font-size: 1.25rem; line-height: 1.45; margin: 0; padding-left: 1.6rem; display: grid; gap: 0.3rem; }
+.q-label { font-weight: 600; font-size: 1.15rem; }
 
-.lv-fig { width: 100%; height: auto; max-height: 15.5rem; margin: 0.4rem 0; }
-.lv-fig .lvl { cursor: pointer; }
-.lv-fig .lvl rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1; }
-.lv-fig .lvl text { fill: var(--ink); font-family: "Inter", system-ui, sans-serif; pointer-events: none; }
-.lv-fig .lvl .l1 { font-size: 14px; font-weight: 600; }
-.lv-fig .lvl .l2 { font-size: 12px; fill: var(--muted); }
-.lv-fig .lvl.is-active rect { fill: var(--accent); stroke: var(--accent); stroke-width: 2; }
-.lv-fig .lvl.is-active text { fill: var(--accent-ink); }
-.lv-fig .lvl.is-active .l2 { fill: var(--accent-ink); }
-.lv-fig .lvl:focus-visible rect { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fig .hen-out { fill: var(--muted); stroke: var(--muted); stroke-width: 6; stroke-linejoin: round; }
+.fig .hen-fill { fill: var(--surface); stroke: none; }
+.fig .hen-wing { fill: var(--surface-2); stroke: var(--muted); stroke-width: 2.5; stroke-linejoin: round; }
+.fig .hen-wing-line { fill: none; stroke: var(--muted); stroke-width: 2.5; stroke-linecap: round; }
+.fig .hen-leg { fill: none; stroke: var(--d5); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.fig .hen-beak { fill: var(--d5); stroke: var(--muted); stroke-width: 2.5; stroke-linejoin: round; }
+.fig .hen-comb { fill: var(--d2); stroke: var(--muted); stroke-width: 2; }
+.fig .hen-eye { fill: var(--ink); }
+
+.lx-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 1.8rem; flex: 1; min-height: 0; align-items: center; }
+.lx-left { display: grid; gap: 0.9rem; justify-items: center; align-content: center; min-height: 0; }
+.lx-layout .fig { width: min(100%, max(24rem, 52vh)); height: auto; }
+.fig .lx-box.is-on { stroke: var(--ink); stroke-width: 4; }
+.lx-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.lx-nav .btn:disabled { opacity: 0.4; cursor: default; }
+.lx-stage { color: var(--muted); font-size: 0.95rem; min-width: 6.5rem; text-align: center; font-variant-numeric: tabular-nums; }
+.lx-read { display: grid; gap: 0.8rem; align-content: center; }
+.lx-level { font-size: 1.8rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+.lx-line { font-size: 1.1rem; }
+.lx-label { font-weight: 600; }
+.lx-adv { font-size: 1.1rem; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .case-layout, .lv-layout, .lx-layout { grid-template-columns: 1fr; }
+}
+</style>
 </style>
 </head>
 <body>
@@ -286,6 +345,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </header>
 
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker></defs></svg>
+
 <main class="stage" id="stage">
   <div class="card" id="card">
 
@@ -295,161 +356,469 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide" data-type="title" data-title="Identify levels of analysis">
   <p class="code">C1 Epidemiological and economic thinking</p>
   <h1>Identify levels of analysis</h1>
-  <p class="lead">At which level is a problem studied: the individual animal, the animal population, or the animal product and economic system?</p>
+  <p class="lead">One disease on a farm can be studied in one hen, in the whole flock, or in the eggs that leave the farm. What would you learn from each view?</p>
   <ul class="meta-list">
-    <li><span class="code">S1.6</span><span>Identify the levels of analysis in a problem</span></li>
-    <li><span class="code">Time</span><span>About 15 minutes</span></li>
-    <li><span class="code">Before</span><span><a href="./match-population-status-to-objective.html">Match population status to objective</a></span></li>
+    <li><span class="code">S1.5</span><span>Identify the levels of analysis in a problem</span></li>
+    <li><span class="code">Time</span><span>About 18 minutes</span></li>
+    <li><span class="code">Before</span><span><a href="./explain-veterinary-economics.html">Explain veterinary economics</a></span></li>
   </ul>
+  <div class="notes">Read the guiding question aloud. Ask for a first answer in one sentence. Each view is a level of analysis, a term that slide 4 introduces.</div>
 </section>
-
-<!-- Slide 2: Anchor case recap -->
-<section class="slide" data-type="concept" data-title="The anchor case">
-  <h2>The case: Salmonella on a layer farm and in its eggs</h2>
+<!-- Slide 2: Recap of the anchor case -->
+<section class="slide" data-type="recap" data-title="The case">
+  <h2>The case: Salmonella on a layer farm</h2>
   <div class="case-layout">
     <div>
-      <p>A layer farm with 8,000 hens in 8 pens lost 120 hens in one week. The laboratory found Salmonella in the hens, and eggs from the two worst pens had already reached two markets.</p>
-      <p>Your role: regulatory assessor at the district authority (GP3.2), two years after graduation. You must advise whether the eggs from this farm can stay on sale.</p>
-      <p class="small-note">These numbers are synthetic and are for teaching.</p>
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, next to the water inlet.</p>
+      <p>The laboratory tests five hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have already reached two markets.</p>
+      <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian checks whether farms, animals, and products meet health rules, and advises authorities.">regulatory assessor</span> at the local animal health authority. You must advise whether the eggs from these pens can stay on sale.</p>
     </div>
     <dl class="facts">
-      <div><dt>Hens tested by the laboratory</dt><dd class="num">5 hens</dd></div>
-      <div><dt>Pens with high deaths</dt><dd>A1 and B1</dd></div>
-      <div><dt>Markets that received eggs</dt><dd class="num">2</dd></div>
-      <div><dt>Question for the assessor</dt><dd>Can the eggs stay on sale?</dd></div>
+      <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
+      <div><dt>Deaths in one week</dt><dd>120</dd></div>
+      <div><dt>Hens tested, all with Salmonella</dt><dd>5</dd></div>
+      <div><dt>Markets that received eggs</dt><dd>2</dd></div>
     </dl>
   </div>
-  <div class="notes">Read the two sentences aloud. Ask the class which numbers describe one hen, which describe the flock, and which describe the eggs.</div>
+  <div class="notes">Read the three paragraphs aloud. The farm owner has IDR 15,000,000 left this month (deck 3). The assessor advises the authority, so this deck looks at the same case from a different seat.</div>
 </section>
-
 <!-- Slide 3: Question -->
 <section class="slide" data-type="question" data-title="Predict first">
-  <h2>How many levels do you need to describe the Salmonella case fully?</h2>
+  <h2>Five tested hens are positive for Salmonella. What can the assessor say about the eggs in the two markets?</h2>
   <p>Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
-    <li><button class="choice" data-value="a"><span class="key">A</span>Three levels, from the hen to the egg chain</button></li>
-    <li><button class="choice" data-value="b"><span class="key">B</span>One level, the sick hens</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>Two levels, the hens and the flock</button></li>
+    <li><button class="choice" data-value="a"><span class="key">A</span>All the eggs in the two markets are contaminated</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>The eggs in the two markets are probably safe</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>The result cannot show which eggs are contaminated</button></li>
   </ul>
   <p class="verdict" id="predict-note" aria-live="polite"></p>
+  <div class="notes">Let students choose, then ask a student to explain the choice. The answer is C. The next slides explain why: the result describes five hens, and the question is about eggs.</div>
 </section>
-
-<!-- Slide 4: Concept, table of three levels -->
-<section class="slide" data-type="concept" data-title="Three levels">
-  <h2>Three levels of analysis</h2>
-  <p>A problem is studied at one level or at several. Each level has its own question, its own data, and its own decision.</p>
-  <table class="cmp">
-    <thead><tr><th scope="col">Level</th><th scope="col">What is studied</th><th scope="col">Role in the course</th></tr></thead>
+<!-- Slide 4: Concept, definition only -->
+<section class="slide" data-type="concept" data-title="What a level is">
+  <h2>A level of analysis tells what a statement is about</h2>
+  <p class="def-line">A view of a problem is called a level of analysis. To find the level, ask: what is the statement about?</p>
+  <table class="ex-table lv-table">
+    <thead><tr><th scope="col">Statement about the case</th><th scope="col">What it is about</th></tr></thead>
     <tbody>
-      <tr><th scope="row"><span class="term" data-tip="The level at which a problem is studied: the individual animal, the animal population, or the animal product and economic system. Course convention.">Individual animal</span></th><td>Clinical disease, infection, welfare state, productivity</td><td>Source of population patterns</td></tr>
-      <tr><th scope="row"><span class="term" data-tip="A defined group of animals that share a place or a production system, for example a herd, a flock, or all dogs in a district.">Animal population</span></th><td>Herd, flock, kennel, shelter, village population, wildlife group</td><td>Main level of analysis</td></tr>
-      <tr><th scope="row">Animal product and economic system</th><td>Milk, meat, eggs, hides, feed, veterinary medicines, veterinary services, markets, regulations</td><td>Data source, pathway for introduction, place where economic consequences appear</td></tr>
+      <tr><td>The laboratory finds Salmonella in hen number 3.</td><td>One hen</td></tr>
+      <tr><td>120 of the 8,000 hens die in one week.</td><td>A group of hens</td></tr>
+      <tr><td>Eggs from pens A1 and B1 reached two markets.</td><td>The eggs and where they went</td></tr>
     </tbody>
   </table>
+  <div class="notes">Link back to slide 1: each view is a level. Read the three statements. Ask what each one is about before you read the right column. The next two slides give the names of the levels.</div>
 </section>
-
-<!-- Slide 5: Explore, nested levels -->
-<section class="slide" data-type="explore" data-title="Zoom through the levels" data-panel="controls">
-  <h2>Zoom through the levels of the case</h2>
-  <svg class="lv-fig" id="lv-svg" viewBox="0 0 640 236" role="group" aria-label="Three nested levels: the individual hen inside the flock, inside the egg chain. Select a level to see the case at that level."></svg>
-  <div class="loop-text" id="lv-card" data-detail="d-levels" tabindex="0" aria-label="Description of the selected level. Select for details.">
-    <h3 id="lv-h"></h3>
-    <p id="lv-ex"></p>
-    <p id="lv-q" class="loop-q"></p>
-  </div>
-  <div class="notes">Start at the inner level and move outward. At each level, ask what data the assessor would need and what decision the level supports.</div>
-</section>
-
-<!-- Slide 6: Explore, matcher -->
-<section class="slide" data-type="explore" data-title="Match the level" data-panel="controls">
-  <h2>At which level does the statement sit?</h2>
-  <div class="sorter">
-    <div class="sort-top"><span class="num" id="m-pos"></span><span class="num" id="m-score"></span></div>
-    <p class="sort-q" id="m-q"></p>
-    <p class="sort-hint" id="m-hint" hidden>Ask: is the statement about one animal, a group of animals, or the products and the system around them?</p>
-    <div class="sort-btns" id="m-btns">
-      <button class="btn sort-btn" data-answer="ind">Individual animal</button>
-      <button class="btn sort-btn" data-answer="pop">Animal population</button>
-      <button class="btn sort-btn" data-answer="sys">Animal product and economic system</button>
+<!-- Slide 5: Concept, individual animal and animal population -->
+<section class="slide" data-type="concept" data-title="Animal and population">
+  <h2>Level 1 is one animal. Level 2 is a group of animals.</h2>
+  <div class="lv-layout">
+    <div class="lv-fig"><svg class="fig" viewBox="0 0 440 300" role="img" aria-label="Boxes inside boxes. The outer box is an area. Inside it is a farm with 8,000 hens. Inside the farm is pen A1. Inside the pen are three hens, and one of them is hen number 3.">
+        <defs>
+          <g id="hen5-shape">
+            <ellipse cx="130" cy="130" rx="66" ry="46" transform="rotate(-8 130 130)"/>
+            <path d="M156 112 C168 94 172 78 174 64 L204 68 C200 88 198 106 190 128 Z"/>
+            <ellipse cx="190" cy="58" rx="20" ry="18"/>
+            <path d="M80 112 C56 108 42 88 38 58 C56 64 74 74 92 92 Z"/>
+            <path d="M74 124 C48 128 30 114 22 92 C42 94 60 102 82 112 Z"/>
+            <path d="M76 138 C52 146 32 138 20 120 C40 118 60 122 84 128 Z"/>
+          </g>
+        </defs>
+        <rect class="f-soft" x="4" y="4" width="432" height="292" rx="14"/>
+        <text x="20" y="32" class="t-strong">Area</text>
+        <rect class="f-soft" x="22" y="46" width="396" height="236" rx="12"/>
+        <text x="38" y="72" class="t-strong">Farm with 8,000 hens</text>
+        <rect class="f-box" x="40" y="88" width="360" height="180" rx="10"/>
+        <text x="56" y="114" class="t-strong">Pen A1</text>
+        <g transform="translate(64 124) scale(0.36)" opacity="0.55">
+          <path class="hen-leg" d="M120 172 L118 204 M118 204 L100 204 M118 204 L110 196 M118 204 L134 204"/>
+          <path class="hen-leg" d="M148 172 L150 204 M150 204 L132 204 M150 204 L142 196 M150 204 L166 204"/>
+          <use href="#hen5-shape" class="hen-out"/>
+          <use href="#hen5-shape" class="hen-fill"/>
+          <path class="hen-wing" d="M96 128 C110 108 152 106 168 130 C152 154 110 154 96 128 Z"/>
+          <path class="hen-wing-line" d="M112 132 C126 126 142 126 154 132 M116 142 C128 138 142 138 150 142"/>
+          <path class="hen-beak" d="M207 52 L228 59 L207 66 Z"/>
+          <circle class="hen-comb" cx="181" cy="38" r="7"/>
+          <circle class="hen-comb" cx="191" cy="34" r="8"/>
+          <circle class="hen-comb" cx="201" cy="39" r="6.5"/>
+          <ellipse class="hen-comb" cx="204" cy="74" rx="5" ry="9"/>
+          <circle class="hen-eye" cx="196" cy="54" r="3"/>
+        </g><g transform="translate(160 124) scale(0.36)" opacity="1">
+          <path class="hen-leg" d="M120 172 L118 204 M118 204 L100 204 M118 204 L110 196 M118 204 L134 204"/>
+          <path class="hen-leg" d="M148 172 L150 204 M150 204 L132 204 M150 204 L142 196 M150 204 L166 204"/>
+          <use href="#hen5-shape" class="hen-out"/>
+          <use href="#hen5-shape" class="hen-fill"/>
+          <path class="hen-wing" d="M96 128 C110 108 152 106 168 130 C152 154 110 154 96 128 Z"/>
+          <path class="hen-wing-line" d="M112 132 C126 126 142 126 154 132 M116 142 C128 138 142 138 150 142"/>
+          <path class="hen-beak" d="M207 52 L228 59 L207 66 Z"/>
+          <circle class="hen-comb" cx="181" cy="38" r="7"/>
+          <circle class="hen-comb" cx="191" cy="34" r="8"/>
+          <circle class="hen-comb" cx="201" cy="39" r="6.5"/>
+          <ellipse class="hen-comb" cx="204" cy="74" rx="5" ry="9"/>
+          <circle class="hen-eye" cx="196" cy="54" r="3"/>
+        </g><g transform="translate(256 124) scale(0.36)" opacity="0.55">
+          <path class="hen-leg" d="M120 172 L118 204 M118 204 L100 204 M118 204 L110 196 M118 204 L134 204"/>
+          <path class="hen-leg" d="M148 172 L150 204 M150 204 L132 204 M150 204 L142 196 M150 204 L166 204"/>
+          <use href="#hen5-shape" class="hen-out"/>
+          <use href="#hen5-shape" class="hen-fill"/>
+          <path class="hen-wing" d="M96 128 C110 108 152 106 168 130 C152 154 110 154 96 128 Z"/>
+          <path class="hen-wing-line" d="M112 132 C126 126 142 126 154 132 M116 142 C128 138 142 138 150 142"/>
+          <path class="hen-beak" d="M207 52 L228 59 L207 66 Z"/>
+          <circle class="hen-comb" cx="181" cy="38" r="7"/>
+          <circle class="hen-comb" cx="191" cy="34" r="8"/>
+          <circle class="hen-comb" cx="201" cy="39" r="6.5"/>
+          <ellipse class="hen-comb" cx="204" cy="74" rx="5" ry="9"/>
+          <circle class="hen-eye" cx="196" cy="54" r="3"/>
+        </g>
+        <text x="206" y="246" text-anchor="middle">Hen number3</text>
+      </svg></div>
+    <div>
+      <ul class="st-list">
+        <li><strong>Individual animal:</strong> one hen, for example hen number3.</li>
+        <li><strong>Animal population:</strong> a group of hens. A pen, a farm, and an <span class="term" data-tip="A part of a region with a clear boundary, for example a village, a district, or a regency.">area</span> are each a <span class="term" data-tip="A defined group of animals that share a place or a production system, for example a herd, a flock, or all dogs in an area.">population</span>.</li>
+      </ul>
+      <p class="eg" style="margin-top:1rem">A population is relative. The farm is a population of hens, and it is also one member of the population of farms in the area.</p>
     </div>
-    <p class="verdict" id="m-verdict" aria-live="polite"></p>
-    <p class="sort-why" id="m-why"></p>
-    <div><button class="btn btn-main" id="m-next" hidden>Show the next statement</button></div>
   </div>
-  <div class="notes">Ask the class to vote with a show of hands. Feed deliveries are the statement that students most often place at the population level, because feed reaches the animals.</div>
+  <div class="notes">Point to hen number 3, then to the pen, the farm, and the area. Ask: is the farm a population? Students should say yes for the hens, and also see the farm as one unit among the farms of the area.</div>
 </section>
-
-<!-- Slide 7: Explore, decisions span levels -->
-<section class="slide" data-type="explore" data-title="One decision, several levels" data-panel="controls">
-  <h2>A decision often needs more than one level</h2>
-  <p>Choose a decision in the controls. The slide shows the level of the decision and the other levels that the assessor needs.</p>
-  <div class="loop-text" id="dc-card" tabindex="0" aria-live="polite">
-    <h3 id="dc-h">Select a decision in the controls.</h3>
-    <p id="dc-p"></p>
-    <p id="dc-q" class="loop-q"></p>
+<!-- Slide 6: Concept, animal product chain and system -->
+<section class="slide" data-type="concept" data-title="Chain and system">
+  <h2>Level 3 is the chain of animal products and the system around it</h2>
+  <div class="fig-wrap" data-detail="d-chain" tabindex="0" aria-label="A chain of five boxes from left to right: feed and medicines, layer farm, egg trader, market, buyers. Below the chain, one wide box for the rules, services, and prices around the whole chain. Select for details."><svg class="fig" viewBox="0 0 720 210" role="img" aria-hidden="true">
+    <rect class="f-box" x="0" y="14" width="124" height="62" rx="10"/><text x="62" y="41" text-anchor="middle" class="t-strong">Feed and</text><text x="62" y="61" text-anchor="middle" class="t-strong">medicines</text>
+    <rect class="f-box" x="149" y="14" width="124" height="62" rx="10"/><text x="211" y="51" text-anchor="middle" class="t-strong">Layer farm</text>
+    <rect class="f-box" x="298" y="14" width="124" height="62" rx="10"/><text x="360" y="51" text-anchor="middle" class="t-strong">Egg trader</text>
+    <rect class="f-box" x="447" y="14" width="124" height="62" rx="10"/><text x="509" y="51" text-anchor="middle" class="t-strong">Market</text>
+    <rect class="f-box" x="596" y="14" width="124" height="62" rx="10"/><text x="658" y="51" text-anchor="middle" class="t-strong">Buyers</text>
+    <path class="f-arrow" d="M128 45 H145"/><path class="f-arrow" d="M277 45 H294"/><path class="f-arrow" d="M426 45 H443"/><path class="f-arrow" d="M575 45 H592"/>
+    <rect class="f-soft" x="0" y="112" width="720" height="62" rx="10"/>
+    <text x="360" y="139" text-anchor="middle" class="t-strong">Rules, veterinary services, and prices</text>
+    <text x="360" y="161" text-anchor="middle" class="t-muted">around the whole chain</text>
+    <text x="0" y="200" class="t-muted">Animals, feed, products, and money move along the chain</text>
+  </svg></div>
+  <p class="under-fig">The <strong>animal product chain and system</strong> is the path of animals, feed, and products from the farm to the buyers, with the rules and services around it. The assessor works at this level when the question is where the eggs went.</p>
+  <div class="notes">Trace the eggs from the layer farm to the buyers with a finger. Ask: where would the assessor find records of this path? Open the details to see the three roles of this level.</div>
+</section>
+<!-- Slide 7: Concept, two kinds of question at every level -->
+<section class="slide" data-type="concept" data-title="Two kinds of question">
+  <h2>Every level raises a health question and an <span class="term" data-tip="About value, cost, and who gains or loses.">economic</span> question</h2>
+  <div class="lv-wrap" data-detail="d-matrix" tabindex="0" aria-label="A table of the three levels with a health question and an economic question for each level. Select for details.">
+    <table class="ex-table lv-table">
+      <thead><tr><th scope="col">Level</th><th scope="col">Health question</th><th scope="col">Economic question</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Individual animal</th><td>What is wrong with this hen?</td><td>What is the value of this hen, and what is the cost of its treatment?</td></tr>
+        <tr><th scope="row">Animal population</th><td>How many hens are affected, in which pens, and on which days?</td><td>What is the owner’s total loss, and how much do the control measures cost?</td></tr>
+        <tr><th scope="row">Animal product chain and system</th><td>Where and when did the eggs go, and who may be <span class="term" data-tip="In contact with an agent that can cause disease, for example by eating contaminated eggs.">exposed</span>?</td><td>Who else pays or loses: buyers, traders, the egg price?</td></tr>
+      </tbody>
+    </table>
   </div>
-  <div class="notes">Ask why the decision about the eggs needs all three levels. The decision sits at the system level, and the evidence comes from the population and individual levels.</div>
+  <p class="under-fig">Economic aspects are present at all three levels. The economic question changes with the level.</p>
+  <div class="notes">Ask students to find the animal, place, and time in the middle health question. Ask which economic question the owner asked in the previous deck. The answer is the middle row.</div>
 </section>
-
-<!-- Slide 8: Check 1 -->
-<section class="slide" data-type="check" data-title="Check: the eggs">
-  <h2>The assessor learns that eggs from the two worst pens were sold at two markets. At which level does this finding sit?</h2>
+<!-- Slide 8: Concept, decisions per level -->
+<section class="slide vcenter" data-type="concept" data-title="Decision and decision maker">
+  <h2>Each level has its own decision and <span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">decision maker</span></h2>
+  <ul class="st-list" data-detail="d-decision" tabindex="0" aria-label="Three levels with a decision for each. Select for details.">
+    <li><strong>Individual animal:</strong> the veterinarian and the owner decide whether to treat hen number 3.</li>
+    <li><strong>Animal population:</strong> the owner decides whether to repair the water line and disinfect pens A1 and B1.</li>
+    <li><strong>Animal product chain and system:</strong> the authority decides whether to <span class="term" data-tip="Take back from sale.">withdraw</span> the eggs from the two markets.</li>
+  </ul>
+  <p class="eg">A decision at one level moves costs and benefits to other levels. Withdrawing the eggs protects the buyers, but causes the owners to lose revenue.</p>
+  <div class="notes">Ask who pays and who gains in the last bullet. This links to private and public benefits in the previous deck. Open the details for what is at stake at each level.</div>
+</section>
+<!-- Slide 9: Example -->
+<section class="slide" data-type="example" data-title="The case at three levels">
+  <h2>The assessor sees the case at three levels</h2>
+  <div class="lv-wrap" data-detail="d-example" tabindex="0" aria-label="A table with one finding of the case and its data source for each level. Select for details.">
+    <table class="ex-table lv-table">
+      <thead><tr><th scope="col">Level</th><th scope="col">Finding in the case</th><th scope="col">Source of the data</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Individual animal</th><td>Salmonella in the five hens that the laboratory tested</td><td>Laboratory test of five hens</td></tr>
+        <tr><th scope="row">Animal population</th><td>120 of 8,000 hens die in one week, 90 of them in pens A1 and B1</td><td>Farm records of deaths by pen</td></tr>
+        <tr><th scope="row">Animal product chain and system</th><td>Eggs from pens A1 and B1 reached two markets</td><td>Egg sales records of the farm</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="under-fig">Each row answers a different question, based on different data. No row replaces any other row.</p>
+  <div class="notes">Go through the rows from top to bottom. At the last row ask: which level does the assessor need to decide about the eggs? Open the details to see what each row cannot show.</div>
+</section>
+<!-- Slide 10: Concept, data and question at the same level -->
+<section class="slide" data-type="concept" data-title="Keep the conclusion at its level">
+  <h2>Why do five positive hens not answer the question about the eggs?</h2>
+  <div class="lv-layout lv-layout-10">
+    <div class="lv-fig"><svg class="fig" viewBox="0 0 330 250" role="img" aria-label="Three boxes stacked: animal product chain and system on top, animal population in the middle, individual animal at the bottom. The bottom box is marked data and the top box is marked question. A dashed arrow with a question mark runs from the bottom box to the top box.">
+        <defs><marker id="lv-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="lv-ah"/></marker></defs>
+        <rect class="f-soft" x="4" y="4" width="262" height="66" rx="10"/>
+        <text x="20" y="32" class="t-strong">Animal product chain and system</text>
+        <text x="20" y="56" class="t-muted">Question about the eggs</text>
+        <rect class="f-soft" x="4" y="92" width="262" height="66" rx="10"/>
+        <text x="20" y="130" class="t-strong">Animal population</text>
+        <rect class="f-box" x="4" y="180" width="262" height="66" rx="10"/>
+        <text x="20" y="208" class="t-strong">Individual animal</text>
+        <text x="20" y="232" class="t-muted">Data from five hens</text>
+        <path class="lv-jump" d="M298 178 V76" marker-end="url(#lv-ah)"/>
+        <text x="311" y="134" class="t-strong">?</text>
+      </svg></div>
+    <div>
+      <ul class="st-list" data-detail="d-claim" tabindex="0" aria-label="The data, the question, the gap, and the fix. Select for details.">
+        <li><strong>Data:</strong> five hens, at the individual animal level.</li>
+        <li><strong>Question:</strong> are the eggs in the two markets <span class="term" data-tip="Carrying an agent such as Salmonella, so that the egg can cause disease.">contaminated</span>? This is the chain level.</li>
+        <li><strong>Gap:</strong> the data and the question sit at different levels, so the data cannot answer the question.</li>
+        <li><strong>Fix:</strong> collect data at the level of the question. Test eggs and trace where they went.</li>
+      </ul>
+      <p class="eg" style="margin-top:1rem">A conclusion stays safe at the level of its data.</p>
+    </div>
+  </div>
+  <div class="notes">Return to the first question of the deck and work it in four lines. Ask students to name the level of the data and the level of the question before you show the gap. Open the details for the jump in the other direction, from a group to one animal.</div>
+</section>
+<!-- Slide 11: Practice, sort cards -->
+<section class="slide" data-type="practice" data-title="Sort the statements">
+  <h2>Drag each statement into the box of its level</h2>
+  <div class="sorter" data-sorter data-explain="d-sort" data-explain-always="1">
+    <div class="sorter-pool" aria-label="Cards to sort">
+      <button class="sort-card" data-target="i">Hen number 7 cannot stand and has a fever.</button>
+      <button class="sort-card" data-target="p">1.5 of every 100 hens die in one week.</button>
+      <button class="sort-card" data-target="c">The same feed lot was delivered to three farms.</button>
+      <button class="sort-card" data-target="i">Treating one sick hen costs more than the hen is worth.</button>
+      <button class="sort-card" data-target="p">The dead hens cut the farm’s egg income this month.</button>
+      <button class="sort-card" data-target="c">The egg price falls in the two markets.</button>
+      <button class="sort-card" data-target="p">Pens A1 and B1 have the highest death counts of the eight pens.</button>
+      <button class="sort-card" data-target="c">Part of the eggs went to a bakery.</button>
+    </div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="i"><h3>Individual animal</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="p"><h3>Animal population</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="c"><h3>Animal product chain and system</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <p class="practice-note">Ask for each card: what is the statement about? Some statements are about money.</p>
+  <div class="notes">Students work in pairs. Cards about money are the hard ones. The level follows what the statement is about, not the topic of money. The feed lot card is often placed at the population level because feed reaches the animals.</div>
+</section>
+<!-- Slide 12: Practice, complete the statements -->
+<section class="slide" data-type="practice" data-title="Complete the statements">
+  <h2>Complete each statement</h2>
+  <div class="bd-rows">
+    <div class="bd-row">
+      <p class="quote-s">1. “Pen B1 has 40 of the dead hens.”</p>
+      <p class="bd-fill">This statement sits at the <select id="r1l" aria-label="Level for statement 1"><option value="">Choose</option><option value="i">individual animal</option><option value="p">animal population</option><option value="c">animal product chain and system</option></select> level. It answers a <select id="r1q" aria-label="Kind of question for statement 1"><option value="">Choose</option><option value="h">health</option><option value="e">economic</option></select> question.</p>
+    </div>
+    <div class="bd-row">
+      <p class="quote-s">2. “Treating hen number 3 costs IDR 40,000.”</p>
+      <p class="bd-fill">This statement sits at the <select id="r2l" aria-label="Level for statement 2"><option value="">Choose</option><option value="i">individual animal</option><option value="p">animal population</option><option value="c">animal product chain and system</option></select> level. It answers a <select id="r2q" aria-label="Kind of question for statement 2"><option value="">Choose</option><option value="h">health</option><option value="e">economic</option></select> question.</p>
+    </div>
+    <div class="bd-row">
+      <p class="quote-s">3. “Who will pay for the eggs that the authority withdraws?”</p>
+      <p class="bd-fill">This statement sits at the <select id="r3l" aria-label="Level for statement 3"><option value="">Choose</option><option value="i">individual animal</option><option value="p">animal population</option><option value="c">animal product chain and system</option></select> level. It answers a <select id="r3q" aria-label="Kind of question for statement 3"><option value="">Choose</option><option value="h">health</option><option value="e">economic</option></select> question.</p>
+    </div>
+  </div>
+  <div class="bd-actions">
+    <button class="btn btn-main" id="bd-check">Check the statements</button>
+    <button class="btn" id="bd-reset">Start again</button>
+    <span class="verdict" id="bd-verdict" aria-live="polite"></span>
+  </div>
+  <div class="bd-why" id="bd-why"></div>
+  <div class="notes">In statement 3, some students choose the population level because the owner pays. The question is about who else pays, and the authority acts on the chain. Ask what the statement is about.</div>
+</section>
+<!-- Slide 13: Practice, find the error -->
+<section class="slide" data-type="practice" data-title="Find the error">
+  <h2>Find the error</h2>
+  <p>The assessor writes a note.</p>
+  <ol class="quote lv-note">
+    <li>The laboratory finds Salmonella in five hens.</li>
+    <li>So no other hen in the flock is infected.</li>
+    <li>The assessor asks for the egg sales records of pens A1 and B1.</li>
+  </ol>
+  <p class="q-label">Which sentence draws a conclusion that its data cannot support?</p>
   <div>
-    <ul class="choices" data-check="q1" data-answer="c" data-explain="d-q1">
-      <li><button class="choice" data-value="a"><span class="key">A</span>Individual animal, as seen in the hens that were tested</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Animal population, as seen in all the hens of the farm</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>Animal product and economic system, as seen in the egg chain</button></li>
+    <ul class="choices" data-check="q0" data-answer="b" data-explain="d-q0">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Sentence 1, about the laboratory result</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Sentence 2, about the other hens</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Sentence 3, about the egg records</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+  <div class="notes">For each sentence ask what it is about and what its data describe. Sentence 3 shows the right move: a question about the eggs needs data on the eggs.</div>
+</section>
+<!-- Slide 14: Explore, three stages -->
+<section class="slide" data-type="explore" data-title="Follow the evidence">
+  <h2>Follow the evidence from the hen to the egg chain</h2>
+  <div class="lx-layout">
+    <div class="lx-left">
+      <svg class="fig" id="lx-fig" viewBox="0 0 420 300" role="img" aria-label="Three boxes inside each other: the individual animal inside the animal population inside the animal product chain and system. The box of the selected stage has a thick outline.">
+        <defs>
+          <g id="hen14-shape">
+            <ellipse cx="130" cy="130" rx="66" ry="46" transform="rotate(-8 130 130)"/>
+            <path d="M156 112 C168 94 172 78 174 64 L204 68 C200 88 198 106 190 128 Z"/>
+            <ellipse cx="190" cy="58" rx="20" ry="18"/>
+            <path d="M80 112 C56 108 42 88 38 58 C56 64 74 74 92 92 Z"/>
+            <path d="M74 124 C48 128 30 114 22 92 C42 94 60 102 82 112 Z"/>
+            <path d="M76 138 C52 146 32 138 20 120 C40 118 60 122 84 128 Z"/>
+          </g>
+        </defs>
+        <rect id="lx-r3" class="f-soft lx-box" x="4" y="4" width="412" height="292" rx="14"/>
+        <text x="20" y="30" class="t-strong">Animal product chain and system</text>
+        <rect id="lx-r2" class="f-soft lx-box" x="36" y="50" width="348" height="230" rx="12"/>
+        <text x="52" y="76" class="t-strong">Animal population</text>
+        <rect id="lx-r1" class="f-box lx-box" x="76" y="98" width="268" height="168" rx="10"/>
+        <text x="92" y="124" class="t-strong">Individual animal</text>
+        <g transform="translate(150 140) scale(0.34)" opacity="1">
+          <path class="hen-leg" d="M120 172 L118 204 M118 204 L100 204 M118 204 L110 196 M118 204 L134 204"/>
+          <path class="hen-leg" d="M148 172 L150 204 M150 204 L132 204 M150 204 L142 196 M150 204 L166 204"/>
+          <use href="#hen14-shape" class="hen-out"/>
+          <use href="#hen14-shape" class="hen-fill"/>
+          <path class="hen-wing" d="M96 128 C110 108 152 106 168 130 C152 154 110 154 96 128 Z"/>
+          <path class="hen-wing-line" d="M112 132 C126 126 142 126 154 132 M116 142 C128 138 142 138 150 142"/>
+          <path class="hen-beak" d="M207 52 L228 59 L207 66 Z"/>
+          <circle class="hen-comb" cx="181" cy="38" r="7"/>
+          <circle class="hen-comb" cx="191" cy="34" r="8"/>
+          <circle class="hen-comb" cx="201" cy="39" r="6.5"/>
+          <ellipse class="hen-comb" cx="204" cy="74" rx="5" ry="9"/>
+          <circle class="hen-eye" cx="196" cy="54" r="3"/>
+        </g>
+      </svg>
+      <div class="lx-nav">
+        <button class="btn" id="lx-prev">Previous stage</button>
+        <span class="lx-stage" id="lx-stage" aria-live="polite"></span>
+        <button class="btn btn-main" id="lx-next">Next stage</button>
+      </div>
+    </div>
+    <div class="lx-read" aria-live="polite">
+      <p class="lx-level" id="lx-level"></p>
+      <p class="lx-line"><span class="lx-label">Known: </span><span id="lx-known"></span></p>
+      <p class="lx-line"><span class="lx-label">Not yet known: </span><span id="lx-unk"></span></p>
+      <p class="lx-line"><span class="lx-label">Who is affected: </span><span id="lx-who"></span></p>
+      <p class="lx-adv" id="lx-adv"></p>
+    </div>
+  </div>
+  <p class="practice-note">Select Next stage. Before you read the advice, say whether the assessor can decide about the eggs.</p>
+  <div class="notes">At each stage ask the class whether the assessor can decide about the eggs. At stage 1 the answer is no, which is the answer to the first question of the deck. Only at stage 3 are there data at the level of the question.</div>
+</section>
+<!-- Slide 15: Check 1 -->
+<section class="slide" data-type="check" data-title="Check: a cost">
+  <div>
+    <h2>The farm owner says: “Repairing the water line and disinfecting pens A1 and B1 costs IDR 15 million.” At which level does this statement sit?</h2>
+    <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Individual animal</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Animal population</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Animal product chain and system</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 9: Check 2, transfer to beef chain -->
+<!-- Slide 16: Check 2 -->
+<section class="slide" data-type="check" data-title="Check: the right data">
+  <div>
+    <h2>The assessor wants to know whether the eggs in the first market are contaminated. Which data sit at the level of that question?</h2>
+    <ul class="choices" data-check="q2" data-answer="c" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>The Salmonella result of the five tested hens</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>The count of 120 dead hens in the flock</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>A Salmonella test of eggs taken from that market</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+<!-- Slide 17: Check 3, transfer -->
 <section class="slide" data-type="check" data-title="Check: a new case">
   <h2>A new case: a beef chain</h2>
-  <p>A regulatory assessor (GP3.2) studies a beef chain with a cattle farm, a slaughterhouse, and a retail market. Cattle from one lot show lesions in their muscle. This scenario is synthetic and is for teaching.</p>
-  <p><strong>Which statement sits at the animal population level?</strong></p>
+  <p>A regulatory assessor studies a beef chain with a cattle farm, a <span class="term" data-tip="A place where animals are killed for meat under official control.">slaughterhouse</span>, and a retail market. At the slaughterhouse, 12 of the 40 cattle in one lot show <span class="term" data-tip="Damage to a tissue or an organ.">lesions</span> in the muscle.</p>
   <div>
-    <ul class="choices" data-check="q2" data-answer="b" data-explain="d-q2">
-      <li><button class="choice" data-value="a"><span class="key">A</span>One steer shows a lump in its muscle at examination</button></li>
-      <li><button class="choice" data-value="b"><span class="key">B</span>Lesions appear in 12 of the 40 cattle in the lot</button></li>
-      <li><button class="choice" data-value="c"><span class="key">C</span>The price of beef at the nearby retail market falls</button></li>
+    <p class="q-label">Which conclusion goes beyond the level of its data?</p>
+    <ul class="choices" data-check="q3" data-answer="a" data-explain="d-q3">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Every cut of beef sold from this lot has lesions</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Lesions are present in 30 of every 100 cattle in this lot</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>The 12 cattle with lesions need an examination one by one</button></li>
     </ul>
     <p class="verdict" aria-live="polite"></p>
   </div>
 </section>
-
-<!-- Slide 10: Summary -->
+<!-- Slide 18: Summary -->
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
-    <li>The level of analysis is the level at which a problem is studied. The course uses three: the individual animal, the animal population, and the animal product and economic system.</li>
-    <li>Each level has its own question, data, and decision. The population is the main level of the course.</li>
-    <li>Most problems span several levels, and a decision at one level often needs evidence from the others.</li>
-    <li>A conclusion at one level does not automatically hold at another, so state the level of every conclusion.</li>
+    <li>The level of analysis tells what a statement is about. The course uses three levels: the individual animal, the animal population, and the animal product chain and system.</li>
+    <li>A population is relative. A pen, a farm, and an area are each a population.</li>
+    <li>Every level raises a health question and an economic question. A decision at one level moves costs and benefits to other levels.</li>
+    <li>Keep a conclusion at the level of its data. When a conclusion needs another level, collect data at that level.</li>
   </ul>
   <div class="links">
     <a class="btn" href="../encyclopedia/level-of-analysis.html">Read the article: Level of analysis</a>
-    <a class="btn" href="../competencies/epidemiological-and-economic-thinking.html#s1-6">Open skill S1.6</a>
-    <a class="btn btn-main" href="./write-problem-frame.html">Open the next deck: Write a problem frame</a>
+    <a class="btn btn-main" href="./link-approaches-to-domains.html">Open the next deck: Link approaches to domains</a>
   </div>
 </section>
 
-<!-- Details -->
-<template id="d-levels">
-  <h3>About the levels</h3>
-  <p>The three levels are nested. Individual animals form a population, and the population sits inside a system of products, feed, services, markets, and regulations.</p>
-  <p>The system level has three roles: it is a source of data, a pathway for introduction, and the place where economic consequences appear. The levels are a way to organize a problem. After the level is chosen, the population, the units, and the data still need to be defined.</p>
+<!-- Details: one template per element with data-detail or data-explain -->
+<template id="d-chain">
+  <h3>The three roles of this level</h3>
+  <ul>
+    <li><strong>Source of data:</strong> sales records, inspection records, and movement records.</li>
+    <li><strong>Pathway:</strong> a disease or a hazard can enter a population through feed, medicines, or traded animals.</li>
+    <li><strong>Place of consequences:</strong> lost sales, price changes, and effects on people who eat the products appear here.</li>
+  </ul>
+  <p>A batch of eggs is also a group, and it can have its own proportion of contaminated eggs. The chain level follows these batches and the actors who handle them.</p>
+</template>
+<template id="d-matrix">
+  <h3>About the two kinds of question</h3>
+  <p>The level tells what the question is about. The kind of question tells what the question asks: about disease, or about value and cost.</p>
+  <p>The health question of a population has an animal, a place, and a time. It can also ask why: which factors explain the pattern. That is an analytical question. It comes back in the deck on approaches and in later competencies.</p>
+  <p>The economic questions use the tools of the previous deck: scarcity, opportunity cost, and who benefits.</p>
+</template>
+<template id="d-decision">
+  <h3>What is at stake</h3>
+  <ul>
+    <li><strong>Individual animal:</strong> the welfare of the hen and its value to the owner.</li>
+    <li><strong>Animal population:</strong> the health of the flock and the income of the farm.</li>
+    <li><strong>Animal product chain and system:</strong> the safety of people who eat the eggs, access to markets, and the livelihood of traders.</li>
+  </ul>
+  <p>Disinfecting pens A1 and B1 costs the owner and protects the next flock. Withdrawing the eggs costs the owner and protects buyers. A choice between such options rests on values, which are not in the data. Skill S15.6 returns to this point.</p>
+</template>
+<template id="d-example">
+  <h3>What each row cannot show</h3>
+  <ul>
+    <li><strong>Individual animal:</strong> the result describes five hens. It does not show how many other hens are infected.</li>
+    <li><strong>Animal population:</strong> the deaths show where the problem is. They do not show where the eggs went.</li>
+    <li><strong>Animal product chain and system:</strong> the records show where the eggs went. They do not show the cause of the deaths.</li>
+  </ul>
+  <p>To advise on the eggs, the assessor needs the last row. The first two rows explain why the eggs may be unsafe.</p>
+</template>
+<template id="d-claim">
+  <h3>A logical leap can also occur in the opposite direction</h3>
+  <p>A conclusion can also jump from a population to one animal. "Pens A1 and B1 have the most deaths, so every hen that died in those pens died of Salmonella." The data describe pens. However, the conclusion is about single hens.</p>
+  <p>This is called the ecological fallacy: a pattern in groups applies equally to each of its members. In the case of the eggs, the jump goes from a few animals to the products.</p>
+  <p>In both directions the right move is the same: collect data at the level of the conclusion.</p>
+</template>
+<template id="d-sort">
+  <h3>How to place a statement</h3>
+  <p>The level follows what the statement is about. A statement about money sits at the level of the thing that costs or earns.</p>
+  <ul>
+    <li><strong>Individual animal:</strong> the sick hen, and the cost of treating that hen.</li>
+    <li><strong>Animal population:</strong> the death rate of the flock, the pens, and the farm income.</li>
+    <li><strong>Animal product chain and system:</strong> feed lots, the egg price, and where the eggs went.</li>
+  </ul>
+</template>
+<template id="d-q0">
+  <h3>Answer: B</h3>
+  <p>Sentence 2 moves from five tested hens to the whole flock. A test of five hens cannot show the status of the hens that were not tested.</p>
+  <p>Sentence 3 makes the right move. A question about the eggs needs data on the eggs.</p>
 </template>
 <template id="d-q1">
-  <h3>Answer: C</h3>
-  <p>Eggs, markets, and the path from the farm to the buyer belong to the animal product and economic system. This level shows where the products went.</p>
-  <p>The tested hens belong to the individual level. The count of positive pens belongs to the population level.</p>
+  <h3>Answer: B</h3>
+  <p>The statement is about the cost of work on two pens, so it sits at the population level. Money does not move a statement to the system level. The level follows what the statement is about.</p>
+  <p>A statement about the cost of treating one hen would sit at the individual level. A statement about the egg price would sit at the chain level.</p>
 </template>
 <template id="d-q2">
-  <h3>Answer: B</h3>
-  <p>The count of affected cattle in a lot describes a group of animals. This is the animal population level.</p>
-  <p>The steer with a lump is one animal. The retail price belongs to the economic system.</p>
+  <h3>Answer: C</h3>
+  <p>The question is about eggs in a market, so the data must be about eggs. A test of eggs taken from that market has the same level as the question.</p>
+  <p>The result of five hens and the count of dead hens describe animals. They explain why the eggs may be unsafe. They do not show which eggs are contaminated.</p>
+</template>
+<template id="d-q3">
+  <h3>Answer: A</h3>
+  <p>The data describe cattle in one lot. The conclusion is about every cut of beef sold, which is a conclusion about products in the chain. The data cannot support it. The assessor needs records of where the meat went and tests of the meat.</p>
+  <p>Conclusion B stays at the level of the lot. Conclusion C is a plan for the individual animals.</p>
 </template>
 
   </div><!-- /card -->
@@ -470,26 +839,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     </div>
   </aside>
 
-<!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
-<div class="controls" data-for-slide="5" hidden>
-  <div class="control"><label for="lv-step">Level of analysis <output id="lv-out"></output></label><input type="range" id="lv-step" min="1" max="3" step="1" value="1"></div>
-  <button class="btn" data-reset>Reset the controls</button>
-</div>
-<div class="controls" data-for-slide="6" hidden>
-  <div class="control"><label for="in-hint6">Show a hint <input type="checkbox" id="in-hint6"></label></div>
-  <button class="btn" id="m-reset" data-reset>Reset the sorting</button>
-</div>
-<div class="controls" data-for-slide="7" hidden>
-  <div class="control"><label for="dc-select">Decision of the assessor</label>
-    <select id="dc-select">
-      <option value="">Select a decision</option>
-      <option value="a">Treat one sick hen</option>
-      <option value="b">Remove pens A1 and B1 from egg supply</option>
-      <option value="c">Withdraw the eggs from the two markets</option>
-    </select>
-  </div>
-  <button class="btn" data-reset>Reset the controls</button>
-</div>
 
 <!-- ===================== END OF CONTENT ===================== -->
 </main>
@@ -576,8 +925,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
     const show = hasPanelContent(s);
     $('#btn-panel').hidden = !show;
-    stage.classList.toggle('has-panel', show && !panelClosed);
-    $('#btn-panel').setAttribute('aria-pressed', String(show && !panelClosed));
+    const auto = !!ctl || !!(notesMode && note);
+    stage.classList.toggle('has-panel', auto && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(auto && !panelClosed));
     stage.classList.remove('sheet-open');
     setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
   }
@@ -588,20 +938,51 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $('#counter').textContent = (current + 1) + ' / ' + slides.length;
-    $('#btn-prev').disabled = current === 0; $('#btn-next').disabled = current === slides.length - 1;
+    $('#btn-prev').disabled = current === 0; updateNav();
     if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
     hideTip(); updatePanel();
     document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
   }
   $('#btn-prev').addEventListener('click', () => go(current - 1));
-  $('#btn-next').addEventListener('click', () => go(current + 1));
+  $('#btn-next').addEventListener('click', () => next());
+
+  // Reveal steps: elements with data-step="n" appear one number at a time
+  const showAll = new URLSearchParams(location.search).get('steps') === 'all';
+  slides.forEach(s => {
+    const els = $$('[data-step]', s);
+    if (!els.length) return;
+    s._steps = Array.from(new Set(els.map(e => Number(e.dataset.step)))).sort((a, b) => a - b);
+    s._shown = showAll ? s._steps.length : 0;
+    els.forEach(e => { if (!showAll) e.classList.add('step-hidden'); });
+    const b = document.createElement('button'); b.className = 'btn step-btn'; b.type = 'button';
+    b.addEventListener('click', () => revealNext(s)); s.appendChild(b); s._btn = b;
+    refreshStep(s);
+  });
+  function refreshStep(s) {
+    if (!s._steps) return;
+    const left = s._steps.length - s._shown;
+    s._btn.hidden = left <= 0;
+    s._btn.textContent = 'Show the next step (' + (s._shown + 1) + ' of ' + s._steps.length + ')';
+  }
+  function revealNext(s) {
+    if (!s._steps || s._shown >= s._steps.length) return false;
+    const n = s._steps[s._shown]; s._shown++;
+    $$('[data-step="' + n + '"]', s).forEach(e => e.classList.remove('step-hidden'));
+    refreshStep(s); updateNav(); return true;
+  }
+  function next() { if (!revealNext(slides[current])) go(current + 1); }
+  function updateNav() {
+    const s = slides[current];
+    $('#btn-next').disabled = current === slides.length - 1 && !(s._steps && s._shown < s._steps.length);
+  }
 
   // Panel
   $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
   $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
   $('#btn-panel').addEventListener('click', () => {
     if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
-    panelClosed = stage.classList.contains('has-panel'); updatePanel();
+    if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); }
+    else { panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').setAttribute('aria-pressed', 'true'); }
   });
   function openDetail(el) {
     const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
@@ -623,6 +1004,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     const b = e.target.closest('[data-reset]'); if (!b) return;
     const c = b.closest('.controls'); if (!c) return;
     c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    // Inputs made after load: use the attribute defaults
+    $$('input, select', c).forEach(el => {
+      if (c._defaults.some(d => d[0] === el)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+      else if (el.tagName === 'SELECT') { const o = Array.from(el.options).findIndex(x => x.defaultSelected); el.selectedIndex = o < 0 ? 0 : o; }
+      else el.value = el.defaultValue;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    c.dispatchEvent(new CustomEvent('deckreset', { bubbles: true }));
   });
 
   // Choices (predictions) and checks
@@ -639,6 +1029,52 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         if (list.dataset.explain) openDetail(list);
       }
     }));
+  });
+
+  // Card sorter: drag a card into a box, or select a card and then select a box
+  $$('[data-sorter]').forEach(sr => {
+    const pool = $('.sorter-pool', sr), bins = $$('.sort-bin', sr), cardsAll = $$('.sort-card', sr);
+    const verdict = $('.verdict', sr); let sel = null, dragged = null;
+    const zoneOf = el => el.classList.contains('sorter-pool') ? el : $('.sort-drop', el);
+    const cap = el => Number(el.dataset.capacity || 0);
+    function clearMarks() { cardsAll.forEach(c => c.classList.remove('is-correct', 'is-wrong')); verdict.textContent = ''; verdict.className = 'verdict'; }
+    function unselect() { if (sel) { sel.classList.remove('is-selected'); sel.setAttribute('aria-pressed', 'false'); } sel = null; }
+    function place(card, box) {
+      const z = zoneOf(box);
+      if (cap(box) && z.children.length >= cap(box) && card.parentElement !== z) { const old = z.children[0]; pool.appendChild(old); }
+      z.appendChild(card); clearMarks(); unselect();
+    }
+    cardsAll.forEach(c => {
+      c.type = 'button'; c.draggable = true; c.setAttribute('aria-pressed', 'false');
+      c.addEventListener('dragstart', e => { dragged = c; try { e.dataTransfer.setData('text/plain', c.textContent); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+      c.addEventListener('dragend', () => { dragged = null; $$('.is-over', sr).forEach(x => x.classList.remove('is-over')); });
+      c.addEventListener('click', e => {
+        e.stopPropagation();
+        if (sel && sel !== c) { place(sel, c.closest('.sort-bin') || pool); return; }
+        if (sel === c) { unselect(); return; }
+        sel = c; c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true');
+      });
+    });
+    [pool].concat(bins).forEach(box => {
+      box.addEventListener('click', () => { if (sel) place(sel, box); });
+      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('is-over'); });
+      box.addEventListener('dragleave', () => box.classList.remove('is-over'));
+      box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('is-over'); if (dragged) place(dragged, box); });
+    });
+    $('[data-sorter-check]', sr).addEventListener('click', () => {
+      if (cardsAll.some(c => c.parentElement === pool)) { verdict.textContent = 'Place every card in a box first.'; verdict.className = 'verdict bad'; return; }
+      let ok = 0;
+      cardsAll.forEach(c => {
+        const bin = c.closest('.sort-bin').dataset.bin;
+        const right = (c.dataset.target || '').split(' ').includes(bin);
+        c.classList.toggle('is-correct', right); c.classList.toggle('is-wrong', !right); if (right) ok++;
+      });
+      const all = ok === cardsAll.length;
+      verdict.textContent = all ? 'All ' + ok + ' cards are in the right box.' : ok + ' of ' + cardsAll.length + ' cards are in the right box. Move the cards marked ✗ and check again.';
+      verdict.className = 'verdict ' + (all ? 'ok' : 'bad');
+      if (sr.dataset.explain && (all || sr.dataset.explainAlways)) openDetail(sr);
+    });
+    $('[data-sorter-reset]', sr).addEventListener('click', () => { unselect(); cardsAll.forEach(c => pool.appendChild(c)); clearMarks(); });
   });
 
   // Tooltips
@@ -681,7 +1117,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const k = e.key;
-    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); go(current + 1); }
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
     else if (k === 'Home') go(0);
     else if (k === 'End') go(slides.length - 1);
@@ -714,7 +1150,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     rng: seed => mulberry32(Number(seed) || 1),
     newSeed: () => Math.floor(Math.random() * 1e6),
     seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
-    current: () => current, go,
+    current: () => current, go, next,
     onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
   };
 
@@ -729,118 +1165,66 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 (function () {
   const $ = id => document.getElementById(id);
 
-  // Slide 3
+  // Slide 3: explain after a prediction
   const note = $('predict-note');
   document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
     note.className = 'verdict';
-    note.textContent = 'Option A is the best answer. One hen, the flock, and the egg chain each answer a different question. The next slides show the three levels.';
+    note.textContent = 'The best answer is C. The result describes five hens. It does not show which eggs are contaminated or how many other hens are infected. The next slides show why.';
   }));
 
-  // Slide 5: nested levels
-  const lv = [
-    { n: 'Individual animal', t: 'The laboratory necropsies five hens and finds Salmonella in them. One hen has lost weight and has stopped laying.', q: 'Question: what is wrong with this animal? Decision: how to treat it.' },
-    { n: 'Animal population', t: 'The farm records show 120 deaths in one week, 90 of them in pens A1 and B1. Positive results appear in several pens.', q: 'Question: how many animals are affected, and where? Decision: what to do with the flock.' },
-    { n: 'Animal product and economic system', t: 'Eggs from pens A1 and B1 reached two markets, and the farm buys feed from one supplier. The farm loses sales while the eggs are held.', q: 'Question: where do the products go, and what does the disease cost? Decision: what to do with the eggs.' }
+  // Slide 12: complete the statements
+  const rows = [
+    { sel: ['r1l', 'r1q'], ans: ['p', 'h'], why: 'Statement 1: pen B1 holds a group of dead hens, so the statement is about the population. It counts dead hens, so it is a health question.' },
+    { sel: ['r2l', 'r2q'], ans: ['i', 'e'], why: 'Statement 2: the cost of treating one hen is about that hen, so it sits at the individual level. It asks about cost, so it is an economic question.' },
+    { sel: ['r3l', 'r3q'], ans: ['c', 'e'], why: 'Statement 3: the question is about who else pays for withdrawn eggs. It is about the chain and the people in it, and it asks about cost, so it is an economic question at the chain level.' }
   ];
-  const svg = $('lv-svg'), slider = $('lv-step'), out = $('lv-out');
-  const boxes = [
-    { x: 55, y: 110, w: 530, h: 100, t1: 'Individual animal', t2: 'One hen' },
-    { x: 30, y: 58, w: 580, h: 156, t1: 'Animal population', t2: 'All hens of the farm' },
-    { x: 5, y: 5, w: 630, h: 218, t1: 'Animal product and economic system', t2: 'Eggs, feed, markets, rules' }
-  ];
-  const labelY = [ 133, 81, 27 ];
-  let html = '';
-  [2, 1, 0].forEach(i => {
-    const b = boxes[i];
-    html += '<g class="lvl" data-level="' + (i + 1) + '" tabindex="0" role="button" aria-label="Level ' + (i + 1) + ': ' + b.t1 + '"><rect x="' + b.x + '" y="' + b.y + '" width="' + b.w + '" height="' + b.h + '" rx="12"/>' +
-      '<text class="l1" x="' + (b.x + 14) + '" y="' + labelY[i] + '">' + b.t1 + '</text>' +
-      '<text class="l2" x="' + (b.x + 14) + '" y="' + (labelY[i] + 17) + '">' + b.t2 + '</text></g>';
-  });
-  svg.innerHTML = html;
-  function renderLv() {
-    const k = Number(slider.value) - 1, s = lv[k];
-    out.textContent = (k + 1) + ' of 3';
-    Array.from(svg.querySelectorAll('.lvl')).forEach(g => g.classList.toggle('is-active', Number(g.dataset.level) === k + 1));
-    $('lv-h').textContent = 'Level ' + (k + 1) + ': ' + s.n;
-    $('lv-ex').textContent = s.t;
-    $('lv-q').textContent = s.q;
+  const allSel = rows.flatMap(r => r.sel.map($));
+  function bdClear() {
+    allSel.forEach(s => s.classList.remove('is-correct', 'is-wrong'));
+    $('bd-verdict').textContent = ''; $('bd-verdict').className = 'verdict'; $('bd-why').innerHTML = '';
   }
-  Array.from(svg.querySelectorAll('.lvl')).forEach(g => {
-    const pick = () => { slider.value = g.dataset.level; renderLv(); };
-    g.addEventListener('click', pick);
-    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); pick(); } });
+  allSel.forEach(s => s.addEventListener('change', bdClear));
+  $('bd-check').addEventListener('click', () => {
+    if (allSel.some(s => !s.value)) { $('bd-verdict').textContent = 'Choose an answer for every gap first.'; $('bd-verdict').className = 'verdict bad'; return; }
+    const why = $('bd-why'); why.innerHTML = ''; let okRows = 0;
+    rows.forEach(r => {
+      let rowOk = true;
+      r.sel.forEach((id, i) => {
+        const el = $(id), right = el.value === r.ans[i];
+        el.classList.toggle('is-correct', right); el.classList.toggle('is-wrong', !right);
+        if (!right) rowOk = false;
+      });
+      if (rowOk) okRows++; else { const p = document.createElement('p'); p.textContent = r.why; why.appendChild(p); }
+    });
+    const all = okRows === rows.length;
+    $('bd-verdict').textContent = all ? 'All 3 statements are correct.' : okRows + ' of 3 statements are correct. Change the gaps marked in red and check again.';
+    $('bd-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
   });
-  slider.addEventListener('input', renderLv);
-  renderLv();
+  $('bd-reset').addEventListener('click', () => { allSel.forEach(s => { s.value = ''; }); bdClear(); });
 
-  // Slide 6: match statements to levels
-  const items = [
-    { q: 'The laboratory finds Salmonella in one necropsied hen.', a: 'ind', why: 'The statement is about one animal. This is the individual animal level.' },
-    { q: 'Pens A1 and B1 have a much higher death rate than the other pens.', a: 'pop', why: 'The statement compares groups of animals. This is the animal population level.' },
-    { q: 'Eggs from the affected pens were sold at two markets last week.', a: 'sys', why: 'Eggs and markets belong to the animal product and economic system.' },
-    { q: 'One hen has lost weight and has stopped laying eggs.', a: 'ind', why: 'Weight and egg laying of one hen describe an individual animal.' },
-    { q: 'The feed supplier delivered feed to 12 farms in the district.', a: 'sys', why: 'Feed and its supply are part of the system around the animals. Feed can also be a pathway for introduction.' },
-    { q: 'Six of the eight pens on the farm have positive results.', a: 'pop', why: 'The statement counts pens, which are groups of animals. This is the animal population level.' }
+  // Slide 14: three stages
+  const stages = [
+    { box: 'lx-r1', level: 'Individual animal', known: 'Five tested hens have Salmonella.', unk: 'How many other hens are infected, and which eggs are contaminated.', who: 'The five hens.', adv: 'Not enough to advise about the eggs.' },
+    { box: 'lx-r2', level: 'Animal population', known: '120 of 8,000 hens die in one week, most of them in pens A1 and B1.', unk: 'Where the eggs of these pens went.', who: 'The owner, through the flock and the farm income.', adv: 'Not enough to advise about the eggs.' },
+    { box: 'lx-r3', level: 'Animal product chain and system', known: 'Eggs from pens A1 and B1 reached two markets.', unk: 'Whether eggs from the other six pens are also contaminated.', who: 'The owner, the traders, the buyers, and the people who eat the eggs.', adv: 'Enough to advise withdrawing the eggs of pens A1 and B1 from the two markets.' }
   ];
-  const lab = { ind: 'the individual animal level', pop: 'the animal population level', sys: 'the animal product and economic system level' };
-  const qEl = $('m-q'), posEl = $('m-pos'), scoreEl = $('m-score'), verdict = $('m-verdict'), why = $('m-why'),
-        next = $('m-next'), btns = $('m-btns'), hint = $('m-hint'), hintBox = $('in-hint6');
-  const buttons = Array.from(btns.querySelectorAll('.sort-btn'));
-  let idx = 0, score = 0, answered = false, finished = false;
-  function render() {
-    finished = false; answered = false;
-    qEl.textContent = items[idx].q;
-    posEl.textContent = 'Statement ' + (idx + 1) + ' of ' + items.length;
-    scoreEl.textContent = 'Correct so far: ' + score;
-    verdict.textContent = ''; verdict.className = 'verdict'; why.textContent = '';
-    next.hidden = true; btns.hidden = false;
-    buttons.forEach(b => { b.disabled = false; b.classList.remove('is-correct', 'is-wrong'); });
+  let stage = 0;
+  const btnPrev = $('lx-prev'), btnNext = $('lx-next');
+  function renderStage() {
+    const st = stages[stage];
+    document.querySelectorAll('#lx-fig .lx-box').forEach(r => r.classList.toggle('is-on', r.id === st.box));
+    $('lx-stage').textContent = 'Stage ' + (stage + 1) + ' of 3';
+    $('lx-level').textContent = st.level;
+    $('lx-known').textContent = st.known;
+    $('lx-unk').textContent = st.unk;
+    $('lx-who').textContent = st.who;
+    $('lx-adv').textContent = st.adv;
+    btnPrev.disabled = stage === 0;
+    btnNext.textContent = stage === stages.length - 1 ? 'Start again' : 'Next stage';
   }
-  function reset() { idx = 0; score = 0; render(); }
-  function showResult() {
-    finished = true;
-    posEl.textContent = 'Result'; scoreEl.textContent = '';
-    qEl.textContent = 'You matched ' + score + ' of ' + items.length + ' statements correctly.';
-    verdict.textContent = ''; verdict.className = 'verdict';
-    why.textContent = 'The question to ask each time is whether the statement is about one animal, a group of animals, or the system around them.';
-    btns.hidden = true; next.textContent = 'Reset the sorting'; next.hidden = false;
-  }
-  buttons.forEach(b => b.addEventListener('click', () => {
-    if (answered) return;
-    answered = true;
-    const item = items[idx], ok = b.dataset.answer === item.a;
-    if (ok) score++;
-    buttons.forEach(x => { x.disabled = true; });
-    b.classList.add(ok ? 'is-correct' : 'is-wrong');
-    if (!ok) buttons.find(x => x.dataset.answer === item.a).classList.add('is-correct');
-    verdict.textContent = ok ? 'Correct.' : 'Not correct. This statement sits at ' + lab[item.a] + '.';
-    verdict.className = 'verdict ' + (ok ? 'ok' : 'bad');
-    why.textContent = item.why;
-    scoreEl.textContent = 'Correct so far: ' + score;
-    next.textContent = idx === items.length - 1 ? 'Show the result' : 'Show the next statement';
-    next.hidden = false;
-  }));
-  next.addEventListener('click', () => {
-    if (finished) { reset(); return; }
-    if (idx === items.length - 1) { showResult(); return; }
-    idx++; render();
-  });
-  $('m-reset').addEventListener('click', reset);
-  function syncHint() { hint.hidden = !hintBox.checked; }
-  hintBox.addEventListener('input', syncHint); hintBox.addEventListener('change', syncHint);
-  render(); syncHint();
-
-  // Slide 7: decisions and levels
-  const dc = {
-    '': { h: 'Select a decision in the controls.', p: '', q: '' },
-    a: { h: 'Level of the decision: individual animal', p: 'Treating one hen needs the findings of that hen, such as clinical signs and a test result.', q: 'The population level is also needed. If many hens are infected, treating one hen does not solve the problem of the flock.' },
-    b: { h: 'Level of the decision: animal population', p: 'Removing two pens from egg supply needs the positive results by pen and the death rate of each pen.', q: 'The system level is also needed, because the assessor must know where the eggs from these pens go.' },
-    c: { h: 'Level of the decision: animal product and economic system', p: 'Withdrawing eggs from markets needs to know which markets received eggs, and how many eggs.', q: 'The population and individual levels are also needed. They show which pens are positive and what the laboratory found in the hens.' }
-  };
-  const sel = $('dc-select');
-  function renderDc() { const e = dc[sel.value] || dc['']; $('dc-h').textContent = e.h; $('dc-p').textContent = e.p; $('dc-q').textContent = e.q; }
-  sel.addEventListener('input', renderDc); sel.addEventListener('change', renderDc);
-  renderDc();
+  btnPrev.addEventListener('click', () => { if (stage > 0) { stage--; renderStage(); } });
+  btnNext.addEventListener('click', () => { stage = stage === stages.length - 1 ? 0 : stage + 1; renderStage(); });
+  renderStage();
 })();
 </script>
 </body>
