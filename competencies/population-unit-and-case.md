@@ -163,7 +163,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">System boundary. A group of animals that share about the same likelihood of exposure, such as a pen, herd, flock, or village (WOAH).</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Write a problem frame</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Frame a problem as an answerable question</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Distinguish the epidemiological, observation, and analysis units</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Distinguish target, source, and study populations</a></li><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Describe the structure and turnover of a population</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Define the health event, exposure, and outcome</a></li><li><a href="data-sources-and-sampling.html#s3-1"><span class="code">S3.1</span> Distinguish approaches to population health information</a></li></ul></div></div></div>
 ```
 
