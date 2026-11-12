@@ -120,7 +120,7 @@ listing:
 <div class="skill-body"><p class="skill-scope">Status: unknown, free, sporadic, endemic, outbreak, epidemic, pandemic. Objective: find out the status, keep the disease out, or reduce it. Free has a history: never reported, or present before and now gone.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-1"><span class="code">S1.1</span> Explain epidemiology and its population perspective</a></li></ul></div>
-<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Write a problem frame</a></li><li><a href="data-sources-and-sampling.html#s3-2"><span class="code">S3.2</span> Classify data collection with the four questions</a></li><li><a href="risk-of-introduction-and-spread.html#s14-1"><span class="code">S14.1</span> Identify the hazards of a commodity or movement</a></li><li><a href="intervention-options.html#s15-2"><span class="code">S15.2</span> List intervention options for a problem</a></li></ul></div></div></div>
+<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Frame a problem as an answerable question</a></li><li><a href="data-sources-and-sampling.html#s3-2"><span class="code">S3.2</span> Classify data collection with the four questions</a></li><li><a href="risk-of-introduction-and-spread.html#s14-1"><span class="code">S14.1</span> Identify the hazards of a commodity or movement</a></li><li><a href="intervention-options.html#s15-2"><span class="code">S15.2</span> List intervention options for a problem</a></li></ul></div></div></div>
 ```
 
 ::: {#m-s1-2 .skill-materials}
@@ -132,7 +132,7 @@ listing:
 <div class="skill-body"><p class="skill-scope">Scarce resources and choices, opportunity cost, the value of animal health to owners and society, and how epidemiology and economics together support decisions.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-1"><span class="code">S1.1</span> Explain epidemiology and its population perspective</a></li></ul></div>
-<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-4"><span class="code">S1.4</span> Identify the levels of analysis in a problem</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Write a problem frame</a></li><li><a href="economic-impact-of-disease.html#s16-1"><span class="code">S16.1</span> Explain how disease changes the value of production</a></li></ul></div></div></div>
+<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-4"><span class="code">S1.4</span> Identify the levels of analysis in a problem</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Frame a problem as an answerable question</a></li><li><a href="economic-impact-of-disease.html#s16-1"><span class="code">S16.1</span> Explain how disease changes the value of production</a></li></ul></div></div></div>
 ```
 
 ::: {#m-s1-3 .skill-materials}
@@ -144,7 +144,7 @@ listing:
 <div class="skill-body"><p class="skill-scope">Individual animal, animal population, and animal product chain and system. A health question and an economic question can be asked at every level. A conclusion stays at the level of its data.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-1"><span class="code">S1.1</span> Explain epidemiology and its population perspective</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Explain what veterinary economics is</a></li></ul></div>
-<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Write a problem frame</a></li></ul></div></div></div>
+<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Frame a problem as an answerable question</a></li></ul></div></div></div>
 ```
 
 ::: {#m-s1-4 .skill-materials}
@@ -156,16 +156,16 @@ listing:
 <div class="skill-body"><p class="skill-scope">Descriptive epidemiology (D1) and analytical epidemiology (D2) are core: students tell them apart by the groups that they study (the cases only, or the cases and the non-cases). Experimental epidemiology (D2), predictive epidemiology (D3), and interventional epidemiology (D4 and D5) are introduced and taught in later competencies. The five questions and the population-to-intervention loop: the six boxes, the work between them, and Domain 5 as the comparison of two turns. The student places a problem in the five questions.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-1"><span class="code">S1.1</span> Explain epidemiology and its population perspective</a></li></ul></div>
-<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Write a problem frame</a></li></ul></div></div></div>
+<div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Frame a problem as an answerable question</a></li></ul></div></div></div>
 ```
 
 ::: {#m-s1-5 .skill-materials}
 :::
 
-## S1.6 Write a problem frame {#s1-6}
+## S1.6 Frame a problem as an answerable question {#s1-6}
 
 ```{=html}
-<div class="skill-body"><p class="skill-scope">Population, outcome, decision, decision maker, and objective. For each part, the student names the information that the decision needs, with a possible source of each item.</p>
+<div class="skill-body"><p class="skill-scope">A decision (decision maker and options), an objective read from the disease status, and the question that fills the gap in what the decision maker knows. The question passes four checks (clear, evidence, discipline, choice) and is one of the five questions, with population, health event, place, and time. The student names the information that the question needs and a possible source of each item.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-2"><span class="code">S1.2</span> Set an objective from the disease status of a population</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Explain what veterinary economics is</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-4"><span class="code">S1.4</span> Identify the levels of analysis in a problem</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-5"><span class="code">S1.5</span> Explain epidemiological approaches and questions</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li><li><a href="evaluating-interventions.html#s18-1"><span class="code">S18.1</span> Define evaluation objectives and indicators</a></li></ul></div></div></div>
