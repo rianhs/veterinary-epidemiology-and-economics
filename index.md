@@ -31,7 +31,8 @@ toc: false
 <div class="org-notes">
 <p><strong>Codes.</strong> Each item has a code. D marks a domain, C a competency, and S a skill. S4.3 is the third skill of competency C4.</p>
 <p><strong>Order.</strong> Some skills need other skills first. These are prerequisites. Each competency page shows them.</p>
-<p><strong>Loop.</strong> The five questions form a loop. You observe a population, interpret the information, decide, act, and observe again. Domain 0 explains the loop.</p>
+<p><strong>Loop.</strong> The five questions follow the population-to-intervention loop. You observe a population, turn the observations into information, interpret the information, decide, and carry out an intervention. The intervention changes the population, and the loop turns again. Domain 0 is the frame around the loop.</p>
+<p><strong>Examples.</strong> The cases, numbers, and organisations in the course materials are fictional examples for teaching, unless a source is cited.</p>
 <p><strong>Start.</strong> Begin with Domain 0. Then follow the domains in order.</p>
 </div>
 </section>
