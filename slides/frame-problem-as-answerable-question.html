@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frame a problem as an answerable question</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!--
+  SLIDE SHELL TEMPLATE
+  Veterinary Epidemiology and Economics
+
+  How to make a new deck:
+  1. Copy this file to slides/<slug>.html.
+  2. Edit the deck-meta block below.
+  3. Replace the example slides, details, and controls in the CONTENT area.
+  4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
+     <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     SVG figure classes (.fig), and a Reset button that also resets inputs made later.
+     Add ?steps=all to the URL to show all steps (for review and printing).
+  5. Register the deck in slides/decks.yml.
+  Rules: 05-slide-deck-guide.md.
+-->
+
+<script type="application/json" id="deck-meta">
+{
+  "title": "Frame a problem as an answerable question",
+  "domain": "D0",
+  "competency": "C1",
+  "skills": {
+    "primary": "S1.6",
+    "secondary": []
+  },
+  "minutes": 30,
+  "articles": [],
+  "guides": [],
+  "status": "draft",
+  "updated": "2026-11-12"
+}
+</script>
+
+<!-- ===================== SHELL STYLES (do not edit) ===================== -->
+<style id="shell-styles">
+:root {
+  --bg: #FFFFFF; --surface: #F5F7F9; --surface-2: #EDF1F4; --line: #E1E6EB;
+  --ink: #18222F; --muted: #5A6573; --accent: #0B7A6E; --accent-ink: #FFFFFF;
+  --ok: #0B7A6E; --bad: #B4441C;
+  --d0: #6B7480; --d1: #0072B2; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #18222F;
+  --panel-w: 400px; --bar-h: 52px; --radius: 12px;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0D1526; --surface: #131D31; --surface-2: #18243B; --line: #243250;
+  --ink: #E6EBF2; --muted: #9AA6B8; --accent: #2DD4BF; --accent-ink: #062A26;
+  --ok: #2DD4BF; --bad: #F08A5D;
+  --d0: #9AA6B8; --d1: #56B4E9; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #E6EBF2;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+:root:fullscreen, :root.is-full { font-size: 20px; }
+body {
+  margin: 0; height: 100vh; height: 100dvh; overflow: hidden;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5;
+  background: var(--bg); color: var(--ink);
+  display: grid; grid-template-rows: var(--bar-h) 1fr var(--bar-h);
+}
+button { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.code { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
+.dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--dc, var(--d0)); display: inline-block; flex: none; }
+
+/* Top bar */
+.topbar { display: flex; align-items: center; gap: 0.75rem; padding: 0 1rem; border-bottom: 1px solid var(--line); min-width: 0; }
+.deck-id { display: flex; align-items: center; gap: 0.55rem; min-width: 0; flex: 1; }
+.deck-id .code { font-size: 0.85rem; white-space: nowrap; }
+.deck-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tools { display: flex; gap: 0.25rem; }
+.icon-btn { width: 2.25rem; height: 2.25rem; border: 1px solid transparent; background: transparent; border-radius: 8px; display: grid; place-items: center; cursor: pointer; color: var(--muted); }
+.icon-btn:hover { background: var(--surface); color: var(--ink); }
+.icon-btn[aria-pressed="true"] { color: var(--ink); background: var(--surface-2); }
+.icon-btn svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn[hidden] { display: none; }
+
+/* Stage */
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+.stage.has-panel { grid-template-columns: minmax(0, 1fr) var(--panel-w); }
+.card { position: relative; min-height: 0; overflow: hidden; }
+.slide { position: absolute; inset: 0; padding: 2.2rem clamp(1.2rem, 4vw, 3.2rem); display: none; flex-direction: column; gap: 1rem; overflow: hidden; }
+.slide.is-active { display: flex; }
+.slide h1 { font-size: 2.6rem; line-height: 1.08; letter-spacing: -0.03em; margin: 0; font-weight: 700; }
+.slide h2 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0; font-weight: 650; }
+.slide p { margin: 0; }
+.slide .lead { font-size: 1.2rem; color: var(--muted); }
+.slide ul { margin: 0; padding-left: 1.2rem; }
+.slide li + li { margin-top: 0.35rem; }
+.notes { display: none; }
+
+/* Slide types */
+.slide[data-type="title"] { justify-content: center; }
+.slide[data-type="title"] .meta-list { display: grid; gap: 0.4rem; margin-top: 1rem; padding: 0; list-style: none; }
+.slide[data-type="title"] .meta-list li { display: flex; gap: 0.6rem; align-items: baseline; }
+.slide[data-type="question"] { justify-content: center; }
+.slide[data-type="summary"] .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; text-decoration: none; color: var(--ink); }
+.btn:hover { border-color: var(--muted); }
+.btn-main { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* Interactive markers */
+.term { border-bottom: 1.5px dotted var(--muted); cursor: help; }
+[data-detail] { position: relative; cursor: pointer; border-radius: var(--radius); outline: 1px solid transparent; transition: outline-color 0.15s; }
+[data-detail]:hover, [data-detail]:focus-visible { outline: 1px solid var(--muted); outline-offset: 4px; }
+[data-detail]::after { content: "i"; position: absolute; top: -0.55rem; right: -0.55rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: 600 0.72rem/1.1rem "Inter", sans-serif; text-align: center; font-style: italic; }
+[data-detail].is-open { outline: 2px solid var(--accent); outline-offset: 4px; }
+.tooltip { position: fixed; z-index: 50; max-width: 18rem; padding: 0.5rem 0.7rem; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 0.85rem; line-height: 1.4; pointer-events: none; opacity: 0; transition: opacity 0.12s; }
+.tooltip.is-on { opacity: 1; }
+
+/* Choice and check components */
+.choices { display: grid; gap: 0.5rem; padding: 0; margin: 0.4rem 0 0; list-style: none; }
+.choice { text-align: left; width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; display: flex; gap: 0.7rem; align-items: baseline; }
+.choice:hover { border-color: var(--muted); }
+.choice .key { font-weight: 600; color: var(--muted); }
+.choice[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); }
+.choice.is-correct { border-color: var(--ok); }
+.choice.is-wrong { border-color: var(--bad); }
+.verdict { min-height: 1.5rem; font-weight: 600; }
+.slide[data-type="check"] > div { display: grid; gap: 1.3rem; align-content: start; }
+.slide[data-type="check"] .choice { font-size: 1.1rem; }
+.slide .choices { padding-left: 0; }
+.verdict.ok { color: var(--ok); }
+.verdict.bad { color: var(--bad); }
+
+/* Reveal steps */
+.step-hidden { visibility: hidden; opacity: 0; }
+.slide [data-step] { transition: opacity 0.2s; }
+.step-btn { margin-top: auto; align-self: flex-start; }
+.step-btn[hidden] { display: none; }
+
+/* Card sorter */
+.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
+.sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
+.sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
+.sort-card:hover { border-color: var(--muted); }
+.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); }
+.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.sort-card.is-wrong { border-color: var(--bad); }
+.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* SVG figures */
+.fig { display: block; width: 100%; height: auto; max-height: 100%; }
+.fig text { fill: var(--ink); font-family: inherit; font-size: 15px; }
+.fig .t-muted { fill: var(--muted); }
+.fig .t-strong { font-weight: 600; }
+.fig .f-box { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-soft { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .f-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-arrow { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+.fig .f-accent { fill: var(--accent); }
+.fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
+.fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
+
+/* Panel */
+.panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
+.stage.has-panel .panel { display: flex; }
+.panel-head { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.6rem 0 0.8rem; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 0.25rem; flex: 1; }
+.tab { border: none; background: none; padding: 0.55rem 0.7rem; cursor: pointer; color: var(--muted); font-weight: 600; font-size: 0.92rem; border-bottom: 2px solid transparent; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab[hidden] { display: none; }
+.panel-body { overflow: auto; padding: 1.1rem 1.2rem 1.5rem; flex: 1; font-size: 0.95rem; }
+.panel-body h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
+.panel-body p { margin: 0 0 0.75rem; }
+.panel-section[hidden] { display: none; }
+.empty-note { color: var(--muted); }
+.control { display: grid; gap: 0.35rem; margin-bottom: 1.1rem; }
+.control label { font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; gap: 1rem; }
+.control output { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 500; }
+.control input[type="range"] { width: 100%; accent-color: var(--accent); }
+details.acc { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); margin: 0 0 0.75rem; }
+details.acc > summary { list-style: none; cursor: pointer; padding: 0.6rem 0.8rem; font-weight: 600; display: flex; gap: 0.5rem; }
+details.acc > summary::-webkit-details-marker { display: none; }
+details.acc > summary::before { content: "▶"; font-size: 0.7rem; color: var(--muted); line-height: 1.6rem; }
+details.acc[open] > summary::before { content: "▼"; }
+details.acc > div { padding: 0 0.8rem 0.7rem; }
+
+/* Bottom bar */
+.bottombar { position: relative; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; gap: 0.75rem; border-top: 1px solid var(--line); padding: 0 1rem; }
+.nav-btn { width: 2.3rem; height: 2.3rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.25rem; line-height: 1; display: grid; place-items: center; }
+.nav-btn:disabled { opacity: 0.4; cursor: default; }
+.dots { display: flex; gap: 0.35rem; align-items: center; }
+.dots button { width: 0.6rem; height: 0.6rem; padding: 0; border-radius: 50%; border: 1px solid var(--muted); background: transparent; cursor: pointer; }
+.dots button[aria-current="step"] { background: var(--ink); border-color: var(--ink); }
+.counter { border: none; background: none; cursor: pointer; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 6px; }
+.counter:hover { background: var(--surface); color: var(--ink); }
+
+/* Overlays */
+.overlay { position: fixed; inset: var(--bar-h) 0 var(--bar-h); background: var(--bg); z-index: 40; overflow: auto; padding: 2rem clamp(1rem, 4vw, 3rem); display: none; }
+.overlay.is-on { display: block; }
+.overlay h2 { margin: 0 0 1rem; font-size: 1.4rem; }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.75rem; }
+.ov-grid button { text-align: left; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); cursor: pointer; display: grid; gap: 0.2rem; }
+.ov-grid button:hover { border-color: var(--muted); }
+.ov-grid button[aria-current="step"] { border-color: var(--accent); }
+.ov-grid .ov-type { font-size: 0.82rem; color: var(--muted); }
+.help-list { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.2rem; max-width: 40rem; margin: 0 0 1.5rem; }
+.help-list dt { font-weight: 600; }
+.help-list dd { margin: 0; color: var(--muted); }
+.kbd { display: inline-block; border: 1px solid var(--line); border-radius: 5px; padding: 0 0.35rem; font-size: 0.85rem; background: var(--surface); }
+.demo-term { border-bottom: 1.5px dotted var(--muted); }
+.demo-detail { display: inline-block; position: relative; padding: 0.1rem 0.5rem; border: 1px solid var(--line); border-radius: 8px; }
+.demo-detail::after { content: "i"; position: absolute; top: -0.5rem; right: -0.5rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: italic 600 0.7rem/1rem "Inter", sans-serif; text-align: center; }
+
+/* Narrow screens: panel becomes a bottom sheet */
+@media (max-width: 1099px) {
+  .stage.has-panel { grid-template-columns: minmax(0, 1fr); }
+  .panel { position: fixed; left: 0; right: 0; bottom: var(--bar-h); height: 62vh; z-index: 30; border-left: none; border-top: 1px solid var(--line); border-radius: 16px 16px 0 0; transform: translateY(105%); transition: transform 0.2s ease; display: flex; }
+  .panel { visibility: hidden; }
+  .stage.has-panel.sheet-open .panel { transform: translateY(0); visibility: visible; }
+  .stage:not(.has-panel) .panel { display: none; }
+}
+@media (max-width: 700px) and (orientation: portrait) {
+  .slide { overflow-y: auto; padding: 1.4rem 1.1rem 2rem; }
+  .slide h1 { font-size: 2rem; }
+  .slide h2 { font-size: 1.4rem; }
+  .dots { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media print {
+  body { display: block; height: auto; overflow: visible; }
+  .topbar, .bottombar, .panel, .overlay, .tooltip { display: none !important; }
+  .card { overflow: visible; }
+  .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
+  [data-detail]::after { display: none; }
+  .step-hidden { visibility: visible; opacity: 1; }
+  .step-btn { display: none; }
+}
+</style>
+
+<!-- ===================== DECK STYLES (edit for each deck) ===================== -->
+<style id="deck-styles">
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
+.case-layout p + p { margin-top: 0.9rem; }
+.case-layout p { font-size: 1.15rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
+
+.def-line { font-size: 1.4rem; line-height: 1.4; font-weight: 500; }
+.under { font-size: 1.12rem; }
+.lead-in { font-size: 1.12rem; }
+.practice-note { color: var(--muted); font-size: 0.98rem; }
+
+.tb-wrap { flex: none; width: 100%; max-width: 70rem; align-self: flex-start; }
+.ex-table { border-collapse: collapse; width: 100%; font-size: 1.03rem; }
+.ex-table th, .ex-table td { text-align: left; padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
+.ex-table tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }
+.ex-table .dom { white-space: nowrap; font-weight: 600; }
+.ex-table .dom .dot { margin-right: 0.45rem; }
+.ex-table td.q { font-weight: 500; }
+
+.fq-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; flex: none; }
+.fq-two-wide { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
+.fq-list { display: grid; gap: 0.75rem; margin: 0; padding-left: 1.3rem; font-size: 1.12rem; line-height: 1.4; }
+.fq-list li + li { margin-top: 0; }
+.fq-side { display: grid; gap: 1rem; align-content: start; }
+.fq-fig { display: block; width: min(100%, 36rem); height: auto; overflow: visible; }
+.fq-fig-wrap { flex: none; align-self: flex-start; width: 100%; max-width: 36rem; }
+
+.parts { margin: 0; display: grid; gap: 0.45rem; }
+.parts div { display: grid; grid-template-columns: 8.4rem minmax(0, 1fr); gap: 0.8rem; padding: 0.45rem 0.85rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); align-items: baseline; }
+.parts dt { font-weight: 600; color: var(--muted); }
+.parts dd { margin: 0; font-size: 1rem; line-height: 1.42; }
+.parts dd ul { margin: 0.25rem 0 0; padding-left: 1.1rem; }
+.parts dd li + li { margin-top: 0.15rem; }
+.slide ul.passes, .slide ul.ck-list { padding-left: 0; }
+.passes { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; font-size: 1.05rem; }
+.passes li { padding: 0.55rem 0.9rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.passes li + li { margin-top: 0; }
+.passes b { font-weight: 600; }
+.passes-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.passes .ok::before { content: "✓ "; color: var(--ok); font-weight: 700; }
+
+.bd-rows { display: grid; gap: 0.45rem; }
+.bd-row { display: grid; grid-template-columns: minmax(0, 1fr) 15.5rem; gap: 1rem; align-items: center; padding-bottom: 0.45rem; border-bottom: 1px solid var(--line); }
+.quote-s { font-size: 1.05rem; line-height: 1.4; }
+.bd-fill { font-size: 1rem; }
+.bd-fill select { font: inherit; font-size: 1rem; padding: 0.2rem 0.5rem; border: 1.5px solid var(--muted); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
+.bd-fill select.is-correct { border-color: var(--ok); }
+.bd-fill select.is-wrong { border-color: var(--bad); }
+.bd-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.bd-why { display: grid; gap: 0.25rem; color: var(--muted); font-size: 0.93rem; }
+.bd-why p { margin: 0; }
+
+.sorter { flex: none; }
+.sorter-pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; padding: 0.4rem; }
+.sorter-pool:not(:has(.sort-card)) { display: none; }
+.sorter-bins { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sort-card { font-size: 0.92rem; padding: 0.35rem 0.65rem; }
+.sort-drop { min-height: 2.6rem; }
+
+.ck-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+.ck-list li { margin: 0; }
+.ck-list label { display: flex; gap: 0.6rem; align-items: baseline; padding: 0.5rem 0.8rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; font-size: 1.02rem; line-height: 1.35; }
+.ck-list label:hover { border-color: var(--muted); }
+.ck-list input { accent-color: var(--accent); flex: none; width: 1.05rem; height: 1.05rem; transform: translateY(0.15rem); }
+.ck-list label.is-correct { border-color: var(--ok); }
+.ck-list label.is-wrong { border-color: var(--bad); }
+.ck-list label.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.ck-list label.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+
+.fq-picks { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.fq-pick[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); outline: 2px solid var(--accent); outline-offset: 0; }
+.fq-card { flex: none; width: 100%; max-width: 70rem; align-self: flex-start; }
+.fq-rows { margin: 0; display: grid; gap: 0.5rem; }
+.fq-rows div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1rem; padding: 0.5rem 0.9rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); align-items: baseline; }
+.fq-rows dt { font-weight: 600; color: var(--muted); }
+.fq-rows dd { margin: 0; font-size: 1.05rem; }
+
+/* Details panel open: the card is narrower, so the text gets smaller */
+.stage.has-panel .ex-table { font-size: 0.9rem; }
+.stage.has-panel .ex-table th, .stage.has-panel .ex-table td { padding: 0.3rem 0.55rem; }
+.stage.has-panel .under, .stage.has-panel .lead-in { font-size: 1rem; }
+.stage.has-panel .def-line { font-size: 1.2rem; }
+.stage.has-panel .fq-list, .stage.has-panel .passes { font-size: 0.98rem; }
+.stage.has-panel .parts dd, .stage.has-panel .fq-rows dd { font-size: 0.95rem; }
+.stage.has-panel .parts div, .stage.has-panel .fq-rows div { padding: 0.35rem 0.7rem; }
+.stage.has-panel .passes li { padding: 0.3rem 0.7rem; }
+.stage.has-panel .parts dd { line-height: 1.35; }
+.stage.has-panel .parts { gap: 0.35rem; }
+.stage.has-panel .fq-picks .btn { padding: 0.4rem 0.75rem; }
+.stage.has-panel .slide { gap: 0.75rem; padding-top: 1.6rem; }
+
+@media (max-width: 900px) {
+  .case-layout, .fq-two, .fq-two-wide { grid-template-columns: 1fr; }
+  .ck-list, .passes-2 { grid-template-columns: 1fr; }
+  .parts div, .fq-rows div { grid-template-columns: 1fr; gap: 0.2rem; }
+  .bd-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SHELL MARKUP (do not edit) ===================== -->
+<header class="topbar">
+  <div class="deck-id"><span class="dot" id="deck-dot"></span><span class="code" id="deck-code"></span><span class="deck-title" id="deck-title"></span></div>
+  <div class="tools">
+    <button class="icon-btn" id="btn-panel" aria-label="Show or hide the panel" title="Panel" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+    <button class="icon-btn" id="btn-help" aria-label="Help" title="Help (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg></button>
+    <button class="icon-btn" id="btn-theme" aria-label="Switch light or dark mode" title="Light or dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    <button class="icon-btn" id="btn-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+</header>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker></defs></svg>
+
+<main class="stage" id="stage">
+  <div class="card" id="card">
+
+<!-- ===================== CONTENT (edit for each deck) ===================== -->
+
+<!-- Slide 1: Title -->
+<section class="slide" data-type="title" data-title="Frame a problem as an answerable question">
+  <p class="code">C1 Epidemiological and economic thinking</p>
+  <h1>Frame a problem as an answerable question</h1>
+  <p class="lead">After 120 hens died on a layer farm in one week, a consultant has eight questions in mind. Which of these questions can be answered with <span class="term" data-tip="Facts that show that something is true. For a disease, this is often a set of laboratory test results.">evidence</span>, and what should the consultant do with the remaining questions?</p>
+  <ul class="meta-list">
+    <li><span class="code">S1.6</span><span>Frame a problem as an answerable question</span></li>
+    <li><span class="code">Time</span><span>About 30 minutes</span></li>
+    <li><span class="code">Before</span><span><a href="./explain-epidemiological-approaches-and-questions.html">Explain epidemiological approaches and questions</a></span></li>
+  </ul>
+  <div class="notes">Read the lead aloud. Ask for a first answer in one sentence. The deck gives the course answer: four checks that sort a question, and a way to list the information that an answerable question needs.</div>
+</section>
+
+<!-- Slide 2: Recap -->
+<section class="slide" data-type="recap" data-title="The case">
+  <h2>The case: Salmonella on a layer farm</h2>
+  <div class="case-layout">
+    <div>
+      <p>In one week, 120 of the 8,000 hens on a layer farm die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, which are located near the <span class="term" data-tip="The place where water enters the building, for example from a pipe or a tank.">water inlet</span>.</p>
+      <p>The laboratory tests five died hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have reached two markets.</p>
+      <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian gives technical advice and product support to farms and companies, for example in a feed or poultry company.">technical service consultant</span> of a poultry company. The farm owner phones you and says that IDR 15,000,000 is left this month. On the way to the farm, you write down the questions that come to your mind. Some come from the owner. Some are your own.</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
+      <div><dt>Deaths in one week</dt><dd>120</dd></div>
+      <div><dt>Hens tested, all with Salmonella</dt><dd>5</dd></div>
+      <div><dt>Budget this month</dt><dd>IDR 15,000,000</dd></div>
+    </dl>
+  </div>
+  <div class="notes">Read the three paragraphs aloud. The numbers are the same as in the earlier decks. In this deck you work in the consultant seat. Nobody has told you yet what to do, so the first job is to decide which questions are worth answering.</div>
+</section>
+
+<!-- Slide 3: Predict -->
+<section class="slide" data-type="question" data-title="Predict first">
+  <h2>Sort the consultant's eight questions</h2>
+  <p>For each question, decide who can answer it: <span class="term" data-tip="The study of how disease occurs in groups of animals and what affects it.">epidemiology</span> or <span class="term" data-tip="The study of how people choose when resources are scarce, and of what the choices cost and give.">economics</span>, another <span class="term" data-tip="A field of study with its own methods, such as microbiology or law.">discipline</span>, or nobody can answer the question. You have not seen any rule yet. Use your own judgement.</p>
+  <div class="sorter" data-sorter>
+    <div class="sorter-pool" aria-label="Questions to sort">
+      <button class="sort-card" data-target="none">Will this ever happen on this farm again?</button>
+      <button class="sort-card" data-target="ee">Which measure gives the owner the most benefit for IDR 15,000,000?</button>
+      <button class="sort-card" data-target="other">Which antibiotic should the sick hens in pen A1 get?</button>
+      <button class="sort-card" data-target="ee">How many hens have died, in which pens, and on which days?</button>
+      <button class="sort-card" data-target="none">Is this farm healthy?</button>
+      <button class="sort-card" data-target="other">Which type of Salmonella is in the five hens?</button>
+      <button class="sort-card" data-target="ee">Why did more hens die in pens A1 and B1 than in the other six pens?</button>
+      <button class="sort-card" data-target="other">Is the owner allowed to keep selling the eggs from pens A1 and B1?</button>
+    </div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="ee"><h3>Epidemiology or economics answers it</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="other"><h3>Another discipline answers it</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="none"><h3>Nobody can answer it in its current form.</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <p class="practice-note">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box. The next slides give the reasons.</p>
+  <div class="notes">Let students sort first and compare in pairs. Do not explain the reasons yet. The answer key: three questions for epidemiology or economics (counts by pen, the comparison of pens, the choice between measures), three for other disciplines (microbiology, clinical medicine, law), and two that nobody can answer as asked (no time frame, and a word without a criterion).</div>
+</section>
+
+<!-- Slide 4: Definition -->
+<section class="slide" data-type="concept" data-title="Answerable question">
+  <h2>Answerable question</h2>
+  <p class="def-line">An answerable question is a question that someone can answer with <span class="term" data-tip="Facts that show that something is true. For a disease, this is often a set of laboratory test results.">evidence</span>, and whose answer can change what someone does.</p>
+  <div class="tb-wrap" data-detail="d-aq" tabindex="0" aria-label="A table that compares a request with an answerable question. Select for details.">
+    <table class="ex-table">
+      <thead><tr><th></th><th>Example</th><th>What would finish the work?</th></tr></thead>
+      <tbody>
+        <tr><th>Request</th><td class="q">“Tell me everything about Salmonella.”</td><td>Nothing. Another fact always exists.</td></tr>
+        <tr><th>Answerable question</th><td class="q">“How many hens died in each pen, and on which days?”</td><td>A table of the deaths by pen and by day.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="under">A request specifies a topic. A topic has no end. The first task of the consultant is to turn a request into questions that can be answered.</p>
+  <div class="notes">Ask the class what the consultant would hand over to finish the request on the first row. There is no such thing. Then ask the same for the second row.</div>
+</section>
+
+<!-- Slide 5: Four checks -->
+<section class="slide" data-type="concept" data-title="The four checks of a question">
+  <h2>The four checks of a question</h2>
+  <p class="lead-in">A <span class="term" data-tip="One of four things to confirm about a question before you try to answer it.">check</span> is one thing to confirm about a question before you try to answer it. An answerable question passes all four checks, in this order.</p>
+  <div class="tb-wrap" data-detail="d-checks" tabindex="0" aria-label="A table of the four checks, the question to ask for each check, and what to do when the question fails. Select for details.">
+    <table class="ex-table">
+      <thead><tr><th>Check</th><th>Ask</th><th>If the question fails</th></tr></thead>
+      <tbody>
+        <tr><th>1 Clear</th><td>Does every word have a meaning that someone can measure, and is everything that the question assumes true?</td><td>Rewrite the question with defined words and remove the assumption.</td></tr>
+        <tr><th>2 Evidence</th><td>Could an observation show that one answer is right and another is wrong?</td><td>Add a time frame. Replace “ever” or “never” with a chance.</td></tr>
+        <tr><th>3 Discipline</th><td>Is the answer a fact about animals in a population or a chain, about causes, about what could happen, or about what options give?</td><td>Give the question to the discipline that answers it. Keep its answer as possible data.</td></tr>
+        <tr><th>4 Choice</th><td>Would a different answer lead someone to a different action?</td><td>Drop the question, or find the choice that it serves.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="notes">Say the order out loud. A question with no clear meaning cannot be tested for evidence, so check 1 comes first. Check 3 and check 4 only make sense for a question that has an answer.</div>
+</section>
+
+<!-- Slide 6: Checks 1 and 2 -->
+<section class="slide" data-type="concept" data-title="Checks 1 and 2: a question that has an answer">
+  <h2>Checks 1 and 2: a question that has an answer</h2>
+  <div class="tb-wrap" data-detail="d-c12" tabindex="0" aria-label="A table of three questions that fail check 1 or check 2, the reason, and a better question. Select for details.">
+    <table class="ex-table">
+      <thead><tr><th>Check</th><th>Question</th><th>Why it fails</th><th>A better question</th></tr></thead>
+      <tbody>
+        <tr><th>1 Clear</th><td class="q">“Is this farm healthy?”</td><td>“Healthy” has no criterion, so no result can count as the answer.</td><td>Did more hens die this week than the <span class="term" data-tip="The usual level of disease in this population, based on earlier weeks or years. It is also called the baseline.">expected level</span> for this flock?</td></tr>
+        <tr><th>1 Clear</th><td class="q">“Which feed batch brought Salmonella to the farm?”</td><td>It assumes that the feed is the source of Salmonella. The case does not show this.</td><td>Based on the available data, what could be the actual source (feed, water, new poultry, or humans)?</td></tr>
+        <tr><th>2 Evidence</th><td class="q">“Will this ever happen on this farm again?”</td><td>It has no time frame. No observation can show that it will never happen.</td><td>What is the chance that the next flock is infected with Salmonella during its time on the farm, if nothing changes?</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="under">A question that fails check 1 or check 2 cannot be answered in their current form, so rewrite it. A term needs a criterion that someone can measure, an assumption needs evidence, and “ever” needs a time frame.</p>
+  <div class="notes">The better question for the second row is open on purpose: it lets the data speak about the source. Ask which of the three better questions belongs to which of the five questions of the course. The answers are Domain 1, Domain 2, and Domain 3. Slide 9 gives the types.</div>
+</section>
+
+<!-- Slide 7: Check 3 -->
+<section class="slide" data-type="concept" data-title="Check 3: the discipline that answers the question">
+  <h2>Check 3: the discipline that answers the question</h2>
+  <div class="tb-wrap" data-detail="d-c3" tabindex="0" aria-label="A table of six questions, the kind of answer each one needs, and the discipline that answers it. Select for details.">
+    <table class="ex-table">
+      <thead><tr><th>Question</th><th>Kind of answer</th><th>Who answers it</th></tr></thead>
+      <tbody>
+        <tr><td class="q">How many hens have died, in which pens, and on which days?</td><td>A count of events in a population</td><td>Epidemiology, <span class="term" data-tip="One of the five questions of the course, or Domain 0. A domain groups the competencies that answer one question.">Domain</span> 1</td></tr>
+        <tr><td class="q">Why did more hens die in pens A1 and B1 than in the other six pens?</td><td>A cause, found by comparing groups</td><td>Epidemiology, Domain 2</td></tr>
+        <tr><td class="q">Which measure gives the owner the most benefit for IDR 15,000,000?</td><td>What each option gives and costs</td><td>Epidemiology and economics, Domain 4</td></tr>
+        <tr><td class="q">Which type of Salmonella is in the five hens?</td><td>A property of bacteria in a sample</td><td><span class="term" data-tip="The study of bacteria, viruses, and other very small organisms.">Microbiology</span></td></tr>
+        <tr><td class="q">Which antibiotic should the sick hens in pen A1 get?</td><td>A treatment for sick animals</td><td>Clinical medicine and <span class="term" data-tip="The study of medicines and how they act in the body.">pharmacology</span></td></tr>
+        <tr><td class="q">Is the owner allowed to keep selling the eggs from pens A1 and B1?</td><td>A rule</td><td>Law and <span class="term" data-tip="A rule made by an authority.">regulation</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="under">Epidemiology and economics answer questions about animals in a population or in a chain. An answer from another discipline can become data for epidemiology.</p>
+  <div class="notes">These are the same six questions as the first six cards on slide 3, minus the two that nobody can answer. Ask which cards students placed differently.</div>
+</section>
+
+<!-- Slide 8: Check 4 -->
+<section class="slide" data-type="concept" data-title="Check 4: the choice that the answer serves">
+  <h2>Check 4: the choice that the answer serves</h2>
+  <p class="lead-in">A question is worth asking when its possible answers lead to different actions. Every choice has three parts.</p>
+  <div class="fq-two fq-two-wide">
+    <ul class="fq-list" data-detail="d-c4" tabindex="0" aria-label="The three parts of a choice. Select for details.">
+      <li><b><span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">Decision maker</span>:</b> the person who chooses. The owner chooses for the farm.</li>
+      <li><b>Options:</b> the actions that the decision maker can choose between. There are at least two. Each option has an <span class="term" data-tip="The value of the best alternative use of a resource.">opportunity cost</span>.</li>
+      <li><b><span class="term" data-tip="What someone wants to achieve.">Objective</span>:</b> what the choice should achieve. The <span class="term" data-tip="The state of one disease in one population at one time, for example free, outbreak, or unknown.">disease status</span> of the population gives the objective. The farm has an <span class="term" data-tip="A disease occurs at a level clearly above the expected level in a population, for example on one farm in one week.">outbreak</span>, so the objective is to reduce the disease.</li>
+    </ul>
+    <div class="tb-wrap" style="max-width:none">
+      <table class="ex-table">
+        <thead><tr><th>Question</th><th>Does a different answer change the choice?</th></tr></thead>
+        <tbody>
+          <tr><td class="q">Is the water line the source of the infection?</td><td>Yes. If it is the source, repairing it is worth more. If it is not, the owner may choose another measure.</td></tr>
+          <tr><td class="q">On which hour of the day did the first hen die?</td><td>No. The owner chooses the same measure, whatever the hour.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="under">A question that fails check 4 can have an answer and still not be worth the time. Drop it, or find the choice that it serves.</p>
+  <div class="notes">The three parts come from the earlier decks: the opportunity cost of the options, and the objective that follows from the disease status. Ask students what the objective would be on a farm where nobody has tested the hens.</div>
+</section>
+
+<!-- Slide 9: Five questions as types -->
+<section class="slide" data-type="concept" data-title="The five questions as types of question">
+  <h2>The five questions as types of question</h2>
+  <p class="lead-in">A question that passes the four checks belongs to one of the five questions of the course. The type tells what the sentence must contain. Every type needs a <span class="term" data-tip="A defined group of animals that share a place or a production system, for example a herd, a flock, or all dogs in an area.">population</span> and an <span class="term" data-tip="A result that you measure, such as deaths, infection, or an amount of money.">outcome</span>.</p>
+  <div class="tb-wrap" data-detail="d-types" tabindex="0" aria-label="A table of the five questions, what a question of each type needs, and an example from the layer farm. Select for details.">
+    <table class="ex-table">
+      <thead><tr><th>Domain</th><th>The question</th><th>The sentence needs</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td class="dom"><span class="dot" style="background:var(--d1)"></span>Domain 1</td><td>What is happening?</td><td>Population, health event, place, time</td><td class="q">How many hens have died, in which pens, and on which days?</td></tr>
+        <tr><td class="dom"><span class="dot" style="background:var(--d2)"></span>Domain 2</td><td>Why is it happening?</td><td>Population, outcome, <span class="term" data-tip="Contact with something that can cause disease, such as contaminated water.">exposure</span>, and a group to compare with</td><td class="q">Why did more hens die in pens A1 and B1 than in the other six pens?</td></tr>
+        <tr><td class="dom"><span class="dot" style="background:var(--d3)"></span>Domain 3</td><td>What could happen?</td><td>Population, outcome, a scenario, and a period</td><td class="q">What is the chance that the next flock is infected during its time on the farm, if nothing changes?</td></tr>
+        <tr><td class="dom"><span class="dot" style="background:var(--d4)"></span>Domain 4</td><td>What should be done?</td><td>The options, and what each gives in health and in money</td><td class="q">Which measure gives the owner the most benefit for IDR 15,000,000?</td></tr>
+        <tr><td class="dom"><span class="dot" style="background:var(--d5)"></span>Domain 5</td><td>Did it work?</td><td>The measure, a comparison (before, or without it), and the outcome</td><td class="q">Did fewer hens die per week after the owner repaired the water line?</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="notes">Ask students to match the three better questions of slide 6 to the types. Then open the details and read the note about PICO and PECO. The templates are taught in a later competency. This deck only uses the same two words, population and outcome.</div>
+</section>
+
+<!-- Slide 10: Information needed -->
+<section class="slide" data-type="concept" data-title="The information that a question needs">
+  <h2>The information that a question needs</h2>
+  <div class="fq-two">
+    <div class="fq-side">
+      <p class="under">To answer a question, you must know several things. Write each one as a smaller question. Then apply one rule: keep an item only if a different result would lead to a different choice.</p>
+      <p class="under">Example: the estimate for measure B assumes that the water line is the source of the infection. So “Is the water line the source?” is an item that the choice between measures needs.</p>
+    </div>
+    <div class="fq-fig-wrap" data-detail="d-info" tabindex="0" aria-label="A figure. The item Is the water line the source of the infection has two answers. If yes, measure B stays the best choice. If no, measure B is worth less and the owner may choose measure A or C. Select for details.">
+      <svg class="fig fq-fig" viewBox="0 0 540 330" role="img" aria-hidden="true">
+        <rect class="f-box" x="40" y="10" width="460" height="64" rx="10"/>
+        <text x="270" y="38" text-anchor="middle" class="t-strong">Item: is the water line the source</text>
+        <text x="270" y="60" text-anchor="middle" class="t-strong">of the infection in pens A1 and B1?</text>
+        <path class="f-arrow" d="M170 78 L120 170"/><path class="f-arrow" d="M370 78 L420 170"/>
+        <text x="122" y="132" text-anchor="end" class="t-strong">Yes</text>
+        <text x="418" y="132" class="t-strong">No</text>
+        <rect class="f-soft" x="0" y="176" width="255" height="128" rx="10"/>
+        <text x="127" y="214" text-anchor="middle">Measure B stays the best</text>
+        <text x="127" y="238" text-anchor="middle">choice. It avoids IDR 45</text>
+        <text x="127" y="262" text-anchor="middle">million of loss.</text>
+        <rect class="f-soft" x="285" y="176" width="255" height="128" rx="10"/>
+        <text x="412" y="214" text-anchor="middle">Measure B is worth less.</text>
+        <text x="412" y="238" text-anchor="middle">The owner may choose</text>
+        <text x="412" y="262" text-anchor="middle">measure A or C instead.</text>
+        <text x="0" y="326" class="t-muted">Different answers lead to different choices, so the item stays.</text>
+      </svg>
+    </div>
+  </div>
+  <div class="notes">The measures are defined on the next example slides, and the IDR 45 million is the estimate of the earlier deck on veterinary economics. Ask students for an item that fails the rule. The hour of the first death is one.</div>
+</section>
+
+<!-- Slide 11: Sources -->
+<section class="slide" data-type="concept" data-title="Sources of information">
+  <h2>Sources of information</h2>
+  <div class="fq-two">
+    <div class="fq-side">
+      <p class="lead-in">Every item needs a source. Three kinds of source exist.</p>
+      <ul class="fq-list">
+        <li><b>Existing <span class="term" data-tip="Written information that someone already keeps, such as sales books or laboratory reports.">records</span>:</b> farm records, laboratory results, and <span class="term" data-tip="The routine collection of health data to find problems early.">surveillance</span> reports of the authority.</li>
+        <li><b>New data:</b> a visit, samples, or questions to people.</li>
+        <li><b>Published knowledge and experts:</b> studies, textbooks, guidelines, and specialists.</li>
+      </ul>
+      <p class="under">A source is usable when it gives the item in time, at a cost that the decision maker accepts, and with a quality that is good enough for the question. When no source is usable, change the question, or state an assumption and say that it is an assumption.</p>
+    </div>
+    <div class="fq-fig-wrap" data-detail="d-src" tabindex="0" aria-label="A figure. A question needs information. The information needs a source. When no source is usable, the arrow goes back to the question. Select for details.">
+      <svg class="fig fq-fig" viewBox="0 0 560 200" role="img" aria-hidden="true">
+        <rect class="f-box" x="0" y="14" width="150" height="66" rx="10"/><text x="75" y="53" text-anchor="middle" class="t-strong">Question</text>
+        <rect class="f-box" x="205" y="14" width="150" height="66" rx="10"/><text x="280" y="42" text-anchor="middle" class="t-strong">Information</text><text x="280" y="62" text-anchor="middle" class="t-strong">it needs</text>
+        <rect class="f-box" x="410" y="14" width="150" height="66" rx="10"/><text x="485" y="53" text-anchor="middle" class="t-strong">Source</text>
+        <path class="f-arrow" d="M154 47 H201"/><path class="f-arrow" d="M359 47 H406"/>
+        <path class="f-arrow" d="M485 84 V134 H75 V88"/>
+        <text x="280" y="170" text-anchor="middle">No usable source: change the question</text>
+        <text x="280" y="192" text-anchor="middle">or state an assumption</text>
+      </svg>
+    </div>
+  </div>
+  <div class="notes">The return arrow is the key point. A question that nobody can supply with information is not yet an answerable question. Ask students for an item in the owner's case that has no usable source today.</div>
+</section>
+
+<!-- Slide 12: Example, the choice and the main question -->
+<section class="slide" data-type="example" data-title="Worked example: the problem frame">
+  <h2>Worked example: the problem frame of the farm owner</h2>
+  <p class="lead-in">A <span class="term" data-tip="A short statement of a problem: the choice, the objective, the main question, and the information that the question needs.">problem frame</span> has four parts. This slide shows the first three. The next slide shows the fourth.</p>
+  <dl class="parts" data-detail="d-ex1" tabindex="0" aria-label="The choice, the objective, and the main question of the owner. Select for details.">
+    <div><dt>Decision maker</dt><dd>The farm owner</dd></div>
+    <div><dt>Options</dt><dd>A: test the eggs from the two pens for Salmonella. B: repair the water line and disinfect the two pens. C: vaccinate the next flock of hens against Salmonella. Each costs IDR 15 million.</dd></div>
+    <div><dt>Objective</dt><dd>Reduce the disease. The farm has an <span class="term" data-tip="A disease occurs at a level clearly above the expected level in a population, for example on one farm in one week.">outbreak</span>: 120 hens died in one week, and the expected level is about 10.</dd></div>
+    <div><dt>Main question</dt><dd>Which measure gives the owner the most benefit for IDR 15,000,000? This is a Domain 4 question.</dd></div>
+  </dl>
+  <ul class="passes passes-2">
+    <li class="ok"><b>Check 1, clear.</b> “Benefit” means the loss that a measure avoids, in rupiah.</li>
+    <li class="ok"><b>Check 2, evidence.</b> Records, tests, and estimates can show which measure is worth more.</li>
+    <li class="ok"><b>Check 3, discipline.</b> It asks what options give and cost: epidemiology and economics.</li>
+    <li class="ok"><b>Check 4, choice.</b> The owner picks one measure, so each answer leads to a choice.</li>
+  </ul>
+  <div class="notes">The three measures, the budget, and the avoided losses come from the deck on veterinary economics. The expected level of about 10 deaths per week comes from the deck on disease status. Slide 13 lists the information that this question needs.</div>
+</section>
+
+<!-- Slide 13: Example, information and sources -->
+<section class="slide" data-type="example" data-title="Worked example: the information and its sources">
+  <h2>Worked example: the information that the main question needs</h2>
+  <p class="lead-in">The consultant breaks the main question into smaller questions. Each smaller question has a type, a source, and a reason.</p>
+  <div class="tb-wrap" data-detail="d-ex2" tabindex="0" aria-label="A table of four smaller questions with their type, source, and the measure that needs them. Select for details.">
+    <table class="ex-table">
+      <thead><tr><th>Smaller question</th><th>Type</th><th>Source</th><th>Needed for</th></tr></thead>
+      <tbody>
+        <tr><td class="q">How many eggs from pens A1 and B1 reached the two markets?</td><td class="dom"><span class="dot" style="background:var(--d1)"></span>Domain 1</td><td>Existing records: the egg sales records of the farm</td><td>Measure A</td></tr>
+        <tr><td class="q">Is the water line the source of the infection in pens A1 and B1?</td><td class="dom"><span class="dot" style="background:var(--d2)"></span>Domain 2</td><td>New data: water samples and a comparison of the pens</td><td>Measure B</td></tr>
+        <tr><td class="q">What is the chance that the next flock is infected if nothing changes?</td><td class="dom"><span class="dot" style="background:var(--d3)"></span>Domain 3</td><td>Published knowledge and experts: the history of the farm and the opinion of a specialist</td><td>Measure C</td></tr>
+        <tr><td class="q">What does each measure cost, and what loss does it avoid?</td><td class="dom"><span class="dot" style="background:var(--d4)"></span>Domain 4</td><td>Existing records: price lists and the owner's records</td><td>All three measures</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="under">The consultant drops “On which hour of the day did the first hen die?”. No answer to it changes the choice, so it fails check 4.</p>
+  <div class="notes">Each row serves one measure, apart from the last row. Ask which row has the weakest source today. The comparison of pens needs new samples, so it takes time and money. This is the point where a consultant may decide to state an assumption.</div>
+</section>
+
+<!-- Slide 14: Practice, find the check that fails -->
+<section class="slide" data-type="practice" data-title="Find the check that fails">
+  <h2>Find the check that each question fails</h2>
+  <p class="practice-note">If a question fails more than one check, choose the first one.</p>
+  <div class="bd-rows">
+    <div class="bd-row"><p class="quote-s">1. “Is the water in pen A1 dirty?”</p><p class="bd-fill"><select id="f1" aria-label="Check for question 1"><option value="">Choose</option><option value="c1">fails check 1 (clear)</option><option value="c2">fails check 2 (evidence)</option><option value="c3">fails check 3 (discipline)</option><option value="c4">fails check 4 (choice)</option><option value="ok">passes all four checks</option></select></p></div>
+    <div class="bd-row"><p class="quote-s">2. “Will Salmonella ever be gone from this farm for good?”</p><p class="bd-fill"><select id="f2" aria-label="Check for question 2"><option value="">Choose</option><option value="c1">fails check 1 (clear)</option><option value="c2">fails check 2 (evidence)</option><option value="c3">fails check 3 (discipline)</option><option value="c4">fails check 4 (choice)</option><option value="ok">passes all four checks</option></select></p></div>
+    <div class="bd-row"><p class="quote-s">3. “How does Salmonella cross the gut wall of a hen?”</p><p class="bd-fill"><select id="f3" aria-label="Check for question 3"><option value="">Choose</option><option value="c1">fails check 1 (clear)</option><option value="c2">fails check 2 (evidence)</option><option value="c3">fails check 3 (discipline)</option><option value="c4">fails check 4 (choice)</option><option value="ok">passes all four checks</option></select></p></div>
+    <div class="bd-row"><p class="quote-s">4. “On which hour of the day did the first hen die?” The owner chooses between measures A, B, and C.</p><p class="bd-fill"><select id="f4" aria-label="Check for question 4"><option value="">Choose</option><option value="c1">fails check 1 (clear)</option><option value="c2">fails check 2 (evidence)</option><option value="c3">fails check 3 (discipline)</option><option value="c4">fails check 4 (choice)</option><option value="ok">passes all four checks</option></select></p></div>
+    <div class="bd-row"><p class="quote-s">5. “What share of the 8,000 hens died in pens A1 and B1, and what share died in the other six pens?”</p><p class="bd-fill"><select id="f5" aria-label="Check for question 5"><option value="">Choose</option><option value="c1">fails check 1 (clear)</option><option value="c2">fails check 2 (evidence)</option><option value="c3">fails check 3 (discipline)</option><option value="c4">fails check 4 (choice)</option><option value="ok">passes all four checks</option></select></p></div>
+  </div>
+  <div class="bd-actions">
+    <button class="btn btn-main" id="bd-check">Check the answers</button>
+    <button class="btn" id="bd-reset">Start again</button>
+    <span class="verdict" id="bd-verdict" aria-live="polite"></span>
+  </div>
+  <div class="bd-why" id="bd-why"></div>
+  <div class="notes">Use the order of the checks. If a question fails two checks, name the first one. One of the five questions passes all four checks. Question 4 fails check 4 only because the owner already has three measures to choose from.</div>
+</section>
+
+<!-- Slide 15: Practice, sort the sources -->
+<section class="slide" data-type="practice" data-title="Sort the sources">
+  <h2>Sort each item of information into the kind of source that supplies it</h2>
+  <div class="sorter" data-sorter data-explain="d-sort15">
+    <div class="sorter-pool" aria-label="Items to sort">
+      <button class="sort-card" data-target="new">Whether eggs from pens A1 and B1 carry Salmonella now</button>
+      <button class="sort-card" data-target="lit">How often the eggs of an infected hen carry Salmonella</button>
+      <button class="sort-card" data-target="rec">How many eggs each pen sold to each market last week</button>
+      <button class="sort-card" data-target="new">How many eggs from pens A1 and B1 are still unsold in the two markets today</button>
+      <button class="sort-card" data-target="rec">How many hens each pen holds</button>
+      <button class="sort-card" data-target="lit">How many days Salmonella stays alive on an eggshell</button>
+    </div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="rec"><h3>Existing records</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="new"><h3>New data to collect</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="lit"><h3>Published knowledge or an expert</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <p class="practice-note">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
+  <div class="notes">Ask who would have to act for each new item: who takes the egg sample, and who visits the markets. A source that needs new work has a cost in time and money.</div>
+</section>
+
+<!-- Slide 16: Practice, the information that the choice needs -->
+<section class="slide" data-type="practice" data-title="Select the information that the choice needs">
+  <h2>Select the information that the owner's choice needs</h2>
+  <p class="lead-in">The owner chooses between measures A, B, and C. Select every item for which a different result could lead to a different choice.</p>
+  <ul class="ck-list" id="ck-list">
+      <li><label><input type="checkbox" data-need="1"><span>How many eggs from pens A1 and B1 reached the two markets</span></label></li>
+      <li><label><input type="checkbox" data-need="0"><span>The name of the technician who sampled the five hens</span></label></li>
+      <li><label><input type="checkbox" data-need="1"><span>Whether the water line is the source of the infection</span></label></li>
+      <li><label><input type="checkbox" data-need="0"><span>The brand of the egg trays used at the markets</span></label></li>
+      <li><label><input type="checkbox" data-need="1"><span>What each of the three measures costs</span></label></li>
+      <li><label><input type="checkbox" data-need="0"><span>On which hour of the day the first hen died</span></label></li>
+      <li><label><input type="checkbox" data-need="1"><span>The chance that the next flock is infected if nothing changes</span></label></li>
+  </ul>
+  <div class="bd-actions">
+    <button class="btn btn-main" id="ck-check">Check the list</button>
+    <button class="btn" id="ck-reset">Start again</button>
+    <span class="verdict" id="ck-verdict" aria-live="polite"></span>
+  </div>
+  <div class="bd-why" id="ck-why"></div>
+  <div class="notes">Four items are needed and three are not. Ask students to say, for each item, what could change in the choice if the result changed.</div>
+</section>
+
+<!-- Slide 17: Explore, three decision makers -->
+<section class="slide" data-type="explore" data-title="One event, three decision makers">
+  <h2>One event, three decision makers</h2>
+  <p class="lead-in">Three people have a stake in the deaths. Select one and read how the frame changes.</p>
+  <div class="fq-picks" role="group" aria-label="Decision maker">
+    <button class="btn fq-pick" type="button" data-dm="0" aria-pressed="true">The farm owner</button>
+    <button class="btn fq-pick" type="button" data-dm="1" aria-pressed="false">The local animal health authority</button>
+    <button class="btn fq-pick" type="button" data-dm="2" aria-pressed="false">An egg trader at one of the two markets</button>
+  </div>
+  <div class="fq-card" data-detail="d-dm" tabindex="0" aria-label="The choice, the population, the disease status, the objective, and the main question of the selected decision maker. Select for details.">
+    <dl class="fq-rows">
+      <div><dt>Choice</dt><dd id="dm-choice"></dd></div>
+      <div><dt>Population</dt><dd id="dm-pop"></dd></div>
+      <div><dt>Disease status</dt><dd id="dm-status"></dd></div>
+      <div><dt>Objective</dt><dd id="dm-obj"></dd></div>
+      <div><dt>Main question</dt><dd id="dm-q"></dd></div>
+    </dl>
+  </div>
+  <p class="under">The decision maker fixes the population. The population fixes the disease status and the objective.</p>
+  <div class="notes">Go through the three decision makers in turn. Ask what the local animal health authority would do first if the other farms of the area were already known to be free. The objective would change from finding out to keeping the disease out.</div>
+</section>
+
+<!-- Slide 18: Check -->
+<section class="slide" data-type="check" data-title="Check: answerable questions">
+  <div>
+    <h2>The owner thinks about a new water line. Which question is answerable and serves this choice?</h2>
+    <ul class="choices" data-check="q1" data-answer="c" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Why has this farm had so much bad luck with Salmonella during the last months?</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Will a new water line keep Salmonella away from this farm in all future years?</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Did a larger share of hens die in the pens near the inlet than in the other pens?</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 19: Check, transfer -->
+<section class="slide" data-type="check" data-title="Check: a new case">
+  <h2>A new case: a tilapia farm</h2>
+  <p>A <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian protects the health and production of farm animals, for example on poultry or dairy farms.">production animal veterinarian</span> visits a <span class="term" data-tip="A freshwater fish that farmers keep in ponds.">tilapia</span> farm with 20 ponds. Last week, fish died in 3 ponds. Nobody has tested the fish, and nobody has looked at the other 17 ponds. The owner asks what to do.</p>
+  <div>
+    <p class="q-label">Which objective and which first question fit this situation?</p>
+    <ul class="choices" data-check="q3" data-answer="b" data-explain="d-q3">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Objective: reduce the disease. Question: which medicine gives the most benefit for each rupiah that the owner spends?</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Objective: find out the disease status. Question: how many ponds have dead fish, and how many fish died?</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Objective: keep the disease out. Question: which rule would stop the disease from reaching the ponds of the farm?</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 20: Summary -->
+<section class="slide" data-type="summary" data-title="Summary">
+  <h2>Key points</h2>
+  <ul>
+    <li>An answerable question is a question that someone can answer with evidence, and whose answer can change what someone does. A request names a topic and has no end.</li>
+    <li>Four checks sort a question: is it clear, can evidence answer it, does epidemiology or economics answer it, and does a different answer change a choice. A question that fails check 1 or 2 needs a rewrite. A question that fails check 3 belongs to another discipline. A question that fails check 4 is not worth asking.</li>
+    <li>A question that passes belongs to one of the five questions of the course. The type tells what the sentence must contain.</li>
+    <li>A choice has a decision maker, options, and an objective. The decision maker fixes the population. The population fixes the disease status and the objective.</li>
+    <li>A question needs information. Write each item as a smaller question, keep it only if a different result would change the choice, and name a usable source: existing records, new data, or published knowledge and experts.</li>
+  </ul>
+</section>
+
+<template id="d-aq">
+<h3>A question is an unfinished statement</h3>
+<p>To answer a question is to finish a statement with something that evidence supports. “How many hens died in each pen?” is finished by a table. “Tell me everything about Salmonella” is a topic, and a topic never ends.</p>
+<p>Two conditions make a question answerable. Evidence can settle the answer, and the answer matters for a choice. The four checks of the next slides test these two conditions, together with the meaning of the words and the discipline that owns the answer.</p>
+</template>
+<template id="d-checks">
+<h3>Why these four checks, in this order</h3>
+<p>Check 1 is about meaning. A question with a word that has no criterion cannot be tested.</p>
+<p>Check 2 is about knowledge. Could anyone know the answer, if the evidence were collected?</p>
+<p>Check 3 is about the kind of fact that the question asks for. Some facts are about animals in a population. Others are about the inside of one animal, a rule, or a value.</p>
+<p>Check 4 is about value. The answer matters only for someone who must choose.</p>
+<p>Whether the information can be collected in time is a property of the source. The slide on sources treats it.</p>
+</template>
+<template id="d-c12">
+<h3>Two ways to have no answer</h3>
+<p>The first way is a question without a clear meaning. A word has no criterion (“healthy”), or the question hides an assumption (“which feed batch”). The second way is a question that no observation can settle. A question about “ever” or “never” has no end point.</p>
+<p>A third case exists. The question has an answer, but nobody can collect the evidence in time or at an acceptable cost. This case belongs to the sources of information, and the slide on sources treats it.</p>
+<p>A rewritten question needs a new run of the checks.</p>
+</template>
+<template id="d-c3">
+<h3>The boundary between disciplines</h3>
+<p>The boundary is not sharp. Some questions mix a fact and a value. “Is it fair that the owner pays for the measure?” has a factual part: who pays, and who gains. Epidemiology and economics can answer it. Whether this is fair is a question of values, and evidence does not settle it.</p>
+<p>The clinical question about one sick hen is a question about an individual animal. It belongs to clinical medicine. The population question about the same disease belongs to epidemiology.</p>
+<p>An answer from another discipline is often a source for epidemiology. The type of Salmonella from the laboratory tells whether the five hens carry the same type.</p>
+</template>
+<template id="d-c4">
+<h3>Why the choice matters</h3>
+<p>The choice gives a question its use. Without a choice, a question is curiosity.</p>
+<p>The objective carries values. The owner may want to protect income. The buyers may want to protect health. Evidence can show the effect of each measure on each aim. It does not say whose aim counts most.</p>
+<p>The options come with an opportunity cost: the value of the best option that the owner gives up.</p>
+</template>
+<template id="d-types">
+<h3>The five types and PICO or PECO</h3>
+<p>The type of a question tells you what the sentence must contain. Every type needs a population and an outcome.</p>
+<p>PICO stands for population, intervention, comparator, and outcome. PECO uses exposure in place of intervention. They are templates for questions about an effect. Domain 2 questions fit PECO. Domain 5 questions fit PICO. Questions of Domain 1 and Domain 3 need other parts, and Domain 4 questions compare several options.</p>
+<p>A later competency teaches both templates. They use the same words, population and outcome, as this deck. PICO comes from evidence-based medicine.</p>
+</template>
+<template id="d-info">
+<h3>The rule for an item of information</h3>
+<p>Keep an item only if a different result would lead to a different choice. If every possible result leads to the same choice, the item is not needed.</p>
+<p>Measure B is worth IDR 45 million in the estimate of the earlier deck. That estimate assumes that the water line is the source. If the source is another one, the estimate falls, and measure A or C may become the better choice. The answer to the item can change the choice, so the item stays.</p>
+</template>
+<template id="d-src">
+<h3>Sources and their limits</h3>
+<p>Existing records are quick and cheap, but they can be incomplete or wrong. New data takes time and money, but it can answer the exact question. Published knowledge and experts are fast, but they describe other populations.</p>
+<p>When no source is usable, there are two honest moves. Change the question to one that a source can answer. Or state an assumption and say that it is an assumption, so that the decision maker knows what the answer rests on.</p>
+</template>
+<template id="d-ex1">
+<h3>How the parts fit together</h3>
+<p>The decision maker, the options, and the objective form the choice. The main question asks which option to take. It is a Domain 4 question because it asks what should be done.</p>
+<p>The objective comes from the disease status. 120 deaths in one week against an expected level of about 10 puts the flock in the status outbreak. For an outbreak, the objective is to reduce the disease.</p>
+<p>The budget of IDR 15,000,000 pays for one measure, so choosing one measure means giving up the other two. This is the opportunity cost.</p>
+</template>
+<template id="d-ex2">
+<h3>Reading the table</h3>
+<p>Each smaller question is a question in its own right. It has a type among the five questions, and it needs a source. The main question depends on all four.</p>
+<p>The sources differ in cost. The sales records exist already. The water samples need new work. The chance of infection for the next flock rests on the history of the farm and on an expert, so it carries an assumption.</p>
+<p>The estimates of avoided loss in the earlier deck (IDR 20, 45, and 30 million for measures A, B, and C) are the result of this work, and they assume that the water line is the source.</p>
+</template>
+<template id="d-sort15">
+<h3>Why each item sits where it does</h3>
+<p>Sales per pen and the number of hens in each pen are numbers that the farm keeps already. They are existing records.</p>
+<p>Whether the eggs carry Salmonella now, and how many eggs are still unsold, need a sample and a visit. They are new data.</p>
+<p>How often the eggs of an infected hen carry Salmonella, and how long the bacteria stay alive on a shell, are questions that earlier studies have answered. A published study or a specialist is the source. The answer describes other hens and other conditions, so it carries an assumption.</p>
+</template>
+<template id="d-dm">
+<h3>Why the frame changes</h3>
+<p>The same event gives three populations. For the owner it is the flock. For the authority it is the other layer farms of the area, about which nobody has data. For the trader it is the eggs in stock.</p>
+<p>Each population has its own disease status, so each decision maker has a different objective. The level of analysis changes too: animal population for the owner and the authority, and animal product chain for the trader. The question types differ: Domain 4 for the owner, Domain 1 for the other two.</p>
+<p>The three decision makers also count loss in different ways. The owner counts lost income, the authority counts risk to people in the area, and the trader counts risk to customers and sales. Evidence shows these effects. It does not say whose loss should count most.</p>
+</template>
+<template id="d-q1">
+<h3>Answer: C</h3>
+<p>Option A fails check 1: “bad luck” has no criterion. Option B fails check 2: “all future years” has no time frame that evidence can cover.</p>
+<p>Option C is clear, it compares groups of pens (a Domain 2 question), and its answer changes the choice. If the pens near the inlet have a larger share of deaths, the repair of the water line gains support.</p>
+</template>
+<template id="d-q3">
+<h3>Answer: B</h3>
+<p>Nobody has tested the fish, so the disease status is unknown. The first objective is to find out the status. The first question is a Domain 1 question: how many ponds, and how many fish.</p>
+<p>Option A assumes that the disease is present and starts to compare treatments. Option C assumes that the disease is absent and starts to protect the farm. Neither rests on evidence yet.</p>
+</template>
+
+  </div><!-- /card -->
+
+  <aside class="panel" id="panel" aria-label="Panel">
+    <div class="panel-head">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tab-controls" aria-selected="true" data-tab="controls">Controls</button>
+        <button class="tab" role="tab" id="tab-details" aria-selected="false" data-tab="details">Details</button>
+        <button class="tab" role="tab" id="tab-notes" aria-selected="false" data-tab="notes" hidden>Notes</button>
+      </div>
+      <button class="icon-btn" id="btn-close" aria-label="Close the panel" title="Close (Esc)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-section" id="sec-controls"></div>
+      <div class="panel-section" id="sec-details" hidden><p class="empty-note">Select an element marked with "i" on the slide to see details here.</p></div>
+      <div class="panel-section" id="sec-notes" hidden></div>
+    </div>
+  </aside>
+
+<!-- ===================== END OF CONTENT ===================== -->
+</main>
+
+<footer class="bottombar">
+  <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="counter" id="counter" aria-label="Open the overview"></button>
+  <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+</footer>
+
+<div class="overlay" id="overview" role="dialog" aria-label="Overview"><h2>All slides</h2><div class="ov-grid" id="ov-grid"></div></div>
+<div class="overlay" id="help" role="dialog" aria-label="Help">
+  <h2>How to use these slides</h2>
+  <dl class="help-list">
+    <dt><span class="demo-term">Dotted text</span></dt><dd>A term with a short definition. Hover or tap it.</dd>
+    <dt><span class="demo-detail">Box</span></dt><dd>An element with an "i" opens details in the panel. Click it or press Enter.</dd>
+    <dt><span class="kbd">→</span> <span class="kbd">Space</span> <span class="kbd">Page Down</span></dt><dd>Next slide</dd>
+    <dt><span class="kbd">←</span> <span class="kbd">Page Up</span></dt><dd>Previous slide</dd>
+    <dt><span class="kbd">Home</span> <span class="kbd">End</span></dt><dd>First or last slide</dd>
+    <dt><span class="kbd">F</span></dt><dd>Full screen</dd>
+    <dt><span class="kbd">O</span></dt><dd>Overview of all slides</dd>
+    <dt><span class="kbd">N</span></dt><dd>Lecturer notes</dd>
+    <dt><span class="kbd">Esc</span></dt><dd>Close the panel or this screen</dd>
+  </dl>
+  <button class="btn" id="btn-help-close">Close</button>
+</div>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+
+<!-- ===================== SHELL SCRIPT (do not edit) ===================== -->
+<script id="shell-script">
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const root = document.documentElement;
+  const meta = JSON.parse($('#deck-meta').textContent);
+  const domVar = { D0: '--d0', D1: '--d1', D2: '--d2', D3: '--d3', D4: '--d4', D5: '--d5', Integration: '--dint' };
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+  // Theme
+  const saved = store.get('eev-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+  $('#btn-theme').addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; store.set('eev-theme', root.dataset.theme); });
+
+  // Top bar
+  $('#deck-title').textContent = meta.title;
+  $('#deck-code').textContent = meta.domain === 'Integration' ? meta.competency : meta.domain + ' ' + meta.competency;
+  $('#deck-dot').style.background = 'var(' + (domVar[meta.domain] || '--d0') + ')';
+
+  // Slides and navigation
+  const slides = $$('.slide');
+  const stage = $('#stage');
+  let current = 0, notesMode = false, panelClosed = false;
+  const dots = $('#dots'), ovGrid = $('#ov-grid');
+  slides.forEach((s, i) => {
+    const t = s.dataset.title || ('Slide ' + (i + 1));
+    const d = document.createElement('button'); d.title = (i + 1) + '. ' + t; d.setAttribute('aria-label', 'Slide ' + (i + 1) + ': ' + t);
+    d.addEventListener('click', () => go(i)); dots.appendChild(d);
+    const o = document.createElement('button'); o.innerHTML = '<span class="ov-type"></span><strong></strong>';
+    o.querySelector('.ov-type').textContent = (i + 1) + '. ' + (s.dataset.type || '');
+    o.querySelector('strong').textContent = t;
+    o.addEventListener('click', () => { closeOverlays(); go(i); }); ovGrid.appendChild(o);
+  });
+  const controlsByslide = {};
+  const store2 = document.createElement('div'); store2.hidden = true; document.body.appendChild(store2);
+  $$('.controls').forEach(c => { controlsByslide[c.dataset.forSlide] = c; c.hidden = false; store2.appendChild(c); c._defaults = $$('input, select', c).map(el => [el, el.type === 'checkbox' ? el.checked : el.value]); });
+  const secControls = $('#sec-controls'), secDetails = $('#sec-details'), secNotes = $('#sec-notes');
+  const detailEmpty = secDetails.innerHTML;
+
+  function setTab(name) {
+    ['controls', 'details', 'notes'].forEach(n => { $('#tab-' + n).setAttribute('aria-selected', String(n === name)); $('#sec-' + n).hidden = n !== name; });
+  }
+  function hasPanelContent(s) { return s.dataset.panel === 'controls' || s.querySelector('[data-detail]') || s.querySelector('[data-explain]') || (notesMode && s.querySelector('.notes')); }
+  function updatePanel() {
+    const s = slides[current];
+    const ctl = controlsByslide[String(current + 1)];
+    Array.from(secControls.children).forEach(ch => store2.appendChild(ch)); if (ctl) secControls.appendChild(ctl);
+    $('#tab-controls').hidden = !ctl;
+    const note = s.querySelector('.notes');
+    $('#tab-notes').hidden = !(notesMode && note);
+    secNotes.innerHTML = note ? '<h3>Lecturer notes</h3><p></p>' : ''; if (note) secNotes.querySelector('p').textContent = note.textContent.trim();
+    secDetails.innerHTML = detailEmpty;
+    $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
+    const show = hasPanelContent(s);
+    $('#btn-panel').hidden = !show;
+    const auto = !!ctl || !!(notesMode && note);
+    stage.classList.toggle('has-panel', auto && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(auto && !panelClosed));
+    stage.classList.remove('sheet-open');
+    setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
+  }
+  function go(i, fromHash) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    panelClosed = false;
+    slides.forEach((s, k) => s.classList.toggle('is-active', k === current));
+    $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $('#counter').textContent = (current + 1) + ' / ' + slides.length;
+    $('#btn-prev').disabled = current === 0; updateNav();
+    if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
+    hideTip(); updatePanel();
+    document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
+  }
+  $('#btn-prev').addEventListener('click', () => go(current - 1));
+  $('#btn-next').addEventListener('click', () => next());
+
+  // Reveal steps: elements with data-step="n" appear one number at a time
+  const showAll = new URLSearchParams(location.search).get('steps') === 'all';
+  slides.forEach(s => {
+    const els = $$('[data-step]', s);
+    if (!els.length) return;
+    s._steps = Array.from(new Set(els.map(e => Number(e.dataset.step)))).sort((a, b) => a - b);
+    s._shown = showAll ? s._steps.length : 0;
+    els.forEach(e => { if (!showAll) e.classList.add('step-hidden'); });
+    const b = document.createElement('button'); b.className = 'btn step-btn'; b.type = 'button';
+    b.addEventListener('click', () => revealNext(s)); s.appendChild(b); s._btn = b;
+    refreshStep(s);
+  });
+  function refreshStep(s) {
+    if (!s._steps) return;
+    const left = s._steps.length - s._shown;
+    s._btn.hidden = left <= 0;
+    s._btn.textContent = 'Show the next step (' + (s._shown + 1) + ' of ' + s._steps.length + ')';
+  }
+  function revealNext(s) {
+    if (!s._steps || s._shown >= s._steps.length) return false;
+    const n = s._steps[s._shown]; s._shown++;
+    $$('[data-step="' + n + '"]', s).forEach(e => e.classList.remove('step-hidden'));
+    refreshStep(s); updateNav(); return true;
+  }
+  function next() { if (!revealNext(slides[current])) go(current + 1); }
+  function updateNav() {
+    const s = slides[current];
+    $('#btn-next').disabled = current === slides.length - 1 && !(s._steps && s._shown < s._steps.length);
+  }
+
+  // Panel
+  $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
+  $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
+  $('#btn-panel').addEventListener('click', () => {
+    if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
+    if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); }
+    else { panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').setAttribute('aria-pressed', 'true'); }
+  });
+  function openDetail(el) {
+    const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
+    secDetails.innerHTML = ''; secDetails.appendChild(tpl.content.cloneNode(true));
+    $$('[data-detail].is-open').forEach(x => x.classList.remove('is-open'));
+    if (el.dataset.detail) el.classList.add('is-open');
+    panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').hidden = false;
+    if (window.innerWidth < 1100) stage.classList.add('sheet-open');
+    setTab('details');
+  }
+  $$('[data-detail]').forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.tabIndex = 0;
+    el.addEventListener('click', () => openDetail(el));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); openDetail(el); } });
+  });
+
+  // Reset buttons
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-reset]'); if (!b) return;
+    const c = b.closest('.controls'); if (!c) return;
+    c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    // Inputs made after load: use the attribute defaults
+    $$('input, select', c).forEach(el => {
+      if (c._defaults.some(d => d[0] === el)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+      else if (el.tagName === 'SELECT') { const o = Array.from(el.options).findIndex(x => x.defaultSelected); el.selectedIndex = o < 0 ? 0 : o; }
+      else el.value = el.defaultValue;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    c.dispatchEvent(new CustomEvent('deckreset', { bubbles: true }));
+  });
+
+  // Choices (predictions) and checks
+  $$('[data-choice], [data-check]').forEach(list => {
+    $$('.choice', list).forEach(btn => btn.addEventListener('click', () => {
+      $$('.choice', list).forEach(b => { b.setAttribute('aria-pressed', 'false'); b.classList.remove('is-correct', 'is-wrong'); });
+      btn.setAttribute('aria-pressed', 'true');
+      if (list.dataset.check) {
+        const ok = btn.dataset.value === list.dataset.answer;
+        const right = $('.choice[data-value="' + list.dataset.answer + '"]', list);
+        btn.classList.add(ok ? 'is-correct' : 'is-wrong'); right.classList.add('is-correct');
+        const v = list.parentElement.querySelector('.verdict');
+        if (v) { v.textContent = ok ? 'Correct.' : 'Not correct. The answer is ' + right.querySelector('.key').textContent + '.'; v.className = 'verdict ' + (ok ? 'ok' : 'bad'); }
+        if (list.dataset.explain) openDetail(list);
+      }
+    }));
+  });
+
+  // Card sorter: drag a card into a box, or select a card and then select a box
+  $$('[data-sorter]').forEach(sr => {
+    const pool = $('.sorter-pool', sr), bins = $$('.sort-bin', sr), cardsAll = $$('.sort-card', sr);
+    const verdict = $('.verdict', sr); let sel = null, dragged = null;
+    const zoneOf = el => el.classList.contains('sorter-pool') ? el : $('.sort-drop', el);
+    const cap = el => Number(el.dataset.capacity || 0);
+    function clearMarks() { cardsAll.forEach(c => c.classList.remove('is-correct', 'is-wrong')); verdict.textContent = ''; verdict.className = 'verdict'; }
+    function unselect() { if (sel) { sel.classList.remove('is-selected'); sel.setAttribute('aria-pressed', 'false'); } sel = null; }
+    function place(card, box) {
+      const z = zoneOf(box);
+      if (cap(box) && z.children.length >= cap(box) && card.parentElement !== z) { const old = z.children[0]; pool.appendChild(old); }
+      z.appendChild(card); clearMarks(); unselect();
+    }
+    cardsAll.forEach(c => {
+      c.type = 'button'; c.draggable = true; c.setAttribute('aria-pressed', 'false');
+      c.addEventListener('dragstart', e => { dragged = c; try { e.dataTransfer.setData('text/plain', c.textContent); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+      c.addEventListener('dragend', () => { dragged = null; $$('.is-over', sr).forEach(x => x.classList.remove('is-over')); });
+      c.addEventListener('click', e => {
+        e.stopPropagation();
+        if (sel && sel !== c) { place(sel, c.closest('.sort-bin') || pool); return; }
+        if (sel === c) { unselect(); return; }
+        sel = c; c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true');
+      });
+    });
+    [pool].concat(bins).forEach(box => {
+      box.addEventListener('click', () => { if (sel) place(sel, box); });
+      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('is-over'); });
+      box.addEventListener('dragleave', () => box.classList.remove('is-over'));
+      box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('is-over'); if (dragged) place(dragged, box); });
+    });
+    $('[data-sorter-check]', sr).addEventListener('click', () => {
+      if (cardsAll.some(c => c.parentElement === pool)) { verdict.textContent = 'Place every card in a box first.'; verdict.className = 'verdict bad'; return; }
+      let ok = 0;
+      cardsAll.forEach(c => {
+        const bin = c.closest('.sort-bin').dataset.bin;
+        const right = (c.dataset.target || '').split(' ').includes(bin);
+        c.classList.toggle('is-correct', right); c.classList.toggle('is-wrong', !right); if (right) ok++;
+      });
+      const all = ok === cardsAll.length;
+      verdict.textContent = all ? 'All ' + ok + ' cards are in the right box.' : ok + ' of ' + cardsAll.length + ' cards are in the right box. Move the cards marked ✗ and check again.';
+      verdict.className = 'verdict ' + (all ? 'ok' : 'bad');
+      if (sr.dataset.explain && (all || sr.dataset.explainAlways)) openDetail(sr);
+    });
+    $('[data-sorter-reset]', sr).addEventListener('click', () => { unselect(); cardsAll.forEach(c => pool.appendChild(c)); clearMarks(); });
+  });
+
+  // Tooltips
+  const tip = $('#tooltip'); let tipFor = null;
+  function showTip(el) {
+    tip.textContent = el.dataset.tip; tip.classList.add('is-on'); tipFor = el;
+    const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect();
+    let x = Math.min(Math.max(8, r.left + r.width / 2 - t.width / 2), window.innerWidth - t.width - 8);
+    let y = r.top - t.height - 8; if (y < 8) y = r.bottom + 8;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip() { tip.classList.remove('is-on'); tipFor = null; }
+  $$('.term[data-tip]').forEach(el => {
+    el.tabIndex = 0;
+    el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('focus', () => showTip(el)); el.addEventListener('blur', hideTip);
+    el.addEventListener('click', e => { e.stopPropagation(); tipFor === el ? hideTip() : showTip(el); });
+  });
+  document.addEventListener('click', e => { if (tipFor && !e.target.closest('.term')) hideTip(); });
+
+  // Overlays
+  function closeOverlays() { $$('.overlay').forEach(o => o.classList.remove('is-on')); }
+  function toggleOverlay(id) { const o = $('#' + id); const on = !o.classList.contains('is-on'); closeOverlays(); o.classList.toggle('is-on', on); }
+  $('#counter').addEventListener('click', () => toggleOverlay('overview'));
+  $('#btn-help').addEventListener('click', () => toggleOverlay('help'));
+  $('#btn-help-close').addEventListener('click', closeOverlays);
+
+  // Full screen
+  function toggleFull() {
+    const el = document.documentElement;
+    if (document.fullscreenElement || document.webkitFullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+    else if (el.requestFullscreen || el.webkitRequestFullscreen) { (el.requestFullscreen || el.webkitRequestFullscreen).call(el); }
+    else { root.classList.toggle('is-full'); }
+  }
+  $('#btn-full').addEventListener('click', toggleFull);
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const k = e.key;
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else if (k === 'f' || k === 'F') toggleFull();
+    else if (k === 'o' || k === 'O') toggleOverlay('overview');
+    else if (k === '?') toggleOverlay('help');
+    else if (k === 'n' || k === 'N') { notesMode = !notesMode; panelClosed = false; updatePanel(); if (notesMode && slides[current].querySelector('.notes')) setTab('notes'); }
+    else if (k === 'Escape') { if ($('.overlay.is-on')) closeOverlays(); else if (tipFor) hideTip(); else if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); } }
+  });
+
+  // Swipe on the main card
+  let sx = null, sy = null;
+  const card = $('#card');
+  card.addEventListener('touchstart', e => {
+    if (e.target.closest('input, select, textarea, button, svg, canvas, [data-noswipe]')) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  card.addEventListener('touchend', e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(current + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+
+  // Seeded random numbers and URL parameters for deck scripts
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const params = new URLSearchParams(location.search);
+  window.Deck = {
+    meta, params,
+    rng: seed => mulberry32(Number(seed) || 1),
+    newSeed: () => Math.floor(Math.random() * 1e6),
+    seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
+    current: () => current, go, next,
+    onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
+  };
+
+  window.addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if (n) go(n - 1, true); });
+  const start = parseInt(location.hash.slice(1), 10);
+  go(start ? start - 1 : 0, true);
+})();
+</script>
+
+<!-- ===================== DECK SCRIPT (edit for each deck) ===================== -->
+<script id="deck-script">
+(function () {
+  const $ = id => document.getElementById(id);
+
+  // Slide 14: find the check that fails
+  const rows = [
+    { id: 'f1', ans: 'c1', why: 'Question 1 fails check 1: “dirty” has no criterion. Better: does a sample of the water in pen A1 contain Salmonella?' },
+    { id: 'f2', ans: 'c2', why: 'Question 2 fails check 2: it has no time frame. Better: will Salmonella be found in the next flock during its time on the farm?' },
+    { id: 'f3', ans: 'c3', why: 'Question 3 fails check 3: it asks about a mechanism inside one animal. Pathology and microbiology answer it.' },
+    { id: 'f4', ans: 'c4', why: 'Question 4 fails check 4: the owner chooses the same measure whatever the hour.' },
+    { id: 'f5', ans: 'ok', why: 'Question 5 passes all four checks: the words are clear, counts can answer it, and the answer helps the owner to judge the source.' }
+  ];
+  const sels = rows.map(r => $(r.id));
+  function clearF() {
+    sels.forEach(s => s.classList.remove('is-correct', 'is-wrong'));
+    $('bd-verdict').textContent = ''; $('bd-verdict').className = 'verdict'; $('bd-why').innerHTML = '';
+  }
+  sels.forEach(s => s.addEventListener('change', clearF));
+  $('bd-check').addEventListener('click', () => {
+    if (sels.some(s => !s.value)) { $('bd-verdict').textContent = 'Choose an answer for every question first.'; $('bd-verdict').className = 'verdict bad'; return; }
+    const why = $('bd-why'); why.innerHTML = ''; let ok = 0;
+    rows.forEach(r => {
+      const el = $(r.id), right = el.value === r.ans;
+      el.classList.toggle('is-correct', right); el.classList.toggle('is-wrong', !right);
+      if (right) ok++; else { const p = document.createElement('p'); p.textContent = r.why; why.appendChild(p); }
+    });
+    const all = ok === rows.length;
+    $('bd-verdict').textContent = all ? 'All 5 answers are correct.' : ok + ' of 5 answers are correct. Change the answers marked in red and check again.';
+    $('bd-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
+  });
+  $('bd-reset').addEventListener('click', () => { sels.forEach(s => { s.value = ''; }); clearF(); });
+
+  // Slide 16: the information that the choice needs
+  const ckWhy = [
+    'How many eggs reached the two markets is needed. It decides how much loss measure A can avoid.',
+    'The name of the technician changes no choice. It is not needed.',
+    'Whether the water line is the source is needed. The estimate for measure B rests on it.',
+    'The brand of the egg trays changes no choice. It is not needed.',
+    'The cost of each measure is needed. The owner compares the options with the budget.',
+    'The hour of the first death changes no choice. It is not needed.',
+    'The chance that the next flock is infected is needed. It decides how much measure C is worth.'
+  ];
+  const boxes = Array.from(document.querySelectorAll('#ck-list input'));
+  function clearC() {
+    boxes.forEach(b => b.closest('label').classList.remove('is-correct', 'is-wrong'));
+    $('ck-verdict').textContent = ''; $('ck-verdict').className = 'verdict'; $('ck-why').innerHTML = '';
+  }
+  boxes.forEach(b => b.addEventListener('change', clearC));
+  $('ck-check').addEventListener('click', () => {
+    const why = $('ck-why'); why.innerHTML = ''; let ok = 0;
+    boxes.forEach((b, i) => {
+      const right = b.checked === (b.dataset.need === '1');
+      const lab = b.closest('label');
+      lab.classList.toggle('is-correct', right); lab.classList.toggle('is-wrong', !right);
+      if (right) ok++; else { const p = document.createElement('p'); p.textContent = ckWhy[i]; why.appendChild(p); }
+    });
+    const all = ok === boxes.length;
+    $('ck-verdict').textContent = all ? 'All 7 items are right.' : ok + ' of 7 items are right. Change the items marked ✗ and check again.';
+    $('ck-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
+  });
+  $('ck-reset').addEventListener('click', () => { boxes.forEach(b => { b.checked = false; }); clearC(); });
+
+  // Slide 17: three decision makers
+  const dms = [
+    { choice: 'Choose one of measures A, B, and C. The budget of IDR 15,000,000 pays for one.',
+      pop: 'The flock of the farm, 8,000 hens. Level: animal population.',
+      status: 'Outbreak. 120 hens died in one week, and the expected level is about 10.',
+      obj: 'Reduce the disease.',
+      q: 'Which measure gives the owner the most benefit for IDR 15,000,000? (Domain 4)' },
+    { choice: 'Test a sample of the other layer farms now, or wait for reports from the farms.',
+      pop: 'The other layer farms of the area. Level: animal population, at the scale of an area.',
+      status: 'Unknown. Nobody has tested the other farms.',
+      obj: 'Find out the disease status.',
+      q: 'How many of the other layer farms of the area have Salmonella, and where are they? (Domain 1)' },
+    { choice: 'Keep selling the eggs, sell them only after a test, or stop buying from this farm.',
+      pop: 'The eggs from pens A1 and B1 in the stock of the trader. Level: animal product chain.',
+      status: 'Unknown. Nobody has tested these eggs.',
+      obj: 'Find out the disease status.',
+      q: 'How many of the eggs from pens A1 and B1 in my stock carry Salmonella? (Domain 1)' }
+  ];
+  const picks = Array.from(document.querySelectorAll('.fq-pick'));
+  function showDm(i) {
+    const d = dms[i];
+    $('dm-choice').textContent = d.choice; $('dm-pop').textContent = d.pop; $('dm-status').textContent = d.status;
+    $('dm-obj').textContent = d.obj; $('dm-q').textContent = d.q;
+    picks.forEach((b, k) => b.setAttribute('aria-pressed', String(k === i)));
+  }
+  picks.forEach((b, i) => b.addEventListener('click', () => showDm(i)));
+  showDm(0);
+})();
+</script>
+</body>
+</html>
