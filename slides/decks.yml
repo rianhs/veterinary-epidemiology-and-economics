@@ -30,9 +30,8 @@
   path: /slides/explain-epidemiological-approaches-and-questions.html
   description: Explain which approach of epidemiology answers each of the five questions, and place a problem in the five questions and the population-to-intervention loop.
   categories: [C1, S1.5]
-- title: Write a problem frame
+- title: Frame a problem as an answerable question
   type: slides
-  path: /slides/write-problem-frame.html
-  description: "Write a problem frame with five parts: population, outcome, decision, decision maker, and objective, and name the information that the decision needs."
+  path: /slides/frame-problem-as-answerable-question.html
+  description: "Check whether a question is clear, can be answered with evidence, belongs to epidemiology or economics, and serves a choice, then list the information that it needs, with a source for each item."
   categories: [C1, S1.6]
-  
