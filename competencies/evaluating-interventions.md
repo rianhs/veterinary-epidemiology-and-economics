@@ -121,7 +121,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Process, output, and outcome indicators for epidemiological and economic results.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-8"><span class="code">S1.8</span> Write a problem frame</a></li><li><a href="intervention-options.html#s15-2"><span class="code">S15.2</span> List intervention options for a problem</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-6"><span class="code">S1.6</span> Write a problem frame</a></li><li><a href="intervention-options.html#s15-2"><span class="code">S15.2</span> List intervention options for a problem</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="evaluating-interventions.html#s18-2"><span class="code">S18.2</span> Choose an evaluation design</a></li><li><a href="evaluating-interventions.html#s18-5"><span class="code">S18.5</span> Use incidence trends and Re to evaluate</a></li><li><a href="evaluating-interventions.html#s18-6"><span class="code">S18.6</span> Compare actual and planned costs and effects</a></li></ul></div></div></div>
 ```
 

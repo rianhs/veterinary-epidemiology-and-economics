@@ -17,8 +17,6 @@ website:
         text: Guides
       - href: slides/index.md
         text: Slides
-      - href: glossary.md
-        text: Glossary
       - href: skills.md
         text: Skill map
   page-footer:

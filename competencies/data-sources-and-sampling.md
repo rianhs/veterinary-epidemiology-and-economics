@@ -203,7 +203,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Purpose, trigger, unit selection, and data source. The inference rule for random and non-random selection.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="data-sources-and-sampling.html#s3-1"><span class="code">S3.1</span> Distinguish approaches to population health information</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-3"><span class="code">S1.3</span> Match the population status of a disease to an objective</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="data-sources-and-sampling.html#s3-1"><span class="code">S3.1</span> Distinguish approaches to population health information</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-2"><span class="code">S1.2</span> Set an objective from the disease status of a population</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="data-sources-and-sampling.html#s3-3"><span class="code">S3.3</span> Distinguish active and passive data collection</a></li><li><a href="data-sources-and-sampling.html#s3-4"><span class="code">S3.4</span> Match a data collection approach to an objective</a></li></ul></div></div></div>
 ```
 
