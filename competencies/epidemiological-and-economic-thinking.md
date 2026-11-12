@@ -195,7 +195,7 @@ listing:
 ## S1.5 Identify the levels of analysis in a problem {#s1-5}
 
 ```{=html}
-<div class="skill-body"><p class="skill-scope">Individual animal, animal population, and animal product and economic system.</p>
+<div class="skill-body"><p class="skill-scope">Individual animal, animal population, and animal product chain and system. A health question and an economic question arise at every level. A conclusion stays at the level of its data.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-2"><span class="code">S1.2</span> Distinguish clinical questions from population questions</a></li><li><a href="epidemiological-and-economic-thinking.html#s1-4"><span class="code">S1.4</span> Explain what veterinary economics is</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="epidemiological-and-economic-thinking.html#s1-8"><span class="code">S1.8</span> Write a problem frame</a></li></ul></div></div></div>
