@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explain epidemiological approaches and questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!--
+  SLIDE SHELL TEMPLATE
+  Veterinary Epidemiology and Economics
+
+  How to make a new deck:
+  1. Copy this file to slides/<slug>.html.
+  2. Edit the deck-meta block below.
+  3. Replace the example slides, details, and controls in the CONTENT area.
+  4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
+     <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
+     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     SVG figure classes (.fig), and a Reset button that also resets inputs made later.
+     Add ?steps=all to the URL to show all steps (for review and printing).
+  5. Register the deck in slides/decks.yml.
+  Rules: 05-slide-deck-guide.md.
+-->
+
+<script type="application/json" id="deck-meta">
+{
+  "title": "Explain epidemiological approaches and questions",
+  "domain": "D0",
+  "competency": "C1",
+  "skills": {
+    "primary": "S1.6",
+    "secondary": [
+      "S1.7"
+    ]
+  },
+  "minutes": 20,
+  "articles": [
+    "approaches-of-epidemiology"
+  ],
+  "guides": [],
+  "status": "draft",
+  "updated": "2026-11-12"
+}
+</script>
+
+
+<!-- ===================== SHELL STYLES (do not edit) ===================== -->
+<style id="shell-styles">
+:root {
+  --bg: #FFFFFF; --surface: #F5F7F9; --surface-2: #EDF1F4; --line: #E1E6EB;
+  --ink: #18222F; --muted: #5A6573; --accent: #0B7A6E; --accent-ink: #FFFFFF;
+  --ok: #0B7A6E; --bad: #B4441C;
+  --d0: #6B7480; --d1: #0072B2; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #18222F;
+  --panel-w: 400px; --bar-h: 52px; --radius: 12px;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0D1526; --surface: #131D31; --surface-2: #18243B; --line: #243250;
+  --ink: #E6EBF2; --muted: #9AA6B8; --accent: #2DD4BF; --accent-ink: #062A26;
+  --ok: #2DD4BF; --bad: #F08A5D;
+  --d0: #9AA6B8; --d1: #56B4E9; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #E6EBF2;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+:root:fullscreen, :root.is-full { font-size: 20px; }
+body {
+  margin: 0; height: 100vh; height: 100dvh; overflow: hidden;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5;
+  background: var(--bg); color: var(--ink);
+  display: grid; grid-template-rows: var(--bar-h) 1fr var(--bar-h);
+}
+button { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.code { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
+.dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--dc, var(--d0)); display: inline-block; flex: none; }
+
+/* Top bar */
+.topbar { display: flex; align-items: center; gap: 0.75rem; padding: 0 1rem; border-bottom: 1px solid var(--line); min-width: 0; }
+.deck-id { display: flex; align-items: center; gap: 0.55rem; min-width: 0; flex: 1; }
+.deck-id .code { font-size: 0.85rem; white-space: nowrap; }
+.deck-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tools { display: flex; gap: 0.25rem; }
+.icon-btn { width: 2.25rem; height: 2.25rem; border: 1px solid transparent; background: transparent; border-radius: 8px; display: grid; place-items: center; cursor: pointer; color: var(--muted); }
+.icon-btn:hover { background: var(--surface); color: var(--ink); }
+.icon-btn[aria-pressed="true"] { color: var(--ink); background: var(--surface-2); }
+.icon-btn svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn[hidden] { display: none; }
+
+/* Stage */
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+.stage.has-panel { grid-template-columns: minmax(0, 1fr) var(--panel-w); }
+.card { position: relative; min-height: 0; overflow: hidden; }
+.slide { position: absolute; inset: 0; padding: 2.2rem clamp(1.2rem, 4vw, 3.2rem); display: none; flex-direction: column; gap: 1rem; overflow: hidden; }
+.slide.is-active { display: flex; }
+.slide h1 { font-size: 2.6rem; line-height: 1.08; letter-spacing: -0.03em; margin: 0; font-weight: 700; }
+.slide h2 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0; font-weight: 650; }
+.slide p { margin: 0; }
+.slide .lead { font-size: 1.2rem; color: var(--muted); }
+.slide ul { margin: 0; padding-left: 1.2rem; }
+.slide li + li { margin-top: 0.35rem; }
+.notes { display: none; }
+
+/* Slide types */
+.slide[data-type="title"] { justify-content: center; }
+.slide[data-type="title"] .meta-list { display: grid; gap: 0.4rem; margin-top: 1rem; padding: 0; list-style: none; }
+.slide[data-type="title"] .meta-list li { display: flex; gap: 0.6rem; align-items: baseline; }
+.slide[data-type="question"] { justify-content: center; }
+.slide[data-type="summary"] .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; text-decoration: none; color: var(--ink); }
+.btn:hover { border-color: var(--muted); }
+.btn-main { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* Interactive markers */
+.term { border-bottom: 1.5px dotted var(--muted); cursor: help; }
+[data-detail] { position: relative; cursor: pointer; border-radius: var(--radius); outline: 1px solid transparent; transition: outline-color 0.15s; }
+[data-detail]:hover, [data-detail]:focus-visible { outline: 1px solid var(--muted); outline-offset: 4px; }
+[data-detail]::after { content: "i"; position: absolute; top: -0.55rem; right: -0.55rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: 600 0.72rem/1.1rem "Inter", sans-serif; text-align: center; font-style: italic; }
+[data-detail].is-open { outline: 2px solid var(--accent); outline-offset: 4px; }
+.tooltip { position: fixed; z-index: 50; max-width: 18rem; padding: 0.5rem 0.7rem; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 0.85rem; line-height: 1.4; pointer-events: none; opacity: 0; transition: opacity 0.12s; }
+.tooltip.is-on { opacity: 1; }
+
+/* Choice and check components */
+.choices { display: grid; gap: 0.5rem; padding: 0; margin: 0.4rem 0 0; list-style: none; }
+.choice { text-align: left; width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; display: flex; gap: 0.7rem; align-items: baseline; }
+.choice:hover { border-color: var(--muted); }
+.choice .key { font-weight: 600; color: var(--muted); }
+.choice[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); }
+.choice.is-correct { border-color: var(--ok); }
+.choice.is-wrong { border-color: var(--bad); }
+.verdict { min-height: 1.5rem; font-weight: 600; }
+.slide[data-type="check"] > div { display: grid; gap: 1.3rem; align-content: start; }
+.slide[data-type="check"] .choice { font-size: 1.1rem; }
+.slide .choices { padding-left: 0; }
+.verdict.ok { color: var(--ok); }
+.verdict.bad { color: var(--bad); }
+
+/* Reveal steps */
+.step-hidden { visibility: hidden; opacity: 0; }
+.slide [data-step] { transition: opacity 0.2s; }
+.step-btn { margin-top: auto; align-self: flex-start; }
+.step-btn[hidden] { display: none; }
+
+/* Card sorter */
+.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
+.sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
+.sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
+.sort-card:hover { border-color: var(--muted); }
+.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); }
+.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
+.sort-card.is-wrong { border-color: var(--bad); }
+.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* SVG figures */
+.fig { display: block; width: 100%; height: auto; max-height: 100%; }
+.fig text { fill: var(--ink); font-family: inherit; font-size: 15px; }
+.fig .t-muted { fill: var(--muted); }
+.fig .t-strong { font-weight: 600; }
+.fig .f-box { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-soft { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+.fig .f-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-arrow { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+.fig .f-accent { fill: var(--accent); }
+.fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
+.fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
+
+/* Panel */
+.panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
+.stage.has-panel .panel { display: flex; }
+.panel-head { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.6rem 0 0.8rem; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 0.25rem; flex: 1; }
+.tab { border: none; background: none; padding: 0.55rem 0.7rem; cursor: pointer; color: var(--muted); font-weight: 600; font-size: 0.92rem; border-bottom: 2px solid transparent; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab[hidden] { display: none; }
+.panel-body { overflow: auto; padding: 1.1rem 1.2rem 1.5rem; flex: 1; font-size: 0.95rem; }
+.panel-body h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
+.panel-body p { margin: 0 0 0.75rem; }
+.panel-section[hidden] { display: none; }
+.empty-note { color: var(--muted); }
+.control { display: grid; gap: 0.35rem; margin-bottom: 1.1rem; }
+.control label { font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; gap: 1rem; }
+.control output { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 500; }
+.control input[type="range"] { width: 100%; accent-color: var(--accent); }
+details.acc { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); margin: 0 0 0.75rem; }
+details.acc > summary { list-style: none; cursor: pointer; padding: 0.6rem 0.8rem; font-weight: 600; display: flex; gap: 0.5rem; }
+details.acc > summary::-webkit-details-marker { display: none; }
+details.acc > summary::before { content: "▶"; font-size: 0.7rem; color: var(--muted); line-height: 1.6rem; }
+details.acc[open] > summary::before { content: "▼"; }
+details.acc > div { padding: 0 0.8rem 0.7rem; }
+
+/* Bottom bar */
+.bottombar { position: relative; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; gap: 0.75rem; border-top: 1px solid var(--line); padding: 0 1rem; }
+.nav-btn { width: 2.3rem; height: 2.3rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.25rem; line-height: 1; display: grid; place-items: center; }
+.nav-btn:disabled { opacity: 0.4; cursor: default; }
+.dots { display: flex; gap: 0.35rem; align-items: center; }
+.dots button { width: 0.6rem; height: 0.6rem; padding: 0; border-radius: 50%; border: 1px solid var(--muted); background: transparent; cursor: pointer; }
+.dots button[aria-current="step"] { background: var(--ink); border-color: var(--ink); }
+.counter { border: none; background: none; cursor: pointer; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 6px; }
+.counter:hover { background: var(--surface); color: var(--ink); }
+
+/* Overlays */
+.overlay { position: fixed; inset: var(--bar-h) 0 var(--bar-h); background: var(--bg); z-index: 40; overflow: auto; padding: 2rem clamp(1rem, 4vw, 3rem); display: none; }
+.overlay.is-on { display: block; }
+.overlay h2 { margin: 0 0 1rem; font-size: 1.4rem; }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.75rem; }
+.ov-grid button { text-align: left; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); cursor: pointer; display: grid; gap: 0.2rem; }
+.ov-grid button:hover { border-color: var(--muted); }
+.ov-grid button[aria-current="step"] { border-color: var(--accent); }
+.ov-grid .ov-type { font-size: 0.82rem; color: var(--muted); }
+.help-list { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.2rem; max-width: 40rem; margin: 0 0 1.5rem; }
+.help-list dt { font-weight: 600; }
+.help-list dd { margin: 0; color: var(--muted); }
+.kbd { display: inline-block; border: 1px solid var(--line); border-radius: 5px; padding: 0 0.35rem; font-size: 0.85rem; background: var(--surface); }
+.demo-term { border-bottom: 1.5px dotted var(--muted); }
+.demo-detail { display: inline-block; position: relative; padding: 0.1rem 0.5rem; border: 1px solid var(--line); border-radius: 8px; }
+.demo-detail::after { content: "i"; position: absolute; top: -0.5rem; right: -0.5rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: italic 600 0.7rem/1rem "Inter", sans-serif; text-align: center; }
+
+/* Narrow screens: panel becomes a bottom sheet */
+@media (max-width: 1099px) {
+  .stage.has-panel { grid-template-columns: minmax(0, 1fr); }
+  .panel { position: fixed; left: 0; right: 0; bottom: var(--bar-h); height: 62vh; z-index: 30; border-left: none; border-top: 1px solid var(--line); border-radius: 16px 16px 0 0; transform: translateY(105%); transition: transform 0.2s ease; display: flex; }
+  .panel { visibility: hidden; }
+  .stage.has-panel.sheet-open .panel { transform: translateY(0); visibility: visible; }
+  .stage:not(.has-panel) .panel { display: none; }
+}
+@media (max-width: 700px) and (orientation: portrait) {
+  .slide { overflow-y: auto; padding: 1.4rem 1.1rem 2rem; }
+  .slide h1 { font-size: 2rem; }
+  .slide h2 { font-size: 1.4rem; }
+  .dots { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media print {
+  body { display: block; height: auto; overflow: visible; }
+  .topbar, .bottombar, .panel, .overlay, .tooltip { display: none !important; }
+  .card { overflow: visible; }
+  .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
+  [data-detail]::after { display: none; }
+  .step-hidden { visibility: visible; opacity: 1; }
+  .step-btn { display: none; }
+}
+</style>
+
+<!-- ===================== DECK STYLES (edit for each deck) ===================== -->
+<style id="deck-styles">
+.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
+.case-layout p + p { margin-top: 0.9rem; }
+.case-layout p { font-size: 1.15rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
+
+.def-line { font-size: 1.4rem; line-height: 1.4; font-weight: 500; }
+.under-fig { font-size: 1.15rem; }
+.fig-wrap { flex: none; display: flex; align-items: flex-start; align-self: flex-start; width: 100%; max-width: 60rem; }
+.fig-wrap .fig { height: auto; width: 100%; overflow: visible; }
+.fig .lp-core { stroke: var(--ink); stroke-width: 3; }
+.fig .lp-tag { fill: var(--accent); }
+.fig .lp-bar2 { fill: var(--muted); }
+
+.ex-table { border-collapse: collapse; width: 100%; font-size: 1.05rem; }
+.ex-table th, .ex-table td { text-align: left; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
+.ex-table tbody th { font-weight: 600; color: var(--muted); width: 13rem; }
+.lv-table td { font-size: 1.1rem; }
+.lv-wrap { width: 100%; max-width: 62rem; flex: none; align-self: flex-start; }
+
+.dc-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.6rem; flex: none; }
+.dc-col { display: grid; gap: 0.5rem; align-content: start; padding: 0.9rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.dc-head { display: flex; align-items: center; gap: 0.55rem; font-weight: 600; font-size: 1.15rem; }
+.dc-q { color: var(--muted); font-size: 1.05rem; }
+.dc-res { font-weight: 600; font-size: 1.1rem; }
+.dc-col .fig { max-width: 26rem; }
+.dc-line { font-size: 1.05rem; }
+.dc-table { font-size: 1rem; }
+.dc-table th, .dc-table td { padding: 0.35rem 0.6rem; }
+.dc-table td { text-align: right; font-variant-numeric: tabular-nums; }
+.dc-table thead th:not(:first-child) { text-align: right; }
+.dc-table tbody th { width: auto; color: var(--ink); }
+
+.lp-wrap { flex: none; align-self: flex-start; width: 100%; max-width: 54rem; }
+.lp-wrap .fig { width: 100%; height: auto; max-height: 48vh; }
+
+.practice-note { color: var(--muted); font-size: 0.98rem; }
+.sorter { flex: none; }
+.sorter-pool { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.3rem; padding: 0.25rem; }
+.sorter-bins { grid-template-columns: 1fr; gap: 0.25rem; }
+.sort-card { font-size: 0.84rem; padding: 0.25rem 0.5rem; line-height: 1.25; }
+.sort-bin { grid-template-columns: 9.5rem minmax(0, 1fr); align-items: start; gap: 0.6rem; padding: 0.3rem 0.6rem; }
+.sort-bin h3 { font-size: 0.9rem; line-height: 1.3; padding-top: 0.1rem; }
+.sort-drop { min-height: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.35rem; align-content: flex-start; }
+.sort-drop .sort-card { flex: 1 1 14rem; }
+.lp-sort-title { font-size: 1.4rem; }
+.sorter-pool:not(:has(.sort-card)) { display: none; }
+.lp-sorter-wrap { display: grid; gap: 0.5rem; }
+
+.bd-rows { display: grid; gap: 0.35rem; }
+.bd-row { display: grid; gap: 0.1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--line); }
+.quote-s { font-size: 1.1rem; }
+.bd-fill { line-height: 1.75; font-size: 1.05rem; }
+.bd-fill select { font: inherit; font-size: 1.02rem; padding: 0.2rem 0.5rem; border: 1.5px solid var(--muted); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
+.bd-fill select.is-correct { border-color: var(--ok); }
+.bd-fill select.is-wrong { border-color: var(--bad); }
+.bd-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.bd-why { display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.98rem; }
+.quote { font-size: 1.25rem; line-height: 1.45; margin: 0; padding-left: 1.6rem; display: grid; gap: 0.3rem; }
+.q-label { font-weight: 600; font-size: 1.15rem; }
+
+.lw-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 1.8rem; flex: 1; min-height: 0; align-items: center; }
+.lw-left { display: grid; gap: 0.9rem; justify-items: center; align-content: center; min-height: 0; }
+.lw-left .fig { width: min(100%, 34rem); height: auto; }
+.fig .lw-box.is-on { stroke: var(--ink); stroke-width: 4; fill: var(--surface-2); }
+.fig .lw-arr.is-on { stroke: var(--ink); stroke-width: 4; }
+.lw-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.lw-nav .btn:disabled { opacity: 0.4; cursor: default; }
+.lw-stage { color: var(--muted); font-size: 0.95rem; min-width: 6.5rem; text-align: center; font-variant-numeric: tabular-nums; }
+.lw-read { display: grid; gap: 0.8rem; align-content: center; }
+.lw-box { font-size: 1.8rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+.lw-line { font-size: 1.1rem; }
+.lw-label { font-weight: 600; }
+
+@media (max-width: 900px) {
+  .case-layout, .lw-layout, .dc-layout { grid-template-columns: 1fr; }
+  .sorter-pool { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sort-bin { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+
+<!-- ===================== SHELL MARKUP (do not edit) ===================== -->
+<header class="topbar">
+  <div class="deck-id"><span class="dot" id="deck-dot"></span><span class="code" id="deck-code"></span><span class="deck-title" id="deck-title"></span></div>
+  <div class="tools">
+    <button class="icon-btn" id="btn-panel" aria-label="Show or hide the panel" title="Panel" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+    <button class="icon-btn" id="btn-help" aria-label="Help" title="Help (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg></button>
+    <button class="icon-btn" id="btn-theme" aria-label="Switch light or dark mode" title="Light or dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    <button class="icon-btn" id="btn-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+</header>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker></defs></svg>
+
+<main class="stage" id="stage">
+  <div class="card" id="card">
+
+
+<!-- ===================== CONTENT (edit for each deck) ===================== -->
+
+<!-- Slide 1: Title -->
+<section class="slide" data-type="title" data-title="Explain epidemiological approaches and questions">
+  <p class="code">C1 Epidemiological and economic thinking</p>
+  <h1>Explain epidemiological approaches and questions</h1>
+  <p class="lead">Epidemiology answers five questions about a health problem, from what is happening to whether a measure worked. How does one question lead to the next?</p>
+  <ul class="meta-list">
+    <li><span class="code">S1.6</span><span>Link the approaches of epidemiology to the domains</span></li>
+    <li><span class="code">S1.7</span><span>Place a problem in the five questions</span></li>
+    <li><span class="code">Time</span><span>About 20 minutes</span></li>
+    <li><span class="code">Before</span><span><a href="./identify-levels-of-analysis.html">Identify levels of analysis</a></span></li>
+  </ul>
+  <div class="notes">Read the lead aloud. Ask for a first answer in one sentence. The deck gives the course answer: five questions, five domains, and one loop that connects them.</div>
+</section>
+
+<!-- Slide 2: Recap of the anchor case -->
+<section class="slide" data-type="recap" data-title="The case">
+  <h2>The case: Salmonella on a layer farm</h2>
+  <div class="case-layout">
+    <div>
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, two of the eight pens, next to the water inlet.</p>
+      <p>The laboratory tests five hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have reached two markets.</p>
+      <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian runs laboratory tests, studies samples, and explains the results.">laboratory diagnostician</span>. The farm owner asks you: what should we do next?</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
+      <div><dt>Deaths in one week</dt><dd>120</dd></div>
+      <div><dt>Hens tested, all with Salmonella</dt><dd>5</dd></div>
+      <div><dt>Budget left this month</dt><dd>IDR 15,000,000</dd></div>
+    </dl>
+  </div>
+  <div class="notes">Read the three paragraphs aloud. The budget comes from deck 3. In this deck you work in the laboratory seat. The owner asks a question about action, and the laboratory has a result about animals.</div>
+</section>
+
+<!-- Slide 3: Question -->
+<section class="slide" data-type="question" data-title="Predict first">
+  <h2>The laboratory finds Salmonella in five hens. The owner asks: what should we do next? Which question does the laboratory result answer?</h2>
+  <p>Choose your prediction.</p>
+  <ul class="choices" data-choice="predict">
+    <li><button class="choice" data-value="a"><span class="key">A</span>What is happening?</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>Why is it happening?</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>What should be done?</button></li>
+  </ul>
+  <p class="verdict" id="predict-note" aria-live="polite"></p>
+  <div class="notes">Let students choose, then ask a student to explain the choice. The answer is A. The owner asks what should be done, which is a different question. The next slides name the five questions and the work behind each one.</div>
+</section>
+
+<!-- Slide 4: Concept, the definition has an object and three kinds of work -->
+<section class="slide" data-type="concept" data-title="The definition">
+  <h2>The definition of epidemiology has an object and three kinds of work</h2>
+  <p class="def-line">Epidemiology is the study of the <strong>distribution</strong> and <strong>determinants</strong> of health-related states or events in specified populations, and the <strong>application</strong> of this study to the control of health problems.</p>
+  <div class="lv-wrap" data-detail="d-def" tabindex="0" aria-label="A table with the object of the definition and its three kinds of work: work 1 distribution, work 2 determinants, and work 3 application. Select for details.">
+    <table class="ex-table lv-table">
+      <thead><tr><th scope="col">Part of the definition</th><th scope="col">What it asks the epidemiologist to do</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Object</th><td>Study <span class="term" data-tip="Diseases, infections, deaths, injuries, production problems, welfare states, and food safety hazards.">health-related states or events</span> in <span class="term" data-tip="Defined groups of animals, and the animal products that come from them.">specified populations</span>.</td></tr>
+        <tr><th scope="row">Work 1: <span class="term" data-tip="The frequency and pattern of health events by animal, place, and time.">Distribution</span></th><td>Describe how often the events occur, by animal, place, and time.</td></tr>
+        <tr><th scope="row">Work 2: <span class="term" data-tip="Any factor that changes the frequency of a health event in a population.">Determinants</span></th><td>Explain which factors change how often the events occur.</td></tr>
+        <tr><th scope="row">Work 3: <span class="term" data-tip="Use of the results to prevent and control health problems, and to check whether the measures worked.">Application</span></th><td>Use the results to control health problems and to check the measures.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="notes">This slide recalls deck 1. Ask students to name the six elements of the full definition before you show the table. Each kind of work leads to an approach on the next slide.</div>
+</section>
+
+<!-- Slide 5: Concept, five questions, five domains -->
+<section class="slide" data-type="concept" data-title="Five questions">
+  <h2>The course turns the three kinds of work into five questions</h2>
+  <p>Each question is one <span class="term" data-tip="One of the five questions of the course, or Domain 0. A domain groups the competencies that answer one question.">domain</span>, from Domain 1 (D1) to Domain 5 (D5). This material belongs to Domain 0 (D0). It comes first and asks why epidemiology is needed.</p>
+  <div class="fig-wrap" data-detail="d-five" tabindex="0" aria-label="Five boxes in a row, one for each domain. Domain 1 asks what is happening: descriptive epidemiology. Domain 2 asks why is it happening: analytical and experimental epidemiology. Domain 3 asks what could happen: predictive epidemiology. Domain 4 asks what should be done, and Domain 5 asks did it work: both interventional epidemiology. Brackets above the boxes link Domain 1 to work 1 distribution, Domain 2 to work 2 determinants, and Domains 3 to 5 to work 3 application. Select for details.">
+    <svg class="fig" viewBox="0 0 800 270" role="img" aria-label="Five boxes in a row, one for each domain, with the approach of each domain. Brackets above link Domain 1 to work 1, Domain 2 to work 2, and Domains 3 to 5 to work 3.">
+<path class="f-line" d="M6 62 V50 H154 V62"/>
+<text x="80.0" y="18" text-anchor="middle" class="t-strong">Work 1</text>
+<text x="80.0" y="38" text-anchor="middle" class="t-strong">Distribution</text>
+<path class="f-line" d="M166 62 V50 H314 V62"/>
+<text x="240.0" y="18" text-anchor="middle" class="t-strong">Work 2</text>
+<text x="240.0" y="38" text-anchor="middle" class="t-strong">Determinants</text>
+<path class="f-line" d="M326 62 V50 H794 V62"/>
+<text x="560.0" y="18" text-anchor="middle" class="t-strong">Work 3</text>
+<text x="560.0" y="38" text-anchor="middle" class="t-strong">Application</text>
+<rect class="f-box lp-core" x="6" y="72" width="148" height="190" rx="10"/>
+<rect class="f-d1" x="6" y="72" width="148" height="9" rx="4"/>
+<text x="80.0" y="108" text-anchor="middle" class="t-strong" style="font-size:18px">Domain 1</text>
+<text x="80.0" y="136" text-anchor="middle">What is</text>
+<text x="80.0" y="156" text-anchor="middle">happening?</text>
+<text x="80.0" y="196" text-anchor="middle" class="t-muted">Descriptive</text>
+<text x="80.0" y="215" text-anchor="middle" class="t-muted">epidemiology</text>
+<rect class="f-box lp-core" x="166" y="72" width="148" height="190" rx="10"/>
+<rect class="f-d2" x="166" y="72" width="148" height="9" rx="4"/>
+<text x="240.0" y="108" text-anchor="middle" class="t-strong" style="font-size:18px">Domain 2</text>
+<text x="240.0" y="136" text-anchor="middle">Why is it</text>
+<text x="240.0" y="156" text-anchor="middle">happening?</text>
+<text x="240.0" y="196" text-anchor="middle" class="t-muted">Analytical</text>
+<text x="240.0" y="215" text-anchor="middle" class="t-muted">(and experimental)</text>
+<text x="240.0" y="234" text-anchor="middle" class="t-muted">epidemiology</text>
+<rect class="f-box" x="326" y="72" width="148" height="190" rx="10"/>
+<rect class="f-d3" x="326" y="72" width="148" height="9" rx="4"/>
+<text x="400.0" y="108" text-anchor="middle" class="t-strong" style="font-size:18px">Domain 3</text>
+<text x="400.0" y="136" text-anchor="middle">What could</text>
+<text x="400.0" y="156" text-anchor="middle">happen?</text>
+<text x="400.0" y="196" text-anchor="middle" class="t-muted">Predictive</text>
+<text x="400.0" y="215" text-anchor="middle" class="t-muted">epidemiology</text>
+<rect class="f-box" x="486" y="72" width="148" height="190" rx="10"/>
+<rect class="f-d4" x="486" y="72" width="148" height="9" rx="4"/>
+<text x="560.0" y="108" text-anchor="middle" class="t-strong" style="font-size:18px">Domain 4</text>
+<text x="560.0" y="136" text-anchor="middle">What should</text>
+<text x="560.0" y="156" text-anchor="middle">be done?</text>
+<text x="560.0" y="196" text-anchor="middle" class="t-muted">Interventional</text>
+<text x="560.0" y="215" text-anchor="middle" class="t-muted">epidemiology</text>
+<rect class="f-box" x="646" y="72" width="148" height="190" rx="10"/>
+<rect class="f-d5" x="646" y="72" width="148" height="9" rx="4"/>
+<text x="720.0" y="108" text-anchor="middle" class="t-strong" style="font-size:18px">Domain 5</text>
+<text x="720.0" y="136" text-anchor="middle">Did it</text>
+<text x="720.0" y="156" text-anchor="middle">work?</text>
+<text x="720.0" y="196" text-anchor="middle" class="t-muted">Interventional</text>
+<text x="720.0" y="215" text-anchor="middle" class="t-muted">epidemiology</text>
+</svg>
+  </div>
+  <p class="under-fig">This file differentiates <span class="term" data-tip="The approach that describes the distribution of health events by animal, place, and time.">descriptive epidemiology</span> and <span class="term" data-tip="The approach that studies the determinants of health events by comparing groups.">analytical epidemiology</span>. The other approaches are introduced here and taught later.</p>
+  <div class="notes">Point at the brackets: work 1 (distribution) leads to Domain 1, work 2 (determinants) to Domain 2, and work 3 (application) to Domains 3, 4, and 5. Domains 4 and 5 share one approach name, because checking a measure belongs to the same line of work as choosing it. The approaches of D3 to D5 are introduced here and come back in later competencies. Open the details to show the definition of each approach.</div>
+</section>
+
+<!-- Slide 6: Concept, describe or compare -->
+<section class="slide" data-type="concept" data-title="Descriptive vs analytical epidemiology">
+  <h2>Descriptive vs analytical epidemiology</h2>
+  <p><span class="term" data-tip="The approach that describes the distribution of health events by animal, place, and time.">Descriptive epidemiology</span> describes the cases, whereas <span class="term" data-tip="The approach that studies the determinants of health events by comparing groups.">analytical epidemiology</span> compares cases with non-cases. Here, the <span class="term" data-tip="A unit that meets the case definition. Here, a case is a hen that died.">cases</span> are the 120 hens that died, and the <span class="term" data-tip="A unit that does not meet the case definition. Here, a non-case is a hen that did not die.">non-cases</span> are the 7,880 hens that did not die.</p>
+  <div class="dc-layout" data-detail="d-dc" tabindex="0" aria-label="Two cards. Left, descriptive epidemiology describes the cases: 120 deaths among 8,000 hens, 1.5 percent, with 50 deaths in pen A1, 40 in pen B1, and 5 in each of the other six pens. Right, analytical epidemiology compares cases with non-cases. Each pen holds 1,000 hens. In pens A1 and B1, 90 cases and 1,910 non-cases, 4.5 percent died. In the other six pens, 30 cases and 5,970 non-cases, 0.5 percent died. Select for details.">
+    <div class="dc-col">
+      <p class="dc-head"><span class="dot" style="--dc: var(--d1)"></span><span class="code">Domain 1</span>Descriptive epidemiology</p>
+      <p class="dc-line"><strong>Health event:</strong> dead hens (the cases)</p>
+      <p class="dc-line"><strong>Total:</strong> 120 deaths among 8,000 hens, or 1.5%</p>
+      <p class="dc-line"><strong>Distribution of cases by pen:</strong></p>
+      <svg class="fig lp-bars" viewBox="0 0 400 130" role="img" aria-label="Dead hens by pen: pen A1 50, pen B1 40, and each of the other six pens 5.">
+<text x="0" y="32">Pen A1</text>
+<rect class="f-d1" x="190" y="10" width="160.0" height="32" rx="4"/>
+<text x="358.0" y="33" class="t-strong">50</text>
+<text x="0" y="76">Pen B1</text>
+<rect class="f-d1" x="190" y="54" width="128.0" height="32" rx="4"/>
+<text x="326.0" y="77" class="t-strong">40</text>
+<text x="0" y="120">Each of the other six pens</text>
+<rect class="f-d1" x="190" y="98" width="16.0" height="32" rx="4"/>
+<text x="214.0" y="121" class="t-strong">5</text>
+</svg>
+    </div>
+    <div class="dc-col">
+      <p class="dc-head"><span class="dot" style="--dc: var(--d2)"></span><span class="code">Domain 2</span>Analytical epidemiology</p>
+      <p class="dc-line"><strong>Comparison:</strong> 120 cases and 7,880 non-cases. Each pen has 1,000 hens.</p>
+      <table class="ex-table dc-table">
+        <thead><tr><th scope="col">Pens</th><th scope="col">Cases</th><th scope="col">Non-cases</th><th scope="col">Hens that died</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">A1 and B1</th><td>90</td><td>1,910</td><td>4.5%</td></tr>
+          <tr><th scope="row">Other six pens</th><td>30</td><td>5,970</td><td>0.5%</td></tr>
+          <tr><th scope="row">Total (all eight pens)</th><td>120</td><td>7,880</td><td>1.5%</td></tr>
+        </tbody>
+      </table>
+      <p class="dc-line"><strong>Result:</strong> the proportion of hens that died is nine times higher in pens A1 and B1.</p>
+    </div>
+  </div>
+  <div class="notes">Ask what the left card can tell the owner and what it cannot. It shows where the deaths are. It cannot show why, because no other group is in the card. The right card adds the second group: the non-cases. Compare 4.5% with 0.5%. Do not name study designs here. They come in later competencies.</div>
+</section>
+
+<!-- Slide 7: Concept, the loop has six boxes -->
+<section class="slide" data-type="concept" data-title="The population-to-intervention loop">
+  <h2>The population-to-intervention loop</h2>
+  <p>The <span class="term" data-tip="The cycle that turns observation of a population into action. The action changes the population that is observed next.">population-to-intervention loop</span> has six boxes. It turns what we see into what we do. Each box is what we hold at one moment. After box 6, the loop goes back to box 1, because the <span class="term" data-tip="A measure that changes a health problem, such as disinfection or vaccination.">intervention</span> changes the population.</p>
+  <div class="lp-wrap" data-detail="d-boxes" tabindex="0" aria-label="A loop of six boxes. Top row from left to right: 1 Population, 2 Observation, 3 Information. Bottom row from right to left: 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1. Select for details.">
+    <svg class="fig" viewBox="0 0 760 300" role="img" aria-label="The loop of six boxes: 1 Population, 2 Observation, 3 Information, 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1.">
+<path id="lp-a1" class="f-arrow lp-arr" d="M172 55.0 L301 55.0"/>
+<path id="lp-a2" class="f-arrow lp-arr" d="M457 55.0 L586 55.0"/>
+<path id="lp-a3" class="f-arrow lp-arr" d="M665.0 92 L665.0 201"/>
+<path id="lp-a4" class="f-arrow lp-arr" d="M588 240.0 L459 240.0"/>
+<path id="lp-a5" class="f-arrow lp-arr" d="M303 240.0 L174 240.0"/>
+<path id="lp-a6" class="f-arrow lp-arr" d="M95.0 203 L95.0 94"/>
+<rect id="lp-b1" class="f-box lp-box" x="20" y="20" width="150" height="70" rx="10"/>
+<text x="95.0" y="50" text-anchor="middle" class="t-muted">1</text>
+<text x="95.0" y="74" text-anchor="middle" class="t-strong" style="font-size:18px">Population</text>
+<rect id="lp-b2" class="f-box lp-box" x="305" y="20" width="150" height="70" rx="10"/>
+<text x="380.0" y="50" text-anchor="middle" class="t-muted">2</text>
+<text x="380.0" y="74" text-anchor="middle" class="t-strong" style="font-size:18px">Observation</text>
+<rect id="lp-b3" class="f-box lp-box" x="590" y="20" width="150" height="70" rx="10"/>
+<text x="665.0" y="50" text-anchor="middle" class="t-muted">3</text>
+<text x="665.0" y="74" text-anchor="middle" class="t-strong" style="font-size:18px">Information</text>
+<rect id="lp-b4" class="f-box lp-box" x="590" y="205" width="150" height="70" rx="10"/>
+<text x="665.0" y="235" text-anchor="middle" class="t-muted">4</text>
+<text x="665.0" y="259" text-anchor="middle" class="t-strong" style="font-size:18px">Interpretation</text>
+<rect id="lp-b5" class="f-box lp-box" x="305" y="205" width="150" height="70" rx="10"/>
+<text x="380.0" y="235" text-anchor="middle" class="t-muted">5</text>
+<text x="380.0" y="259" text-anchor="middle" class="t-strong" style="font-size:18px">Decision</text>
+<rect id="lp-b6" class="f-box lp-box" x="20" y="205" width="150" height="70" rx="10"/>
+<text x="95.0" y="235" text-anchor="middle" class="t-muted">6</text>
+<text x="95.0" y="259" text-anchor="middle" class="t-strong" style="font-size:18px">Intervention</text>
+</svg>
+  </div>
+  <div class="notes">Trace the loop with a finger: boxes 1 to 6, then back to box 1. Stress that box 1 is the same population at a later time, so the loop has six boxes. Open the details for the meaning of each box.</div>
+</section>
+
+<!-- Slide 8: Concept, the arrows -->
+<section class="slide" data-type="concept" data-title="The work between the boxes">
+  <h2>The work between the boxes of the loop</h2>
+  <p>Each arrow is work that moves the loop to the next box. The label names the work, and the code names the domain that teaches it. Select the figure for an example of each arrow.</p>
+  <div class="lp-wrap" data-detail="d-arrows" tabindex="0" aria-label="The loop of six boxes with a label on each arrow. Population to Observation: collect data, D1. Observation to Information: summarise, D1. Information to Interpretation: analyse, D2 and D3. Interpretation to Decision: weigh options, D4. Decision to Intervention: carry out, D4. Intervention back to Population: animals respond, D5 compares two turns. Select for details.">
+    <svg class="fig" viewBox="0 0 760 300" role="img" aria-label="The loop of six boxes: 1 Population, 2 Observation, 3 Information, 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1.">
+<path id="lp-a1" class="f-arrow lp-arr" d="M172 55.0 L301 55.0"/>
+<path id="lp-a2" class="f-arrow lp-arr" d="M457 55.0 L586 55.0"/>
+<path id="lp-a3" class="f-arrow lp-arr" d="M665.0 92 L665.0 201"/>
+<path id="lp-a4" class="f-arrow lp-arr" d="M588 240.0 L459 240.0"/>
+<path id="lp-a5" class="f-arrow lp-arr" d="M303 240.0 L174 240.0"/>
+<path id="lp-a6" class="f-arrow lp-arr" d="M95.0 203 L95.0 94"/>
+<rect id="lp-b1" class="f-box lp-box" x="20" y="20" width="150" height="70" rx="10"/>
+<text x="95.0" y="50" text-anchor="middle" class="t-muted">1</text>
+<text x="95.0" y="74" text-anchor="middle" class="t-strong" style="font-size:18px">Population</text>
+<rect id="lp-b2" class="f-box lp-box" x="305" y="20" width="150" height="70" rx="10"/>
+<text x="380.0" y="50" text-anchor="middle" class="t-muted">2</text>
+<text x="380.0" y="74" text-anchor="middle" class="t-strong" style="font-size:18px">Observation</text>
+<rect id="lp-b3" class="f-box lp-box" x="590" y="20" width="150" height="70" rx="10"/>
+<text x="665.0" y="50" text-anchor="middle" class="t-muted">3</text>
+<text x="665.0" y="74" text-anchor="middle" class="t-strong" style="font-size:18px">Information</text>
+<rect id="lp-b4" class="f-box lp-box" x="590" y="205" width="150" height="70" rx="10"/>
+<text x="665.0" y="235" text-anchor="middle" class="t-muted">4</text>
+<text x="665.0" y="259" text-anchor="middle" class="t-strong" style="font-size:18px">Interpretation</text>
+<rect id="lp-b5" class="f-box lp-box" x="305" y="205" width="150" height="70" rx="10"/>
+<text x="380.0" y="235" text-anchor="middle" class="t-muted">5</text>
+<text x="380.0" y="259" text-anchor="middle" class="t-strong" style="font-size:18px">Decision</text>
+<rect id="lp-b6" class="f-box lp-box" x="20" y="205" width="150" height="70" rx="10"/>
+<text x="95.0" y="235" text-anchor="middle" class="t-muted">6</text>
+<text x="95.0" y="259" text-anchor="middle" class="t-strong" style="font-size:18px">Intervention</text>
+<text x="237.5" y="45.0" text-anchor="middle">collect data</text>
+<text x="237.5" y="75.0" text-anchor="middle" class="t-strong lp-tag">D1</text>
+<text x="522.5" y="45.0" text-anchor="middle">summarise</text>
+<text x="522.5" y="75.0" text-anchor="middle" class="t-strong lp-tag">D1</text>
+<text x="653.0" y="133.5" text-anchor="end">analyse</text>
+<text x="653.0" y="163.5" text-anchor="end" class="t-strong lp-tag">D2, D3</text>
+<text x="522.5" y="230.0" text-anchor="middle">weigh options</text>
+<text x="522.5" y="260.0" text-anchor="middle" class="t-strong lp-tag">D4</text>
+<text x="237.5" y="230.0" text-anchor="middle">carry out</text>
+<text x="237.5" y="260.0" text-anchor="middle" class="t-strong lp-tag">D4</text>
+<text x="107.0" y="133.5">animals respond</text>
+<text x="107.0" y="159.5" class="t-strong lp-tag">D5 compares two turns</text>
+</svg>
+  </div>
+  <div class="notes">Go arrow by arrow. D1 covers the first two arrows. D2 and D3 share the third arrow. D4 covers the fourth and fifth arrows. No arrow carries D5. It is the comparison of two turns, which the next slide shows. Open the details for an example and a risk at each arrow.</div>
+</section>
+
+<!-- Slide 9: Concept, the loop turns again -->
+<section class="slide" data-type="concept" data-title="The loop turns again">
+  <h2>Continuation of the loop</h2>
+  <p>The measure changes the population. A new observation then shows the changed population. Comparing it with the first observation answers the question: did it work? Without the first observation, there is nothing to compare.</p>
+  <div class="fig-wrap" data-detail="d-turn" tabindex="0" aria-label="Three boxes in a row: turn 1 observation, intervention, and turn 2 observation. An arrow leads from each box to the next. A bracket above the first and third box is labeled D5 compares the two observations. Select for details.">
+    <svg class="fig" viewBox="0 0 760 210" role="img" aria-label="Three boxes in a row: observation of turn 1, intervention, and observation of turn 2. An arrow leads from each box to the next. A bracket above the first and third box is labeled D5 compares the two observations.">
+<rect class="f-box" x="20" y="90" width="200" height="90" rx="10"/>
+<text x="120" y="127" text-anchor="middle" class="t-strong" style="font-size:19px">Observation</text>
+<text x="120" y="156" text-anchor="middle" class="t-muted">turn 1, before</text>
+<rect class="f-box" x="280" y="90" width="200" height="90" rx="10"/>
+<text x="380" y="127" text-anchor="middle" class="t-strong" style="font-size:19px">Intervention</text>
+<text x="380" y="156" text-anchor="middle" class="t-muted">the measure</text>
+<rect class="f-box" x="540" y="90" width="200" height="90" rx="10"/>
+<text x="640" y="127" text-anchor="middle" class="t-strong" style="font-size:19px">Observation</text>
+<text x="640" y="156" text-anchor="middle" class="t-muted">turn 2, after</text>
+<path class="f-arrow" d="M222 135 L274 135"/><path class="f-arrow" d="M482 135 L534 135"/>
+<path class="s-d5" d="M120 78 V48 H640 V78" style="stroke-width:3"/>
+<text x="380" y="34" text-anchor="middle" class="t-strong" style="font-size:18px">D5 compares the two observations</text>
+</svg>
+  </div>
+  <div class="notes">D5 is the comparison between two turns of the loop. No box holds it. Ask what the farm would lack if nobody had counted the deaths before the measure.</div>
+</section>
+
+<!-- Slide 10: Example, the case in the loop -->
+<section class="slide" data-type="explore" data-title="The case in the loop">
+  <h2>Follow the case through the loop</h2>
+  <div class="lw-layout">
+    <div class="lw-left">
+      <svg class="fig" id="lw-fig" viewBox="0 0 520 232" role="img" aria-label="The loop of six boxes: 1 Population, 2 Observation, 3 Information, 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1.">
+<path id="lw-a1" class="f-arrow lw-arr" d="M140 51.0 L191 51.0"/>
+<path id="lw-a2" class="f-arrow lw-arr" d="M327 51.0 L378 51.0"/>
+<path id="lw-a3" class="f-arrow lw-arr" d="M447.0 84 L447.0 146"/>
+<path id="lw-a4" class="f-arrow lw-arr" d="M380 181.0 L329 181.0"/>
+<path id="lw-a5" class="f-arrow lw-arr" d="M193 181.0 L142 181.0"/>
+<path id="lw-a6" class="f-arrow lw-arr" d="M73.0 148 L73.0 86"/>
+<rect id="lw-b1" class="f-box lw-box" x="8" y="20" width="130" height="62" rx="10"/>
+<text x="73.0" y="45" text-anchor="middle" class="t-muted">1</text>
+<text x="73.0" y="68" text-anchor="middle" class="t-strong">Population</text>
+<rect id="lw-b2" class="f-box lw-box" x="195" y="20" width="130" height="62" rx="10"/>
+<text x="260.0" y="45" text-anchor="middle" class="t-muted">2</text>
+<text x="260.0" y="68" text-anchor="middle" class="t-strong">Observation</text>
+<rect id="lw-b3" class="f-box lw-box" x="382" y="20" width="130" height="62" rx="10"/>
+<text x="447.0" y="45" text-anchor="middle" class="t-muted">3</text>
+<text x="447.0" y="68" text-anchor="middle" class="t-strong">Information</text>
+<rect id="lw-b4" class="f-box lw-box" x="382" y="150" width="130" height="62" rx="10"/>
+<text x="447.0" y="175" text-anchor="middle" class="t-muted">4</text>
+<text x="447.0" y="198" text-anchor="middle" class="t-strong">Interpretation</text>
+<rect id="lw-b5" class="f-box lw-box" x="195" y="150" width="130" height="62" rx="10"/>
+<text x="260.0" y="175" text-anchor="middle" class="t-muted">5</text>
+<text x="260.0" y="198" text-anchor="middle" class="t-strong">Decision</text>
+<rect id="lw-b6" class="f-box lw-box" x="8" y="150" width="130" height="62" rx="10"/>
+<text x="73.0" y="175" text-anchor="middle" class="t-muted">6</text>
+<text x="73.0" y="198" text-anchor="middle" class="t-strong">Intervention</text>
+</svg>
+      <div class="lw-nav">
+        <button class="btn" id="lp-prev">Previous stage</button>
+        <span class="lw-stage" id="lp-stage" aria-live="polite"></span>
+        <button class="btn btn-main" id="lp-next">Next stage</button>
+      </div>
+    </div>
+    <div class="lw-read" aria-live="polite">
+      <p class="lw-box" id="lp-box"></p>
+      <p class="lw-line"><span class="lw-label">What we have: </span><span id="lp-have"></span></p>
+      <p class="lw-line"><span class="lw-label">Work that led here: </span><span id="lp-work"></span></p>
+      <p class="lw-line"><span class="lw-label">Who acts: </span><span id="lp-who"></span></p>
+    </div>
+  </div>
+  <p class="practice-note">Select Next stage. At each stage, say which question the work answers.</p>
+  <div class="notes">At stage 4, show that two questions share one arrow: why (D2) and what could happen (D3). At stage 5, the owner is the decision maker. The laboratory diagnostician works mostly from box 1 to box 4. At stage 7, the loop starts a second turn.</div>
+</section>
+
+<!-- Slide 11: Practice, sort cards -->
+<section class="slide" data-type="practice" data-title="Sort the statements">
+  <h2 class="lp-sort-title">Sort each statement by the question that it answers</h2>
+  <div class="sorter" data-sorter data-explain="d-sort" data-explain-always="1">
+    <div class="sorter-pool" aria-label="Cards to sort">
+      <button class="sort-card" data-target="d1">The laboratory counts the dead hens by pen and by day.</button>
+      <button class="sort-card" data-target="d4">The owner chooses between testing the eggs, repairing the water line, and vaccinating the next flock.</button>
+      <button class="sort-card" data-target="d2">The laboratory compares the share of hens that died in pens near and far from the water inlet.</button>
+      <button class="sort-card" data-target="d5">The laboratory checks whether deaths fell after the pens were disinfected.</button>
+      <button class="sort-card" data-target="d1">Pens A1 and B1 have the most deaths of the eight pens.</button>
+      <button class="sort-card" data-target="d3">The laboratory estimates how many more hens could be infected next week.</button>
+      <button class="sort-card" data-target="d2">The laboratory compares the cases and non-cases of pens A1 and B1 with those of the other six pens.</button>
+      <button class="sort-card" data-target="d4">The authority decides whether the eggs of pens A1 and B1 stay on sale.</button>
+    </div>
+    <div class="sorter-bins">
+      <div class="sort-bin" data-bin="d1"><h3>D1 What is happening?</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="d2"><h3>D2 Why is it happening?</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="d3"><h3>D3 What could happen?</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="d4"><h3>D4 What should be done?</h3><div class="sort-drop"></div></div>
+      <div class="sort-bin" data-bin="d5"><h3>D5 Did it work?</h3><div class="sort-drop"></div></div>
+    </div>
+    <div class="sorter-actions">
+      <button class="btn btn-main" data-sorter-check>Check the sorting</button>
+      <button class="btn" data-sorter-reset>Start again</button>
+      <span class="verdict" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <div class="notes">Students work in pairs. The hard pair is the statement about the pens with the most deaths, which describes a pattern (D1), and the statements that compare groups of pens, which look for a determinant (D2). A statement that only says where deaths are does not explain why.</div>
+</section>
+
+<!-- Slide 12: Practice, complete the statements -->
+<section class="slide" data-type="practice" data-title="Name the work">
+  <h2>Name the work that each statement describes</h2>
+  <div class="bd-rows">
+    <div class="bd-row">
+      <p class="quote-s">1. “Staff choose which five hens to test.”</p>
+      <p class="bd-fill">This is the work of: <select id="w1" aria-label="Work for statement 1"><option value="">Choose</option><option value="collect">collecting data</option><option value="summarise">summarising data</option><option value="analyse">analysing data</option><option value="weigh">weighing options</option><option value="carry">carrying out a measure</option><option value="respond">waiting for the animals to respond</option></select></p>
+    </div>
+    <div class="bd-row">
+      <p class="quote-s">2. “The laboratory puts the deaths by pen and by day in a table.”</p>
+      <p class="bd-fill">This is the work of: <select id="w2" aria-label="Work for statement 2"><option value="">Choose</option><option value="collect">collecting data</option><option value="summarise">summarising data</option><option value="analyse">analysing data</option><option value="weigh">weighing options</option><option value="carry">carrying out a measure</option><option value="respond">waiting for the animals to respond</option></select></p>
+    </div>
+    <div class="bd-row">
+      <p class="quote-s">3. “The laboratory compares the share of hens that died in pens A1 and B1 with the share in the other six pens.”</p>
+      <p class="bd-fill">This is the work of: <select id="w3" aria-label="Work for statement 3"><option value="">Choose</option><option value="collect">collecting data</option><option value="summarise">summarising data</option><option value="analyse">analysing data</option><option value="weigh">weighing options</option><option value="carry">carrying out a measure</option><option value="respond">waiting for the animals to respond</option></select></p>
+    </div>
+    <div class="bd-row">
+      <p class="quote-s">4. “The owner compares three measures against the budget.”</p>
+      <p class="bd-fill">This is the work of: <select id="w4" aria-label="Work for statement 4"><option value="">Choose</option><option value="collect">collecting data</option><option value="summarise">summarising data</option><option value="analyse">analysing data</option><option value="weigh">weighing options</option><option value="carry">carrying out a measure</option><option value="respond">waiting for the animals to respond</option></select></p>
+    </div>
+    <div class="bd-row">
+      <p class="quote-s">5. “Staff repair the water line and disinfect pens A1 and B1.”</p>
+      <p class="bd-fill">This is the work of: <select id="w5" aria-label="Work for statement 5"><option value="">Choose</option><option value="collect">collecting data</option><option value="summarise">summarising data</option><option value="analyse">analysing data</option><option value="weigh">weighing options</option><option value="carry">carrying out a measure</option><option value="respond">waiting for the animals to respond</option></select></p>
+    </div>
+  </div>
+  <div class="bd-actions">
+    <button class="btn btn-main" id="bd-check">Check the statements</button>
+    <button class="btn" id="bd-reset">Start again</button>
+    <span class="verdict" id="bd-verdict" aria-live="polite"></span>
+  </div>
+  <div class="bd-why" id="bd-why"></div>
+  <div class="notes">Statements 2 and 3 are the pair to discuss. A table of deaths by pen and by day summarises the cases. A comparison of the share of hens that died in two groups of pens analyses them. One option is not the work of any statement.</div>
+</section>
+
+<!-- Slide 13: Practice, find the error -->
+<section class="slide" data-type="practice" data-title="Find the error">
+  <h2>Find the error</h2>
+  <p>The laboratory diagnostician writes a note.</p>
+  <ol class="quote lv-note">
+    <li>The laboratory counts the dead hens by pen: 90 of the 120 are in pens A1 and B1.</li>
+    <li>The laboratory plans to compare the share of hens that died in pens A1 and B1 with the share in the other six pens.</li>
+    <li>Pens A1 and B1 are next to the water inlet, so the water caused the deaths.</li>
+  </ol>
+  <p class="q-label">Which sentence draws a conclusion that its data cannot support?</p>
+  <div>
+    <ul class="choices" data-check="q0" data-answer="c" data-explain="d-q0">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Sentence 1, about the count by pen</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Sentence 2, about the comparison</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Sentence 3, about the water inlet</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+  <div class="notes">For each sentence ask which question it answers. Sentence 1 answers what is happening. Sentence 2 is a plan to answer why, and it compares two groups. Sentence 3 answers why, but it has only the count. A count shows where the deaths are. It does not show their cause.</div>
+</section>
+
+<!-- Slide 14: Check 1 -->
+<section class="slide" data-type="check" data-title="Check: a second test">
+  <div>
+    <h2>The owner repairs the water line. The laboratory tests the flock again and compares the result with the first test. Which question does this comparison answer?</h2>
+    <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
+      <li><button class="choice" data-value="a"><span class="key">A</span>What should be done?</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Did it work?</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Why is it happening?</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 15: Check 2 -->
+<section class="slide" data-type="check" data-title="Check: an arrow">
+  <div>
+    <h2>A technician selects 30 hens at random from the eight pens and tests each hen for Salmonella. Which work of the loop is this?</h2>
+    <ul class="choices" data-check="q2" data-answer="a" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Collect data, from Population to Observation</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>Summarise data, from Observation to Information</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>Analyse data, from Information to Interpretation</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 16: Check 3, transfer -->
+<section class="slide" data-type="check" data-title="Check: a new case">
+  <h2>A new case: dead waterbirds at a lake</h2>
+  <p>A <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian cares for wild animals and helps to control disease in them.">wildlife veterinarian</span> finds 30 dead <span class="term" data-tip="A bird that lives on or near water, such as a duck or a heron.">waterbirds</span> at a lake in one week. She counts the dead birds by day and by site on the shore. She then compares sites near a <span class="term" data-tip="A farm that keeps chickens, ducks, or other birds for eggs or meat.">poultry farm</span> with sites far from a poultry farm.</p>
+  <div>
+    <p class="q-label">Which statement is correct?</p>
+    <ul class="choices" data-check="q3" data-answer="c" data-explain="d-q3">
+      <li><button class="choice" data-value="a"><span class="key">A</span>The counting and the comparison are both descriptive epidemiology</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>The counting is analytical epidemiology and the comparison is descriptive</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>The counting is descriptive epidemiology and the comparison is analytical</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 17: Summary -->
+<section class="slide" data-type="summary" data-title="Summary">
+  <h2>Key points</h2>
+  <ul>
+    <li>The definition of epidemiology has an object and three kinds of work: work 1 is distribution, work 2 is determinants, and work 3 is application.</li>
+    <li>Descriptive epidemiology describes the cases: how many, which animals, where, and when. Analytical epidemiology compares cases with non-cases to look for determinants.</li>
+    <li>The course has five questions, one for each domain: what is happening (Domain 1), why is it happening (Domain 2), what could happen (Domain 3), what should be done (Domain 4), and did it work (Domain 5).</li>
+    <li>The population-to-intervention loop has six boxes. The arrows are the work between the boxes. After box 6 the loop returns to box 1, and Domain 5 compares two turns.</li>
+    <li>An answer needs the work of its own question. A count of cases does not explain why.</li>
+  </ul>
+  <div class="links">
+    <a class="btn" href="../encyclopedia/approaches-of-epidemiology.html">Read the article: Approaches of epidemiology</a>
+    <a class="btn btn-main" href="./write-problem-frame.html">Open the next deck: Write a problem frame</a>
+  </div>
+</section>
+
+<!-- Details: one template per element with data-detail or data-explain -->
+<template id="d-def">
+  <h3>About the definition</h3>
+  <p>The definition is by Last (2001). Check the exact wording against the source before you quote it.</p>
+  <ul>
+    <li><strong>Study:</strong> a scientific and systematic activity based on data.</li>
+    <li><strong>Object:</strong> health-related states or events, in specified populations. In veterinary work, the events include diseases, deaths, production problems, and welfare states.</li>
+    <li><strong>Three kinds of work:</strong> describe the distribution, explain the determinants, and apply the study to control health problems.</li>
+  </ul>
+  <p>Each kind of work leads to an approach of epidemiology. The next slide shows them.</p>
+</template>
+<template id="d-five">
+  <h3>The approaches and their domains</h3>
+  <ul>
+    <li><strong>Domain 1, descriptive epidemiology:</strong> describes the distribution of health events by animal, place, and time.</li>
+    <li><strong>Domain 2, analytical epidemiology:</strong> studies the determinants of health events by comparing groups.</li>
+    <li><strong>Experimental epidemiology:</strong> studies determinants or interventions in trials in which the investigator assigns the exposure. It belongs to Domain 2 and is an advanced part of the course.</li>
+    <li><strong>Domain 3, predictive epidemiology:</strong> projects what could happen, through risk assessment and models.</li>
+    <li><strong>Domain 4, interventional epidemiology:</strong> applies epidemiological evidence to choose measures that prevent and control health problems.</li>
+    <li><strong>Domain 5, interventional epidemiology:</strong> the same approach checks whether a measure reached its objectives, by comparing indicators before and after, or between groups. The word evaluation names this work.</li>
+  </ul>
+  <p>The names predictive epidemiology and interventional epidemiology are course conventions. Check them against the literature. Textbooks group these approaches in different ways. The definition names no projection. The course adds it to application.</p>
+</template>
+<template id="d-dc">
+  <h3>About the numbers and the comparison</h3>
+  <p>The case gives no number of hens per pen. This deck sets 1,000 hens in each of the eight pens.</p>
+  <ul>
+    <li><strong>Deaths by pen:</strong> 50 in pen A1, 40 in pen B1, and 5 in each of the other six pens. The total is 120.</li>
+    <li><strong>Pens A1 and B1:</strong> 2,000 hens. 90 are cases and 1,910 are non-cases. 90 of 2,000 is 4.5%.</li>
+    <li><strong>Other six pens:</strong> 6,000 hens. 30 are cases and 5,970 are non-cases. 30 of 6,000 is 0.5%.</li>
+    <li><strong>All eight pens:</strong> 120 cases and 7,880 non-cases. 120 of 8,000 is 1.5%.</li>
+  </ul>
+  <p>A count of cases can also give a percentage when the number of animals is known. The difference is the second group. A comparison needs animals without the event.</p>
+  <p>The comparison shows that death is linked with pens A1 and B1. It does not show that the water inlet caused the deaths. Other differences between the pens, such as the age of the hens or the feed, need a check. Later competencies teach how.</p>
+</template>
+<template id="d-boxes">
+  <h3>The six boxes</h3>
+  <p>Boxes are what we hold. Arrows are what we do.</p>
+  <ul>
+    <li><strong>1 Population:</strong> the animals of one place, with one disease in view. Case: 8,000 hens in eight pens.</li>
+    <li><strong>2 Observation:</strong> raw data and samples. Case: the death records and five tested hens.</li>
+    <li><strong>3 Information:</strong> data organised into counts, rates, tables, maps, and curves. Case: deaths by pen and by day.</li>
+    <li><strong>4 Interpretation:</strong> what the information means: an explanation of why and a projection of what could happen. Case: deaths cluster near the water inlet.</li>
+    <li><strong>5 Decision:</strong> the option that the decision maker chooses. Case: the owner chooses to repair the water line and disinfect the two pens.</li>
+    <li><strong>6 Intervention:</strong> the measure in place. Case: the water line is repaired and the pens are disinfected.</li>
+  </ul>
+  <p>Domain 0 sits outside the loop. It is the frame that explains why the loop is needed.</p>
+</template>
+<template id="d-arrows">
+  <h3>The six arrows</h3>
+  <details class="acc" open><summary>1 to 2: collect data (D1)</summary><div><p>Choose which animals and records to observe. Case: five hens are tested. Risk: the chosen animals may not represent the flock.</p></div></details>
+  <details class="acc"><summary>2 to 3: summarise (D1)</summary><div><p>Turn raw data into counts, rates, tables, maps, or curves. Case: deaths by pen and by day. Risk: a wrong count or a wrong denominator.</p></div></details>
+  <details class="acc"><summary>3 to 4: analyse (D2 and D3)</summary><div><p>Compare groups to look for determinants (D2), and project what could happen (D3). Case: the share of hens that died is compared between pens A1 and B1 and the other six pens. Risk: bias and other factors can create a false pattern.</p></div></details>
+  <details class="acc"><summary>4 to 5: weigh options (D4)</summary><div><p>Compare measures on health and cost, with the budget and the values of the people involved. Case: three measures against IDR 15,000,000. Risk: values and costs are not in the data.</p></div></details>
+  <details class="acc"><summary>5 to 6: carry out (D4)</summary><div><p>Carry out the chosen measure. Case: the water line is repaired and the pens are disinfected. Risk: the measure is done in part.</p></div></details>
+  <details class="acc"><summary>6 to 1: animals respond (D5)</summary><div><p>Time passes and the animals respond to the measure. The next turn of the loop compares the new observation with the first. Risk: other changes happen at the same time.</p></div></details>
+  </template>
+<template id="d-turn">
+  <h3>Why two turns are needed</h3>
+  <p>A fall in deaths after the measure does not prove that the measure worked. Other changes can happen at the same time, such as the weather or a change in feed. Later competencies return to this point.</p>
+  <p>The first observation is still needed. Without it, nobody can say whether deaths fell.</p>
+</template>
+<template id="d-sort">
+  <h3>How to place a statement</h3>
+  <p>Ask which work the statement describes.</p>
+  <ul>
+    <li><strong>D1:</strong> describes the cases: how many, which animals, where, and when. A pattern, such as the pens with the most deaths, is still a description.</li>
+    <li><strong>D2:</strong> compares groups to look for a determinant, for example the share of hens that died in pens near and far from the water inlet.</li>
+    <li><strong>D3:</strong> projects what could happen next.</li>
+    <li><strong>D4:</strong> chooses a measure or an action.</li>
+    <li><strong>D5:</strong> checks whether a measure worked, by comparing before and after.</li>
+  </ul>
+</template>
+<template id="d-q0">
+  <h3>Answer: C</h3>
+  <p>Sentence 3 moves from a count to a cause. A count of deaths by pen shows where and how many. It does not show why.</p>
+  <p>Sentence 2 plans the right move: compare the share of hens that died in two groups of pens. Even that comparison shows a link, and the cause needs more checks.</p>
+</template>
+<template id="d-q1">
+  <h3>Answer: B</h3>
+  <p>The comparison with the first test asks whether the measure worked. That is question D5.</p>
+  <p>The new test is a second observation, box 2 of the second turn. The comparison with the first turn makes it an evaluation.</p>
+</template>
+<template id="d-q2">
+  <h3>Answer: A</h3>
+  <p>Choosing hens and testing them collects raw data from the population. It moves the loop from box 1 to box 2.</p>
+  <p>Summarising comes later, when the results are counted in a table. Analysing comes after that, when groups are compared.</p>
+</template>
+<template id="d-q3">
+  <h3>Answer: C</h3>
+  <p>Counting the dead birds by day and by site describes the distribution of the cases. That is descriptive epidemiology.</p>
+  <p>Comparing sites near and far from poultry farms looks for a factor that is linked with death, by comparing groups. That is analytical epidemiology. The comparison still needs care before anyone names a cause.</p>
+</template>
+
+  </div><!-- /card -->
+
+  <aside class="panel" id="panel" aria-label="Panel">
+    <div class="panel-head">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tab-controls" aria-selected="true" data-tab="controls">Controls</button>
+        <button class="tab" role="tab" id="tab-details" aria-selected="false" data-tab="details">Details</button>
+        <button class="tab" role="tab" id="tab-notes" aria-selected="false" data-tab="notes" hidden>Notes</button>
+      </div>
+      <button class="icon-btn" id="btn-close" aria-label="Close the panel" title="Close (Esc)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-section" id="sec-controls"></div>
+      <div class="panel-section" id="sec-details" hidden><p class="empty-note">Select an element marked with "i" on the slide to see details here.</p></div>
+      <div class="panel-section" id="sec-notes" hidden></div>
+    </div>
+  </aside>
+
+
+<!-- ===================== END OF CONTENT ===================== -->
+</main>
+
+<footer class="bottombar">
+  <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="counter" id="counter" aria-label="Open the overview"></button>
+  <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+</footer>
+
+<div class="overlay" id="overview" role="dialog" aria-label="Overview"><h2>All slides</h2><div class="ov-grid" id="ov-grid"></div></div>
+<div class="overlay" id="help" role="dialog" aria-label="Help">
+  <h2>How to use these slides</h2>
+  <dl class="help-list">
+    <dt><span class="demo-term">Dotted text</span></dt><dd>A term with a short definition. Hover or tap it.</dd>
+    <dt><span class="demo-detail">Box</span></dt><dd>An element with an "i" opens details in the panel. Click it or press Enter.</dd>
+    <dt><span class="kbd">→</span> <span class="kbd">Space</span> <span class="kbd">Page Down</span></dt><dd>Next slide</dd>
+    <dt><span class="kbd">←</span> <span class="kbd">Page Up</span></dt><dd>Previous slide</dd>
+    <dt><span class="kbd">Home</span> <span class="kbd">End</span></dt><dd>First or last slide</dd>
+    <dt><span class="kbd">F</span></dt><dd>Full screen</dd>
+    <dt><span class="kbd">O</span></dt><dd>Overview of all slides</dd>
+    <dt><span class="kbd">N</span></dt><dd>Lecturer notes</dd>
+    <dt><span class="kbd">Esc</span></dt><dd>Close the panel or this screen</dd>
+  </dl>
+  <button class="btn" id="btn-help-close">Close</button>
+</div>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+
+<!-- ===================== SHELL SCRIPT (do not edit) ===================== -->
+<script id="shell-script">
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const root = document.documentElement;
+  const meta = JSON.parse($('#deck-meta').textContent);
+  const domVar = { D0: '--d0', D1: '--d1', D2: '--d2', D3: '--d3', D4: '--d4', D5: '--d5', Integration: '--dint' };
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+  // Theme
+  const saved = store.get('eev-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+  $('#btn-theme').addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; store.set('eev-theme', root.dataset.theme); });
+
+  // Top bar
+  $('#deck-title').textContent = meta.title;
+  $('#deck-code').textContent = meta.domain === 'Integration' ? meta.competency : meta.domain + ' ' + meta.competency;
+  $('#deck-dot').style.background = 'var(' + (domVar[meta.domain] || '--d0') + ')';
+
+  // Slides and navigation
+  const slides = $$('.slide');
+  const stage = $('#stage');
+  let current = 0, notesMode = false, panelClosed = false;
+  const dots = $('#dots'), ovGrid = $('#ov-grid');
+  slides.forEach((s, i) => {
+    const t = s.dataset.title || ('Slide ' + (i + 1));
+    const d = document.createElement('button'); d.title = (i + 1) + '. ' + t; d.setAttribute('aria-label', 'Slide ' + (i + 1) + ': ' + t);
+    d.addEventListener('click', () => go(i)); dots.appendChild(d);
+    const o = document.createElement('button'); o.innerHTML = '<span class="ov-type"></span><strong></strong>';
+    o.querySelector('.ov-type').textContent = (i + 1) + '. ' + (s.dataset.type || '');
+    o.querySelector('strong').textContent = t;
+    o.addEventListener('click', () => { closeOverlays(); go(i); }); ovGrid.appendChild(o);
+  });
+  const controlsByslide = {};
+  const store2 = document.createElement('div'); store2.hidden = true; document.body.appendChild(store2);
+  $$('.controls').forEach(c => { controlsByslide[c.dataset.forSlide] = c; c.hidden = false; store2.appendChild(c); c._defaults = $$('input, select', c).map(el => [el, el.type === 'checkbox' ? el.checked : el.value]); });
+  const secControls = $('#sec-controls'), secDetails = $('#sec-details'), secNotes = $('#sec-notes');
+  const detailEmpty = secDetails.innerHTML;
+
+  function setTab(name) {
+    ['controls', 'details', 'notes'].forEach(n => { $('#tab-' + n).setAttribute('aria-selected', String(n === name)); $('#sec-' + n).hidden = n !== name; });
+  }
+  function hasPanelContent(s) { return s.dataset.panel === 'controls' || s.querySelector('[data-detail]') || s.querySelector('[data-explain]') || (notesMode && s.querySelector('.notes')); }
+  function updatePanel() {
+    const s = slides[current];
+    const ctl = controlsByslide[String(current + 1)];
+    Array.from(secControls.children).forEach(ch => store2.appendChild(ch)); if (ctl) secControls.appendChild(ctl);
+    $('#tab-controls').hidden = !ctl;
+    const note = s.querySelector('.notes');
+    $('#tab-notes').hidden = !(notesMode && note);
+    secNotes.innerHTML = note ? '<h3>Lecturer notes</h3><p></p>' : ''; if (note) secNotes.querySelector('p').textContent = note.textContent.trim();
+    secDetails.innerHTML = detailEmpty;
+    $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
+    const show = hasPanelContent(s);
+    $('#btn-panel').hidden = !show;
+    const auto = !!ctl || !!(notesMode && note);
+    stage.classList.toggle('has-panel', auto && !panelClosed);
+    $('#btn-panel').setAttribute('aria-pressed', String(auto && !panelClosed));
+    stage.classList.remove('sheet-open');
+    setTab(ctl ? 'controls' : (notesMode && note ? 'notes' : 'details'));
+  }
+  function go(i, fromHash) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    panelClosed = false;
+    slides.forEach((s, k) => s.classList.toggle('is-active', k === current));
+    $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    $('#counter').textContent = (current + 1) + ' / ' + slides.length;
+    $('#btn-prev').disabled = current === 0; updateNav();
+    if (!fromHash) history.replaceState(null, '', location.pathname + location.search + '#' + (current + 1));
+    hideTip(); updatePanel();
+    document.dispatchEvent(new CustomEvent('slidechange', { detail: { index: current, slide: slides[current] } }));
+  }
+  $('#btn-prev').addEventListener('click', () => go(current - 1));
+  $('#btn-next').addEventListener('click', () => next());
+
+  // Reveal steps: elements with data-step="n" appear one number at a time
+  const showAll = new URLSearchParams(location.search).get('steps') === 'all';
+  slides.forEach(s => {
+    const els = $$('[data-step]', s);
+    if (!els.length) return;
+    s._steps = Array.from(new Set(els.map(e => Number(e.dataset.step)))).sort((a, b) => a - b);
+    s._shown = showAll ? s._steps.length : 0;
+    els.forEach(e => { if (!showAll) e.classList.add('step-hidden'); });
+    const b = document.createElement('button'); b.className = 'btn step-btn'; b.type = 'button';
+    b.addEventListener('click', () => revealNext(s)); s.appendChild(b); s._btn = b;
+    refreshStep(s);
+  });
+  function refreshStep(s) {
+    if (!s._steps) return;
+    const left = s._steps.length - s._shown;
+    s._btn.hidden = left <= 0;
+    s._btn.textContent = 'Show the next step (' + (s._shown + 1) + ' of ' + s._steps.length + ')';
+  }
+  function revealNext(s) {
+    if (!s._steps || s._shown >= s._steps.length) return false;
+    const n = s._steps[s._shown]; s._shown++;
+    $$('[data-step="' + n + '"]', s).forEach(e => e.classList.remove('step-hidden'));
+    refreshStep(s); updateNav(); return true;
+  }
+  function next() { if (!revealNext(slides[current])) go(current + 1); }
+  function updateNav() {
+    const s = slides[current];
+    $('#btn-next').disabled = current === slides.length - 1 && !(s._steps && s._shown < s._steps.length);
+  }
+
+  // Panel
+  $$('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
+  $('#btn-close').addEventListener('click', () => { panelClosed = true; updatePanel(); });
+  $('#btn-panel').addEventListener('click', () => {
+    if (window.innerWidth < 1100) { panelClosed = false; stage.classList.add('has-panel'); stage.classList.toggle('sheet-open'); return; }
+    if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); }
+    else { panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').setAttribute('aria-pressed', 'true'); }
+  });
+  function openDetail(el) {
+    const tpl = document.getElementById(el.dataset.detail || el.dataset.explain); if (!tpl) return;
+    secDetails.innerHTML = ''; secDetails.appendChild(tpl.content.cloneNode(true));
+    $$('[data-detail].is-open').forEach(x => x.classList.remove('is-open'));
+    if (el.dataset.detail) el.classList.add('is-open');
+    panelClosed = false; stage.classList.add('has-panel'); $('#btn-panel').hidden = false;
+    if (window.innerWidth < 1100) stage.classList.add('sheet-open');
+    setTab('details');
+  }
+  $$('[data-detail]').forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.tabIndex = 0;
+    el.addEventListener('click', () => openDetail(el));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); openDetail(el); } });
+  });
+
+  // Reset buttons
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-reset]'); if (!b) return;
+    const c = b.closest('.controls'); if (!c) return;
+    c._defaults.forEach(([el, v]) => { if (el.type === 'checkbox') el.checked = v; else el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); });
+    // Inputs made after load: use the attribute defaults
+    $$('input, select', c).forEach(el => {
+      if (c._defaults.some(d => d[0] === el)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+      else if (el.tagName === 'SELECT') { const o = Array.from(el.options).findIndex(x => x.defaultSelected); el.selectedIndex = o < 0 ? 0 : o; }
+      else el.value = el.defaultValue;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    c.dispatchEvent(new CustomEvent('deckreset', { bubbles: true }));
+  });
+
+  // Choices (predictions) and checks
+  $$('[data-choice], [data-check]').forEach(list => {
+    $$('.choice', list).forEach(btn => btn.addEventListener('click', () => {
+      $$('.choice', list).forEach(b => { b.setAttribute('aria-pressed', 'false'); b.classList.remove('is-correct', 'is-wrong'); });
+      btn.setAttribute('aria-pressed', 'true');
+      if (list.dataset.check) {
+        const ok = btn.dataset.value === list.dataset.answer;
+        const right = $('.choice[data-value="' + list.dataset.answer + '"]', list);
+        btn.classList.add(ok ? 'is-correct' : 'is-wrong'); right.classList.add('is-correct');
+        const v = list.parentElement.querySelector('.verdict');
+        if (v) { v.textContent = ok ? 'Correct.' : 'Not correct. The answer is ' + right.querySelector('.key').textContent + '.'; v.className = 'verdict ' + (ok ? 'ok' : 'bad'); }
+        if (list.dataset.explain) openDetail(list);
+      }
+    }));
+  });
+
+  // Card sorter: drag a card into a box, or select a card and then select a box
+  $$('[data-sorter]').forEach(sr => {
+    const pool = $('.sorter-pool', sr), bins = $$('.sort-bin', sr), cardsAll = $$('.sort-card', sr);
+    const verdict = $('.verdict', sr); let sel = null, dragged = null;
+    const zoneOf = el => el.classList.contains('sorter-pool') ? el : $('.sort-drop', el);
+    const cap = el => Number(el.dataset.capacity || 0);
+    function clearMarks() { cardsAll.forEach(c => c.classList.remove('is-correct', 'is-wrong')); verdict.textContent = ''; verdict.className = 'verdict'; }
+    function unselect() { if (sel) { sel.classList.remove('is-selected'); sel.setAttribute('aria-pressed', 'false'); } sel = null; }
+    function place(card, box) {
+      const z = zoneOf(box);
+      if (cap(box) && z.children.length >= cap(box) && card.parentElement !== z) { const old = z.children[0]; pool.appendChild(old); }
+      z.appendChild(card); clearMarks(); unselect();
+    }
+    cardsAll.forEach(c => {
+      c.type = 'button'; c.draggable = true; c.setAttribute('aria-pressed', 'false');
+      c.addEventListener('dragstart', e => { dragged = c; try { e.dataTransfer.setData('text/plain', c.textContent); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+      c.addEventListener('dragend', () => { dragged = null; $$('.is-over', sr).forEach(x => x.classList.remove('is-over')); });
+      c.addEventListener('click', e => {
+        e.stopPropagation();
+        if (sel && sel !== c) { place(sel, c.closest('.sort-bin') || pool); return; }
+        if (sel === c) { unselect(); return; }
+        sel = c; c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true');
+      });
+    });
+    [pool].concat(bins).forEach(box => {
+      box.addEventListener('click', () => { if (sel) place(sel, box); });
+      box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('is-over'); });
+      box.addEventListener('dragleave', () => box.classList.remove('is-over'));
+      box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('is-over'); if (dragged) place(dragged, box); });
+    });
+    $('[data-sorter-check]', sr).addEventListener('click', () => {
+      if (cardsAll.some(c => c.parentElement === pool)) { verdict.textContent = 'Place every card in a box first.'; verdict.className = 'verdict bad'; return; }
+      let ok = 0;
+      cardsAll.forEach(c => {
+        const bin = c.closest('.sort-bin').dataset.bin;
+        const right = (c.dataset.target || '').split(' ').includes(bin);
+        c.classList.toggle('is-correct', right); c.classList.toggle('is-wrong', !right); if (right) ok++;
+      });
+      const all = ok === cardsAll.length;
+      verdict.textContent = all ? 'All ' + ok + ' cards are in the right box.' : ok + ' of ' + cardsAll.length + ' cards are in the right box. Move the cards marked ✗ and check again.';
+      verdict.className = 'verdict ' + (all ? 'ok' : 'bad');
+      if (sr.dataset.explain && (all || sr.dataset.explainAlways)) openDetail(sr);
+    });
+    $('[data-sorter-reset]', sr).addEventListener('click', () => { unselect(); cardsAll.forEach(c => pool.appendChild(c)); clearMarks(); });
+  });
+
+  // Tooltips
+  const tip = $('#tooltip'); let tipFor = null;
+  function showTip(el) {
+    tip.textContent = el.dataset.tip; tip.classList.add('is-on'); tipFor = el;
+    const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect();
+    let x = Math.min(Math.max(8, r.left + r.width / 2 - t.width / 2), window.innerWidth - t.width - 8);
+    let y = r.top - t.height - 8; if (y < 8) y = r.bottom + 8;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip() { tip.classList.remove('is-on'); tipFor = null; }
+  $$('.term[data-tip]').forEach(el => {
+    el.tabIndex = 0;
+    el.addEventListener('mouseenter', () => showTip(el)); el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('focus', () => showTip(el)); el.addEventListener('blur', hideTip);
+    el.addEventListener('click', e => { e.stopPropagation(); tipFor === el ? hideTip() : showTip(el); });
+  });
+  document.addEventListener('click', e => { if (tipFor && !e.target.closest('.term')) hideTip(); });
+
+  // Overlays
+  function closeOverlays() { $$('.overlay').forEach(o => o.classList.remove('is-on')); }
+  function toggleOverlay(id) { const o = $('#' + id); const on = !o.classList.contains('is-on'); closeOverlays(); o.classList.toggle('is-on', on); }
+  $('#counter').addEventListener('click', () => toggleOverlay('overview'));
+  $('#btn-help').addEventListener('click', () => toggleOverlay('help'));
+  $('#btn-help-close').addEventListener('click', closeOverlays);
+
+  // Full screen
+  function toggleFull() {
+    const el = document.documentElement;
+    if (document.fullscreenElement || document.webkitFullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+    else if (el.requestFullscreen || el.webkitRequestFullscreen) { (el.requestFullscreen || el.webkitRequestFullscreen).call(el); }
+    else { root.classList.toggle('is-full'); }
+  }
+  $('#btn-full').addEventListener('click', toggleFull);
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (['input', 'select', 'textarea'].includes(tag) || e.target.isContentEditable) return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const k = e.key;
+    if (['ArrowRight', 'PageDown', ' '].includes(k)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); go(current - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else if (k === 'f' || k === 'F') toggleFull();
+    else if (k === 'o' || k === 'O') toggleOverlay('overview');
+    else if (k === '?') toggleOverlay('help');
+    else if (k === 'n' || k === 'N') { notesMode = !notesMode; panelClosed = false; updatePanel(); if (notesMode && slides[current].querySelector('.notes')) setTab('notes'); }
+    else if (k === 'Escape') { if ($('.overlay.is-on')) closeOverlays(); else if (tipFor) hideTip(); else if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); } }
+  });
+
+  // Swipe on the main card
+  let sx = null, sy = null;
+  const card = $('#card');
+  card.addEventListener('touchstart', e => {
+    if (e.target.closest('input, select, textarea, button, svg, canvas, [data-noswipe]')) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  card.addEventListener('touchend', e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(current + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+
+  // Seeded random numbers and URL parameters for deck scripts
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const params = new URLSearchParams(location.search);
+  window.Deck = {
+    meta, params,
+    rng: seed => mulberry32(Number(seed) || 1),
+    newSeed: () => Math.floor(Math.random() * 1e6),
+    seed: () => params.has('seed') ? Number(params.get('seed')) : Math.floor(Math.random() * 1e6),
+    current: () => current, go, next,
+    onSlide: fn => document.addEventListener('slidechange', e => fn(e.detail))
+  };
+
+  window.addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if (n) go(n - 1, true); });
+  const start = parseInt(location.hash.slice(1), 10);
+  go(start ? start - 1 : 0, true);
+})();
+</script>
+
+<!-- ===================== DECK SCRIPT (edit for each deck) ===================== -->
+<script id="deck-script">
+(function () {
+  const $ = id => document.getElementById(id);
+
+  // Slide 3: explain after a prediction
+  const note = $('predict-note');
+  document.querySelectorAll('[data-choice="predict"] .choice').forEach(b => b.addEventListener('click', () => {
+    note.className = 'verdict';
+    note.textContent = 'The best answer is A. The result shows what is happening: five hens have Salmonella. The owner asks what should be done, and that question needs other work. The next slides show which work.';
+  }));
+
+  // Slide 12: name the work
+  const ans = ['collect', 'summarise', 'analyse', 'weigh', 'carry'];
+  const why = [
+    'Statement 1: choosing which hens to test is collecting data, the work from Population to Observation.',
+    'Statement 2: a table of deaths by pen and by day turns raw records into information. This is summarising.',
+    'Statement 3: comparing the share of hens that died in two groups of pens looks for a determinant. This is analysing, the work from Information to Interpretation.',
+    'Statement 4: comparing three measures against the budget is weighing options. It leads to a decision.',
+    'Statement 5: repairing the water line and disinfecting the pens is carrying out the chosen measure.'
+  ];
+  const sels = [1, 2, 3, 4, 5].map(i => $('w' + i));
+  function bdClear() {
+    sels.forEach(s => s.classList.remove('is-correct', 'is-wrong'));
+    $('bd-verdict').textContent = ''; $('bd-verdict').className = 'verdict'; $('bd-why').innerHTML = '';
+  }
+  sels.forEach(s => s.addEventListener('change', bdClear));
+  $('bd-check').addEventListener('click', () => {
+    if (sels.some(s => !s.value)) { $('bd-verdict').textContent = 'Choose an answer for every statement first.'; $('bd-verdict').className = 'verdict bad'; return; }
+    const box = $('bd-why'); box.innerHTML = ''; let ok = 0;
+    sels.forEach((el, i) => {
+      const right = el.value === ans[i];
+      el.classList.toggle('is-correct', right); el.classList.toggle('is-wrong', !right);
+      if (right) ok++; else { const p = document.createElement('p'); p.textContent = why[i]; box.appendChild(p); }
+    });
+    const all = ok === ans.length;
+    $('bd-verdict').textContent = all ? 'All 5 statements are correct.' : ok + ' of 5 statements are correct. Change the answers marked in red and check again.';
+    $('bd-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
+  });
+  $('bd-reset').addEventListener('click', () => { sels.forEach(s => { s.value = ''; }); bdClear(); });
+
+  // Slide 10: the case in the loop, seven stages
+  const stages = [
+    { box: 1, arrow: 0, name: 'Population', have: 'A layer farm with 8,000 hens in eight pens.', work: 'None yet. Nobody has looked at the hens.', who: 'The farm owner, who keeps the hens.' },
+    { box: 2, arrow: 1, name: 'Observation', have: 'Death records, and five tested hens that all have Salmonella.', work: 'Collect data (D1): staff record the deaths and choose five hens to test.', who: 'Farm staff and the laboratory.' },
+    { box: 3, arrow: 2, name: 'Information', have: 'Deaths by pen and by day. 90 of the 120 dead hens were in pens A1 and B1.', work: 'Summarise (D1): the laboratory puts the records in a table.', who: 'The laboratory diagnostician.' },
+    { box: 4, arrow: 3, name: 'Interpretation', have: '4.5% of the hens in pens A1 and B1 died, against 0.5% in the other six pens. The water inlet may be a source. More hens could be infected next week.', work: 'Analyse (D2 and D3): the laboratory compares the share of hens that died in the two groups of pens, checks for bias, and projects what could happen.', who: 'The laboratory diagnostician.' },
+    { box: 5, arrow: 4, name: 'Decision', have: 'The owner chooses measure B: repair the water line and disinfect the two pens, for IDR 15,000,000.', work: 'Weigh options (D4): the owner compares testing the eggs, repairing the water line, and vaccinating the next flock against the budget.', who: 'The farm owner, with advice from the laboratory.' },
+    { box: 6, arrow: 5, name: 'Intervention', have: 'The water line is repaired and pens A1 and B1 are disinfected.', work: 'Carry out (D4): staff do the chosen measure.', who: 'Farm staff.' },
+    { box: 1, arrow: 6, name: 'Population (changed)', have: 'Three weeks later, fewer hens die. The loop starts a second turn.', work: 'Animals respond (D5): a new observation is compared with the first.', who: 'The laboratory diagnostician.' }
+  ];
+  let stage = 0;
+  const bPrev = $('lp-prev'), bNext = $('lp-next');
+  function renderStage() {
+    const st = stages[stage];
+    document.querySelectorAll('#lw-fig .lw-box').forEach(r => r.classList.toggle('is-on', r.id === 'lw-b' + st.box));
+    document.querySelectorAll('#lw-fig .lw-arr').forEach(r => r.classList.toggle('is-on', r.id === 'lw-a' + st.arrow));
+    $('lp-stage').textContent = 'Stage ' + (stage + 1) + ' of ' + stages.length;
+    $('lp-box').textContent = st.name;
+    $('lp-have').textContent = st.have;
+    $('lp-work').textContent = st.work;
+    $('lp-who').textContent = st.who;
+    bPrev.disabled = stage === 0;
+    bNext.textContent = stage === stages.length - 1 ? 'Start again' : 'Next stage';
+  }
+  bPrev.addEventListener('click', () => { if (stage > 0) { stage--; renderStage(); } });
+  bNext.addEventListener('click', () => { stage = stage === stages.length - 1 ? 0 : stage + 1; renderStage(); });
+  renderStage();
+})();
+</script>
+</body>
+</html>
