@@ -11,12 +11,14 @@ website:
   search: true
   navbar:
     left:
-      - href: encyclopedia/index.md
-        text: Encyclopedia
-      - href: guides/index.md
-        text: Guides
-      - href: slides/index.md
-        text: Slides
+      - text: Learning materials
+        menu:
+          - href: slides/index.md
+            text: Slides
+          - href: encyclopedia/index.md
+            text: Encyclopedia
+          - href: guides/index.md
+            text: Guides
       - href: skills.md
         text: Skill map
   page-footer:
@@ -31,4 +33,7 @@ format:
     respect-user-color-scheme: true
     lang: en
     toc: true
+    toc-location: left
+    toc-depth: 3
+    toc-title: Contents
     smooth-scroll: true
