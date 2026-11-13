@@ -15,9 +15,11 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
-     The shell version 3.1 offers: reveal steps (data-step), the card sorter (data-sorter),
+     The shell version 3.2 offers: layout patterns (intro, after, lay-split, lay-cards,
+     lay-compare), one box design (box), one table design (tbl), the card sorter (data-sorter),
      SVG figure classes (.fig), and a Reset button that also resets inputs made later.
-     Add ?steps=all to the URL to show all steps (for review and printing).
+     The example slides show each slide family and each layout pattern (05, sections 3.5 to 3.10).
+     Reveal steps (data-step) remain for old decks only. New decks do not use them (05, section 2.3).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -195,6 +197,58 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
 .fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
 
+
+/* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
+   Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
+   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
+.slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
+.slide .after { margin-top: var(--gap-after); }
+.slide .intro + .intro, .slide .after + .after { margin-top: -0.35rem; }
+.slide .definition { font-size: var(--fs-def); line-height: 1.4; }
+.slide.vcenter { justify-content: center; }
+.slide.vcenter .definition { font-size: var(--fs-def-alone); line-height: 1.3; }
+.slide.vcenter .definition.long { font-size: var(--fs-def-long); line-height: 1.5; }
+.slide .small { font-size: var(--fs-small); color: var(--muted); }
+
+/* Split: two columns. The first element in the markup is the left column. */
+.lay-split { display: grid; grid-template-columns: var(--split, minmax(0, 1fr) minmax(0, 1fr)); gap: 2.2rem; align-items: start; min-height: 0; }
+.lay-split.mid { align-items: center; }
+.txt { display: grid; gap: 0.8rem; align-content: start; min-width: 0; }
+.txt ul, .txt ol { margin: 0; padding-left: 1.2rem; }
+.vis { display: flex; justify-content: center; align-items: flex-start; min-width: 0; min-height: 0; }
+.vis > .fig { width: 100%; max-width: var(--fig-w, 34rem); }
+.vis[data-detail] { width: fit-content; max-width: 100%; justify-self: center; }
+
+/* Boxes: one design for every box. Cards: two to four parallel boxes. Compare: two boxes, one for each side. */
+.box { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0.8rem 1rem 0.9rem; display: grid; gap: 0.45rem; align-content: start; font-size: var(--fs-comp); min-width: 0; }
+.box h3 { margin: 0; font-size: 1.15rem; font-weight: 600; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
+.box p { margin: 0; }
+.box ul { margin: 0; padding-left: 1.1rem; }
+.lay-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; align-items: stretch; }
+.lay-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; align-items: stretch; }
+
+/* Tables: a frame, a filled header row, horizontal lines between rows, no vertical lines. */
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.4; }
+.tbl.fit { width: auto; max-width: 100%; align-self: flex-start; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--line); }
+.tbl thead th { background: var(--surface); font-weight: 600; vertical-align: middle; }
+.tbl thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
+.tbl thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
+.tbl tbody tr:last-child > * { border-bottom: none; }
+.tbl tbody th { font-weight: 600; }
+.tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
+.tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
+.box .tbl { border: none; border-radius: 0; background: transparent; }
+.box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
+.box .tbl td, .box .tbl tbody th { padding-left: 0; }
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .lay-split, .lay-compare { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+}
+@media print { .tbl, .box { break-inside: avoid; } }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -305,27 +359,18 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
-.case-layout p + p { margin-top: 0.9rem; }
-.case-layout p { font-size: 1.15rem; }
-.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; width: 100%; }
 .facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .facts dt { color: var(--muted); }
 .facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
 
-.def-line { font-size: 1.4rem; line-height: 1.4; font-weight: 500; }
-.under { font-size: 1.12rem; }
-.lead-in { font-size: 1.12rem; }
-.practice-note { color: var(--muted); font-size: 0.98rem; }
 
 .tb-wrap { flex: none; width: 100%; max-width: 70rem; align-self: flex-start; }
-.ex-table { border-collapse: collapse; width: 100%; font-size: 1.03rem; }
-.ex-table th, .ex-table td { text-align: left; padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.ex-table tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }
-.ex-table .dom { white-space: nowrap; font-weight: 600; }
-.ex-table .dom .dot { margin-right: 0.45rem; }
-.ex-table td.q { font-weight: 500; }
+.tbl .dom { white-space: nowrap; font-weight: 600; }
+.tbl .dom .dot { margin-right: 0.45rem; }
+.tbl td.q { font-weight: 500; }
+.tbl { --fs-comp: 1.03rem; }
+.tbl tbody th { white-space: nowrap; }
 
 .fq-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; flex: none; }
 .fq-two-wide { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
@@ -400,21 +445,22 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .fq-rows dd { margin: 0; font-size: 1.05rem; }
 
 /* Details panel open: the card is narrower, so the text gets smaller */
-.stage.has-panel .ex-table { font-size: 0.9rem; }
-.stage.has-panel .ex-table th, .stage.has-panel .ex-table td { padding: 0.3rem 0.55rem; }
-.stage.has-panel .under, .stage.has-panel .lead-in { font-size: 1rem; }
-.stage.has-panel .def-line { font-size: 1.2rem; }
+.stage.has-panel .tbl { --fs-comp: 0.9rem; }
+.stage.has-panel .tbl th, .stage.has-panel .tbl td { padding: 0.3rem 0.55rem; }
+.stage.has-panel .intro, .stage.has-panel .after { font-size: 1rem; }
+.stage.has-panel .definition { font-size: 1.2rem; }
 .stage.has-panel .fq-list, .stage.has-panel .passes { font-size: 0.98rem; }
 .stage.has-panel .parts dd, .stage.has-panel .fq-rows dd { font-size: 0.95rem; }
 .stage.has-panel .parts div, .stage.has-panel .fq-rows div { padding: 0.35rem 0.7rem; }
 .stage.has-panel .passes li { padding: 0.3rem 0.7rem; }
+.stage.has-panel .passes { gap: 0.35rem; }
 .stage.has-panel .parts dd { line-height: 1.35; }
 .stage.has-panel .parts { gap: 0.35rem; }
 .stage.has-panel .fq-picks .btn { padding: 0.4rem 0.75rem; }
 .stage.has-panel .slide { gap: 0.75rem; padding-top: 1.6rem; }
 
 @media (max-width: 900px) {
-  .case-layout, .fq-two, .fq-two-wide { grid-template-columns: 1fr; }
+  .fq-two, .fq-two-wide { grid-template-columns: 1fr; }
   .ck-list, .passes-2 { grid-template-columns: 1fr; }
   .parts div, .fq-rows div { grid-template-columns: 1fr; gap: 0.2rem; }
   .bd-row { grid-template-columns: 1fr; }
@@ -456,21 +502,23 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="notes">Read the lead aloud. Ask for a first answer in one sentence. The deck gives the course answer: four checks that sort a question, and a way to list the information that an answerable question needs.</div>
 </section>
 
-<!-- Slide 2: Recap -->
-<section class="slide" data-type="recap" data-title="The case">
-  <h2>The case: Salmonella on a layer farm</h2>
-  <div class="case-layout">
-    <div>
+<!-- Slide 2: Scenario. Layout P3, text | key numbers -->
+<section class="slide" data-type="scenario" data-title="The scenario">
+  <h2>The scenario: Salmonella on a layer farm</h2>
+  <div class="lay-split" style="--split: minmax(0, 1fr) minmax(0, 0.9fr)">
+    <div class="txt">
       <p>In one week, 120 of the 8,000 hens on a layer farm die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, which are located near the <span class="term" data-tip="The place where water enters the building, for example from a pipe or a tank.">water inlet</span>.</p>
       <p>The laboratory tests five dead hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have reached two markets.</p>
       <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian gives technical advice and product support to farms and companies, for example in a feed or poultry company.">technical service consultant</span> of a poultry company. The farm owner phones you and says that the farm has IDR 15,000,000 left to spend this month. On the way to the farm, you write down the questions that come to your mind. Some come from the owner. Some are your own.</p>
     </div>
+    <div class="vis">
     <dl class="facts">
       <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
       <div><dt>Deaths in one week</dt><dd>120</dd></div>
       <div><dt>Hens tested, all with Salmonella</dt><dd>5</dd></div>
       <div><dt>Budget this month</dt><dd>IDR 15,000,000</dd></div>
     </dl>
+    </div>
   </div>
   <div class="notes">Read the three paragraphs aloud. The numbers are the same as in the earlier decks. In this deck you work in the consultant seat. Nobody has told you yet what to do, so the first job is to decide which questions are worth answering.</div>
 </section>
@@ -501,34 +549,34 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <span class="verdict" role="status" aria-live="polite"></span>
     </div>
   </div>
-  <p class="practice-note">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box. The next slides give the reasons.</p>
+  <p class="small">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box. The next slides give the reasons.</p>
   <div class="notes">Let students sort first and compare in pairs. Do not explain the reasons yet. The answer key: three questions for epidemiology or economics (counts by pen, the comparison of pens, the choice between measures), three for other disciplines (microbiology, clinical medicine, law), and two that nobody can answer as asked (no time frame, and a word without a criterion).</div>
 </section>
 
 <!-- Slide 4: Definition -->
 <section class="slide" data-type="concept" data-title="Answerable question">
   <h2>Answerable question</h2>
-  <p class="def-line">An answerable question is a question that someone can answer with <span class="term" data-tip="Facts that show that something is true. For a disease, this is often a set of laboratory test results.">evidence</span>, and its answer can change what someone does.</p>
+  <p class="definition">An answerable question is a question that someone can answer with <span class="term" data-tip="Facts that show that something is true. For a disease, this is often a set of laboratory test results.">evidence</span>, and its answer can change what someone does.</p>
   <div class="tb-wrap" data-detail="d-aq" tabindex="0" aria-label="A table that compares a request with an answerable question. Select for details.">
-    <table class="ex-table">
-      <thead><tr><th></th><th>Example</th><th>What would finish the work?</th></tr></thead>
+    <table class="tbl">
+      <thead><tr><th>Kind of text</th><th>Example</th><th>What would finish the work?</th></tr></thead>
       <tbody>
         <tr><th>Request</th><td class="q">“Tell me everything about Salmonella.”</td><td>Nothing. Another fact always exists.</td></tr>
         <tr><th>Answerable question</th><td class="q">“How many hens died in each pen, and on which days?”</td><td>A table of the deaths by pen and by day.</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="under">There is a difference between a request and a question. A request names a topic, and a topic has no end, so nobody can finish it. A question has an end, because evidence can answer it. The answer of a question also has a use: it helps someone to decide what to do.</p>
-  <p class="under">The first task of the consultant is to turn a request into questions.</p>
+  <p class="after">There is a difference between a request and a question. A request names a topic, and a topic has no end, so nobody can finish it. A question has an end, because evidence can answer it. The answer of a question also has a use: it helps someone to decide what to do.</p>
+  <p class="after">The first task of the consultant is to turn a request into questions.</p>
   <div class="notes">Ask the class what the consultant would hand over to finish the request on the first row. There is no such thing. Then ask the same for the second row.</div>
 </section>
 
 <!-- Slide 5: Four checks -->
 <section class="slide" data-type="concept" data-title="The four checks of a question">
   <h2>The four checks of a question</h2>
-  <p class="lead-in">A <span class="term" data-tip="One of four things to confirm about a question before you try to answer it.">check</span> is one thing to confirm about a question before you try to answer it. An answerable question passes all four checks, in this order.</p>
+  <p class="intro">A <span class="term" data-tip="One of four things to confirm about a question before you try to answer it.">check</span> is one thing to confirm about a question before you try to answer it. An answerable question passes all four checks, in this order.</p>
   <div class="tb-wrap" data-detail="d-checks" tabindex="0" aria-label="A table of the four checks, the question to ask for each check, and what to do when the question fails. Select for details.">
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th>Check</th><th>Ask</th><th>If the question fails</th></tr></thead>
       <tbody>
         <tr><th>1 Clear</th><td>Does every word have a meaning that someone can measure, and is everything that the question assumes true?</td><td>Rewrite the question with defined words and remove the assumption.</td></tr>
@@ -543,9 +591,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- Slide 6: Checks 1 and 2 -->
 <section class="slide" data-type="concept" data-title="Checks 1 and 2: a question that has an answer">
-  <h2>Checks 1 and 2: a question that has an answer</h2>
+  <h2>Checks 1 and 2: A question that has an answer</h2>
+  <p class="intro">Checks 1 and 2 ask whether a question can have an answer at all. The table shows three questions that fail, why they fail, and a better question.</p>
   <div class="tb-wrap" data-detail="d-c12" tabindex="0" aria-label="A table of three questions that fail check 1 or check 2, the reason, and a better question. Select for details.">
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th>Check</th><th>Question</th><th>Why it fails</th><th>A better question</th></tr></thead>
       <tbody>
         <tr><th>1 Clear</th><td class="q">“Is this farm healthy?”</td><td>“Healthy” has no <span class="term" data-tip="A rule that tells you when the answer is yes or no, for example “more than 10 deaths in one week”.">criterion</span>, so nobody can say which result means healthy.</td><td>Did more hens die this week than the <span class="term" data-tip="The usual level of disease in this population, based on earlier weeks or years. It is also called the baseline.">expected level</span> for this flock?</td></tr>
@@ -554,16 +603,16 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       </tbody>
     </table>
   </div>
-  <p class="under">A question that fails check 1 or check 2 cannot be answered in its current form, so rewrite it. A term needs a criterion that someone can measure, an assumption needs evidence, and “ever” needs a time frame.</p>
+  <p class="after">A question that fails check 1 or check 2 cannot be answered in its current form, so rewrite it. A term needs a criterion that someone can measure, an assumption needs evidence, and “ever” needs a time frame.</p>
   <div class="notes">The better question for the second row is open on purpose: it lets the data speak about the source. Ask which of the three better questions belongs to which of the five questions of the course. The answers are Domain 1, Domain 2, and Domain 3. Slide 9 gives the types.</div>
 </section>
 
 <!-- Slide 7: Check 3 -->
 <section class="slide" data-type="concept" data-title="Check 3: the discipline that answers the question">
-  <h2>Check 3: the discipline that answers the question</h2>
-  <p class="lead-in">Check 3 asks which discipline answers the question. Epidemiology and economics answer questions about animals in a population or in a chain. The other questions need another kind of answer, from another discipline.</p>
+  <h2>Check 3: The discipline that answers the question</h2>
+  <p class="intro">Check 3 asks which discipline answers the question. Epidemiology and economics answer questions about animals in a population or in a chain. The other questions need another kind of answer, from another discipline.</p>
   <div class="tb-wrap" data-detail="d-c3" tabindex="0" aria-label="A table of six questions, the kind of answer each one needs, and the discipline that answers it. Select for details.">
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th>Question</th><th>Kind of answer</th><th>Who answers it</th></tr></thead>
       <tbody>
         <tr><td class="q">How many hens have died, in which pens, and on which days?</td><td>A count of events in a population</td><td>Epidemiology, <span class="term" data-tip="One of the five questions of the course, or Domain 0. A domain groups the competencies that answer one question.">Domain</span> 1</td></tr>
@@ -580,15 +629,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- Slide 8: Check 4 -->
 <section class="slide" data-type="concept" data-title="Check 4: the choice that the answer serves">
-  <h2>Check 4: the choice that the answer serves</h2>
-  <p class="lead-in">A question is worth asking when its possible answers lead to different actions. Describe the choice of the owner with three things.</p>
+  <h2>Check 4: The choice that the answer serves</h2>
+  <p class="intro">A question is worth asking when its possible answers lead to different actions. Describe the choice of the owner with three things.</p>
   <div class="fq-trio fq-trio-opt" data-detail="d-c4" tabindex="0" aria-label="The three parts of a choice. Select for details.">
     <div><p class="t"><span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">Decision maker</span></p><p>The person who chooses. The owner chooses for the farm.</p></div>
     <div><p class="t">Options</p><p>The actions that the decision maker can choose between. There are at least two. The owner can choose measure A (test the eggs), B (repair the water line), or C (vaccinate the next flock). Each option has an <span class="term" data-tip="What you give up when you choose one option. If the owner pays for measure A, the money is gone, and the owner cannot pay for measure B.">opportunity cost</span>.</p></div>
     <div><p class="t"><span class="term" data-tip="What someone wants to achieve.">Objective</span></p><p>What the choice should achieve. The <span class="term" data-tip="The state of one disease in one population at one time, for example free, outbreak, or unknown.">disease status</span> of the population gives the objective. The farm has an <span class="term" data-tip="A disease occurs at a level clearly above the expected level in a population, for example on one farm in one week.">outbreak</span>, so the objective is to reduce the disease.</p></div>
   </div>
   <div class="tb-wrap" style="max-width:none">
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th>Question</th><th>Does a different answer change the choice?</th></tr></thead>
       <tbody>
         <tr><td class="q">Is the water line the source of the infection?</td><td>Yes. If it is the source, measure B is worth more. If it is not, the owner may choose measure A or C.</td></tr>
@@ -596,16 +645,16 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       </tbody>
     </table>
   </div>
-  <p class="under">A question that fails check 4 can have an answer and still not be worth the time. Drop it, or find the choice that it serves.</p>
+  <p class="after">A question that fails check 4 can have an answer and still not be worth the time. Drop it, or find the choice that it serves.</p>
   <div class="notes">The three parts come from the earlier decks: the opportunity cost of the options, and the objective that follows from the disease status. Ask students what the objective would be on a farm where nobody has tested the hens.</div>
 </section>
 
 <!-- Slide 9: Five questions as types -->
 <section class="slide" data-type="concept" data-title="The five questions as types of question">
   <h2>The five questions as types of question</h2>
-  <p class="lead-in">A question that passes the four checks has one of five types. The five types are the five questions of the course. Each type needs certain parts in its sentence. Every type needs a <span class="term" data-tip="A defined group of animals that share a place or a production system, for example a herd, a flock, or all dogs in an area.">population</span> and an <span class="term" data-tip="A result that you measure, such as deaths, infection, or an amount of money.">outcome</span>.</p>
+  <p class="intro">A question that passes the four checks has one of five types. The five types are the five questions of the course. Each type needs certain parts in its sentence. Every type needs a <span class="term" data-tip="A defined group of animals that share a place or a production system, for example a herd, a flock, or all dogs in an area.">population</span> and an <span class="term" data-tip="A result that you measure, such as deaths, infection, or an amount of money.">outcome</span>.</p>
   <div class="tb-wrap" data-detail="d-types" tabindex="0" aria-label="A table of the five questions, what a question of each type needs, and an example from the layer farm. Select for details.">
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th>Domain</th><th>The question of the course</th><th>Parts that the sentence needs</th><th>Example</th></tr></thead>
       <tbody>
         <tr><td class="dom"><span class="dot" style="background:var(--d1)"></span>Domain 1</td><td>What is happening?</td><td>Population, health event, place, time</td><td class="q">How many hens have died, in which pens, and on which days?</td></tr>
@@ -622,9 +671,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 10: Smaller questions -->
 <section class="slide" data-type="concept" data-title="From the main question to smaller questions">
   <h2>From the main question to smaller questions</h2>
-  <p class="lead-in">The main question of the farm owner is “Which measure gives the owner the most benefit for IDR 15,000,000?” To answer it, the consultant needs several pieces of information. Write each piece of information as a smaller question.</p>
+  <p class="intro">The main question of the farm owner is “Which measure gives the owner the most benefit for IDR 15,000,000?” To answer it, the consultant needs several pieces of information. Write each piece of information as a smaller question.</p>
   <div class="tb-wrap">
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th>Smaller question</th><th>What the answer helps to decide</th></tr></thead>
       <tbody>
         <tr><td class="q">How many eggs from pens A1 and B1 reached the two markets?</td><td>How much loss measure A can avoid</td></tr>
@@ -635,17 +684,17 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       </tbody>
     </table>
   </div>
-  <p class="under">The consultant does not need all five answers. Which questions does the consultant keep? The next slide gives the test.</p>
+  <p class="after">The consultant does not need all five answers. Which questions does the consultant keep? The next slide gives the test.</p>
   <div class="notes">Slide 14 works out the first four questions. The estimate of the loss that each measure avoids comes from the deck on veterinary economics. Ask students to guess which of the five questions the consultant will drop, and why. Do not confirm yet.</div>
 </section>
 
 <!-- Slide 11: Keep or drop -->
 <section class="slide" data-type="concept" data-title="Keep or drop a smaller question">
   <h2>Keep or drop a smaller question</h2>
+  <p class="intro">Check 4 asked whether a different answer would change the choice of the owner. Apply the same test to each smaller question: keep it only if a different answer could lead the owner to a different measure.</p>
   <div class="fq-two">
-    <div class="fq-side">
-      <p class="under">Check 4 asked whether a different answer would change the choice of the owner. Apply the same test to each smaller question: keep it only if a different answer could lead the owner to a different measure.</p>
-      <p class="under">The figure shows a question that stays. A second question goes: “On which hour of the day did the first hen die?” Whatever the hour is, the owner chooses the same measure, so the answer helps no choice.</p>
+    <div class="fq-side txt">
+      <p>The figure shows a question that stays. A second question goes: “On which hour of the day did the first hen die?” Whatever the hour is, the owner chooses the same measure, so the answer helps no choice.</p>
     </div>
     <div class="fq-fig-wrap" data-detail="d-info" tabindex="0" aria-label="A figure. The smaller question Is the water line the source of the infection has two answers. If yes, measure B avoids IDR 45 million of loss and stays the best choice. If no, measure B avoids less loss, and the owner may choose measure A or C. Select for details.">
       <svg class="fig fq-fig" viewBox="0 0 540 330" role="img" aria-hidden="true">
@@ -674,7 +723,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 12: Sources -->
 <section class="slide" data-type="concept" data-title="Sources of information">
   <h2>Sources of information</h2>
-  <p class="lead-in">Every smaller question needs a source, the place where its answer comes from. Three kinds of source exist.</p>
+  <p class="intro">Every smaller question needs a source, the place where its answer comes from. There are three kinds of source: existing records, new data, and published knowledge.</p>
   <div class="fq-trio">
     <div><p class="t">Existing <span class="term" data-tip="Written information that someone already keeps, such as sales books or laboratory reports.">records</span></p><p>Farm records, laboratory results, and <span class="term" data-tip="The routine collection of health data to find problems early.">surveillance</span> reports of the authority.</p></div>
     <div><p class="t">New data</p><p>A visit, samples, or questions to people.</p></div>
@@ -706,8 +755,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- Slide 13: Example, the choice and the main question -->
 <section class="slide" data-type="example" data-title="Worked example: the problem frame">
-  <h2>Worked example: the problem frame of the farm owner</h2>
-  <p class="lead-in">A <span class="term" data-tip="A short statement of a problem: the choice, the objective, the main question, and the information that the question needs.">problem frame</span> has four parts: the choice, the objective, the main question, and the information that the question needs. This slide shows the first three parts.</p>
+  <h2>The problem frame of the farm owner</h2>
+  <p class="intro">A <span class="term" data-tip="A short statement of a problem: the choice, the objective, the main question, and the information that the question needs.">problem frame</span> has four parts: the choice, the objective, the main question, and the information that the question needs. This slide shows the first three parts.</p>
   <dl class="parts" data-detail="d-ex1" tabindex="0" aria-label="The choice, the objective, and the main question of the owner. Select for details.">
     <div><dt>Choice</dt><dd>The farm owner is the decision maker and chooses one measure. A: test the eggs from the two pens for Salmonella. B: repair the water line and disinfect the two pens. C: vaccinate the next flock of hens against Salmonella. Each costs IDR 15 million.</dd></div>
     <div><dt>Objective</dt><dd>Reduce the disease. The farm has an <span class="term" data-tip="A disease occurs at a level clearly above the expected level in a population, for example on one farm in one week.">outbreak</span>: 120 hens died in one week, and the expected level is about 10.</dd></div>
@@ -724,10 +773,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- Slide 14: Example, information and sources -->
 <section class="slide" data-type="example" data-title="Worked example: the information and its sources">
-  <h2>Worked example: the information that the main question needs</h2>
-  <p class="lead-in">These are the four smaller questions that passed the test of slide 11. For each one, the table shows its type, where the answer comes from, and which measure needs it.</p>
+  <h2>The information that the main question needs</h2>
+  <p class="intro">These are the four smaller questions that passed the test of slide 11. For each one, the table shows its type, where the answer comes from, and which measure needs it.</p>
   <div class="tb-wrap" data-detail="d-ex2" tabindex="0" aria-label="A table of four smaller questions with their type, source, and the measure that needs them. Select for details.">
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th>Smaller question</th><th>Type</th><th>Source</th><th>Needed for</th></tr></thead>
       <tbody>
         <tr><td class="q">How many eggs from pens A1 and B1 reached the two markets?</td><td class="dom"><span class="dot" style="background:var(--d1)"></span>Domain 1</td><td>Existing records: the egg sales records of the farm</td><td>Measure A</td></tr>
@@ -737,14 +786,14 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       </tbody>
     </table>
   </div>
-  <p class="under">The row about the water line needs new data, so it takes time and money. If the owner cannot wait, the consultant may state an assumption and say that it is an assumption.</p>
+  <p class="after">The row about the water line needs new data, so it takes time and money. If the owner cannot wait, the consultant may state an assumption and say that it is an assumption.</p>
   <div class="notes">Each row serves one measure, apart from the last row. The fifth question of slide 10, about the hour of the first death, is not in the table because it was dropped on slide 11. Ask which row has the weakest source today.</div>
 </section>
 
 <!-- Slide 15: Practice, find the check that fails -->
 <section class="slide" data-type="practice" data-title="Find the check that fails">
   <h2>Find the check that each question fails</h2>
-  <p class="lead-in">Read each question. Choose the first check that it fails. Choose “passes all four checks” when it fails none.</p>
+  <p class="intro">Read each question. Choose the first check that it fails. Choose “passes all four checks” when it fails none.</p>
   <div class="bd-rows">
     <div class="bd-row"><p class="quote-s">1. “Is the water in pen A1 dirty?”</p><p class="bd-fill"><select id="f1" aria-label="Check for question 1"><option value="">Choose</option><option value="c1">fails check 1 (clear)</option><option value="c2">fails check 2 (evidence)</option><option value="c3">fails check 3 (discipline)</option><option value="c4">fails check 4 (choice)</option><option value="ok">passes all four checks</option></select></p></div>
     <div class="bd-row"><p class="quote-s">2. “Will Salmonella ever be gone from this farm for good?”</p><p class="bd-fill"><select id="f2" aria-label="Check for question 2"><option value="">Choose</option><option value="c1">fails check 1 (clear)</option><option value="c2">fails check 2 (evidence)</option><option value="c3">fails check 3 (discipline)</option><option value="c4">fails check 4 (choice)</option><option value="ok">passes all four checks</option></select></p></div>
@@ -784,14 +833,14 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <span class="verdict" role="status" aria-live="polite"></span>
     </div>
   </div>
-  <p class="practice-note">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
+  <p class="small">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
   <div class="notes">Ask who would have to act for each new item: who takes the egg sample, and who visits the markets. A source that needs new work has a cost in time and money.</div>
 </section>
 
 <!-- Slide 17: Practice, the information that the choice needs -->
 <section class="slide" data-type="practice" data-title="Select the information that the choice needs">
   <h2>Select the information that the owner's choice needs</h2>
-  <p class="lead-in">The owner chooses between measures A, B, and C. Select each piece of information for which a different answer could lead the owner to a different measure.</p>
+  <p class="intro">The owner chooses between measures A, B, and C. Select each piece of information for which a different answer could lead the owner to a different measure.</p>
   <ul class="ck-list" id="ck-list">
       <li><label><input type="checkbox" data-need="1"><span>How many eggs from pens A1 and B1 reached the two markets</span></label></li>
       <li><label><input type="checkbox" data-need="0"><span>The name of the technician who sampled the five hens</span></label></li>
@@ -813,7 +862,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 18: Explore, three decision makers -->
 <section class="slide" data-type="explore" data-title="One event, three decision makers">
   <h2>One event, three decision makers</h2>
-  <p class="lead-in">Three people are affected by the same deaths. Select one and read how the problem frame changes.</p>
+  <p class="intro">Three people are affected by the same deaths. Select one and read how the problem frame changes.</p>
   <div class="fq-picks" role="group" aria-label="Decision maker">
     <button class="btn fq-pick" type="button" data-dm="0" aria-pressed="true">The farm owner</button>
     <button class="btn fq-pick" type="button" data-dm="1" aria-pressed="false">The local animal health authority</button>
@@ -828,13 +877,13 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <div><dt>Main question</dt><dd id="dm-q"></dd></div>
     </dl>
   </div>
-  <p class="under">Compare the population in the three cases. Each decision maker looks at a different group of animals, so each has a different disease status and a different objective.</p>
+  <p class="after">Compare the population of the three decision makers. Each decision maker looks at a different group of animals, so each has a different disease status and a different objective.</p>
   <div class="notes">Go through the three decision makers in turn. Ask what the local animal health authority would do first if the other farms of the area were already known to be free. The objective would change from finding out to keeping the disease out.</div>
 </section>
 
 <!-- Slide 19: Check, transfer -->
-<section class="slide" data-type="check" data-title="Check: a new case">
-  <h2>A new case: a tilapia farm</h2>
+<section class="slide" data-type="check" data-title="Check: a new scenario">
+  <h2>A new scenario: a tilapia farm</h2>
   <p>A <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian protects the health and production of farm animals, for example on poultry or dairy farms.">production animal veterinarian</span> visits a <span class="term" data-tip="A freshwater fish that farmers keep in ponds.">tilapia</span> farm with 20 ponds. Last week, fish died in 3 ponds. Nobody has tested the fish, and nobody has looked at the other 17 ponds. The owner asks what to do.</p>
   <div>
     <p class="q-label">Which objective and which first question fit this situation?</p>
@@ -1036,7 +1085,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   let current = 0, notesMode = false, panelClosed = false;
   const phases = $('#phases'), ovGrid = $('#ov-grid');
   // One group of marks for each run of slides of the same type
-  const phaseName = { title: 'Start', recap: 'Case', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
+  const phaseName = { title: 'Start', scenario: 'Scenario', recap: 'Scenario', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
   const marks = []; let group = null, lastType = null;
   slides.forEach((s, i) => {
     const t = s.dataset.title || ('Slide ' + (i + 1));
