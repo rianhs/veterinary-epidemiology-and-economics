@@ -15,9 +15,11 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
-     The shell version 3.1 offers: reveal steps (data-step), the card sorter (data-sorter),
+     The shell version 3.2 offers: layout patterns (intro, after, lay-split, lay-cards,
+     lay-compare), one box design (box), one table design (tbl), the card sorter (data-sorter),
      SVG figure classes (.fig), and a Reset button that also resets inputs made later.
-     Add ?steps=all to the URL to show all steps (for review and printing).
+     The example slides show each slide family and each layout pattern (05, sections 3.5 to 3.10).
+     Reveal steps (data-step) remain for old decks only. New decks do not use them (05, section 2.3).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -37,7 +39,7 @@
   ],
   "guides": [],
   "status": "draft",
-  "updated": "2026-11-12"
+  "updated": "2026-11-13"
 }
 </script>
 
@@ -197,6 +199,58 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
 .fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
 
+
+/* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
+   Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
+   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
+.slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
+.slide .after { margin-top: var(--gap-after); }
+.slide .intro + .intro, .slide .after + .after { margin-top: -0.35rem; }
+.slide .definition { font-size: var(--fs-def); line-height: 1.4; }
+.slide.vcenter { justify-content: center; }
+.slide.vcenter .definition { font-size: var(--fs-def-alone); line-height: 1.3; }
+.slide.vcenter .definition.long { font-size: var(--fs-def-long); line-height: 1.5; }
+.slide .small { font-size: var(--fs-small); color: var(--muted); }
+
+/* Split: two columns. The first element in the markup is the left column. */
+.lay-split { display: grid; grid-template-columns: var(--split, minmax(0, 1fr) minmax(0, 1fr)); gap: 2.2rem; align-items: start; min-height: 0; }
+.lay-split.mid { align-items: center; }
+.txt { display: grid; gap: 0.8rem; align-content: start; min-width: 0; }
+.txt ul, .txt ol { margin: 0; padding-left: 1.2rem; }
+.vis { display: flex; justify-content: center; align-items: flex-start; min-width: 0; min-height: 0; }
+.vis > .fig { width: 100%; max-width: var(--fig-w, 34rem); }
+.vis[data-detail] { width: fit-content; max-width: 100%; justify-self: center; }
+
+/* Boxes: one design for every box. Cards: two to four parallel boxes. Compare: two boxes, one for each side. */
+.box { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0.8rem 1rem 0.9rem; display: grid; gap: 0.45rem; align-content: start; font-size: var(--fs-comp); min-width: 0; }
+.box h3 { margin: 0; font-size: 1.15rem; font-weight: 600; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
+.box p { margin: 0; }
+.box ul { margin: 0; padding-left: 1.1rem; }
+.lay-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; align-items: stretch; }
+.lay-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; align-items: stretch; }
+
+/* Tables: a frame, a filled header row, horizontal lines between rows, no vertical lines. */
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.4; }
+.tbl.fit { width: auto; max-width: 100%; align-self: flex-start; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--line); }
+.tbl thead th { background: var(--surface); font-weight: 600; vertical-align: middle; }
+.tbl thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
+.tbl thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
+.tbl tbody tr:last-child > * { border-bottom: none; }
+.tbl tbody th { font-weight: 600; }
+.tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
+.tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
+.box .tbl { border: none; border-radius: 0; background: transparent; }
+.box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
+.box .tbl td, .box .tbl tbody th { padding-left: 0; }
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .lay-split, .lay-compare { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+}
+@media print { .tbl, .box { break-inside: avoid; } }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -307,21 +361,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
-.case-layout p + p { margin-top: 0.9rem; }
-.case-layout p { font-size: 1.15rem; }
-.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; width: 100%; }
+.tbl { --fs-comp: 1.1rem; }
 .facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .facts dt { color: var(--muted); }
 .facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
 
-.vcenter { justify-content: center; }
-.def-line { font-size: 1.4rem; line-height: 1.4; font-weight: 500; }
-.under-fig { font-size: 1.15rem; }
 .st-list { display: grid; gap: 0.7rem; margin: 0; padding-left: 1.3rem; font-size: 1.2rem; line-height: 1.4; }
 .st-list li + li { margin-top: 0; }
 .st-list[data-detail] { width: fit-content; max-width: 100%; padding-right: 1rem; }
-.eg { font-size: 1.15rem; color: var(--muted); }
 .fig-wrap { flex: none; display: flex; align-items: flex-start; align-self: flex-start; width: 100%; max-width: 46rem; }
 .fig-wrap .fig { height: auto; width: 100%; overflow: visible; }
 
@@ -332,14 +380,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .fig .lv-ah { fill: var(--ink); }
 .lv-layout .fig { width: min(100%, max(26rem, 64vh)); height: auto; }
 
-.ex-table { border-collapse: collapse; width: 100%; font-size: 1.05rem; }
-.ex-table th, .ex-table td { text-align: left; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.ex-table tbody th { font-weight: 600; color: var(--muted); width: 9.5rem; }
-.lv-table td { font-size: 1.1rem; }
 .lv-wrap { width: 100%; max-width: 62rem; flex: none; align-self: flex-start; }
 
-.practice-note { color: var(--muted); font-size: 0.98rem; }
 .sorter { flex: none; }
 .sorter-pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; padding: 0.4rem; }
 .sorter-bins { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -381,7 +423,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .lx-adv { font-size: 1.1rem; font-weight: 600; }
 
 @media (max-width: 900px) {
-  .case-layout, .lv-layout, .lx-layout { grid-template-columns: 1fr; }
+  .lv-layout, .lx-layout { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -419,21 +461,23 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </ul>
   <div class="notes">Read the guiding question aloud. Ask for a first answer in one sentence. Each view is a level of analysis, a term that slide 4 introduces.</div>
 </section>
-<!-- Slide 2: Recap of the anchor case -->
-<section class="slide" data-type="recap" data-title="The case">
-  <h2>The case: Salmonella on a layer farm</h2>
-  <div class="case-layout">
-    <div>
-      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, next to the water inlet.</p>
-      <p>The laboratory tests five hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have already reached two markets.</p>
+<!-- Slide 2: Scenario. Layout P3, text | key numbers -->
+<section class="slide" data-type="scenario" data-title="The scenario">
+  <h2>The scenario: Salmonella on a layer farm</h2>
+  <div class="lay-split" style="--split: minmax(0, 1fr) minmax(0, 0.9fr)">
+    <div class="txt">
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, which are located near the <span class="term" data-tip="The place where water enters the building, for example from a pipe or a tank.">water inlet</span>.</p>
+      <p>The laboratory tests five dead hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have already reached two markets.</p>
       <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian checks whether farms, animals, and products meet health rules, and advises authorities.">regulatory assessor</span> at the local animal health authority. You must advise whether the eggs from these pens can stay on sale.</p>
     </div>
+    <div class="vis">
     <dl class="facts">
       <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
       <div><dt>Deaths in one week</dt><dd>120</dd></div>
-      <div><dt>Hens tested, all with Salmonella</dt><dd>5</dd></div>
+      <div><dt>Dead hens tested, all with Salmonella</dt><dd>5</dd></div>
       <div><dt>Markets that received eggs</dt><dd>2</dd></div>
     </dl>
+    </div>
   </div>
   <div class="notes">Read the three paragraphs aloud. The farm owner has IDR 15,000,000 left this month (deck 3). The assessor advises the authority, so this deck looks at the same case from a different seat.</div>
 </section>
@@ -450,11 +494,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="notes">Let students choose, then ask a student to explain the choice. The answer is C. The next slides explain why: the result describes five hens, and the question is about eggs.</div>
 </section>
 <!-- Slide 4: Concept, definition only -->
-<section class="slide" data-type="concept" data-title="What a level is">
-  <h2>A level of analysis tells what a statement is about</h2>
-  <p class="def-line">A view of a problem is called a level of analysis. To find the level, ask: what is the statement about?</p>
-  <table class="ex-table lv-table">
-    <thead><tr><th scope="col">Statement about the case</th><th scope="col">What it is about</th></tr></thead>
+<section class="slide" data-type="concept" data-title="Level of analysis">
+  <h2>Level of analysis</h2>
+  <p class="definition">A view of a problem is called a level of analysis. To find the level, ask: what is the statement about?</p>
+  <table class="tbl">
+    <thead><tr><th scope="col">Statement about the layer farm</th><th scope="col">What it is about</th></tr></thead>
     <tbody>
       <tr><td>The laboratory finds Salmonella in hen number 3.</td><td>One hen</td></tr>
       <tr><td>120 of the 8,000 hens die in one week.</td><td>A group of hens</td></tr>
@@ -465,7 +509,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 </section>
 <!-- Slide 5: Concept, individual animal and animal population -->
 <section class="slide" data-type="concept" data-title="Animal and population">
-  <h2>Level 1 is one animal. Level 2 is a group of animals.</h2>
+  <h2>Individual animal and animal population</h2>
+  <p class="intro">The first two levels of analysis are one animal and a group of animals. The figure shows both levels on the layer farm.</p>
   <div class="lv-layout">
     <div class="lv-fig"><svg class="fig" viewBox="0 0 440 300" role="img" aria-label="Boxes inside boxes. The outer box is an area. Inside it is a farm with 8,000 hens. Inside the farm is pen A1. Inside the pen are three hens, and one of them is hen number 3.">
         <defs>
@@ -526,19 +571,20 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         </g>
         <text x="206" y="246" text-anchor="middle">Hen number 3</text>
       </svg></div>
-    <div>
+    <div class="txt">
       <ul class="st-list">
         <li><strong>Individual animal:</strong> one hen, for example hen number 3.</li>
         <li><strong>Animal population:</strong> a group of hens. A pen, a farm, and an <span class="term" data-tip="A part of a region with a clear boundary, for example a village, a district, or a regency.">area</span> are each a <span class="term" data-tip="A defined group of animals that share a place or a production system, for example a herd, a flock, or all dogs in an area.">population</span>.</li>
       </ul>
-      <p class="eg" style="margin-top:1rem">A population is relative. The farm is a population of hens, and it is also one member of the population of farms in the area.</p>
+      <p>A population is relative. The farm is a population of hens, and it is also one member of the population of farms in the area.</p>
     </div>
   </div>
   <div class="notes">Point to hen number 3, then to the pen, the farm, and the area. Ask: is the farm a population? Students should say yes for the hens, and also see the farm as one unit among the farms of the area.</div>
 </section>
 <!-- Slide 6: Concept, animal product chain and system -->
 <section class="slide" data-type="concept" data-title="Chain and system">
-  <h2>Level 3 is the chain of animal products and the system around it</h2>
+  <h2>Animal product chain and system</h2>
+  <p class="intro">The third level of analysis follows the eggs after they leave the farm.</p>
   <div class="fig-wrap" data-detail="d-chain" tabindex="0" aria-label="A chain of five boxes from left to right: feed and medicines, layer farm, egg trader, market, buyers. Below the chain, one wide box for the rules, services, and prices around the whole chain. Select for details."><svg class="fig" viewBox="0 0 720 210" role="img" aria-hidden="true">
     <rect class="f-box" x="0" y="14" width="124" height="62" rx="10"/><text x="62" y="41" text-anchor="middle" class="t-strong">Feed and</text><text x="62" y="61" text-anchor="middle" class="t-strong">medicines</text>
     <rect class="f-box" x="149" y="14" width="124" height="62" rx="10"/><text x="211" y="51" text-anchor="middle" class="t-strong">Layer farm</text>
@@ -551,14 +597,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <text x="360" y="161" text-anchor="middle" class="t-muted">around the whole chain</text>
     <text x="0" y="200" class="t-muted">Animals, feed, products, and money move along the chain</text>
   </svg></div>
-  <p class="under-fig">The <strong>animal product chain and system</strong> is the path of animals, feed, and products from the farm to the buyers, with the rules and services around it. The assessor works at this level when the question is where the eggs went.</p>
+  <p class="after">The <strong>animal product chain and system</strong> is the path of animals, feed, and products from the farm to the buyers, with the rules and services around it. The assessor works at this level when the question is where the eggs went.</p>
   <div class="notes">Trace the eggs from the layer farm to the buyers with a finger. Ask: where would the assessor find records of this path? Open the details to see the three roles of this level.</div>
 </section>
 <!-- Slide 7: Concept, two kinds of question at every level -->
 <section class="slide" data-type="concept" data-title="Two kinds of question">
-  <h2>Every level raises a health question and an <span class="term" data-tip="About value, cost, and who gains or loses.">economic</span> question</h2>
+  <h2>Health and economic questions at each level</h2>
+  <p class="intro">At every level, the assessor can ask a health question and an <span class="term" data-tip="About value, cost, and who gains or loses.">economic</span> question. The table shows one of each for the three levels.</p>
   <div class="lv-wrap" data-detail="d-matrix" tabindex="0" aria-label="A table of the three levels with a health question and an economic question for each level. Select for details.">
-    <table class="ex-table lv-table">
+    <table class="tbl">
       <thead><tr><th scope="col">Level</th><th scope="col">Health question</th><th scope="col">Economic question</th></tr></thead>
       <tbody>
         <tr><th scope="row">Individual animal</th><td>What is wrong with this hen?</td><td>What is the value of this hen, and what is the cost of its treatment?</td></tr>
@@ -567,26 +614,28 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       </tbody>
     </table>
   </div>
-  <p class="under-fig">Economic aspects are present at all three levels. The economic question changes with the level.</p>
+  <p class="after">Economic aspects are present at all three levels. The economic question changes with the level.</p>
   <div class="notes">Ask students to find the animal, place, and time in the middle health question. Ask which economic question the owner asked in the previous deck. The answer is the middle row.</div>
 </section>
 <!-- Slide 8: Concept, decisions per level -->
-<section class="slide vcenter" data-type="concept" data-title="Decision and decision maker">
-  <h2>Each level has its own decision and <span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">decision maker</span></h2>
+<section class="slide" data-type="concept" data-title="Decision and decision maker">
+  <h2>Decision and decision maker at each level</h2>
+  <p class="intro">Each level has its own decision and <span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">decision maker</span>.</p>
   <ul class="st-list" data-detail="d-decision" tabindex="0" aria-label="Three levels with a decision for each. Select for details.">
     <li><strong>Individual animal:</strong> the veterinarian and the owner decide whether to treat hen number 3.</li>
     <li><strong>Animal population:</strong> the owner decides whether to repair the water line and disinfect pens A1 and B1.</li>
     <li><strong>Animal product chain and system:</strong> the authority decides whether to <span class="term" data-tip="Take back from sale.">withdraw</span> the eggs from the two markets.</li>
   </ul>
-  <p class="eg">A decision at one level moves costs and benefits to other levels. Withdrawing the eggs protects the buyers, but causes the owners to lose revenue.</p>
+  <p class="after">A decision at one level moves costs and benefits to other levels. Withdrawing the eggs protects the buyers, but causes the owners to lose revenue.</p>
   <div class="notes">Ask who pays and who gains in the last bullet. This links to private and public benefits in the previous deck. Open the details for what is at stake at each level.</div>
 </section>
 <!-- Slide 9: Example -->
-<section class="slide" data-type="example" data-title="The case at three levels">
-  <h2>The assessor sees the case at three levels</h2>
+<section class="slide" data-type="example" data-title="Worked example">
+  <h2>The layer farm at three levels</h2>
+  <p class="intro">The assessor looks at the scenario at the three levels. The table gives one finding and the source of its data for each level.</p>
   <div class="lv-wrap" data-detail="d-example" tabindex="0" aria-label="A table with one finding of the case and its data source for each level. Select for details.">
-    <table class="ex-table lv-table">
-      <thead><tr><th scope="col">Level</th><th scope="col">Finding in the case</th><th scope="col">Source of the data</th></tr></thead>
+    <table class="tbl">
+      <thead><tr><th scope="col">Level</th><th scope="col">Finding on the farm</th><th scope="col">Source of the data</th></tr></thead>
       <tbody>
         <tr><th scope="row">Individual animal</th><td>Salmonella in the five hens that the laboratory tested</td><td>Laboratory test of five hens</td></tr>
         <tr><th scope="row">Animal population</th><td>120 of 8,000 hens die in one week, 90 of them in pens A1 and B1</td><td>Farm records of deaths by pen</td></tr>
@@ -594,12 +643,13 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       </tbody>
     </table>
   </div>
-  <p class="under-fig">Each row answers a different question, based on different data. No row replaces any other row.</p>
+  <p class="after">Each row answers a different question, based on different data. No row replaces any other row.</p>
   <div class="notes">Go through the rows from top to bottom. At the last row ask: which level does the assessor need to decide about the eggs? Open the details to see what each row cannot show.</div>
 </section>
 <!-- Slide 10: Concept, data and question at the same level -->
 <section class="slide" data-type="concept" data-title="Keep the conclusion at its level">
-  <h2>Why do five positive hens not answer the question about the eggs?</h2>
+  <h2>Conclusion at the level of the data</h2>
+  <p class="intro">Five positive hens do not answer the question about the eggs in the two markets. The figure and the list show why.</p>
   <div class="lv-layout lv-layout-10">
     <div class="lv-fig"><svg class="fig" viewBox="0 0 330 250" role="img" aria-label="Three boxes stacked: animal product chain and system on top, animal population in the middle, individual animal at the bottom. The bottom box is marked data and the top box is marked question. A dashed arrow with a question mark runs from the bottom box to the top box.">
         <defs><marker id="lv-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="lv-ah"/></marker></defs>
@@ -614,14 +664,14 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
         <path class="lv-jump" d="M298 178 V76" marker-end="url(#lv-ah)"/>
         <text x="311" y="134" class="t-strong">?</text>
       </svg></div>
-    <div>
+    <div class="txt">
       <ul class="st-list" data-detail="d-claim" tabindex="0" aria-label="The data, the question, the gap, and the fix. Select for details.">
         <li><strong>Data:</strong> five hens, at the individual animal level.</li>
         <li><strong>Question:</strong> are the eggs in the two markets <span class="term" data-tip="Carrying an agent such as Salmonella, so that the egg can cause disease.">contaminated</span>? This is the chain level.</li>
         <li><strong>Gap:</strong> the data and the question sit at different levels, so the data cannot answer the question.</li>
         <li><strong>Fix:</strong> collect data at the level of the question. Test eggs and trace where they went.</li>
       </ul>
-      <p class="eg" style="margin-top:1rem">A conclusion stays safe at the level of its data.</p>
+      <p>A conclusion stays safe at the level of its data.</p>
     </div>
   </div>
   <div class="notes">Return to the first question of the deck and work it in four lines. Ask students to name the level of the data and the level of the question before you show the gap. Open the details for the jump in the other direction, from a group to one animal.</div>
@@ -629,6 +679,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 11: Practice, sort cards -->
 <section class="slide" data-type="practice" data-title="Sort the statements">
   <h2>Drag each statement into the box of its level</h2>
+  <p class="intro">Ask for each card: what is the statement about? Some statements are about money.</p>
   <div class="sorter" data-sorter data-explain="d-sort" data-explain-always="1">
     <div class="sorter-pool" aria-label="Cards to sort">
       <button class="sort-card" data-target="i">Hen number 7 cannot stand and has a fever.</button>
@@ -651,7 +702,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <span class="verdict" role="status" aria-live="polite"></span>
     </div>
   </div>
-  <p class="practice-note">Ask for each card: what is the statement about? Some statements are about money.</p>
   <div class="notes">Students work in pairs. Cards about money are the hard ones. The level follows what the statement is about, not the topic of money. The feed lot card is often placed at the population level because feed reaches the animals.</div>
 </section>
 <!-- Slide 12: Practice, complete the statements -->
@@ -700,8 +750,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="notes">For each sentence ask what it is about and what its data describe. Sentence 3 shows the right move: a question about the eggs needs data on the eggs.</div>
 </section>
 <!-- Slide 14: Explore, three stages -->
-<section class="slide" data-type="explore" data-title="Follow the evidence">
-  <h2>Follow the evidence from the hen to the egg chain</h2>
+<section class="slide" data-type="explore" data-title="From hen to egg chain">
+  <h2>Evidence from the hen to the egg chain</h2>
+  <p class="intro">Select Next stage. Before you read the advice, predict whether the assessor can decide about the eggs.</p>
   <div class="lx-layout">
     <div class="lx-left">
       <svg class="fig" id="lx-fig" viewBox="0 0 420 300" role="img" aria-label="Three boxes inside each other: the individual animal inside the animal population inside the animal product chain and system. The box of the selected stage has a thick outline.">
@@ -750,7 +801,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <p class="lx-adv" id="lx-adv"></p>
     </div>
   </div>
-  <p class="practice-note">Select Next stage. Before you read the advice, say whether the assessor can decide about the eggs.</p>
   <div class="notes">At each stage ask the class whether the assessor can decide about the eggs. At stage 1 the answer is no, which is the answer to the first question of the deck. Only at stage 3 are there data at the level of the question.</div>
 </section>
 <!-- Slide 15: Check 1 -->
@@ -778,8 +828,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </section>
 <!-- Slide 17: Check 3, transfer -->
-<section class="slide" data-type="check" data-title="Check: a new case">
-  <h2>A new case: a beef chain</h2>
+<section class="slide" data-type="check" data-title="Check: a new scenario">
+  <h2>A new scenario: a beef chain</h2>
   <p>A regulatory assessor studies a beef chain with a cattle farm, a <span class="term" data-tip="A place where animals are killed for meat under official control.">slaughterhouse</span>, and a retail market. At the slaughterhouse, 12 of the 40 cattle in one lot show <span class="term" data-tip="Damage to a tissue or an organ.">lesions</span> in the muscle.</p>
   <div>
     <p class="q-label">Which conclusion goes beyond the level of its data?</p>
@@ -795,7 +845,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
-    <li>The level of analysis tells what a statement is about. The course uses three levels: the individual animal, the animal population, and the animal product chain and system.</li>
+    <li>The level of analysis tells what a statement is about. This course uses three levels: the individual animal, the animal population, and the animal product chain and system.</li>
     <li>A population is relative. A pen, a farm, and an area are each a population.</li>
     <li>Every level raises a health question and an economic question. A decision at one level moves costs and benefits to other levels.</li>
     <li>Keep a conclusion at the level of its data. When a conclusion needs another level, collect data at that level.</li>
@@ -977,7 +1027,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   let current = 0, notesMode = false, panelClosed = false;
   const phases = $('#phases'), ovGrid = $('#ov-grid');
   // One group of marks for each run of slides of the same type
-  const phaseName = { title: 'Start', recap: 'Case', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
+  const phaseName = { title: 'Start', scenario: 'Scenario', recap: 'Scenario', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
   const marks = []; let group = null, lastType = null;
   slides.forEach((s, i) => {
     const t = s.dataset.title || ('Slide ' + (i + 1));
@@ -1339,9 +1389,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
   // Slide 14: three stages
   const stages = [
-    { box: 'lx-r1', level: 'Individual animal', known: 'Five tested hens have Salmonella.', unk: 'How many other hens are infected, and which eggs are contaminated.', who: 'The five hens.', adv: 'Not enough to advise about the eggs.' },
-    { box: 'lx-r2', level: 'Animal population', known: '120 of 8,000 hens die in one week, most of them in pens A1 and B1.', unk: 'Where the eggs of these pens went.', who: 'The owner, through the flock and the farm income.', adv: 'Not enough to advise about the eggs.' },
-    { box: 'lx-r3', level: 'Animal product chain and system', known: 'Eggs from pens A1 and B1 reached two markets.', unk: 'Whether eggs from the other six pens are also contaminated.', who: 'The owner, the traders, the buyers, and the people who eat the eggs.', adv: 'Enough to advise withdrawing the eggs of pens A1 and B1 from the two markets.' }
+    { box: 'lx-r1', level: 'Level 1: Individual animal', known: 'Five tested hens have Salmonella.', unk: 'How many other hens are infected, and which eggs are contaminated.', who: 'The five hens.', adv: 'Not enough to advise about the eggs.' },
+    { box: 'lx-r2', level: 'Level 2: Animal population', known: '120 of 8,000 hens die in one week, most of them in pens A1 and B1.', unk: 'Where the eggs of these pens went.', who: 'The owner, through the flock and the farm income.', adv: 'Not enough to advise about the eggs.' },
+    { box: 'lx-r3', level: 'Level 3: Animal product chain and system', known: 'Eggs from pens A1 and B1 reached two markets.', unk: 'Whether eggs from the other six pens are also contaminated.', who: 'The owner, the traders, the buyers, and the people who eat the eggs.', adv: 'Enough to advise withdrawing the eggs of pens A1 and B1 from the two markets.' }
   ];
   let stage = 0;
   const btnPrev = $('lx-prev'), btnNext = $('lx-next');
