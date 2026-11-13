@@ -335,6 +335,18 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .fq-fig { display: block; width: min(100%, 36rem); height: auto; overflow: visible; }
 .fq-fig-wrap { flex: none; align-self: flex-start; width: 100%; max-width: 36rem; }
 
+/* Three cards in one row, and a plain box. All boxes share one design. */
+.fq-trio { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; align-items: stretch; }
+.fq-trio > div, .fq-box { padding: 0.65rem 0.9rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: grid; gap: 0.3rem; align-content: start; }
+.fq-trio p, .fq-box p { font-size: 1rem; line-height: 1.42; }
+.fq-trio .t, .fq-box .t { font-weight: 650; font-size: 1.08rem; }
+.fq-trio-opt { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr) minmax(0, 1fr); }
+.fq-two-eq { align-items: stretch; }
+.fq-box .fq-fig-wrap { max-width: none; }
+.fq-box .fq-fig { width: min(100%, 30rem); }
+.stage.has-panel .fq-trio p, .stage.has-panel .fq-box p { font-size: 0.93rem; }
+.stage.has-panel .fq-trio .t, .stage.has-panel .fq-box .t { font-size: 1rem; }
+
 .parts { margin: 0; display: grid; gap: 0.45rem; }
 .parts div { display: grid; grid-template-columns: 8.4rem minmax(0, 1fr); gap: 0.8rem; padding: 0.45rem 0.85rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); align-items: baseline; }
 .parts dt { font-weight: 600; color: var(--muted); }
@@ -368,7 +380,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .sort-drop { min-height: 2.6rem; }
 
 .ck-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
-.ck-list li { margin: 0; }
+.ck-list li { margin: 0; display: flex; }
+.ck-list li label { flex: 1; }
+.ck-list li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .ck-list label { display: flex; gap: 0.6rem; align-items: baseline; padding: 0.5rem 0.8rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; font-size: 1.02rem; line-height: 1.35; }
 .ck-list label:hover { border-color: var(--muted); }
 .ck-list input { accent-color: var(--accent); flex: none; width: 1.05rem; height: 1.05rem; transform: translateY(0.15rem); }
@@ -568,21 +582,19 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide" data-type="concept" data-title="Check 4: the choice that the answer serves">
   <h2>Check 4: the choice that the answer serves</h2>
   <p class="lead-in">A question is worth asking when its possible answers lead to different actions. Describe the choice of the owner with three things.</p>
-  <div class="fq-two fq-two-wide">
-    <ul class="fq-list" data-detail="d-c4" tabindex="0" aria-label="The three parts of a choice. Select for details.">
-      <li><b><span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">Decision maker</span>:</b> the person who chooses. The owner chooses for the farm.</li>
-      <li><b>Options:</b> the actions that the decision maker can choose between. There are at least two. The owner can choose measure A (test the eggs), B (repair the water line), or C (vaccinate the next flock). Each option has an <span class="term" data-tip="What you give up when you choose one option. If the owner pays for measure A, the money is gone, and the owner cannot pay for measure B.">opportunity cost</span>.</li>
-      <li><b><span class="term" data-tip="What someone wants to achieve.">Objective</span>:</b> what the choice should achieve. The <span class="term" data-tip="The state of one disease in one population at one time, for example free, outbreak, or unknown.">disease status</span> of the population gives the objective. The farm has an <span class="term" data-tip="A disease occurs at a level clearly above the expected level in a population, for example on one farm in one week.">outbreak</span>, so the objective is to reduce the disease.</li>
-    </ul>
-    <div class="tb-wrap" style="max-width:none">
-      <table class="ex-table">
-        <thead><tr><th>Question</th><th>Does a different answer change the choice?</th></tr></thead>
-        <tbody>
-          <tr><td class="q">Is the water line the source of the infection?</td><td>Yes. If it is the source, measure B is worth more. If it is not, the owner may choose measure A or C.</td></tr>
-          <tr><td class="q">On which hour of the day did the first hen die?</td><td>No. The owner chooses the same measure, whatever the hour.</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="fq-trio fq-trio-opt" data-detail="d-c4" tabindex="0" aria-label="The three parts of a choice. Select for details.">
+    <div><p class="t"><span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">Decision maker</span></p><p>The person who chooses. The owner chooses for the farm.</p></div>
+    <div><p class="t">Options</p><p>The actions that the decision maker can choose between. There are at least two. The owner can choose measure A (test the eggs), B (repair the water line), or C (vaccinate the next flock). Each option has an <span class="term" data-tip="What you give up when you choose one option. If the owner pays for measure A, the money is gone, and the owner cannot pay for measure B.">opportunity cost</span>.</p></div>
+    <div><p class="t"><span class="term" data-tip="What someone wants to achieve.">Objective</span></p><p>What the choice should achieve. The <span class="term" data-tip="The state of one disease in one population at one time, for example free, outbreak, or unknown.">disease status</span> of the population gives the objective. The farm has an <span class="term" data-tip="A disease occurs at a level clearly above the expected level in a population, for example on one farm in one week.">outbreak</span>, so the objective is to reduce the disease.</p></div>
+  </div>
+  <div class="tb-wrap" style="max-width:none">
+    <table class="ex-table">
+      <thead><tr><th>Question</th><th>Does a different answer change the choice?</th></tr></thead>
+      <tbody>
+        <tr><td class="q">Is the water line the source of the infection?</td><td>Yes. If it is the source, measure B is worth more. If it is not, the owner may choose measure A or C.</td></tr>
+        <tr><td class="q">On which hour of the day did the first hen die?</td><td>No. The owner chooses the same measure, whatever the hour.</td></tr>
+      </tbody>
+    </table>
   </div>
   <p class="under">A question that fails check 4 can have an answer and still not be worth the time. Drop it, or find the choice that it serves.</p>
   <div class="notes">The three parts come from the earlier decks: the opportunity cost of the options, and the objective that follows from the disease status. Ask students what the objective would be on a farm where nobody has tested the hens.</div>
@@ -662,29 +674,31 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 12: Sources -->
 <section class="slide" data-type="concept" data-title="Sources of information">
   <h2>Sources of information</h2>
-  <div class="fq-two">
-    <div class="fq-side">
-      <p class="lead-in">Every smaller question needs a source, the place where its answer comes from. Three kinds of source exist.</p>
-      <ul class="fq-list">
-        <li><b>Existing <span class="term" data-tip="Written information that someone already keeps, such as sales books or laboratory reports.">records</span>:</b> farm records, laboratory results, and <span class="term" data-tip="The routine collection of health data to find problems early.">surveillance</span> reports of the authority.</li>
-        <li><b>New data:</b> a visit, samples, or questions to people.</li>
-        <li><b>Published knowledge and experts:</b> studies, textbooks, guidelines, and specialists.</li>
-      </ul>
-      <p class="under">A source is usable when the answer arrives in time, at a cost that the decision maker accepts, and with a quality that is good enough for the question. When no source is usable, change the question, or state an <span class="term" data-tip="Something that you accept as true without evidence, and say so.">assumption</span> and say that it is an assumption.</p>
+  <p class="lead-in">Every smaller question needs a source, the place where its answer comes from. Three kinds of source exist.</p>
+  <div class="fq-trio">
+    <div><p class="t">Existing <span class="term" data-tip="Written information that someone already keeps, such as sales books or laboratory reports.">records</span></p><p>Farm records, laboratory results, and <span class="term" data-tip="The routine collection of health data to find problems early.">surveillance</span> reports of the authority.</p></div>
+    <div><p class="t">New data</p><p>A visit, samples, or questions to people.</p></div>
+    <div><p class="t">Published knowledge and experts</p><p>Studies, textbooks, guidelines, and specialists.</p></div>
+  </div>
+  <div class="fq-two fq-two-eq">
+    <div class="fq-box">
+      <p class="t">When a source is usable</p>
+      <p>A source is usable when the answer arrives in time, at a cost that the decision maker accepts, and with a quality that is good enough for the question. When no source is usable, change the question, or state an <span class="term" data-tip="Something that you accept as true without evidence, and say so.">assumption</span> and say that it is an assumption.</p>
+      <p>Example: the owner cannot wait for water samples, so the consultant assumes that the water line is the source, and says so.</p>
     </div>
-    <div class="fq-side">
-    <div class="fq-fig-wrap" data-detail="d-src" tabindex="0" aria-label="A figure. The main question needs smaller questions. Each smaller question needs a source. When no source is usable, the arrow goes back to the main question. Select for details.">
-      <svg class="fig fq-fig" viewBox="0 0 560 200" role="img" aria-hidden="true">
-        <rect class="f-box" x="0" y="14" width="150" height="66" rx="10"/><text x="75" y="42" text-anchor="middle" class="t-strong">Main</text><text x="75" y="62" text-anchor="middle" class="t-strong">question</text>
-        <rect class="f-box" x="205" y="14" width="150" height="66" rx="10"/><text x="280" y="42" text-anchor="middle" class="t-strong">Smaller</text><text x="280" y="62" text-anchor="middle" class="t-strong">questions</text>
-        <rect class="f-box" x="410" y="14" width="150" height="66" rx="10"/><text x="485" y="53" text-anchor="middle" class="t-strong">Source</text>
-        <path class="f-arrow" d="M154 47 H201"/><path class="f-arrow" d="M359 47 H406"/>
-        <path class="f-arrow" d="M485 84 V134 H75 V88"/>
-        <text x="280" y="170" text-anchor="middle">No usable source: change the question</text>
-        <text x="280" y="192" text-anchor="middle">or state an assumption</text>
-      </svg>
-    </div>
-    <p class="under">Example: the owner cannot wait for water samples, so the consultant assumes that the water line is the source, and says so.</p>
+    <div class="fq-box">
+      <p class="t">The path of a question</p>
+      <div class="fq-fig-wrap" data-detail="d-src" tabindex="0" aria-label="A figure. The main question needs smaller questions. Each smaller question needs a source. When no source is usable, the arrow goes back to the main question. Select for details.">
+        <svg class="fig fq-fig" viewBox="0 0 560 200" role="img" aria-hidden="true">
+          <rect class="f-box" x="0" y="14" width="150" height="66" rx="10"/><text x="75" y="42" text-anchor="middle" class="t-strong">Main</text><text x="75" y="62" text-anchor="middle" class="t-strong">question</text>
+          <rect class="f-box" x="205" y="14" width="150" height="66" rx="10"/><text x="280" y="42" text-anchor="middle" class="t-strong">Smaller</text><text x="280" y="62" text-anchor="middle" class="t-strong">questions</text>
+          <rect class="f-box" x="410" y="14" width="150" height="66" rx="10"/><text x="485" y="53" text-anchor="middle" class="t-strong">Source</text>
+          <path class="f-arrow" d="M154 47 H201"/><path class="f-arrow" d="M359 47 H406"/>
+          <path class="f-arrow" d="M485 84 V134 H75 V88"/>
+          <text x="280" y="170" text-anchor="middle">No usable source: change the question</text>
+          <text x="280" y="192" text-anchor="middle">or state an assumption</text>
+        </svg>
+      </div>
     </div>
   </div>
   <div class="notes">The return arrow is the key point. A question that nobody can supply with information is not yet an answerable question. Ask students for a smaller question in the owner's case that has no usable source today.</div>
@@ -699,7 +713,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <div><dt>Objective</dt><dd>Reduce the disease. The farm has an <span class="term" data-tip="A disease occurs at a level clearly above the expected level in a population, for example on one farm in one week.">outbreak</span>: 120 hens died in one week, and the expected level is about 10.</dd></div>
     <div><dt>Main question</dt><dd>Which measure gives the owner the most benefit for IDR 15,000,000? This is a Domain 4 question.</dd></div>
   </dl>
-  <ul class="passes passes-2">
+  <ul class="passes">
     <li class="ok"><b>Check 1, clear.</b> “Benefit” means the loss that a measure avoids, in rupiah.</li>
     <li class="ok"><b>Check 2, evidence.</b> Records, tests, and estimates can show which measure is worth more.</li>
     <li class="ok"><b>Check 3, discipline.</b> It asks what options give and cost: epidemiology and economics.</li>
