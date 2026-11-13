@@ -15,9 +15,11 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
-     The shell version 3.1 offers: reveal steps (data-step), the card sorter (data-sorter),
+     The shell version 3.2 offers: layout patterns (intro, after, lay-split, lay-cards,
+     lay-compare), one box design (box), one table design (tbl), the card sorter (data-sorter),
      SVG figure classes (.fig), and a Reset button that also resets inputs made later.
-     Add ?steps=all to the URL to show all steps (for review and printing).
+     The example slides show each slide family and each layout pattern (05, sections 3.5 to 3.10).
+     Reveal steps (data-step) remain for old decks only. New decks do not use them (05, section 2.3).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -37,7 +39,7 @@
   ],
   "guides": [],
   "status": "draft",
-  "updated": "2026-11-12"
+  "updated": "2026-11-13"
 }
 </script>
 
@@ -198,6 +200,58 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
 .fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
 
+
+/* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
+   Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
+   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
+.slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
+.slide .after { margin-top: var(--gap-after); }
+.slide .intro + .intro, .slide .after + .after { margin-top: -0.35rem; }
+.slide .definition { font-size: var(--fs-def); line-height: 1.4; }
+.slide.vcenter { justify-content: center; }
+.slide.vcenter .definition { font-size: var(--fs-def-alone); line-height: 1.3; }
+.slide.vcenter .definition.long { font-size: var(--fs-def-long); line-height: 1.5; }
+.slide .small { font-size: var(--fs-small); color: var(--muted); }
+
+/* Split: two columns. The first element in the markup is the left column. */
+.lay-split { display: grid; grid-template-columns: var(--split, minmax(0, 1fr) minmax(0, 1fr)); gap: 2.2rem; align-items: start; min-height: 0; }
+.lay-split.mid { align-items: center; }
+.txt { display: grid; gap: 0.8rem; align-content: start; min-width: 0; }
+.txt ul, .txt ol { margin: 0; padding-left: 1.2rem; }
+.vis { display: flex; justify-content: center; align-items: flex-start; min-width: 0; min-height: 0; }
+.vis > .fig { width: 100%; max-width: var(--fig-w, 34rem); }
+.vis[data-detail] { width: fit-content; max-width: 100%; justify-self: center; }
+
+/* Boxes: one design for every box. Cards: two to four parallel boxes. Compare: two boxes, one for each side. */
+.box { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0.8rem 1rem 0.9rem; display: grid; gap: 0.45rem; align-content: start; font-size: var(--fs-comp); min-width: 0; }
+.box h3 { margin: 0; font-size: 1.15rem; font-weight: 600; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
+.box p { margin: 0; }
+.box ul { margin: 0; padding-left: 1.1rem; }
+.lay-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; align-items: stretch; }
+.lay-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; align-items: stretch; }
+
+/* Tables: a frame, a filled header row, horizontal lines between rows, no vertical lines. */
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.4; }
+.tbl.fit { width: auto; max-width: 100%; align-self: flex-start; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--line); }
+.tbl thead th { background: var(--surface); font-weight: 600; vertical-align: middle; }
+.tbl thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
+.tbl thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
+.tbl tbody tr:last-child > * { border-bottom: none; }
+.tbl tbody th { font-weight: 600; }
+.tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
+.tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
+.box .tbl { border: none; border-radius: 0; background: transparent; }
+.box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
+.box .tbl td, .box .tbl tbody th { padding-left: 0; }
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .lay-split, .lay-compare { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+}
+@media print { .tbl, .box { break-inside: avoid; } }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -308,31 +362,22 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
-.case-layout p + p { margin-top: 0.9rem; }
-.case-layout p { font-size: 1.15rem; }
-.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; width: 100%; }
+.tbl { --fs-comp: 1.1rem; }
+.tbl.dc-table { --fs-comp: 1rem; }
 .facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .facts dt { color: var(--muted); }
 .facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
 
-.def-line { font-size: 1.4rem; line-height: 1.4; font-weight: 500; }
-.under-fig { font-size: 1.15rem; }
 .fig-wrap { flex: none; display: flex; align-items: flex-start; align-self: flex-start; width: 100%; max-width: 60rem; }
 .fig-wrap .fig { height: auto; width: 100%; overflow: visible; }
 .fig .lp-core { stroke: var(--ink); stroke-width: 3; }
 .fig .lp-tag { fill: var(--accent); }
 .fig .lp-bar2 { fill: var(--muted); }
 
-.ex-table { border-collapse: collapse; width: 100%; font-size: 1.05rem; }
-.ex-table th, .ex-table td { text-align: left; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.ex-table tbody th { font-weight: 600; color: var(--muted); width: 13rem; }
-.lv-table td { font-size: 1.1rem; }
 .lv-wrap { width: 100%; max-width: 62rem; flex: none; align-self: flex-start; }
 
 .dc-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.6rem; flex: none; }
-.dc-col { display: grid; gap: 0.5rem; align-content: start; padding: 0.9rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
 .dc-head { display: flex; align-items: center; gap: 0.55rem; font-weight: 600; font-size: 1.15rem; }
 .dc-q { color: var(--muted); font-size: 1.05rem; }
 .dc-res { font-weight: 600; font-size: 1.1rem; }
@@ -347,7 +392,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .lp-wrap { flex: none; align-self: flex-start; width: 100%; max-width: 54rem; }
 .lp-wrap .fig { width: 100%; height: auto; max-height: 48vh; }
 
-.practice-note { color: var(--muted); font-size: 0.98rem; }
 .sorter { flex: none; }
 .sorter-pool { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.3rem; padding: 0.25rem; }
 .sorter-bins { grid-template-columns: 1fr; gap: 0.25rem; }
@@ -368,6 +412,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .bd-fill select.is-correct { border-color: var(--ok); }
 .bd-fill select.is-wrong { border-color: var(--bad); }
 .bd-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.bd-why[hidden] { display: none; }
+.stage.has-panel .dc-col { gap: 0.3rem; }
+.stage.has-panel .dc-col .fig { max-width: 18rem; }
+.stage.has-panel .tbl.dc-table { --fs-comp: 0.95rem; }
+.stage.has-panel .dc-table th, .stage.has-panel .dc-table td { padding: 0.3rem 0.45rem; }
 .bd-why { display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.98rem; }
 .quote { font-size: 1.25rem; line-height: 1.45; margin: 0; padding-left: 1.6rem; display: grid; gap: 0.3rem; }
 .q-label { font-weight: 600; font-size: 1.15rem; }
@@ -386,7 +435,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .lw-label { font-weight: 600; }
 
 @media (max-width: 900px) {
-  .case-layout, .lw-layout, .dc-layout { grid-template-columns: 1fr; }
+  .lw-layout, .dc-layout { grid-template-columns: 1fr; }
   .sorter-pool { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sort-bin { grid-template-columns: 1fr; }
 }
@@ -429,28 +478,30 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="notes">Read the lead aloud. Ask for a first answer in one sentence. The deck gives the course answer: five questions, five domains, and one loop that connects them.</div>
 </section>
 
-<!-- Slide 2: Recap of the anchor case -->
-<section class="slide" data-type="recap" data-title="The case">
-  <h2>The case: Salmonella on a layer farm</h2>
-  <div class="case-layout">
-    <div>
-      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, two of the eight pens, next to the water inlet.</p>
-      <p>The laboratory tests five hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have reached two markets.</p>
+<!-- Slide 2: Scenario. Layout P3, text | key numbers -->
+<section class="slide" data-type="scenario" data-title="The scenario">
+  <h2>The scenario: Salmonella on a layer farm</h2>
+  <div class="lay-split" style="--split: minmax(0, 1fr) minmax(0, 0.9fr)">
+    <div class="txt">
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, which are located near the <span class="term" data-tip="The place where water enters the building, for example from a pipe or a tank.">water inlet</span>.</p>
+      <p>The laboratory tests five dead hens and finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in all five. Eggs from pens A1 and B1 have reached two markets.</p>
       <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian runs laboratory tests, studies samples, and explains the results.">laboratory diagnostician</span>. The farm owner asks you: what should we do next?</p>
     </div>
+    <div class="vis">
     <dl class="facts">
       <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
       <div><dt>Deaths in one week</dt><dd>120</dd></div>
-      <div><dt>Hens tested, all with Salmonella</dt><dd>5</dd></div>
-      <div><dt>Budget left this month</dt><dd>IDR 15,000,000</dd></div>
+      <div><dt>Dead hens tested</dt><dd>5</dd></div>
+      <div><dt>Dead hens with Salmonella</dt><dd>5</dd></div>
     </dl>
+    </div>
   </div>
   <div class="notes">Read the three paragraphs aloud. The budget comes from deck 3. In this deck you work in the laboratory seat. The owner asks a question about action, and the laboratory has a result about animals.</div>
 </section>
 
 <!-- Slide 3: Question -->
 <section class="slide" data-type="question" data-title="Predict first">
-  <h2>The laboratory finds Salmonella in five hens. The owner asks: what should we do next? Which question does the laboratory result answer?</h2>
+  <h2>The laboratory finds Salmonella in five dead hens. The owner asks: what should we do next? Which question does the laboratory result answer?</h2>
   <p>Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
     <li><button class="choice" data-value="a"><span class="key">A</span>What is happening?</button></li>
@@ -463,10 +514,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- Slide 4: Concept, the definition has an object and three kinds of work -->
 <section class="slide" data-type="concept" data-title="The definition">
-  <h2>The definition of epidemiology has an object and three kinds of work</h2>
-  <p class="def-line">Epidemiology is the study of the <strong>distribution</strong> and <strong>determinants</strong> of health-related states or events in specified populations, and the <strong>application</strong> of this study to the control of health problems.</p>
+  <h2>Parts of the definition of epidemiology</h2>
+  <p class="definition">Epidemiology is the study of the <strong>distribution</strong> and <strong>determinants</strong> of health-related states or events in specified populations, and the <strong>application</strong> of this study to the control of health problems.</p>
   <div class="lv-wrap" data-detail="d-def" tabindex="0" aria-label="A table with the object of the definition and its three kinds of work: work 1 distribution, work 2 determinants, and work 3 application. Select for details.">
-    <table class="ex-table lv-table">
+    <table class="tbl">
       <thead><tr><th scope="col">Part of the definition</th><th scope="col">What it asks the epidemiologist to do</th></tr></thead>
       <tbody>
         <tr><th scope="row">Object</th><td>Study <span class="term" data-tip="Diseases, infections, deaths, injuries, production problems, welfare states, and food safety hazards.">health-related states or events</span> in <span class="term" data-tip="Defined groups of animals, and the animal products that come from them.">specified populations</span>.</td></tr>
@@ -481,8 +532,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- Slide 5: Concept, five questions, five domains -->
 <section class="slide" data-type="concept" data-title="Five questions">
-  <h2>The course turns the three kinds of work into five questions</h2>
-  <p>Each question is one <span class="term" data-tip="One of the five questions of the course, or Domain 0. A domain groups the competencies that answer one question.">domain</span>, from Domain 1 (D1) to Domain 5 (D5). This material belongs to Domain 0 (D0). It comes first and asks why epidemiology is needed.</p>
+  <h2>Five questions in this course</h2>
+  <p class="intro">This course turns the three kinds of work into five questions. Each question is one <span class="term" data-tip="One of the five questions of the course, or Domain 0. A domain groups the competencies that answer one question.">domain</span>, from Domain 1 (D1) to Domain 5 (D5).</p>
   <div class="fig-wrap" data-detail="d-five" tabindex="0" aria-label="Five boxes in a row, one for each domain. Domain 1 asks what is happening: descriptive epidemiology. Domain 2 asks why is it happening: analytical and experimental epidemiology. Domain 3 asks what could happen: predictive epidemiology. Domain 4 asks what should be done, and Domain 5 asks did it work: both interventional epidemiology. Brackets above the boxes link Domain 1 to work 1 distribution, Domain 2 to work 2 determinants, and Domains 3 to 5 to work 3 application. Select for details.">
     <svg class="fig" viewBox="0 0 800 270" role="img" aria-label="Five boxes in a row, one for each domain, with the approach of each domain. Brackets above link Domain 1 to work 1, Domain 2 to work 2, and Domains 3 to 5 to work 3.">
 <path class="f-line" d="M6 62 V50 H154 V62"/>
@@ -532,16 +583,16 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <text x="720.0" y="215" text-anchor="middle" class="t-muted">epidemiology</text>
 </svg>
   </div>
-  <p class="under-fig">This file differentiates <span class="term" data-tip="The approach that describes the distribution of health events by animal, place, and time.">descriptive epidemiology</span> and <span class="term" data-tip="The approach that studies the determinants of health events by comparing groups.">analytical epidemiology</span>. The other approaches are introduced here and taught later.</p>
+  <p class="after">This material belongs to Domain 0 (D0). It comes first and asks why epidemiology is needed. <br>This file differentiates <span class="term" data-tip="The approach that describes the distribution of health events by animal, place, and time.">descriptive epidemiology</span> and <span class="term" data-tip="The approach that studies the determinants of health events by comparing groups.">analytical epidemiology</span>. The other approaches are introduced here and taught later.</p>
   <div class="notes">Point at the brackets: work 1 (distribution) leads to Domain 1, work 2 (determinants) to Domain 2, and work 3 (application) to Domains 3, 4, and 5. Domains 4 and 5 share one approach name, because checking a measure belongs to the same line of work as choosing it. The approaches of D3 to D5 are introduced here and come back in later competencies. Open the details to show the definition of each approach.</div>
 </section>
 
 <!-- Slide 6: Concept, describe or compare -->
 <section class="slide" data-type="concept" data-title="Descriptive vs analytical epidemiology">
   <h2>Descriptive vs analytical epidemiology</h2>
-  <p><span class="term" data-tip="The approach that describes the distribution of health events by animal, place, and time.">Descriptive epidemiology</span> describes the cases, whereas <span class="term" data-tip="The approach that studies the determinants of health events by comparing groups.">analytical epidemiology</span> compares cases with non-cases. Here, the <span class="term" data-tip="A unit that meets the case definition. Here, a case is a hen that died.">cases</span> are the 120 hens that died, and the <span class="term" data-tip="A unit that does not meet the case definition. Here, a non-case is a hen that did not die.">non-cases</span> are the 7,880 hens that did not die.</p>
+  <p class="intro"><span class="term" data-tip="The approach that describes the distribution of health events by animal, place, and time.">Descriptive epidemiology</span> describes the cases, whereas <span class="term" data-tip="The approach that studies the determinants of health events by comparing groups.">analytical epidemiology</span> compares cases with non-cases. Here, the <span class="term" data-tip="A unit that meets the case definition. Here, a case is a hen that died.">cases</span> are the 120 hens that died, and the <span class="term" data-tip="A unit that does not meet the case definition. Here, a non-case is a hen that did not die.">non-cases</span> are the 7,880 hens that did not die.</p>
   <div class="dc-layout" data-detail="d-dc" tabindex="0" aria-label="Two cards. Left, descriptive epidemiology describes the cases: 120 deaths among 8,000 hens, 1.5 percent, with 50 deaths in pen A1, 40 in pen B1, and 5 in each of the other six pens. Right, analytical epidemiology compares cases with non-cases. Each pen holds 1,000 hens. In pens A1 and B1, 90 cases and 1,910 non-cases, 4.5 percent died. In the other six pens, 30 cases and 5,970 non-cases, 0.5 percent died. Select for details.">
-    <div class="dc-col">
+    <div class="box dc-col">
       <p class="dc-head"><span class="dot" style="--dc: var(--d1)"></span><span class="code">Domain 1</span>Descriptive epidemiology</p>
       <p class="dc-line"><strong>Health event:</strong> dead hens (the cases)</p>
       <p class="dc-line"><strong>Total:</strong> 120 deaths among 8,000 hens, or 1.5%</p>
@@ -558,10 +609,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <text x="214.0" y="121" class="t-strong">5</text>
 </svg>
     </div>
-    <div class="dc-col">
+    <div class="box dc-col">
       <p class="dc-head"><span class="dot" style="--dc: var(--d2)"></span><span class="code">Domain 2</span>Analytical epidemiology</p>
       <p class="dc-line"><strong>Comparison:</strong> 120 cases and 7,880 non-cases. Each pen has 1,000 hens.</p>
-      <table class="ex-table dc-table">
+      <table class="tbl dc-table">
         <thead><tr><th scope="col">Pens</th><th scope="col">Cases</th><th scope="col">Non-cases</th><th scope="col">Hens that died</th></tr></thead>
         <tbody>
           <tr><th scope="row">A1 and B1</th><td>90</td><td>1,910</td><td>4.5%</td></tr>
@@ -578,7 +629,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 7: Concept, the loop has six boxes -->
 <section class="slide" data-type="concept" data-title="The population-to-intervention loop">
   <h2>The population-to-intervention loop</h2>
-  <p>The <span class="term" data-tip="The cycle that turns observation of a population into action. The action changes the population that is observed next.">population-to-intervention loop</span> has six boxes. It turns what we see into what we do. Each box is what we hold at one moment. After box 6, the loop goes back to box 1, because the <span class="term" data-tip="A measure that changes a health problem, such as disinfection or vaccination.">intervention</span> changes the population.</p>
+  <p class="intro">The <span class="term" data-tip="The cycle that turns observation of a population into action. The action changes the population that is observed next.">population-to-intervention loop</span> has six boxes. It turns what we see into what we do. Each box is what we hold at one moment. After box 6, the loop goes back to box 1, because the <span class="term" data-tip="A measure that changes a health problem, such as disinfection or vaccination.">intervention</span> changes the population.</p>
   <div class="lp-wrap" data-detail="d-boxes" tabindex="0" aria-label="A loop of six boxes. Top row from left to right: 1 Population, 2 Observation, 3 Information. Bottom row from right to left: 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1. Select for details.">
     <svg class="fig" viewBox="0 0 760 300" role="img" aria-label="The loop of six boxes: 1 Population, 2 Observation, 3 Information, 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1.">
 <path id="lp-a1" class="f-arrow lp-arr" d="M172 55.0 L301 55.0"/>
@@ -613,7 +664,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 8: Concept, the arrows -->
 <section class="slide" data-type="concept" data-title="The work between the boxes">
   <h2>The work between the boxes of the loop</h2>
-  <p>Each arrow is work that moves the loop to the next box. The label names the work, and the code names the domain that teaches it. Select the figure for an example of each arrow.</p>
+  <p class="intro">Each arrow is work that moves the loop to the next box. The label names the work, and the code names the domain that teaches it. Select the figure for an example of each arrow.</p>
   <div class="lp-wrap" data-detail="d-arrows" tabindex="0" aria-label="The loop of six boxes with a label on each arrow. Population to Observation: collect data, D1. Observation to Information: summarise, D1. Information to Interpretation: analyse, D2 and D3. Interpretation to Decision: weigh options, D4. Decision to Intervention: carry out, D4. Intervention back to Population: animals respond, D5 compares two turns. Select for details.">
     <svg class="fig" viewBox="0 0 760 300" role="img" aria-label="The loop of six boxes: 1 Population, 2 Observation, 3 Information, 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1.">
 <path id="lp-a1" class="f-arrow lp-arr" d="M172 55.0 L301 55.0"/>
@@ -659,8 +710,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- Slide 9: Concept, the loop turns again -->
 <section class="slide" data-type="concept" data-title="The loop turns again">
-  <h2>Continuation of the loop</h2>
-  <p>The measure changes the population. A new observation then shows the changed population. Comparing it with the first observation answers the question: did it work? Without the first observation, there is nothing to compare.</p>
+  <h2>Second turn of the population-to-intervention loop</h2>
+  <p class="intro">The measure changes the population. A new observation then shows the changed population. Comparing it with the first observation answers the question: did it work? Without the first observation, there is nothing to compare.</p>
   <div class="fig-wrap" data-detail="d-turn" tabindex="0" aria-label="Three boxes in a row: turn 1 observation, intervention, and turn 2 observation. An arrow leads from each box to the next. A bracket above the first and third box is labeled D5 compares the two observations. Select for details.">
     <svg class="fig" viewBox="0 0 760 210" role="img" aria-label="Three boxes in a row: observation of turn 1, intervention, and observation of turn 2. An arrow leads from each box to the next. A bracket above the first and third box is labeled D5 compares the two observations.">
 <rect class="f-box" x="20" y="90" width="200" height="90" rx="10"/>
@@ -674,15 +725,16 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <text x="640" y="156" text-anchor="middle" class="t-muted">turn 2, after</text>
 <path class="f-arrow" d="M222 135 L274 135"/><path class="f-arrow" d="M482 135 L534 135"/>
 <path class="s-d5" d="M120 78 V48 H640 V78" style="stroke-width:3"/>
-<text x="380" y="34" text-anchor="middle" class="t-strong" style="font-size:18px">D5 compares the two observations</text>
+<text x="380" y="34" text-anchor="middle" class="t-strong" style="font-size:18px">Domain 5 compares the two observations</text>
 </svg>
   </div>
   <div class="notes">D5 is the comparison between two turns of the loop. No box holds it. Ask what the farm would lack if nobody had counted the deaths before the measure.</div>
 </section>
 
 <!-- Slide 10: Example, the case in the loop -->
-<section class="slide" data-type="explore" data-title="The case in the loop">
-  <h2>Follow the case through the loop</h2>
+<section class="slide" data-type="explore" data-title="The farm in the loop">
+  <h2>The layer farm in the population-to-intervention loop</h2>
+  <p class="intro">Select Next stage. At each stage, predict which question the work answers.</p>
   <div class="lw-layout">
     <div class="lw-left">
       <svg class="fig" id="lw-fig" viewBox="0 0 520 232" role="img" aria-label="The loop of six boxes: 1 Population, 2 Observation, 3 Information, 4 Interpretation, 5 Decision, 6 Intervention. An arrow leads from each box to the next, and an arrow from box 6 returns to box 1.">
@@ -724,7 +776,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <p class="lw-line"><span class="lw-label">Who acts: </span><span id="lp-who"></span></p>
     </div>
   </div>
-  <p class="practice-note">Select Next stage. At each stage, say which question the work answers.</p>
   <div class="notes">At stage 4, show that two questions share one arrow: why (D2) and what could happen (D3). At stage 5, the owner is the decision maker. The laboratory diagnostician works mostly from box 1 to box 4. At stage 7, the loop starts a second turn.</div>
 </section>
 
@@ -788,7 +839,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <button class="btn" id="bd-reset">Start again</button>
     <span class="verdict" id="bd-verdict" aria-live="polite"></span>
   </div>
-  <div class="bd-why" id="bd-why"></div>
+  <div class="bd-why" id="bd-why" hidden></div>
+  <span id="bd-open" data-detail="d-bd" hidden></span>
   <div class="notes">Statements 2 and 3 are the pair to discuss. A table of deaths by pen and by day summarises the cases. A comparison of the share of hens that died in two groups of pens analyses them. One option is not the work of any statement.</div>
 </section>
 
@@ -840,8 +892,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 </section>
 
 <!-- Slide 16: Check 3, transfer -->
-<section class="slide" data-type="check" data-title="Check: a new case">
-  <h2>A new case: dead waterbirds at a lake</h2>
+<section class="slide" data-type="check" data-title="Check: a new scenario">
+  <h2>A new scenario: dead waterbirds at a lake</h2>
   <p>A <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian cares for wild animals and helps to control disease in them.">wildlife veterinarian</span> finds 30 dead <span class="term" data-tip="A bird that lives on or near water, such as a duck or a heron.">waterbirds</span> at a lake in one week. She counts the dead birds by day and by site on the shore. She then compares sites near a <span class="term" data-tip="A farm that keeps chickens, ducks, or other birds for eggs or meat.">poultry farm</span> with sites far from a poultry farm.</p>
   <div>
     <p class="q-label">Which statement is correct?</p>
@@ -858,7 +910,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
-    <li>The definition of epidemiology has an object and three kinds of work: work 1 is distribution, work 2 is determinants, and work 3 is application.</li>
+    <li>The definition of epidemiology has an object and three kinds of work: (1) distribution, (2) determinants, and (3) application.</li>
     <li>Descriptive epidemiology describes the cases: how many, which animals, where, and when. Analytical epidemiology compares cases with non-cases to look for determinants.</li>
     <li>The course has five questions, one for each domain: what is happening (Domain 1), why is it happening (Domain 2), what could happen (Domain 3), what should be done (Domain 4), and did it work (Domain 5).</li>
     <li>The population-to-intervention loop has six boxes. The arrows are the work between the boxes. After box 6 the loop returns to box 1, and Domain 5 compares two turns.</li>
@@ -871,6 +923,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 </section>
 
 <!-- Details: one template per element with data-detail or data-explain -->
+<template id="d-bd"><h3>Why these answers</h3></template>
 <template id="d-def">
   <h3>About the definition</h3>
   <p>The definition is by Last (2001). Check the exact wording against the source before you quote it.</p>
@@ -1065,7 +1118,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   let current = 0, notesMode = false, panelClosed = false;
   const phases = $('#phases'), ovGrid = $('#ov-grid');
   // One group of marks for each run of slides of the same type
-  const phaseName = { title: 'Start', recap: 'Case', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
+  const phaseName = { title: 'Start', scenario: 'Scenario', recap: 'Scenario', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
   const marks = []; let group = null, lastType = null;
   slides.forEach((s, i) => {
     const t = s.dataset.title || ('Slide ' + (i + 1));
@@ -1419,7 +1472,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       if (right) ok++; else { const p = document.createElement('p'); p.textContent = why[i]; box.appendChild(p); }
     });
     const all = ok === ans.length;
-    $('bd-verdict').textContent = all ? 'All 5 statements are correct.' : ok + ' of 5 statements are correct. Change the answers marked in red and check again.';
+    $('bd-verdict').textContent = all ? 'All 5 statements are correct.' : ok + ' of 5 correct. Read why in the Details panel.';
+    if (!all) { document.getElementById('d-bd').innerHTML = '<h3>Why these answers</h3>' + box.innerHTML; $('bd-open').click(); }
     $('bd-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
   });
   $('bd-reset').addEventListener('click', () => { sels.forEach(s => { s.value = ''; }); bdClear(); });
