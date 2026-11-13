@@ -1,0 +1,39 @@
+<!-- Show or hide the contents list on the left. Loaded on every page by _quarto.yml. Styles: theme.scss. -->
+<script>
+(function () {
+  var toc = document.querySelector('#quarto-sidebar nav[role="doc-toc"]');
+  if (!toc) return;
+  var title = toc.querySelector('#toc-title');
+  var label = title ? title.textContent.trim() : 'Contents';
+  var KEY = 'eev-toc';
+  function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function make(mark, cls, text) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'toc-toggle ' + cls;
+    b.innerHTML = '<span class="toc-mark" aria-hidden="true">' + mark + '</span><span></span>';
+    b.lastChild.textContent = label;
+    b.setAttribute('aria-label', text + ' ' + label.toLowerCase());
+    b.title = text + ' ' + label.toLowerCase();
+    return b;
+  }
+  var hide = make('▼', 'toc-hide', 'Hide the list:');
+  var show = make('▶', 'toc-show', 'Show the list:');
+  hide.setAttribute('aria-expanded', 'true'); show.setAttribute('aria-expanded', 'false');
+  if (title) { title.textContent = ''; title.appendChild(hide); } else { toc.insertBefore(hide, toc.firstChild); }
+  document.body.appendChild(show);
+  function place() {
+    var head = document.querySelector('#quarto-header');
+    show.style.top = ((head ? head.getBoundingClientRect().height : 0) + 14) + 'px';
+  }
+  function set(hidden, focus) {
+    document.body.classList.toggle('toc-hidden', hidden);
+    save(hidden ? 'hidden' : 'shown'); place();
+    if (focus) (hidden ? show : hide).focus();
+  }
+  hide.addEventListener('click', function () { set(true, true); });
+  show.addEventListener('click', function () { set(false, true); });
+  window.addEventListener('resize', place);
+  set(read() === 'hidden', false);
+})();
+</script>

@@ -38,3 +38,4 @@ format:
     toc-depth: 3
     toc-title: Contents
     smooth-scroll: true
+    include-after-body: toc-toggle.html

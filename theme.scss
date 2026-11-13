@@ -58,6 +58,18 @@ a:hover { text-decoration: underline; text-underline-offset: 0.18em; }
 .sidebar nav[role="doc-toc"] ul > li > a:hover { color: var(--ink); background: var(--surface); text-decoration: none; }
 .sidebar nav[role="doc-toc"] ul > li > a.active { color: var(--ink); font-weight: 600; background: var(--surface); }
 
+/* Button that shows or hides the contents list (script: toc-toggle.html) */
+.toc-toggle { display: inline-flex; align-items: center; gap: 0.45rem; font: inherit; font-size: 0.85rem; font-weight: 650; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 0.2rem 0.5rem; margin-left: -0.5rem; cursor: pointer; }
+.toc-toggle:hover { background: var(--surface); }
+.toc-toggle .toc-mark { font-size: 0.62rem; color: var(--muted); width: 0.8rem; }
+.toc-show { display: none; position: fixed; left: 1.5rem; z-index: 5; margin-left: 0; background: var(--bg); border-color: var(--line); padding: 0.3rem 0.65rem; }
+@media (min-width: 992px) {
+  body.toc-hidden #quarto-sidebar { visibility: hidden; }
+  body.toc-hidden .toc-show { display: inline-flex; }
+}
+@media (max-width: 991.98px) { .toc-hide { pointer-events: none; } .toc-hide .toc-mark { display: none; } }
+@media print { .toc-show { display: none !important; } }
+
 /* Shared blocks */
 .mini-title { font-size: 0.85rem !important; font-weight: 600; color: var(--muted) !important; margin: 0 0 0.35rem !important; letter-spacing: 0; }
 .depth { display: inline-block; font-size: 0.78rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; margin: 0; }
