@@ -23,18 +23,40 @@ a:hover { text-decoration: underline; text-underline-offset: 0.18em; }
 .navbar-title { font-weight: 650; letter-spacing: -0.01em; }
 .navbar .nav-link { font-weight: 500; }
 .navbar .nav-link.active { box-shadow: inset 0 -2px 0 var(--accent); }
+/* Submenu of the navigation bar */
+.navbar .dropdown-menu { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 0.35rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); min-width: 12rem; }
+.navbar .dropdown-item { color: var(--ink); border-radius: 6px; padding: 0.45rem 0.7rem; font-weight: 500; }
+.navbar .dropdown-item:hover, .navbar .dropdown-item:focus { background: var(--surface); color: var(--ink); text-decoration: none; }
+.navbar .dropdown-item.active { background: var(--surface-2); color: var(--ink); }
 .nav-footer { border-top: 1px solid var(--line); font-size: 0.88rem; }
 
 /* Article text and tables */
 #quarto-document-content p, #quarto-document-content li { max-width: 72ch; }
-#quarto-document-content h2 { margin-top: 2.8rem; padding-bottom: 0; border-bottom: none; }
-#quarto-document-content h3 { margin-top: 2rem; }
+#quarto-document-content h2 { margin-top: 2.6rem; margin-bottom: 0.9rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--line); font-size: 1.55rem; }
+#quarto-document-content h3 { margin-top: 1.8rem; margin-bottom: 0.4rem; font-size: 1.15rem; font-weight: 650; letter-spacing: -0.005em; }
+#quarto-document-content h4 { margin-top: 1.4rem; font-size: 1rem; font-weight: 650; letter-spacing: 0; }
+#quarto-document-content .home h2, #quarto-document-content h2.readme-title { border-bottom: none; padding-bottom: 0; }
+#quarto-document-content .home h2 { font-size: 1.7rem; margin: 0 0 0.4rem; }
+#title-block-header { border-bottom: 1px solid var(--line); margin-bottom: 1.4rem; padding-bottom: 0.5rem; }
+#title-block-header h1.title { margin-bottom: 0.3rem; }
 .table { font-size: 0.94rem; color: var(--ink); --bs-table-bg: transparent; }
 .table > :not(caption) > * > * { padding: 0.55rem 0.7rem; border-bottom-color: var(--line); background: transparent; color: var(--ink); }
-.table thead th { font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--ink); }
+.table thead th { font-weight: 600; color: var(--ink); background: var(--surface); vertical-align: middle; border-bottom: 1px solid var(--line); }
+#quarto-document-content main table.table:not(.quarto-listing-table) { width: auto; max-width: 100%; border: 1px solid var(--line); }
+#quarto-document-content main table.table:not(.quarto-listing-table) > :not(caption) > * > * { border: 1px solid var(--line); vertical-align: top; }
+#quarto-document-content main table.table:not(.quarto-listing-table) thead th { vertical-align: middle; }
 .quarto-listing-filter input, .form-control { border-radius: 8px; }
+.input-group-text, .form-select, .form-control { background-color: var(--bg); color: var(--ink); border-color: var(--line); }
+.input-group-text i, .input-group-text svg { color: var(--muted); }
 .quarto-category { border-radius: 6px; border-color: var(--line); color: var(--muted); font-size: 0.8rem; }
-.sidebar nav[role="doc-toc"] ul > li > a.active { border-left-color: var(--accent); color: var(--ink); }
+/* Contents list on the left, as in an encyclopedia */
+.sidebar nav[role="doc-toc"] { font-size: 0.9rem; padding-top: 0.4rem; }
+.sidebar nav[role="doc-toc"] > h2 { font-size: 0.85rem; font-weight: 650; color: var(--ink); border: none; margin: 0 0 0.5rem; padding: 0 0 0.45rem; border-bottom: 1px solid var(--line); }
+.sidebar nav[role="doc-toc"] ul { border-left: none; padding-left: 0; }
+.sidebar nav[role="doc-toc"] ul ul { padding-left: 0.9rem; }
+.sidebar nav[role="doc-toc"] ul > li > a, .sidebar nav[role="doc-toc"] ul > li > a.active { border-left: none !important; padding: 0.22rem 0.5rem; border-radius: 6px; color: var(--muted); line-height: 1.35; }
+.sidebar nav[role="doc-toc"] ul > li > a:hover { color: var(--ink); background: var(--surface); text-decoration: none; }
+.sidebar nav[role="doc-toc"] ul > li > a.active { color: var(--ink); font-weight: 600; background: var(--surface); }
 
 /* Shared blocks */
 .mini-title { font-size: 0.85rem !important; font-weight: 600; color: var(--muted) !important; margin: 0 0 0.35rem !important; letter-spacing: 0; }
