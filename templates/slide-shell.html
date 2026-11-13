@@ -196,14 +196,16 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 
 
 /* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
-   Type scale of a slide: title 1.75rem, definition 1.45rem (2.3rem alone), body 1.15rem, component 1.05rem, small 0.95rem. */
-.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.45rem; --fs-def-alone: 2.3rem; --gap-after: 0.4rem; }
+   Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
+   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
 .slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
 .slide .after { margin-top: var(--gap-after); }
 .slide .intro + .intro, .slide .after + .after { margin-top: -0.35rem; }
-.slide .definition { font-size: var(--fs-def); line-height: 1.38; }
+.slide .definition { font-size: var(--fs-def); line-height: 1.4; }
 .slide.vcenter { justify-content: center; }
 .slide.vcenter .definition { font-size: var(--fs-def-alone); line-height: 1.3; }
+.slide.vcenter .definition.long { font-size: var(--fs-def-long); line-height: 1.5; }
 .slide .small { font-size: var(--fs-small); color: var(--muted); }
 
 /* Split: two columns. The first element in the markup is the left column. */
@@ -217,23 +219,23 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 
 /* Boxes: one design for every box. Cards: two to four parallel boxes. Compare: two boxes, one for each side. */
 .box { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0.8rem 1rem 0.9rem; display: grid; gap: 0.45rem; align-content: start; font-size: var(--fs-comp); min-width: 0; }
-.box h3 { margin: 0; font-size: var(--fs-comp); font-weight: 650; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
+.box h3 { margin: 0; font-size: 1.15rem; font-weight: 600; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
 .box p { margin: 0; }
 .box ul { margin: 0; padding-left: 1.1rem; }
 .lay-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; align-items: stretch; }
 .lay-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; align-items: stretch; }
 
 /* Tables: a frame, a filled header row, horizontal lines between rows, no vertical lines. */
-.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.35; }
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.4; }
 .tbl.fit { width: auto; max-width: 100%; align-self: flex-start; }
 .tbl th, .tbl td { text-align: left; vertical-align: top; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--line); }
-.tbl thead th { background: var(--surface); font-size: var(--fs-small); font-weight: 650; vertical-align: middle; }
+.tbl thead th { background: var(--surface); font-weight: 600; vertical-align: middle; }
 .tbl thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
 .tbl thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
 .tbl tbody tr:last-child > * { border-bottom: none; }
-.tbl tbody th { font-weight: 650; }
+.tbl tbody th { font-weight: 600; }
 .tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 650; }
+.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
 .tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
 .box .tbl { border: none; border-radius: 0; background: transparent; }
 .box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
