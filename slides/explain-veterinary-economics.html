@@ -15,9 +15,11 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
-     The shell version 3.1 offers: reveal steps (data-step), the card sorter (data-sorter),
+     The shell version 3.2 offers: layout patterns (intro, after, lay-split, lay-cards,
+     lay-compare), one box design (box), one table design (tbl), the card sorter (data-sorter),
      SVG figure classes (.fig), and a Reset button that also resets inputs made later.
-     Add ?steps=all to the URL to show all steps (for review and printing).
+     The example slides show each slide family and each layout pattern (05, sections 3.5 to 3.10).
+     Reveal steps (data-step) remain for old decks only. New decks do not use them (05, section 2.3).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -37,7 +39,7 @@
   ],
   "guides": [],
   "status": "draft",
-  "updated": "2026-11-11"
+  "updated": "2026-11-13"
 }
 </script>
 
@@ -197,6 +199,58 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
 .fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
 
+
+/* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
+   Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
+   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
+.slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
+.slide .after { margin-top: var(--gap-after); }
+.slide .intro + .intro, .slide .after + .after { margin-top: -0.35rem; }
+.slide .definition { font-size: var(--fs-def); line-height: 1.4; }
+.slide.vcenter { justify-content: center; }
+.slide.vcenter .definition { font-size: var(--fs-def-alone); line-height: 1.3; }
+.slide.vcenter .definition.long { font-size: var(--fs-def-long); line-height: 1.5; }
+.slide .small { font-size: var(--fs-small); color: var(--muted); }
+
+/* Split: two columns. The first element in the markup is the left column. */
+.lay-split { display: grid; grid-template-columns: var(--split, minmax(0, 1fr) minmax(0, 1fr)); gap: 2.2rem; align-items: start; min-height: 0; }
+.lay-split.mid { align-items: center; }
+.txt { display: grid; gap: 0.8rem; align-content: start; min-width: 0; }
+.txt ul, .txt ol { margin: 0; padding-left: 1.2rem; }
+.vis { display: flex; justify-content: center; align-items: flex-start; min-width: 0; min-height: 0; }
+.vis > .fig { width: 100%; max-width: var(--fig-w, 34rem); }
+.vis[data-detail] { width: fit-content; max-width: 100%; justify-self: center; }
+
+/* Boxes: one design for every box. Cards: two to four parallel boxes. Compare: two boxes, one for each side. */
+.box { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0.8rem 1rem 0.9rem; display: grid; gap: 0.45rem; align-content: start; font-size: var(--fs-comp); min-width: 0; }
+.box h3 { margin: 0; font-size: 1.15rem; font-weight: 600; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
+.box p { margin: 0; }
+.box ul { margin: 0; padding-left: 1.1rem; }
+.lay-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; align-items: stretch; }
+.lay-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; align-items: stretch; }
+
+/* Tables: a frame, a filled header row, horizontal lines between rows, no vertical lines. */
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.4; }
+.tbl.fit { width: auto; max-width: 100%; align-self: flex-start; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--line); }
+.tbl thead th { background: var(--surface); font-weight: 600; vertical-align: middle; }
+.tbl thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
+.tbl thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
+.tbl tbody tr:last-child > * { border-bottom: none; }
+.tbl tbody th { font-weight: 600; }
+.tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
+.tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
+.box .tbl { border: none; border-radius: 0; background: transparent; }
+.box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
+.box .tbl td, .box .tbl tbody th { padding-left: 0; }
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .lay-split, .lay-compare { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+}
+@media print { .tbl, .box { break-inside: avoid; } }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -307,18 +361,12 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.case-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2.2rem; align-items: start; flex: 1; min-height: 0; padding-top: 0.6rem; }
-.case-layout p + p { margin-top: 0.9rem; }
-.case-layout p { font-size: 1.15rem; }
-.facts { margin: 0; display: grid; gap: 0.6rem; }
+.facts { margin: 0; display: grid; gap: 0.6rem; width: 100%; }
 .facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .facts dt { color: var(--muted); }
 .facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
 
-.vcenter { justify-content: center; }
-.big-def { font-size: 2.5rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin-top: 0.6rem; }
-.under-fig { font-size: 1.15rem; }
-.fig-wrap { flex: 1; min-height: 0; display: flex; }
+.fig-wrap { flex: none; min-height: 0; display: flex; }
 .fig-wrap { align-items: flex-start; }
 .fig-wrap .fig { height: auto; width: 100%; max-width: 46rem; overflow: visible; }
 .fig-wrap[data-detail] { flex: none; align-self: flex-start; max-width: 46rem; width: 100%; }
@@ -327,16 +375,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 .st-list { display: grid; gap: 0.7rem; margin: 0; padding-left: 1.3rem; font-size: 1.2rem; line-height: 1.4; }
 .st-list li + li { margin-top: 0; }
-.eg { font-size: 1.15rem; color: var(--muted); }
 
 .pv-layout { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 2rem; align-items: center; flex: 1; min-height: 0; }
 .pv-layout .fig { width: min(100%, max(20rem, 58vh)); height: auto; justify-self: center; }
 
 .ex-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr); gap: 1.8rem; flex: 1; min-height: 0; align-items: start; }
-.ex-table { border-collapse: collapse; width: 100%; font-size: 1.05rem; }
-.ex-table th, .ex-table td { text-align: left; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.ex-table thead th { border-bottom: 2px solid var(--muted); font-weight: 600; }
-.ex-table tbody th { font-weight: 600; color: var(--muted); width: 8.2rem; }
 
 .v-rows { display: grid; gap: 0.9rem; padding: 0.3rem; align-content: start; }
 .v-row { display: grid; gap: 0.25rem; }
@@ -349,26 +392,26 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .v-row.is-given .v-fill, .xo-row.is-given .v-fill { background: var(--d2); }
 .v-axis { color: var(--muted); font-size: 0.92rem; }
 
-.practice-note { color: var(--muted); font-size: 0.98rem; }
 .sorter { flex: none; }
 .sorter-pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .sorter-bins { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .sort-card { font-size: 0.95rem; }
 
-.bd-rows { display: grid; gap: 0.8rem; }
-.bd-row { display: grid; gap: 0.3rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); }
+.bd-rows { display: grid; gap: 0.6rem; }
+.bd-row { display: grid; gap: 0.3rem; padding-bottom: 0.45rem; border-bottom: 1px solid var(--line); }
 .bd-row p { font-size: 1.08rem; }
 .bd-fill { line-height: 2.1; }
 .bd-fill select { font: inherit; font-size: 1.02rem; padding: 0.2rem 0.5rem; border: 1.5px solid var(--muted); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
 .bd-fill select.is-correct { border-color: var(--ok); }
 .bd-fill select.is-wrong { border-color: var(--bad); }
 .bd-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.bd-why[hidden] { display: none; }
 .bd-why { display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.98rem; }
 .quote { font-size: 1.3rem; line-height: 1.45; }
 .q-label { font-weight: 600; font-size: 1.15rem; }
 
 .xo-rows { display: grid; gap: 0.6rem; }
-.xo-row { display: grid; grid-template-columns: 17rem minmax(0, 1fr) 2.6rem 6rem; gap: 0.9rem; align-items: center; width: 100%; text-align: left; padding: 0.55rem 0.9rem; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; }
+.xo-row { display: grid; grid-template-columns: 17rem minmax(0, 1fr) 6rem 5.5rem; gap: 0.9rem; align-items: center; width: 100%; text-align: left; padding: 0.55rem 0.9rem; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; }
 .xo-row:hover { border-color: var(--muted); }
 .xo-row.is-chosen { border: 3px solid var(--ink); padding: calc(0.55rem - 1.5px) calc(0.9rem - 1.5px); }
 .xo-row.is-given { border: 3px dashed var(--d2); padding: calc(0.55rem - 1.5px) calc(0.9rem - 1.5px); }
@@ -381,11 +424,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .xo-actions { display: flex; gap: 0.6rem; align-items: center; }
 
 @media (max-width: 900px) {
-  .case-layout, .pv-layout, .ex-layout, .xo-read { grid-template-columns: 1fr; }
+  .pv-layout, .ex-layout, .xo-read { grid-template-columns: 1fr; }
   .xo-row { grid-template-columns: 1fr 2.6rem; }
   .xo-row .v-track, .xo-tag { grid-column: 1 / -1; }
 }
-</style>
 </style>
 </head>
 <body>
@@ -422,20 +464,22 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </ul>
   <div class="notes">Read the guiding question aloud. Ask for a first answer in one sentence. Students return to this answer at the end of the deck.</div>
 </section>
-<!-- Slide 2: Recap of the anchor case -->
-<section class="slide" data-type="recap" data-title="The case">
-  <h2>The case: Salmonella on a layer farm</h2>
-  <div class="case-layout">
-    <div>
-      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, next to the water inlet.</p>
-      <p>The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the hens. Eggs from these pens have already reached buyers.</p>
+<!-- Slide 2: Scenario. Layout P3, text | key numbers -->
+<section class="slide" data-type="scenario" data-title="The scenario">
+  <h2>The scenario: Salmonella on a layer farm</h2>
+  <div class="lay-split" style="--split: minmax(0, 1fr) minmax(0, 0.9fr)">
+    <div class="txt">
+      <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span> A1 and B1, next to the <span class="term" data-tip="The place where water enters the building, for example from a pipe or a tank.">water inlet</span>.</p>
+      <p>The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the dead hens. Eggs from these pens have already reached buyers.</p>
       <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian gives technical advice and product support to farms and companies, for example in a feed or poultry company.">technical service consultant</span> of a poultry company. The farm owner has IDR 15,000,000 left this month and asks you what to do with it.</p>
     </div>
+    <div class="vis">
     <dl class="facts">
       <div><dt>Hens in the flock</dt><dd>8,000</dd></div>
       <div><dt>Deaths in one week</dt><dd>120</dd></div>
       <div><dt>Budget this month</dt><dd>IDR 15,000,000</dd></div>
     </dl>
+    </div>
   </div>
   <div class="notes">Read the three paragraphs aloud. Ask the class who is affected by this problem besides the owner. Write the answers on the board. Use the list on the slide about private and public benefits.</div>
 </section>
@@ -454,12 +498,13 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 4: Concept, the definition -->
 <section class="slide vcenter" data-type="concept" data-title="Veterinary economics">
   <h2>Veterinary economics</h2>
-  <p class="big-def">Veterinary economics is the use of <span class="term" data-tip="Basic ideas about how people choose when they cannot have everything.">economic principles</span> to decide how to use <span class="term" data-tip="Not enough to meet all wants.">scarce</span> <span class="term" data-tip="Things that people use to get a result, such as money, time, labour, and vaccines.">resources</span> to protect animal health and welfare.</p>
+  <p class="definition">Veterinary economics is the use of <span class="term" data-tip="Basic ideas about how people choose when they cannot have everything.">economic principles</span> to decide how to use <span class="term" data-tip="Not enough to meet all wants.">scarce</span> <span class="term" data-tip="Things that people use to get a result, such as money, time, labour, and vaccines.">resources</span> to protect animal health and welfare.</p>
   <div class="notes">Read the definition aloud. The next slides explain scarce resources and the choice that follows from them.</div>
 </section>
 <!-- Slide 5: Concept, scarcity -->
 <section class="slide" data-type="concept" data-title="Scarcity and choice">
-  <h2>Resources are scarce, so someone must choose</h2>
+  <h2>Scarcity and choice</h2>
+  <p class="intro">The owner has IDR 15 million left this month. Each of the three measures costs IDR 15 million, so the budget pays for one measure.</p>
   <div class="fig-wrap"><svg class="fig" viewBox="0 0 720 230" role="img" aria-label="Two bars on the same scale. The budget bar is IDR 15 million. Below it, a bar for the cost of the three measures is IDR 45 million, made of three equal parts, one for each measure. The budget covers one part.">
     <text x="0" y="47">Budget this month</text>
     <rect class="f-d1" x="250" y="24" width="150" height="34" rx="4"/>
@@ -477,30 +522,32 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <line class="exp-line" x1="400" y1="14" x2="400" y2="156"/>
     <text x="250" y="212" class="t-strong">Total: IDR 45 million</text>
   </svg></div>
-  <p class="under-fig">The budget pays for one measure. The three measures together cost three times the budget. This condition is called <span class="term" data-tip="The condition in which resources are not enough to meet all wants, so that choices are needed.">scarcity</span>, and it forces a choice.</p>
+  <p class="after">The three measures together cost three times the budget. This condition is called <span class="term" data-tip="The condition in which resources are not enough to meet all wants, so that choices are needed.">scarcity</span>, and it forces a choice.</p>
   <div class="notes">Point to the dashed line: the budget ends here. Ask what the owner can do about the other two measures. Possible answers: wait for next month, borrow money, find a cheaper way. Each answer is also a choice.</div>
 </section>
 <!-- Slide 6: Concept, opportunity cost -->
-<section class="slide vcenter" data-type="concept" data-title="Opportunity cost">
-  <h2>Every choice means letting go of the best <span class="term" data-tip="Another choice that you could make instead.">alternative</span></h2>
+<section class="slide" data-type="concept" data-title="Opportunity cost">
+  <h2>Opportunity cost</h2>
+  <p class="intro">Every choice means letting go of the best <span class="term" data-tip="Another choice that you could make instead.">alternative</span>. Two terms describe what a choice costs the owner.</p>
   <ul class="st-list">
     <li><strong>Cost of an action:</strong> the amount of resources paid by an owner for that action.</li>
     <li><strong><span class="term" data-tip="The value of the best alternative use of a resource.">Opportunity cost</span> of a choice:</strong> the value of the best alternative that the owner gives up.</li>
   </ul>
-  <p class="eg">Example: The farm owner spends an entire day cleaning pens and no money is spent for that day. The day has another use: the owner could work at an egg packing station and earn money. This lost income is the opportunity cost of the day.</p>
+  <p class="after">Example: The farm owner spends an entire day cleaning pens and no money is spent for that day. The day has another use: the owner could work at an egg packing station and earn money. This lost income is the opportunity cost of the day.</p>
   <div class="notes">Ask: if no money changes hands, is the day free? The day has no cash cost. It still has an opportunity cost, because the owner cannot use the same day twice.</div>
 </section>
 <!-- Slide 7: Example, the owner chooses B -->
-<section class="slide" data-type="example" data-title="Work through the farm case">
-  <h2>The owner chooses measure B</h2>
+<section class="slide" data-type="example" data-title="Worked example">
+  <h2>The choice of the farm owner</h2>
+  <p class="intro">The owner can only pay for one of the three measures. He chooses measure B. The bars show what each measure is worth to the owner, and the table breaks down those options in four steps.</p>
   <div class="ex-layout">
     <div class="v-rows" data-detail="d-values" tabindex="0" aria-label="Estimated loss avoided by each measure, in IDR million. Measure A 20, measure B 45, measure C 30. Select for details.">
       <p class="v-axis">Estimated <span class="term" data-tip="The money that the owner would otherwise lose. A measure avoids a loss when it stops that loss from happening.">loss avoided</span> by the owner, in IDR.</p>
-      <div class="v-row"><div class="v-top"><span>A. Test the eggs</span><span class="num">20 million</span></div><div class="v-track"><div class="v-fill" style="width:40%"></div></div></div>
+      <div class="v-row"><div class="v-top"><span>A. Test the eggs</span><span><span class="v-tag">Given up</span> <span class="num">20 million</span></div><div class="v-track"><div class="v-fill" style="width:40%"></div></div></div>
       <div class="v-row is-chosen"><div class="v-top"><span>B. Repair the water line</span><span><span class="v-tag">Chosen</span> <span class="num">45 million</span></span></div><div class="v-track"><div class="v-fill" style="width:90%"></div></div></div>
       <div class="v-row is-given"><div class="v-top"><span>C. Vaccinate the next flock</span><span><span class="v-tag">Given up</span> <span class="num">30 million</span></span></div><div class="v-track"><div class="v-fill" style="width:60%"></div></div></div>
     </div>
-    <table class="ex-table">
+    <table class="tbl">
       <thead><tr><th scope="col">Step</th><th scope="col">Description</th></tr></thead>
       <tbody>
         <tr><th scope="row">Choices</th><td>Measures A, B, and C. Each costs IDR 15 million, and the budget pays for one.</td></tr>
@@ -515,7 +562,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 8: Practice, complete the statements -->
 <section class="slide" data-type="practice" data-title="Complete the statements">
   <h2>Complete each statement</h2>
-  <p class="practice-note">Estimated value for the owner, in IDR: A 20 million, B 45 million, C 30 million. Each measure costs IDR 15 million.</p>
+  <p class="intro">Estimated value for the owner, in IDR: A 20 million, B 45 million, C 30 million. Each measure costs IDR 15 million.</p>
   <div class="bd-rows">
     <div class="bd-row">
       <p>1. The owner chooses measure A.</p>
@@ -535,12 +582,14 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <button class="btn" id="bd-reset">Start again</button>
     <span class="verdict" id="bd-verdict" aria-live="polite"></span>
   </div>
-  <div class="bd-why" id="bd-why"></div>
+  <div class="bd-why" id="bd-why" hidden></div>
+  <span id="bd-open" data-detail="d-bd" hidden></span>
   <div class="notes">In statements 1 and 2 the answer is the same measure, B. Ask why. In statement 3, some students choose IDR 0 because no money is paid. Return to the slide about opportunity cost.</div>
 </section>
 <!-- Slide 9: Concept, value of animal health -->
 <section class="slide" data-type="concept" data-title="The value at risk">
-  <h2>Disease takes value away, and control protects it</h2>
+  <h2>Value lost to disease</h2>
+  <p class="intro">Disease takes value from the hens, the eggs, the buyers, and the people who eat the eggs. Control measure protects this value.</p>
   <div class="fig-wrap" data-detail="d-vtable" tabindex="0" aria-label="A chain from hens to eggs to buyers to people who eat the eggs. Under each link is the value that disease takes away: production and welfare for the hens, product quality for the eggs, trade for the buyers, public health for the people. Select for details."><svg class="fig" viewBox="0 0 720 200" role="img" aria-hidden="true">
     <rect class="f-box" x="0" y="14" width="150" height="62" rx="10"/><text x="75" y="51" text-anchor="middle" class="t-strong">Hens</text>
     <rect class="f-box" x="190" y="14" width="150" height="62" rx="10"/><text x="265" y="51" text-anchor="middle" class="t-strong">Eggs</text>
@@ -551,14 +600,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <text x="265" y="118" text-anchor="middle">Product quality</text>
     <text x="455" y="118" text-anchor="middle">Trade</text>
     <text x="645" y="118" text-anchor="middle">Public health</text>
-    <text x="0" y="188" class="t-muted">Value that disease takes away, under each link of the chain</text>
+    <text x="0" y="188" class="t-muted">Value snatched away by disease, under each link in the chain</text>
   </svg></div>
-  <p class="under-fig">The economic analysis must specify which values are taken into account. The case encompasses five values: production, animal welfare, product quality, trade, and public health.</p>
+  <p class="after">In this scenario, there are five values: production, animal welfare, product quality, trade, and public health.</p>
   <div class="notes">Ask students to find the value in the case for each label. Open the details to see the answers. Ask which value is hardest to give a price.</div>
 </section>
 <!-- Slide 10: Concept, private and public benefits -->
 <section class="slide" data-type="concept" data-title="Private and public benefits">
-  <h2>A benefit can go to the owner or to other people</h2>
+  <h2>Private and public benefits</h2>
+  <p class="intro">A benefit of a measure can go to the owner who pays for it, or to other people.</p>
   <div class="pv-layout">
     <svg class="fig" viewBox="0 0 360 300" role="img" aria-label="Two circles, one inside the other. The inner circle is the owner, who decides and pays, and receives the private benefit. The ring around it is other people, who receive the public benefit.">
       <circle class="f-soft" cx="180" cy="150" r="140"/>
@@ -568,12 +618,12 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <text x="180" y="164" text-anchor="middle" class="t-strong">Owner</text>
       <text x="180" y="184" text-anchor="middle" class="t-muted">private benefit</text>
     </svg>
-    <div>
+    <div class="txt">
       <ul class="st-list">
         <li><strong>Private benefit</strong> goes to the owner who decides and pays. Example: the farm keeps selling eggs.</li>
         <li><strong>Public benefit</strong> goes to other people who do not take part in the decision. Example: buyers avoid illness from eggs that carry Salmonella.</li>
       </ul>
-      <p class="eg" style="margin-top:1rem">An effect on people who do not take part in the decision-making is an <span class="term" data-tip="An effect of an action on people who do not take part in the decision.">externality</span>. The person who pays the costs is not always the person who gains.</p>
+      <p>An effect on people who do not take part in the decision-making is an <span class="term" data-tip="An effect of an action on people who do not take part in the decision.">externality</span>. The person who pays the costs is not always the person who gains.</p>
     </div>
   </div>
   <div class="notes">Ask the class to name the other people in the case: buyers, people who eat the eggs, neighbouring farms. Ask who should pay for a measure whose benefit goes mostly to other people.</div>
@@ -581,6 +631,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 11: Practice, sort cards -->
 <section class="slide" data-type="practice" data-title="Sort the benefits">
   <h2>Drag each benefit into the right box</h2>
+  <p class="intro">Ask for each card: does the benefit go to the owner who pays, or to people who do not take part in the decision?</p>
   <div class="sorter" data-sorter data-explain="d-sort" data-explain-always="1">
     <div class="sorter-pool" aria-label="Cards to sort">
       <button class="sort-card" data-target="p">Buyers of the eggs avoid illness.</button>
@@ -600,26 +651,27 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <span class="verdict" role="status" aria-live="polite"></span>
     </div>
   </div>
-  <p class="practice-note">Ask for each card: does the benefit go to the owner who pays, or to people who do not take part in the decision?</p>
   <div class="notes">Students work in pairs. If a pair places a card wrongly, ask them to read the card again and to name who receives the benefit.</div>
 </section>
 <!-- Slide 12: Concept, epidemiology and economics together -->
 <section class="slide" data-type="concept" data-title="Two answers, one decision">
-  <h2>A decision needs an epidemiological and an economic answer</h2>
-  <table class="ex-table">
-    <thead><tr><th scope="col">Comparison</th><th scope="col"><span class="term" data-tip="The study of how disease occurs in groups of animals and what affects it.">Epidemiology</span></th><th scope="col">Economics</th></tr></thead>
+  <h2>Epidemiological and economic answers</h2>
+  <p class="intro">The owner needs two answers before choosing a measure. The table compares the epidemiological answer with the economic answer.</p>
+  <table class="tbl">
+    <thead><tr><th scope="col">Part of the answer</th><th scope="col"><span class="term" data-tip="The study of how disease occurs in groups of animals and what affects it.">Epidemiology</span></th><th scope="col">Economics</th></tr></thead>
     <tbody>
       <tr><th scope="row">Question</th><td>What happens to the disease with and without the <span class="term" data-tip="An action taken by people to deal with a problem, for example a test, a vaccination, or a cleaning procedure.">measure</span>?</td><td>What is the value of that change, what is the cost of that measure, and who gets the benefits?</td></tr>
       <tr><th scope="row">In the case</th><td>Assume that repairing the water line stops the deaths in the two pens.</td><td>The owner avoids an estimated loss of IDR 45 million for a cost of IDR 15 million.</td></tr>
       <tr><th scope="row">Result</th><td>Fewer cases of disease</td><td>A comparison of value, cost, and benefit between measures</td></tr>
     </tbody>
   </table>
-  <p class="under-fig">A measure might be effective and still cost more than it saves. The <span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">decision maker</span> needs both epidemiological and economic information.</p>
+  <p class="after">A measure might be epidemiologically effective, but economically inefficient (costing more than it saves). The <span class="term" data-tip="The person or body that chooses between actions on a health problem, for example a farm owner, a company, or a government authority.">decision maker</span> needs both epidemiological and economic information.</p>
   <div class="notes">Ask which answer the owner can get from a laboratory and which answer needs a comparison of values. Stress that the claim about the water line is an assumption of the exercise.</div>
 </section>
 <!-- Slide 13: Explore, choose a measure -->
-<section class="slide" data-type="explore" data-title="Choose and see what you give up">
-  <h2>Choose a measure. See what the owner gives up and who else benefits.</h2>
+<section class="slide" data-type="explore" data-title="What the owner gives up">
+  <h2>Opportunity cost and benefits to other people</h2>
+  <p class="intro">Choose a measure. Before you read the result, predict what the owner gives up.</p>
   <div class="xo-rows" id="xo-rows" role="group" aria-label="Three measures. Select one.">
     <button class="xo-row" data-m="a" aria-pressed="false"><span>A. Test the eggs for Salmonella</span><span class="v-track"><span class="v-fill" style="display:block;width:40%"></span></span><span class="xo-val">20 million</span><span class="xo-tag"></span></button>
     <button class="xo-row" data-m="b" aria-pressed="false"><span>B. Repair the water line</span><span class="v-track"><span class="v-fill" style="display:block;width:90%"></span></span><span class="xo-val">45 million</span><span class="xo-tag"></span></button>
@@ -636,7 +688,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <p class="v-axis" id="xo-note"></p>
     </div>
   </div>
-  <div class="xo-actions"><button class="btn" id="xo-reset">Start again</button><span class="practice-note">Before you read the result, say what the owner gives up.</span></div>
+  <div class="xo-actions"><button class="btn" id="xo-reset">Start again</button></div>
   <div class="notes">Select A, then B, then C. Each time, ask which alternative the owner gives up. Then ask: the owner chooses B. Which measure would the district health office prefer, and why? The owner's numbers do not include the benefit to other people.</div>
 </section>
 <!-- Slide 14: Practice, find the error -->
@@ -668,8 +720,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </section>
 <!-- Slide 16: Check 2, transfer -->
-<section class="slide" data-type="check" data-title="Check: a new case">
-  <h2>A new case: a dairy cooperative</h2>
+<section class="slide" data-type="check" data-title="Check: a new scenario">
+  <h2>A new scenario: a dairy cooperative</h2>
   <p>A <span class="term" data-tip="A group of farmers who work together and share costs and benefits.">cooperative</span> of dairy farmers can pay for one measure this year. The options are implementing milking hygiene to lower <span class="term" data-tip="Infection and swelling of the udder of a cow. It lowers milk production.">mastitis</span>, or the testing and removal of cattle with <span class="term" data-tip="A bacterial disease of cattle. It can cause abortion in cows. People can also catch it.">brucellosis</span>. Each option costs the whole budget. The estimated value for the farmers is IDR 80 million for milking hygiene and IDR 60 million for brucellosis control.</p>
   <div>
     <p class="q-label">The cooperative chooses brucellosis control. What is the opportunity cost?</p>
@@ -683,7 +735,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 </section>
 <!-- Slide 17: Check 3, transfer, public benefit -->
 <section class="slide" data-type="check" data-title="Check: who benefits">
-  <h2>The dairy cooperative case: brucellosis control</h2>
+  <h2>The dairy cooperative: brucellosis control</h2>
   <p>The cooperative pays for the testing and removal of cattle with <span class="term" data-tip="A bacterial disease of cattle. It can cause abortion in cows. People can also catch it.">brucellosis</span>.</p>
   <div>
     <p class="q-label">Which group receives a public benefit of this measure?</p>
@@ -700,10 +752,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <h2>Key points</h2>
   <ul>
     <li>Veterinary economics is the use of economic principles to decide how to use scarce resources to protect animal health and welfare.</li>
-    <li>Resources are scarce, so every choice gives up something. The opportunity cost of a choice is the value of the best alternative that the choice gives up. It differs from the cost that the owner pays.</li>
-    <li>Disease takes away production, product quality, trade, animal welfare, and public health. Control protects these values.</li>
+    <li>Resources are scarce, so every choice requires sacrificing something. The opportunity cost of a choice is the value of the best alternative that is gone as a result of that choice. This is different from the costs actually paid by the owner.</li>
+    <li>Disease takes away production, product quality, trade, animal welfare, and public health. Control measure protects these values.</li>
     <li>A benefit is private when it goes to the owner who pays, and public when it goes to other people. The person who pays is not always the person who gains.</li>
-    <li>Epidemiology estimates what happens to disease. Economics estimates the value of that change and its costs. The decision maker needs both.</li>
+    <li>Epidemiology estimates what happens to disease. Economics estimates the value of a change and its costs. The decision maker needs both.</li>
   </ul>
   <div class="links">
     <a class="btn" href="../encyclopedia/veterinary-economics.html">Read the article: Veterinary economics</a>
@@ -712,6 +764,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 </section>
 
 <!-- Details: one template per element with data-detail or data-explain -->
+<template id="d-bd"><h3>Why these answers</h3></template>
 <template id="d-values">
   <h3>About these values</h3>
   <p>The bar chart shows the estimated losses that an owner could avoid by implementing each measure, expressed in millions of IDR. The cost for each measure is 15 million IDR.</p>
@@ -857,7 +910,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   let current = 0, notesMode = false, panelClosed = false;
   const phases = $('#phases'), ovGrid = $('#ov-grid');
   // One group of marks for each run of slides of the same type
-  const phaseName = { title: 'Start', recap: 'Case', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
+  const phaseName = { title: 'Start', scenario: 'Scenario', recap: 'Scenario', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
   const marks = []; let group = null, lastType = null;
   slides.forEach((s, i) => {
     const t = s.dataset.title || ('Slide ' + (i + 1));
@@ -1212,7 +1265,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       if (rowOk) okRows++; else { const p = document.createElement('p'); p.textContent = r.why; why.appendChild(p); }
     });
     const all = okRows === rows.length;
-    $('bd-verdict').textContent = all ? 'All 3 statements are correct.' : okRows + ' of 3 statements are correct. Change the gaps marked in red and check again.';
+    $('bd-verdict').textContent = all ? 'All 3 statements are correct.' : okRows + ' of 3 correct. Read why in the Details panel.';
+    if (!all) { document.getElementById('d-bd').innerHTML = '<h3>Why these answers</h3>' + why.innerHTML; $('bd-open').click(); }
     $('bd-verdict').className = 'verdict ' + (all ? 'ok' : 'bad');
   });
   $('bd-reset').addEventListener('click', () => { allSel.forEach(s => { s.value = ''; }); bdClear(); });
