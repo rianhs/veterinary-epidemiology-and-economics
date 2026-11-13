@@ -201,14 +201,16 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 
 
 /* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
-   Type scale of a slide: title 1.75rem, definition 1.45rem (2.3rem alone), body 1.15rem, component 1.05rem, small 0.95rem. */
-.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.45rem; --fs-def-alone: 2.3rem; --gap-after: 0.4rem; }
+   Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
+   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
 .slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
 .slide .after { margin-top: var(--gap-after); }
 .slide .intro + .intro, .slide .after + .after { margin-top: -0.35rem; }
-.slide .definition { font-size: var(--fs-def); line-height: 1.38; }
+.slide .definition { font-size: var(--fs-def); line-height: 1.4; }
 .slide.vcenter { justify-content: center; }
 .slide.vcenter .definition { font-size: var(--fs-def-alone); line-height: 1.3; }
+.slide.vcenter .definition.long { font-size: var(--fs-def-long); line-height: 1.5; }
 .slide .small { font-size: var(--fs-small); color: var(--muted); }
 
 /* Split: two columns. The first element in the markup is the left column. */
@@ -222,23 +224,23 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 
 /* Boxes: one design for every box. Cards: two to four parallel boxes. Compare: two boxes, one for each side. */
 .box { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0.8rem 1rem 0.9rem; display: grid; gap: 0.45rem; align-content: start; font-size: var(--fs-comp); min-width: 0; }
-.box h3 { margin: 0; font-size: var(--fs-comp); font-weight: 650; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
+.box h3 { margin: 0; font-size: 1.15rem; font-weight: 600; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
 .box p { margin: 0; }
 .box ul { margin: 0; padding-left: 1.1rem; }
 .lay-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; align-items: stretch; }
 .lay-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; align-items: stretch; }
 
 /* Tables: a frame, a filled header row, horizontal lines between rows, no vertical lines. */
-.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.35; }
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.4; }
 .tbl.fit { width: auto; max-width: 100%; align-self: flex-start; }
 .tbl th, .tbl td { text-align: left; vertical-align: top; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--line); }
-.tbl thead th { background: var(--surface); font-size: var(--fs-small); font-weight: 650; vertical-align: middle; }
+.tbl thead th { background: var(--surface); font-weight: 600; vertical-align: middle; }
 .tbl thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
 .tbl thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
 .tbl tbody tr:last-child > * { border-bottom: none; }
-.tbl tbody th { font-weight: 650; }
+.tbl tbody th { font-weight: 600; }
 .tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 650; }
+.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
 .tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
 .box .tbl { border: none; border-radius: 0; background: transparent; }
 .box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
@@ -413,6 +415,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .map-why { font-size: var(--fs-comp); color: var(--muted); }
 .map-why[hidden] { display: none; }
 
+/* Sizes of the shell 3.1 version of this deck */
+.tbl { --fs-comp: 1.2rem; }
+.box ul { font-size: 1.1rem; }
+
 /* Slides 12 and 15: quoted note and question line */
 .q-label { font-weight: 600; font-size: 1.15rem; }
 .quote { font-size: 1.3rem; line-height: 1.45; }
@@ -457,7 +463,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="lay-split" style="--split: minmax(0, 1fr) minmax(0, 1.1fr)">
     <div class="txt">
       <p>In one week, 120 of the 8,000 hens on a <span class="term" data-tip="A farm that keeps hens to produce eggs.">layer farm</span> die. Most of the dead hens come from the two <span class="term" data-tip="A small fenced area or house section where a group of animals is kept.">pens</span>, which are located near the <span class="term" data-tip="The place where water enters the building, for example from a pipe or a tank.">water inlet</span>.</p>
-      <p>The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the hens. Eggs from these pens have already reached buyers.</p>
+      <p>The laboratory later finds <span class="term" data-tip="A group of bacteria. They cause disease in animals and can reach people through eggs and meat.">Salmonella</span> in the dead hens. Eggs from these pens have already reached buyers.</p>
       <p>You are the <span class="term" data-tip="One of the graduate profiles of this study program. This veterinarian protects the health and production of farm animals, for example on poultry or dairy farms.">production animal veterinarian</span> of this farm.</p>
     </div>
     <div class="vis">
@@ -486,9 +492,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <h2>You do a <span class="term" data-tip="An examination of a dead animal to find the cause of death.">necropsy</span> on five hens. Does the result of necropsy inform the farm owner what to do?</h2>
   <p>Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
-    <li><button class="choice" data-value="a"><span class="key">A</span>Yes. The necropsy results from the five hens explain the problem in the whole flock.</button></li>
+    <li><button class="choice" data-value="a"><span class="key">A</span>Yes. The necropsy results of five hens explain the problem in the whole flock.</button></li>
     <li><button class="choice" data-value="b"><span class="key">B</span>Partly. It indicates the cause of death of five hens, but it does not show which pens have the most deaths.</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>No. The necropsies do not provide the farm owner with any information regarding the problem affecting the flock.</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>No. The necropsies do not provide the farm owner with any information about the problem in the flock.</button></li>
   </ul>
   <p class="verdict" id="predict-note" aria-live="polite"></p>
 </section>
@@ -559,12 +565,12 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Slide 6: Concept, the full definition. Layout P1 -->
 <section class="slide vcenter" data-type="concept" data-title="The full definition">
   <h2>The full definition of epidemiology</h2>
-  <p class="definition">
+  <p class="definition long">
     <span>Epidemiology is the <span class="term" data-tip="Careful work with a clear method that uses data.">study</span> of the <span class="term" data-tip="How often a health event occurs, and where, when, and in which animals it occurs.">distribution</span> and <span class="term" data-tip="Factors that change how often a health event occurs, such as the feed, the environment, or the management.">determinants</span> of <span class="term" data-tip="A state is a condition that lasts, such as being pregnant or being protected by a vaccine. An event happens at one time, such as a death or an injury.">health-related states or events</span></span>
     <span>in <span class="term" data-tip="Groups of animals that the investigator defines clearly: which animals, in which place, and in which period.">specified populations</span>,</span>
     <span>and the <span class="term" data-tip="Using the results of the study to prevent and control health problems.">application</span> of this study to the control of health problems.</span>
   </p>
-  <p class="small">Source of the definition: Last (2001).</p>
+  <p class="small">Source of the definition: <span class="term" data-tip="Last, J. M. (Ed.). (2001). A dictionary of epidemiology (4th ed.). Oxford University Press.">Last (2001)</span>.</p>
   <div class="notes">Read the definition in three parts. After each part, ask a student to explain it in simple words. Point out that the simple definition on the last slide is a short form of this sentence.</div>
 </section>
 <!-- Slide 7: Example, the six elements in the scenario. Layout P2, table -->
