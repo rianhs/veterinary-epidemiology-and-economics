@@ -119,7 +119,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Variables, questionnaire, or record form.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-applied">Applied</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="designing-observational-studies.html#s11-1"><span class="code">S11.1</span> Match a research question to a study design</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Define the health event, exposure, and outcome</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="designing-observational-studies.html#s11-1"><span class="code">S11.1</span> Match a research question to a study design</a></li><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Describe the natural history of a disease</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="designing-observational-studies.html#s11-6"><span class="code">S11.6</span> Write a study protocol outline</a></li></ul></div></div></div>
 ```
 

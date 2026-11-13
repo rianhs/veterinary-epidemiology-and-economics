@@ -119,7 +119,7 @@ listing:
 ## S8.1 List possible determinants of a health event {#s8-1}
 
 ```{=html}
-<div class="skill-body"><p class="skill-scope">Epidemiological triangle and multifactorial causation.</p>
+<div class="skill-body"><p class="skill-scope">Epidemiological triangle and multifactorial causation. Categories of cause of ill health (infection and infestation, toxic, nutritional, metabolic, genetic, degenerative, traumatic, iatrogenic, neoplastic, immune-mediated, vascular) and their routes to the population: spread between animals, shared exposure, shared susceptibility, and shared medical procedure. Idiopathic means the cause is unknown. It has no route of its own.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-8"><span class="code">S6.8</span> Write a descriptive summary of a disease pattern</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="comparing-groups-and-association.html#s8-2"><span class="code">S8.2</span> Classify determinants by type</a></li><li><a href="comparing-groups-and-association.html#s8-3"><span class="code">S8.3</span> Choose comparison groups for a question</a></li><li><a href="outbreak-investigation.html#s12-5"><span class="code">S12.5</span> Generate hypotheses about source and transmission</a></li></ul></div></div></div>
@@ -145,7 +145,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Exposed and unexposed groups, or cases and non-cases.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="comparing-groups-and-association.html#s8-1"><span class="code">S8.1</span> List possible determinants of a health event</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Define the health event, exposure, and outcome</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="comparing-groups-and-association.html#s8-1"><span class="code">S8.1</span> List possible determinants of a health event</a></li><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Describe the natural history of a disease</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="comparing-groups-and-association.html#s8-4"><span class="code">S8.4</span> Calculate risk ratio, odds ratio, and risk difference</a></li><li><a href="appraising-analytical-reports.html#s10-1"><span class="code">S10.1</span> Identify the study design of a report</a></li></ul></div></div></div>
 ```
 

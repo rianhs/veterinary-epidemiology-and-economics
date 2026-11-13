@@ -117,7 +117,7 @@ listing:
 ## S7.2 Judge the fit of surveillance to its objective {#s7-2}
 
 ```{=html}
-<div class="skill-body"><p class="skill-scope">Match between the design of the system and what it must achieve.</p>
+<div class="skill-body"><p class="skill-scope">Match between the design of the system and what it must achieve. Objectives: estimate prevalence, track a trend, detect early, or demonstrate freedom. Designs and mechanisms that serve them: probability survey, sentinel, risk-based, syndromic, and event-based surveillance, and early warning.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-applied">Applied</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="surveillance-systems.html#s7-1"><span class="code">S7.1</span> Describe the components of a surveillance system</a></li><li><a href="data-sources-and-sampling.html#s3-4"><span class="code">S3.4</span> Match a data collection approach to an objective</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-3"><span class="code">S7.3</span> Assess the attributes of a surveillance system</a></li><li><a href="outbreak-investigation.html#s12-9"><span class="code">S12.9</span> Plan surveillance to confirm the end of an outbreak</a></li></ul></div></div></div>
@@ -141,7 +141,7 @@ listing:
 ## S7.4 Set a baseline and an alert threshold {#s7-4}
 
 ```{=html}
-<div class="skill-body"><p class="skill-scope">Expected count of cases or reports in a time series.</p>
+<div class="skill-body"><p class="skill-scope">Expected count of cases or reports in a time series. An alert threshold is the trigger in any system that raises an alert, such as early warning. A lower threshold finds events earlier and gives more false alarms.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-applied">Applied</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-7"><span class="code">S6.7</span> Describe trend and seasonality</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="surveillance-systems.html#s7-5"><span class="code">S7.5</span> Distinguish a change in disease from a change in detection</a></li><li><a href="outbreak-investigation.html#s12-1"><span class="code">S12.1</span> Verify that an outbreak exists</a></li></ul></div></div></div>

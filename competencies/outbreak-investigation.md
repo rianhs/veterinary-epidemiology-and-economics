@@ -149,7 +149,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Confirm the diagnosis and compare the count with a baseline.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="surveillance-systems.html#s7-4"><span class="code">S7.4</span> Set a baseline and an alert threshold</a></li><li><a href="population-unit-and-case.html#s2-8"><span class="code">S2.8</span> Write a case definition</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="surveillance-systems.html#s7-4"><span class="code">S7.4</span> Set a baseline and an alert threshold</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Write a case definition</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
@@ -161,7 +161,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Case definition that can change as the investigation goes on.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-8"><span class="code">S2.8</span> Write a case definition</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Write a case definition</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-3"><span class="code">S12.3</span> Build and update a line list</a></li></ul></div></div></div>
 ```
 
@@ -195,7 +195,7 @@ listing:
 ## S12.5 Generate hypotheses about source and transmission {#s12-5}
 
 ```{=html}
-<div class="skill-body"><p class="skill-scope">Source of the agent and mode of transmission.</p>
+<div class="skill-body"><p class="skill-scope">Source of the agent and mode of transmission. Include non-infectious causes, such as toxic and nutritional, and test each against the pattern of the epidemic curve.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
 <div><h3 class="mini-title">Needs first</h3><ul><li><a href="outbreak-investigation.html#s12-4"><span class="code">S12.4</span> Describe an outbreak by animal, place, and time</a></li><li><a href="comparing-groups-and-association.html#s8-1"><span class="code">S8.1</span> List possible determinants of a health event</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-6"><span class="code">S12.6</span> Test outbreak hypotheses with attack rates</a></li><li><a href="outbreak-investigation.html#s12-7"><span class="code">S12.7</span> Recommend immediate control measures</a></li></ul></div></div></div>

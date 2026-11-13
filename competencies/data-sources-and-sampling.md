@@ -239,7 +239,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Completeness, gaps, and duplicates of the list or map of units.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Distinguish target, source, and study populations</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="data-sources-and-sampling.html#s3-6"><span class="code">S3.6</span> Select units with probability sampling</a></li></ul></div></div></div>
 ```
 
@@ -275,7 +275,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Expected prevalence, precision, and confidence.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-10"><span class="code">S2.10</span> Calculate a prevalence</a></li><li><a href="../skills.html#x-skills"><span class="code">X2</span> Interpret a confidence interval for a proportion or a mean</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Calculate a prevalence</a></li><li><a href="../skills.html#x-skills"><span class="code">X2</span> Interpret a confidence interval for a proportion or a mean</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="data-sources-and-sampling.html#s3-10"><span class="code">S3.10</span> Adjust a sample size for cluster sampling</a></li><li><a href="data-sources-and-sampling.html#s3-11"><span class="code">S3.11</span> Compare sampling plans</a></li><li><a href="designing-observational-studies.html#s11-4"><span class="code">S11.4</span> Estimate sample size to compare two groups</a></li></ul></div></div></div>
 ```
 
@@ -287,7 +287,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Design prevalence and confidence, with a perfect test.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-10"><span class="code">S2.10</span> Calculate a prevalence</a></li><li><a href="../skills.html#x-skills"><span class="code">X3</span> Apply basic probability rules (complement, independent events, multiplication rule)</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Calculate a prevalence</a></li><li><a href="../skills.html#x-skills"><span class="code">X3</span> Apply basic probability rules (complement, independent events, multiplication rule)</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="data-sources-and-sampling.html#s3-11"><span class="code">S3.11</span> Compare sampling plans</a></li><li><a href="diagnostic-test-quality.html#s4-10"><span class="code">S4.10</span> Adjust a detection sample size for an imperfect test</a></li></ul></div></div></div>
 ```
 
@@ -299,7 +299,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Use a given design effect. Clustering of animals within herds at concept level.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-introduced">Introduced</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="data-sources-and-sampling.html#s3-6"><span class="code">S3.6</span> Select units with probability sampling</a></li><li><a href="data-sources-and-sampling.html#s3-8"><span class="code">S3.8</span> Calculate sample size to estimate a prevalence</a></li><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Distinguish the epidemiological, observation, and analysis units</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="data-sources-and-sampling.html#s3-6"><span class="code">S3.6</span> Select units with probability sampling</a></li><li><a href="data-sources-and-sampling.html#s3-8"><span class="code">S3.8</span> Calculate sample size to estimate a prevalence</a></li><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
@@ -323,7 +323,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Generalization from the study population to the source and target populations.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Distinguish target, source, and study populations</a></li><li><a href="data-sources-and-sampling.html#s3-7"><span class="code">S3.7</span> Explain the limits of non-probability sampling</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-1"><span class="code">S2.1</span> Identify the epidemiological unit</a></li><li><a href="data-sources-and-sampling.html#s3-7"><span class="code">S3.7</span> Explain the limits of non-probability sampling</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="appraising-analytical-reports.html#s10-6"><span class="code">S10.6</span> Judge whether findings apply locally</a></li></ul></div></div></div>
 ```
 
