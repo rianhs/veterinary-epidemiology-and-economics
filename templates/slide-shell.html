@@ -15,9 +15,11 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
-     The shell version 3.1 offers: reveal steps (data-step), the card sorter (data-sorter),
+     The shell version 3.2 offers: layout patterns (intro, after, lay-split, lay-cards,
+     lay-compare), one box design (box), one table design (tbl), the card sorter (data-sorter),
      SVG figure classes (.fig), and a Reset button that also resets inputs made later.
-     Add ?steps=all to the URL to show all steps (for review and printing).
+     The example slides show each slide family and each layout pattern (05, sections 3.5 to 3.10).
+     Reveal steps (data-step) remain for old decks only. New decks do not use them (05, section 2.3).
   5. Register the deck in slides/decks.yml.
   Rules: 05-slide-deck-guide.md.
 -->
@@ -29,10 +31,10 @@
   "competency": "C4",
   "skills": { "primary": "S4.5", "secondary": ["S4.4"] },
   "minutes": 20,
-  "articles": ["apparent-and-true-prevalence"],
+  "articles": [],
   "guides": [],
   "status": "draft",
-  "updated": "2026-11-08"
+  "updated": "2026-11-13"
 }
 </script>
 
@@ -192,6 +194,56 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .fig .f-d1 { fill: var(--d1); } .fig .f-d2 { fill: var(--d2); } .fig .f-d3 { fill: var(--d3); } .fig .f-d4 { fill: var(--d4); } .fig .f-d5 { fill: var(--d5); }
 .fig .s-d1 { stroke: var(--d1); fill: none; stroke-width: 2; } .fig .s-d5 { stroke: var(--d5); fill: none; stroke-width: 2; }
 
+
+/* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
+   Type scale of a slide: title 1.75rem, definition 1.45rem (2.3rem alone), body 1.15rem, component 1.05rem, small 0.95rem. */
+.slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.45rem; --fs-def-alone: 2.3rem; --gap-after: 0.4rem; }
+.slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
+.slide .after { margin-top: var(--gap-after); }
+.slide .intro + .intro, .slide .after + .after { margin-top: -0.35rem; }
+.slide .definition { font-size: var(--fs-def); line-height: 1.38; }
+.slide.vcenter { justify-content: center; }
+.slide.vcenter .definition { font-size: var(--fs-def-alone); line-height: 1.3; }
+.slide .small { font-size: var(--fs-small); color: var(--muted); }
+
+/* Split: two columns. The first element in the markup is the left column. */
+.lay-split { display: grid; grid-template-columns: var(--split, minmax(0, 1fr) minmax(0, 1fr)); gap: 2.2rem; align-items: start; min-height: 0; }
+.lay-split.mid { align-items: center; }
+.txt { display: grid; gap: 0.8rem; align-content: start; min-width: 0; }
+.txt ul, .txt ol { margin: 0; padding-left: 1.2rem; }
+.vis { display: flex; justify-content: center; align-items: flex-start; min-width: 0; min-height: 0; }
+.vis > .fig { width: 100%; max-width: var(--fig-w, 34rem); }
+.vis[data-detail] { width: fit-content; max-width: 100%; justify-self: center; }
+
+/* Boxes: one design for every box. Cards: two to four parallel boxes. Compare: two boxes, one for each side. */
+.box { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 0.8rem 1rem 0.9rem; display: grid; gap: 0.45rem; align-content: start; font-size: var(--fs-comp); min-width: 0; }
+.box h3 { margin: 0; font-size: var(--fs-comp); font-weight: 650; line-height: 1.3; display: flex; gap: 0.5rem; align-items: center; }
+.box p { margin: 0; }
+.box ul { margin: 0; padding-left: 1.1rem; }
+.lay-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; align-items: stretch; }
+.lay-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; align-items: stretch; }
+
+/* Tables: a frame, a filled header row, horizontal lines between rows, no vertical lines. */
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); font-size: var(--fs-comp); line-height: 1.35; }
+.tbl.fit { width: auto; max-width: 100%; align-self: flex-start; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--line); }
+.tbl thead th { background: var(--surface); font-size: var(--fs-small); font-weight: 650; vertical-align: middle; }
+.tbl thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
+.tbl thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
+.tbl tbody tr:last-child > * { border-bottom: none; }
+.tbl tbody th { font-weight: 650; }
+.tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 650; }
+.tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
+.box .tbl { border: none; border-radius: 0; background: transparent; }
+.box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
+.box .tbl td, .box .tbl tbody th { padding-left: 0; }
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .lay-split, .lay-compare { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+}
+@media print { .tbl, .box { break-inside: avoid; } }
+
 /* Panel */
 .panel { border-left: 1px solid var(--line); background: var(--surface); display: none; flex-direction: column; min-height: 0; }
 .stage.has-panel .panel { display: flex; }
@@ -302,21 +354,20 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
-.ap-layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 2rem; align-items: center; flex: 1; min-height: 0; }
-.grid100 { display: grid; grid-template-columns: repeat(20, 1fr); gap: 3px; max-width: 26rem; padding: 0.6rem; }
+/* Styles of the example deck only */
+.grid100 { display: grid; grid-template-columns: repeat(20, 1fr); gap: 3px; width: 24rem; max-width: 100%; padding: 0.6rem; }
 .grid100 span { aspect-ratio: 1; border-radius: 3px; background: var(--surface-2); border: 1px solid var(--line); }
 .grid100 .tp { background: var(--d1); border-color: var(--d1); }
 .grid100 .fp { background: var(--d5); border-color: var(--d5); }
 .grid100 .fn { background: transparent; border: 1.5px solid var(--d1); }
-.legend { display: grid; gap: 0.35rem; font-size: 0.95rem; padding: 0; list-style: none; margin: 0; }
-.legend li { display: flex; gap: 0.5rem; align-items: center; }
-.sw { width: 0.9rem; height: 0.9rem; border-radius: 3px; display: inline-block; }
-.bars { display: grid; gap: 1rem; padding: 0.6rem; }
-.bar-row { display: grid; grid-template-columns: 11rem 1fr 4rem; gap: 0.8rem; align-items: center; }
+.legend { display: grid; gap: 0.45rem; padding: 0; list-style: none; margin: 0; }
+.legend li { display: flex; gap: 0.6rem; align-items: center; }
+.sw { width: 0.95rem; height: 0.95rem; border-radius: 3px; display: inline-block; flex: none; }
+.bars { display: grid; gap: 1rem; padding: 0.6rem; max-width: 46rem; }
+.bar-row { display: grid; grid-template-columns: 11rem 1fr 4rem; gap: 0.8rem; align-items: center; font-size: var(--fs-body); }
 .bar-track { height: 1.6rem; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 6px; transition: width 0.25s ease; }
-.big-number { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-@media (max-width: 900px) { .ap-layout { grid-template-columns: 1fr; } .bar-row { grid-template-columns: 8rem 1fr 3.5rem; } }
+@media (max-width: 900px) { .bar-row { grid-template-columns: 8rem 1fr 3.5rem; } }
 </style>
 </head>
 <body>
@@ -340,12 +391,14 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="card" id="card">
 
 <!-- ===================== CONTENT (edit for each deck) ===================== -->
+<!-- The example slides below show the slide families and the layout patterns of 05-slide-deck-guide.md, sections 3.5 to 3.10.
+     The class names in the comments (intro, after, lay-split, lay-cards, lay-compare, box, tbl) are shell classes. -->
 
-<!-- Slide 1: Title -->
+<!-- Slide 1: Title (opening). Centred. -->
 <section class="slide" data-type="title" data-title="Correct an apparent prevalence">
   <p class="code">C4 Diagnostic test quality</p>
   <h1>Correct an apparent prevalence</h1>
-  <p class="lead">How many animals are truly infected when the test makes errors?</p>
+  <p class="lead">A blood test is positive for 25 of 200 cattle. How many of the 200 cattle are truly infected?</p>
   <ul class="meta-list">
     <li><span class="code">S4.5</span><span>Estimate true prevalence from apparent prevalence</span></li>
     <li><span class="code">S4.4</span><span>Calculate and interpret predictive values</span></li>
@@ -355,73 +408,181 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </ul>
 </section>
 
-<!-- Slide 2: Case recap (anchor case of the competency, two sentences, one graduate profile) -->
-<section class="slide" data-type="recap" data-title="The case">
-  <h2>The case so far</h2>
-  <p>A technical service consultant (GP3.1) visits a layer farm after a rise in mortality.</p>
-  <p>The consultant sends samples to the laboratory and waits for the test results.</p>
+<!-- Slide 2: Scenario (concept family). Layout: split, text | figure. The title starts with "The scenario:". -->
+<section class="slide" data-type="scenario" data-title="The scenario">
+  <h2>The scenario: brucellosis testing in one village</h2>
+  <div class="lay-split" style="--split: minmax(0, 1fr) minmax(0, 0.9fr)">
+    <div class="txt">
+      <p>A <span class="term" data-tip="A veterinarian who works for the local government and protects the health of the animals in an area. This is one of the graduate profiles of the study program.">district animal health officer</span> takes a blood sample from each of the 200 dairy cattle in one village.</p>
+      <p>The laboratory tests every sample for <span class="term" data-tip="A disease of cattle caused by Brucella bacteria. It can cause abortion in cows, and it can pass to people.">brucellosis</span>. The test is positive for 25 cattle and negative for 175 cattle.</p>
+      <p>The officer must report how many of the 200 cattle are infected.</p>
+    </div>
+    <div class="vis">
+      <svg class="fig" style="--fig-w: 24rem" viewBox="0 0 420 220" role="img" aria-label="Of 200 tested cattle, 25 have a positive test and 175 have a negative test.">
+        <rect class="f-box" x="130" y="10" width="160" height="56" rx="10"/>
+        <text x="210" y="35" text-anchor="middle" class="t-strong">Tested</text>
+        <text x="210" y="56" text-anchor="middle">200 cattle</text>
+        <path class="f-arrow" d="M185 70 L110 128"/>
+        <path class="f-arrow" d="M235 70 L310 128"/>
+        <rect class="f-box" x="20" y="134" width="170" height="56" rx="10"/>
+        <text x="105" y="159" text-anchor="middle" class="t-strong">Positive test</text>
+        <text x="105" y="180" text-anchor="middle">25 cattle</text>
+        <rect class="f-box" x="230" y="134" width="170" height="56" rx="10"/>
+        <text x="315" y="159" text-anchor="middle" class="t-strong">Negative test</text>
+        <text x="315" y="180" text-anchor="middle">175 cattle</text>
+      </svg>
+    </div>
+  </div>
 </section>
 
-<!-- Slide 3: Question (predict before the explanation) -->
+<!-- Slide 3: Question (quiz family). Centred. The heading is the question. -->
 <section class="slide" data-type="question" data-title="Predict first">
-  <h2>A test finds 12% positive cattle. What is the true prevalence?</h2>
-  <p>The test has a sensitivity of 0.80 and a specificity of 0.95. Choose your prediction.</p>
+  <h2>The test is positive for 25 of 200 cattle, or 12.5%. What share of the 200 cattle is truly infected?</h2>
+  <p>The test misses some infected cattle, and it is positive for some cattle without infection. Choose your prediction.</p>
   <ul class="choices" data-choice="predict">
-    <li><button class="choice" data-value="a"><span class="key">A</span>Higher than 12%</button></li>
-    <li><button class="choice" data-value="b"><span class="key">B</span>Lower than 12%</button></li>
-    <li><button class="choice" data-value="c"><span class="key">C</span>Exactly 12%</button></li>
+    <li><button class="choice" data-value="a"><span class="key">A</span>More than 12.5% of the cattle</button></li>
+    <li><button class="choice" data-value="b"><span class="key">B</span>Less than 12.5% of the cattle</button></li>
+    <li><button class="choice" data-value="c"><span class="key">C</span>Exactly 12.5% of the cattle</button></li>
   </ul>
 </section>
 
-<!-- Slide 4: Concept with reveal steps and an SVG figure. One idea per slide. -->
-<section class="slide" data-type="concept" data-title="Positive result and infection">
-  <h2>A positive result and an infection are two different things</h2>
-  <div class="ap-layout">
-    <svg class="fig" viewBox="0 0 420 260" role="img" aria-label="Two overlapping circles. The left circle holds infected animals. The right circle holds animals with a positive test. The overlap holds true positives.">
-      <circle class="s-d1" cx="165" cy="130" r="100" data-step="1"/>
-      <text x="95" y="135" class="t-strong" data-step="1">Infected</text>
-      <circle class="s-d5" cx="255" cy="130" r="100" data-step="2"/>
-      <text x="270" y="135" class="t-strong" data-step="2">Test positive</text>
-      <text x="190" y="250" data-step="3" class="t-muted">The overlap is the true positives</text>
-    </svg>
-    <div>
-      <p data-step="1">The <span class="term" data-tip="An animal that carries the infection, whatever the test says.">infected</span> animals form one group.</p>
-      <p data-step="2">The animals with a positive test form another group. The two groups only partly overlap.</p>
-      <p data-step="3">Animals outside the overlap are test errors. They are false positives or false negatives.</p>
+<!-- Slide 4: Concept, definition only. Class vcenter puts the block a little above the middle. -->
+<section class="slide vcenter" data-type="concept" data-title="Apparent prevalence">
+  <h2>Apparent prevalence</h2>
+  <p class="definition">The apparent prevalence is the share of tested animals with a positive test result.</p>
+</section>
+
+<!-- Slide 5: Concept. Layout: intro, then split, text | figure. Use it when the text frames the figure. -->
+<section class="slide" data-type="concept" data-title="Infection and a positive test">
+  <h2>Infection and a positive test result</h2>
+  <p class="intro">In the village, two groups of cattle matter: the cattle that carry the infection, and the cattle with a positive test.</p>
+  <div class="lay-split mid">
+    <div class="txt">
+      <p>The <span class="term" data-tip="An animal that carries the infection, whatever the test says.">infected</span> cattle form one group. The cattle with a positive test form the other group.</p>
+      <p>The two groups overlap only in part. The cattle outside the overlap have a wrong test result.</p>
+    </div>
+    <div class="vis">
+      <svg class="fig" style="--fig-w: 26rem" viewBox="0 0 420 250" role="img" aria-label="Two overlapping circles. The left circle holds infected cattle. The right circle holds cattle with a positive test. The overlap holds infected cattle with a positive test.">
+        <circle class="s-d1" cx="165" cy="120" r="100"/>
+        <circle class="s-d5" cx="255" cy="120" r="100"/>
+        <text x="110" y="125" text-anchor="middle" class="t-strong">Infected</text>
+        <text x="310" y="125" text-anchor="middle" class="t-strong">Positive test</text>
+        <text x="210" y="125" text-anchor="middle">Both</text>
+      </svg>
     </div>
   </div>
 </section>
 
-<!-- Slide 5: Concept -->
-<section class="slide" data-type="concept" data-title="Two kinds of test error">
-  <h2>A positive result is not always a true case</h2>
-  <div class="ap-layout">
-    <div class="grid100" id="grid100" data-detail="d-grid" tabindex="0" aria-label="Grid of 200 animals. Select for details."></div>
-    <div>
-      <p>The <span class="term" data-tip="The proportion of tested animals with a positive test result.">apparent prevalence</span> counts all positive results. It includes false positives. It misses the false negatives.</p>
-      <ul class="legend" style="margin-top:1rem">
-        <li><span class="sw" style="background:var(--d1)"></span>True positive</li>
-        <li><span class="sw" style="background:var(--d5)"></span>False positive</li>
-        <li><span class="sw" style="border:1.5px solid var(--d1)"></span>False negative</li>
+<!-- Slide 6: Concept. Layout: intro, then cards. Use it for two to four parallel items with the same inner order. -->
+<section class="slide" data-type="concept" data-title="Four kinds of test result">
+  <h2>Four kinds of test result</h2>
+  <p class="intro">Each of the 200 cattle has an infection status and a test result. Together they give four kinds of test result.</p>
+  <div class="lay-cards">
+    <div class="box"><h3>True positive</h3><p>Infected, and the test is positive.</p><p class="num">16 cattle</p></div>
+    <div class="box"><h3>False negative</h3><p>Infected, but the test is negative.</p><p class="num">4 cattle</p></div>
+    <div class="box"><h3>False positive</h3><p>Not infected, but the test is positive.</p><p class="num">9 cattle</p></div>
+    <div class="box"><h3>True negative</h3><p>Not infected, and the test is negative.</p><p class="num">171 cattle</p></div>
+  </div>
+  <p class="after">A false result is a test result that disagrees with the infection status of the animal.</p>
+</section>
+
+<!-- Slide 7: Concept. Layout: intro, then split, figure | text. Use it when the figure is the subject and the text explains its parts. -->
+<section class="slide" data-type="concept" data-title="The 200 cattle in one grid">
+  <h2>The 200 cattle in one grid</h2>
+  <p class="intro">Each square in the grid is one of the 200 cattle. The colour and the outline show the kind of test result.</p>
+  <div class="lay-split mid" style="--split: minmax(0, 1.1fr) minmax(0, 1fr)">
+    <div class="vis"><div class="grid100" id="grid100" data-detail="d-grid" tabindex="0" aria-label="Grid of 200 cattle. Select for details."></div></div>
+    <div class="txt">
+      <ul class="legend">
+        <li><span class="sw" style="background:var(--d1)"></span>True positive: 16 cattle</li>
+        <li><span class="sw" style="background:var(--d5)"></span>False positive: 9 cattle</li>
+        <li><span class="sw" style="border:1.5px solid var(--d1)"></span>False negative: 4 cattle</li>
+        <li><span class="sw" style="background:var(--surface-2);border:1px solid var(--line)"></span>True negative: 171 cattle</li>
       </ul>
+      <p>The test reports the 16 true positives and the 9 false positives, which is 25 positive results.</p>
     </div>
   </div>
 </section>
 
-<!-- Slide 6: Explore -->
-<section class="slide" data-type="explore" data-title="Explore the correction" data-panel="controls">
-  <h2>Change the test. Watch the apparent prevalence.</h2>
+<!-- Slide 8: Concept. Layout: stack, intro, table, after. The intro says what the rows and columns are. -->
+<section class="slide" data-type="concept" data-title="Test results by infection status">
+  <h2>Test results by infection status</h2>
+  <p class="intro">The table puts the same 200 cattle in rows by infection status and in columns by test result.</p>
+  <table class="tbl fit">
+    <thead><tr><th scope="col">Infection status</th><th scope="col" class="n">Positive test</th><th scope="col" class="n">Negative test</th><th scope="col" class="n">All tested</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Infected</th><td class="n">16</td><td class="n">4</td><td class="n">20</td></tr>
+      <tr><th scope="row">Not infected</th><td class="n">9</td><td class="n">171</td><td class="n">180</td></tr>
+      <tr class="total"><th scope="row">All cattle</th><td class="n">25</td><td class="n">175</td><td class="n">200</td></tr>
+    </tbody>
+  </table>
+  <p class="after">The column "Positive test" has 25 cattle, but only 16 of them are infected. The row "Infected" has 20 cattle, and 4 of them test negative.</p>
+</section>
+
+<!-- Slide 9: Concept. Layout: intro, then compare (two boxes with the same inner order), then after. -->
+<section class="slide" data-type="concept" data-title="Apparent vs true prevalence">
+  <h2>Apparent vs true prevalence</h2>
+  <p class="intro">The same 200 cattle give two different prevalences. One counts positive test results, and the other counts infected cattle.</p>
+  <div class="lay-compare">
+    <div class="box"><h3><span class="dot" style="--dc: var(--d5)"></span>Apparent prevalence</h3>
+      <p><strong>Counts:</strong> cattle with a positive test</p>
+      <p class="num"><strong>In the village:</strong> 25 of 200 cattle, or 12.5%</p>
+      <p><strong>Includes:</strong> the 9 false positives, and it misses the 4 false negatives</p></div>
+    <div class="box"><h3><span class="dot" style="--dc: var(--d1)"></span>True prevalence</h3>
+      <p><strong>Counts:</strong> cattle that are infected</p>
+      <p class="num"><strong>In the village:</strong> 20 of 200 cattle, or 10.0%</p>
+      <p><strong>Includes:</strong> the 16 true positives and the 4 false negatives</p></div>
+  </div>
+  <p class="after">The apparent prevalence is higher than the true prevalence here, because the 9 false positives are more than the 4 false negatives.</p>
+</section>
+
+<!-- Slide 10: Concept. Layout: intro, cards, table, after. The cards define the terms, and the table uses them. -->
+<section class="slide" data-type="concept" data-title="Test sensitivity and specificity">
+  <h2>Test sensitivity and test specificity</h2>
+  <p class="intro">Two numbers describe how well the blood test works. Each number is a share of one row of the table.</p>
+  <div class="lay-cards">
+    <div class="box"><h3>Test sensitivity (Se)</h3><p>The share of infected cattle that test positive.</p></div>
+    <div class="box"><h3>Test specificity (Sp)</h3><p>The share of cattle without infection that test negative.</p></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th scope="col">Number</th><th scope="col">Row of the table</th><th scope="col" class="n">Count</th><th scope="col" class="n">Value</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Test sensitivity</th><td>Infected cattle that test positive</td><td class="n">16 of 20</td><td class="n">0.80</td></tr>
+      <tr><th scope="row">Test specificity</th><td>Cattle without infection that test negative</td><td class="n">171 of 180</td><td class="n">0.95</td></tr>
+    </tbody>
+  </table>
+  <p class="after">The laboratory gives Se and Sp for each test. The officer can then correct the apparent prevalence without knowing which cattle are infected.</p>
+</section>
+
+<!-- Slide 11: Example. Layout: stack, intro, table of steps, after. Each row names the input and the output of one step. -->
+<section class="slide" data-type="example" data-title="Worked example: the correction">
+  <h2>Worked example: the correction for the village</h2>
+  <p class="intro">The officer knows the apparent prevalence and the Se and Sp of the test. Three steps give the true prevalence.</p>
+  <table class="tbl" data-detail="d-formula">
+    <thead><tr><th scope="col">Step</th><th scope="col">What the officer does</th><th scope="col" class="n">Result</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">1</th><td>Take the apparent prevalence: 25 of 200 cattle</td><td class="n">0.125</td></tr>
+      <tr><th scope="row">2</th><td>Add Sp and subtract 1: 0.125 + 0.95 − 1</td><td class="n">0.075</td></tr>
+      <tr><th scope="row">3</th><td>Divide by Se + Sp − 1: 0.075 / (0.80 + 0.95 − 1) = 0.075 / 0.75</td><td class="n">0.10</td></tr>
+    </tbody>
+  </table>
+  <p class="after">The true prevalence is 0.10, so about 20 of the 200 cattle are infected. This matches the row "Infected" of the table.</p>
+</section>
+
+<!-- Slide 12: Explore. Controls in the right panel. The title is a noun phrase, and the intro gives the instruction. -->
+<section class="slide" data-type="explore" data-title="Test quality and prevalence" data-panel="controls">
+  <h2>Apparent prevalence and the quality of the test</h2>
+  <p class="intro">Move the sliders in the panel. Find a test for which the apparent prevalence equals the true prevalence.</p>
   <div class="bars" data-detail="d-formula" tabindex="0" aria-label="Bars for true and apparent prevalence. Select for details.">
     <div class="bar-row"><span>True prevalence</span><div class="bar-track"><div class="bar-fill" id="bar-tp" style="background:var(--d1)"></div></div><span class="num" id="val-tp"></span></div>
     <div class="bar-row"><span>Apparent prevalence</span><div class="bar-track"><div class="bar-fill" id="bar-ap" style="background:var(--d5)"></div></div><span class="num" id="val-ap"></span></div>
   </div>
-  <p>Move the sliders in the panel. Find a test for which the apparent prevalence equals the true prevalence.</p>
   <div class="notes">Ask students to call out the apparent prevalence before you move each slider. Then set Sp to 1.00 and ask why the gap shrinks.</div>
 </section>
 
-<!-- Slide 7: Practice with the card sorter. Each card has data-target, the value of the right box. -->
+<!-- Slide 13: Practice with the card sorter (quiz family). The heading is the instruction. The help line for the controls is last. -->
 <section class="slide" data-type="practice" data-title="Sort the results">
-  <h2>Sort each result into the right box</h2>
+  <h2>Sort each test result into its box</h2>
   <div class="sorter" data-sorter data-explain="d-sort">
     <div class="sorter-pool" aria-label="Cards to sort">
       <button class="sort-card" data-target="fp">Positive test, animal not infected</button>
@@ -441,11 +602,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       <span class="verdict" role="status" aria-live="polite"></span>
     </div>
   </div>
-  <p>Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
+  <p class="small">Drag a card into a box. On a phone or with the keyboard, select a card and then select a box.</p>
 </section>
 
-<!-- Slide 8: Check. Each question has its own div and its own verdict. The last question is the transfer item. -->
-<section class="slide" data-type="check" data-title="Check">
+<!-- Slide 14: Check (quiz family). One item. Each item has its own div and its own verdict. -->
+<section class="slide" data-type="check" data-title="Check: the correction">
   <div>
     <h2>Apparent prevalence is 12%. Se is 0.80 and Sp is 0.95. What is the true prevalence?</h2>
     <ul class="choices" data-check="q1" data-answer="b" data-explain="d-q1">
@@ -457,17 +618,32 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </div>
 </section>
 
-<!-- Slide 9: Summary -->
+<!-- Slide 15: Check with a transfer scenario. The heading names the new scenario, the paragraph gives it, and the bold line asks. -->
+<section class="slide" data-type="check" data-title="Check: a new scenario">
+  <div>
+    <h2>A new scenario: goats at a livestock market</h2>
+    <p>A veterinarian tests 400 goats at a market. The test is positive for 40 goats. The test has Se 0.90 and Sp 0.98.</p>
+    <p class="q-label"><strong>Which statement about the 40 positive goats is correct?</strong></p>
+    <ul class="choices" data-check="q2" data-answer="a" data-explain="d-q2">
+      <li><button class="choice" data-value="a"><span class="key">A</span>Some of the 40 goats may be free of infection</button></li>
+      <li><button class="choice" data-value="b"><span class="key">B</span>All of the 40 goats carry the infection</button></li>
+      <li><button class="choice" data-value="c"><span class="key">C</span>The 40 goats are all the infected goats</button></li>
+    </ul>
+    <p class="verdict" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Slide 16: Summary (closing) -->
 <section class="slide" data-type="summary" data-title="Summary">
   <h2>Key points</h2>
   <ul>
-    <li>The apparent prevalence counts positive results. The true prevalence counts infected animals.</li>
+    <li>The apparent prevalence counts positive test results. The true prevalence counts infected animals.</li>
     <li>False positives push the apparent prevalence up. False negatives pull it down.</li>
-    <li>With known Se and Sp, you can estimate the true prevalence.</li>
+    <li>With a known Se and Sp, you can estimate the true prevalence.</li>
     <li>The correction fails when the apparent prevalence is below 1 − Sp.</li>
   </ul>
   <div class="links">
-    <a class="btn" href="../encyclopedia/apparent-and-true-prevalence.html">Read the article: Apparent and true prevalence</a>
+    <!-- Article and guide buttons are added when the articles and guides exist. -->
     <!-- Always include the next-deck button. Use the slug of the planned deck, even when the deck does not exist yet. -->
     <a class="btn" href="./next-deck-slug.html">Open the next deck: Title of the next deck</a>
   </div>
@@ -476,8 +652,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- Details: one template per element with data-detail -->
 <template id="d-grid">
   <h3>What the grid shows</h3>
-  <p>Each square is one animal. There are 200 animals. The true prevalence is 10%, so 20 animals are infected.</p>
-  <p>With Se = 0.80, the test finds 16 of the 20 infected animals. With Sp = 0.95, it also gives 9 false positives among the 180 animals without infection.</p>
+  <p>Each square is one of the 200 cattle. The true prevalence is 10%, so 20 cattle are infected.</p>
+  <p>With Se = 0.80, the test finds 16 of the 20 infected cattle. With Sp = 0.95, it also gives 9 false positives among the 180 cattle without infection.</p>
   <p>The test reports 25 positives. The apparent prevalence is 25 / 200 = 12.5%.</p>
 </template>
 <template id="d-formula">
@@ -496,6 +672,11 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <h3>Answer: about 9%</h3>
   <p>TP = (0.12 + 0.95 − 1) / (0.80 + 0.95 − 1) = 0.07 / 0.75 = 0.093.</p>
   <p>False positives make up a large part of the positive results, so the true prevalence is lower than the apparent prevalence.</p>
+</template>
+<template id="d-q2">
+  <h3>Answer: A</h3>
+  <p>Sp is 0.98, so about 2 of every 100 goats without infection test positive. Some of the 40 positive goats can therefore be false positives.</p>
+  <p>Se is 0.90, so the test also misses some infected goats. The 40 positive goats are not all the infected goats.</p>
 </template>
 
   </div><!-- /card -->
@@ -517,7 +698,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   </aside>
 
 <!-- Controls: one block per slide with data-panel="controls". data-for-slide is the slide number. -->
-<div class="controls" data-for-slide="6" hidden>
+<div class="controls" data-for-slide="12" hidden>
   <div class="control"><label for="in-tp">True prevalence <output id="out-tp"></output></label><input type="range" id="in-tp" min="0" max="0.5" step="0.01" value="0.10"></div>
   <div class="control"><label for="in-se">Test sensitivity (Se) <output id="out-se"></output></label><input type="range" id="in-se" min="0.5" max="1" step="0.01" value="0.80"></div>
   <div class="control"><label for="in-sp">Test specificity (Sp) <output id="out-sp"></output></label><input type="range" id="in-sp" min="0.5" max="1" step="0.01" value="0.95"></div>
@@ -606,7 +787,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   let current = 0, notesMode = false, panelClosed = false;
   const phases = $('#phases'), ovGrid = $('#ov-grid');
   // One group of marks for each run of slides of the same type
-  const phaseName = { title: 'Start', recap: 'Case', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
+  const phaseName = { title: 'Start', scenario: 'Scenario', recap: 'Scenario', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
   const marks = []; let group = null, lastType = null;
   slides.forEach((s, i) => {
     const t = s.dataset.title || ('Slide ' + (i + 1));
@@ -927,7 +1108,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- ===================== DECK SCRIPT (edit for each deck) ===================== -->
 <script id="deck-script">
 (function () {
-  // Slide 5: grid of 200 animals, true prevalence 10%, Se 0.80, Sp 0.95
+  // Slide 7: grid of 200 cattle, true prevalence 10%, Se 0.80, Sp 0.95
   const grid = document.getElementById('grid100');
   const cells = [];
   for (let i = 0; i < 16; i++) cells.push('tp');
@@ -938,7 +1119,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   for (let i = cells.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [cells[i], cells[j]] = [cells[j], cells[i]]; }
   grid.innerHTML = cells.map(c => '<span class="' + c + '"></span>').join('');
 
-  // Slide 6: apparent prevalence from true prevalence, Se, and Sp
+  // Slide 12: apparent prevalence from true prevalence, Se, and Sp
   const tp = document.getElementById('in-tp'), se = document.getElementById('in-se'), sp = document.getElementById('in-sp');
   const pct = v => (v * 100).toFixed(1) + '%';
   function update() {
