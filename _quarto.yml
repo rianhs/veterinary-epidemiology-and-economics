@@ -3,6 +3,7 @@ project:
   output-dir: _site
   resources:
     - "slides/*.html"
+    - "assets/fonts/*"
 
 website:
   title: "Veterinary Epidemiology and Economics"

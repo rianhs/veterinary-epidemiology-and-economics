@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Frame a problem as an answerable question</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!--
   SLIDE SHELL TEMPLATE
@@ -18,7 +15,7 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
-     The shell version 2 offers: reveal steps (data-step), the card sorter (data-sorter),
+     The shell version 3 offers: reveal steps (data-step), the card sorter (data-sorter),
      SVG figure classes (.fig), and a Reset button that also resets inputs made later.
      Add ?steps=all to the URL to show all steps (for review and printing).
   5. Register the deck in slides/decks.yml.
@@ -44,32 +41,36 @@
 
 <!-- ===================== SHELL STYLES (do not edit) ===================== -->
 <style id="shell-styles">
+@font-face { font-family: "Source Sans 3"; src: url("../assets/fonts/source-sans-3-latin-wght-normal.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Serif 4"; src: url("../assets/fonts/source-serif-4-latin-wght-normal.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
 :root {
-  --bg: #FFFFFF; --surface: #F5F7F9; --surface-2: #EDF1F4; --line: #E1E6EB;
-  --ink: #18222F; --muted: #5A6573; --accent: #0B7A6E; --accent-ink: #FFFFFF;
-  --ok: #0B7A6E; --bad: #B4441C;
-  --d0: #6B7480; --d1: #0072B2; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #18222F;
-  --panel-w: 400px; --bar-h: 52px; --radius: 12px;
+  --bg: #FFFFFF; --surface: #F5F6F7; --surface-2: #ECEEF0; --line: #DFE2E6;
+  --ink: #16191D; --muted: #5B626B; --accent: #16191D; --accent-ink: #FFFFFF;
+  --ok: #17794B; --bad: #B4441C;
+  --d0: #6B7480; --d1: #0072B2; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #16191D;
+  --font-text: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --panel-w: 23.5rem; --bar-h: 3.3rem; --radius: 0.7rem;
   color-scheme: light;
 }
 :root[data-theme="dark"] {
-  --bg: #0D1526; --surface: #131D31; --surface-2: #18243B; --line: #243250;
-  --ink: #E6EBF2; --muted: #9AA6B8; --accent: #2DD4BF; --accent-ink: #062A26;
-  --ok: #2DD4BF; --bad: #F08A5D;
-  --d0: #9AA6B8; --d1: #56B4E9; --d2: #D55E00; --d3: #CC79A7; --d4: #009E73; --d5: #E69F00; --dint: #E6EBF2;
+  --bg: #000000; --surface: #111111; --surface-2: #1C1C1C; --line: #2E2E2E;
+  --ink: #EDEDED; --muted: #A3A3A3; --accent: #EDEDED; --accent-ink: #000000;
+  --ok: #4CC38A; --bad: #F08A5D;
+  --d0: #A3A3A3; --d1: #56B4E9; --d2: #E0711A; --d3: #CC79A7; --d4: #1DB088; --d5: #E69F00; --dint: #EDEDED;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { font-size: 17px; }
-:root:fullscreen, :root.is-full { font-size: 20px; }
+/* The type size follows the screen. A 1280 by 720 screen gives 17.5px, and a 1920 by 1080 screen gives 26.25px. */
+html { font-size: clamp(16px, min(1.367vw, 2.431vh), 36px); }
 body {
   margin: 0; height: 100vh; height: 100dvh; overflow: hidden;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5;
+  font-family: var(--font-text); line-height: 1.42;
   background: var(--bg); color: var(--ink);
   display: grid; grid-template-rows: var(--bar-h) 1fr var(--bar-h);
 }
 button { font: inherit; color: inherit; }
-a { color: var(--accent); }
+a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.18em; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 .code { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
 .num { font-variant-numeric: tabular-nums; }
@@ -81,24 +82,26 @@ a { color: var(--accent); }
 .deck-id .code { font-size: 0.85rem; white-space: nowrap; }
 .deck-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .tools { display: flex; gap: 0.25rem; }
-.icon-btn { width: 2.25rem; height: 2.25rem; border: 1px solid transparent; background: transparent; border-radius: 8px; display: grid; place-items: center; cursor: pointer; color: var(--muted); }
+.icon-btn { min-width: 2.25rem; height: 2.25rem; padding: 0 0.55rem; border: 1px solid transparent; background: transparent; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; cursor: pointer; color: var(--muted); font-size: 0.82rem; font-weight: 500; white-space: nowrap; }
 .icon-btn:hover { background: var(--surface); color: var(--ink); }
 .icon-btn[aria-pressed="true"] { color: var(--ink); background: var(--surface-2); }
-.icon-btn svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn svg { width: 1.15rem; height: 1.15rem; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .icon-btn[hidden] { display: none; }
 
 /* Stage */
 .stage { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
 .stage.has-panel { grid-template-columns: minmax(0, 1fr) var(--panel-w); }
 .card { position: relative; min-height: 0; overflow: hidden; }
-.slide { position: absolute; inset: 0; padding: 2.2rem clamp(1.2rem, 4vw, 3.2rem); display: none; flex-direction: column; gap: 1rem; overflow: hidden; }
+.slide { position: absolute; inset: 0; padding: 1.6rem clamp(1.2rem, 4vw, 3rem) 1.25rem; display: none; flex-direction: column; gap: 0.9rem; overflow: hidden; }
 .slide.is-active { display: flex; }
-.slide h1 { font-size: 2.6rem; line-height: 1.08; letter-spacing: -0.03em; margin: 0; font-weight: 700; }
-.slide h2 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; margin: 0; font-weight: 650; }
+.slide h1 { font-family: var(--font-display); font-size: 3.1rem; line-height: 1.08; letter-spacing: -0.02em; margin: 0; font-weight: 600; }
+.slide h2 { font-size: 1.75rem; line-height: 1.18; letter-spacing: -0.012em; margin: 0; font-weight: 650; }
 .slide p { margin: 0; }
-.slide .lead { font-size: 1.2rem; color: var(--muted); }
+.slide .lead { font-size: 1.25rem; color: var(--muted); }
 .slide ul { margin: 0; padding-left: 1.2rem; }
 .slide li + li { margin-top: 0.35rem; }
+/* The sentence of a definition uses the display face. New decks use the class "definition". */
+.slide .definition, .slide .big-def, .slide .def-full { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.008em; }
 .notes { display: none; }
 
 /* Slide types */
@@ -109,31 +112,42 @@ a { color: var(--accent); }
 .slide[data-type="summary"] .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
 .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; text-decoration: none; color: var(--ink); }
 .btn:hover { border-color: var(--muted); }
-.btn-main { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-main { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.btn-main:hover { border-color: var(--accent); opacity: 0.88; }
 
 /* Interactive markers */
-.term { border-bottom: 1.5px dotted var(--muted); cursor: help; }
+.term { border-bottom: 1px dotted var(--muted); cursor: help; }
 [data-detail] { position: relative; cursor: pointer; border-radius: var(--radius); outline: 1px solid transparent; transition: outline-color 0.15s; }
 [data-detail]:hover, [data-detail]:focus-visible { outline: 1px solid var(--muted); outline-offset: 4px; }
-[data-detail]::after { content: "i"; position: absolute; top: -0.55rem; right: -0.55rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: 600 0.72rem/1.1rem "Inter", sans-serif; text-align: center; font-style: italic; }
+[data-detail]::after { content: "i"; position: absolute; top: -0.55rem; right: -0.55rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: italic 600 0.75rem/1.1rem var(--font-display); text-align: center; }
 [data-detail].is-open { outline: 2px solid var(--accent); outline-offset: 4px; }
-.tooltip { position: fixed; z-index: 50; max-width: 18rem; padding: 0.5rem 0.7rem; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 0.85rem; line-height: 1.4; pointer-events: none; opacity: 0; transition: opacity 0.12s; }
+.tooltip { position: fixed; z-index: 50; max-width: 19rem; padding: 0.55rem 0.75rem; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 0.88rem; line-height: 1.4; pointer-events: none; opacity: 0; transition: opacity 0.12s; }
 .tooltip.is-on { opacity: 1; }
 
 /* Choice and check components */
 .choices { display: grid; gap: 0.5rem; padding: 0; margin: 0.4rem 0 0; list-style: none; }
 .choice { text-align: left; width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; display: flex; gap: 0.7rem; align-items: baseline; }
 .choice:hover { border-color: var(--muted); }
-.choice .key { font-weight: 600; color: var(--muted); }
-.choice[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); }
-.choice.is-correct { border-color: var(--ok); }
-.choice.is-wrong { border-color: var(--bad); }
+.choice .key { font-weight: 700; color: var(--muted); }
+/* Selected: a dark frame. Correct and wrong: a coloured frame, a mark, and a word. */
+.choice[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--surface-2); }
+.choice.is-correct { border-color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); background: color-mix(in srgb, var(--ok) 9%, var(--bg)); }
+.choice.is-wrong { border-color: var(--bad); box-shadow: inset 0 0 0 1px var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--bg)); }
+.choice.is-correct::after, .choice.is-wrong::after { margin-left: auto; padding-left: 1rem; font-weight: 700; font-size: 0.92em; white-space: nowrap; }
+.choice.is-correct::after { content: "\2713\00a0 Correct"; color: var(--ok); }
+.choice.is-wrong::after { content: "\2717\00a0 Not correct"; color: var(--bad); }
 .verdict { min-height: 1.5rem; font-weight: 600; }
+.slide[data-type="check"] { justify-content: center; }
 .slide[data-type="check"] > div { display: grid; gap: 1.3rem; align-content: start; }
 .slide[data-type="check"] .choice { font-size: 1.1rem; }
 .slide .choices { padding-left: 0; }
 .verdict.ok { color: var(--ok); }
 .verdict.bad { color: var(--bad); }
+
+/* Select elements inside a sentence */
+.slide select:not([multiple]) { appearance: none; -webkit-appearance: none; padding-right: 1.9rem; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 0.95rem) 55%, calc(100% - 0.6rem) 55%; background-size: 0.36rem 0.36rem; background-repeat: no-repeat; }
 
 /* Reveal steps */
 .step-hidden { visibility: hidden; opacity: 0; }
@@ -142,21 +156,22 @@ a { color: var(--accent); }
 .step-btn[hidden] { display: none; }
 
 /* Card sorter */
-.sorter { display: grid; gap: 0.9rem; min-height: 0; }
+.sorter { display: grid; gap: 0.7rem; min-height: 0; }
 .sorter-pool, .sort-drop { display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
-.sorter-pool { min-height: 3rem; padding: 0.5rem; border: 1px dashed var(--line); border-radius: 10px; }
+.sorter-pool { min-height: 2.8rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 10px; }
 .sorter-bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; }
 .sort-bin { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.55rem 0.7rem 0.7rem; display: grid; gap: 0.4rem; align-content: start; cursor: pointer; }
 .sort-bin h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
-.sort-drop { min-height: 3rem; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg); }
-.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--accent); }
+.sort-drop { min-height: 2.6rem; padding: 0.4rem; border: 1px dashed var(--muted); border-radius: 8px; background: var(--bg); }
+.sort-drop:empty::before { content: "Place cards here"; color: var(--muted); font-size: 0.82rem; align-self: center; padding-left: 0.2rem; }
+.sort-bin.is-over, .sorter-pool.is-over { border-color: var(--ink); }
 .sort-card { padding: 0.45rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); cursor: grab; text-align: left; font-size: 0.95rem; line-height: 1.35; }
 .sort-card:hover { border-color: var(--muted); }
-.sort-card.is-selected { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
-.sort-card.is-correct { border-color: var(--ok); }
-.sort-card.is-correct::after { content: " ✓"; color: var(--ok); font-weight: 600; }
-.sort-card.is-wrong { border-color: var(--bad); }
-.sort-card.is-wrong::after { content: " ✗"; color: var(--bad); font-weight: 600; }
+.sort-card.is-selected { border-color: var(--ink); outline: 2px solid var(--ink); outline-offset: 1px; }
+.sort-card.is-correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 9%, var(--bg)); }
+.sort-card.is-correct::after { content: " \2713"; color: var(--ok); font-weight: 700; }
+.sort-card.is-wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--bg)); }
+.sort-card.is-wrong::after { content: " \2717"; color: var(--bad); font-weight: 700; }
 .sorter-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
 
 /* SVG figures */
@@ -178,7 +193,7 @@ a { color: var(--accent); }
 .panel-head { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.6rem 0 0.8rem; border-bottom: 1px solid var(--line); }
 .tabs { display: flex; gap: 0.25rem; flex: 1; }
 .tab { border: none; background: none; padding: 0.55rem 0.7rem; cursor: pointer; color: var(--muted); font-weight: 600; font-size: 0.92rem; border-bottom: 2px solid transparent; }
-.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 .tab[hidden] { display: none; }
 .panel-body { overflow: auto; padding: 1.1rem 1.2rem 1.5rem; flex: 1; font-size: 0.95rem; }
 .panel-body h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
@@ -189,6 +204,7 @@ a { color: var(--accent); }
 .control label { font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; gap: 1rem; }
 .control output { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 500; }
 .control input[type="range"] { width: 100%; accent-color: var(--accent); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); width: 1.05rem; height: 1.05rem; }
 details.acc { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); margin: 0 0 0.75rem; }
 details.acc > summary { list-style: none; cursor: pointer; padding: 0.6rem 0.8rem; font-weight: 600; display: flex; gap: 0.5rem; }
 details.acc > summary::-webkit-details-marker { display: none; }
@@ -196,15 +212,31 @@ details.acc > summary::before { content: "▶"; font-size: 0.7rem; color: var(--
 details.acc[open] > summary::before { content: "▼"; }
 details.acc > div { padding: 0 0.8rem 0.7rem; }
 
-/* Bottom bar */
-.bottombar { position: relative; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; gap: 0.75rem; border-top: 1px solid var(--line); padding: 0 1rem; }
-.nav-btn { width: 2.3rem; height: 2.3rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.25rem; line-height: 1; display: grid; place-items: center; }
+/* Bottom bar: one group of marks for each part of the lesson */
+.bottombar { position: relative; z-index: 35; background: var(--bg); display: flex; align-items: center; justify-content: center; gap: 0.9rem; border-top: 1px solid var(--line); padding: 0 1rem; }
+.nav-btn { width: 2.3rem; height: 2.3rem; flex: none; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.25rem; line-height: 1; display: grid; place-items: center; }
+.nav-btn:hover:not(:disabled) { border-color: var(--muted); }
 .nav-btn:disabled { opacity: 0.4; cursor: default; }
-.dots { display: flex; gap: 0.35rem; align-items: center; }
-.dots button { width: 0.6rem; height: 0.6rem; padding: 0; border-radius: 50%; border: 1px solid var(--muted); background: transparent; cursor: pointer; }
-.dots button[aria-current="step"] { background: var(--ink); border-color: var(--ink); }
-.counter { border: none; background: none; cursor: pointer; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 6px; }
+.phases { display: flex; gap: 0.85rem; align-items: flex-end; min-width: 0; }
+.phase { display: grid; gap: 0.2rem; justify-items: start; }
+.phase-name { font-size: 0.72rem; font-weight: 600; line-height: 1; color: var(--muted); white-space: nowrap; }
+.phase.is-current .phase-name { color: var(--ink); }
+.phase-marks { display: flex; gap: 0.2rem; }
+.phase-marks button { width: 1.5rem; height: 1.1rem; padding: 0; border: none; background: transparent; cursor: pointer; display: grid; align-items: center; }
+.phase-marks button::before { content: ""; display: block; height: 0.3rem; border-radius: 2px; background: var(--line); }
+.phase-marks button.is-done::before { background: var(--muted); }
+.phase-marks button:hover::before { background: var(--ink); }
+.phase-marks button[aria-current="step"]::before { background: var(--ink); height: 0.5rem; }
+.counter { border: none; background: none; cursor: pointer; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 6px; white-space: nowrap; flex: none; }
 .counter:hover { background: var(--surface); color: var(--ink); }
+
+/* Summary slide: what the student did in this deck */
+.recall { display: grid; gap: 0.3rem; padding: 0.75rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); font-size: 0.95rem; }
+.recall p { margin: 0; }
+.recall strong { font-weight: 650; }
+.recall button { font: inherit; color: var(--ink); background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.18em; }
+.recall .r-ok { color: var(--ok); font-weight: 700; }
+.recall .r-bad { color: var(--bad); font-weight: 700; }
 
 /* Overlays */
 .overlay { position: fixed; inset: var(--bar-h) 0 var(--bar-h); background: var(--bg); z-index: 40; overflow: auto; padding: 2rem clamp(1rem, 4vw, 3rem); display: none; }
@@ -213,15 +245,15 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.75rem; }
 .ov-grid button { text-align: left; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); cursor: pointer; display: grid; gap: 0.2rem; }
 .ov-grid button:hover { border-color: var(--muted); }
-.ov-grid button[aria-current="step"] { border-color: var(--accent); }
+.ov-grid button[aria-current="step"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
 .ov-grid .ov-type { font-size: 0.82rem; color: var(--muted); }
 .help-list { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.2rem; max-width: 40rem; margin: 0 0 1.5rem; }
 .help-list dt { font-weight: 600; }
 .help-list dd { margin: 0; color: var(--muted); }
 .kbd { display: inline-block; border: 1px solid var(--line); border-radius: 5px; padding: 0 0.35rem; font-size: 0.85rem; background: var(--surface); }
-.demo-term { border-bottom: 1.5px dotted var(--muted); }
+.demo-term { border-bottom: 1px dotted var(--muted); }
 .demo-detail { display: inline-block; position: relative; padding: 0.1rem 0.5rem; border: 1px solid var(--line); border-radius: 8px; }
-.demo-detail::after { content: "i"; position: absolute; top: -0.5rem; right: -0.5rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: italic 600 0.7rem/1rem "Inter", sans-serif; text-align: center; }
+.demo-detail::after { content: "i"; position: absolute; top: -0.5rem; right: -0.5rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--bg); color: var(--muted); font: italic 600 0.7rem/1rem var(--font-display); text-align: center; }
 
 /* Narrow screens: panel becomes a bottom sheet */
 @media (max-width: 1099px) {
@@ -230,15 +262,23 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .panel { visibility: hidden; }
   .stage.has-panel.sheet-open .panel { transform: translateY(0); visibility: visible; }
   .stage:not(.has-panel) .panel { display: none; }
+  .icon-btn .lbl { display: none; }
+  .phase-name { display: none; }
+  .phases { gap: 0.4rem; align-items: center; }
+  .phase-marks button { width: 0.9rem; }
 }
 @media (max-width: 700px) and (orientation: portrait) {
+  html { font-size: 16px; }
   .slide { overflow-y: auto; padding: 1.4rem 1.1rem 2rem; }
-  .slide h1 { font-size: 2rem; }
+  .slide h1 { font-size: 2.1rem; }
   .slide h2 { font-size: 1.4rem; }
-  .dots { display: none; }
+  .slide[data-type="check"] { justify-content: flex-start; }
+  .phases { display: none; }
 }
+@media (max-height: 520px) and (orientation: landscape) { html { font-size: 14px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media print {
+  html { font-size: 15px; }
   body { display: block; height: auto; overflow: visible; }
   .topbar, .bottombar, .panel, .overlay, .tooltip { display: none !important; }
   .card { overflow: visible; }
@@ -359,10 +399,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <header class="topbar">
   <div class="deck-id"><span class="dot" id="deck-dot"></span><span class="code" id="deck-code"></span><span class="deck-title" id="deck-title"></span></div>
   <div class="tools">
-    <button class="icon-btn" id="btn-panel" aria-label="Show or hide the panel" title="Panel" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
-    <button class="icon-btn" id="btn-help" aria-label="Help" title="Help (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg></button>
-    <button class="icon-btn" id="btn-theme" aria-label="Switch light or dark mode" title="Light or dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
-    <button class="icon-btn" id="btn-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    <button class="icon-btn" id="btn-panel" aria-label="Show or hide the panel" title="Show or hide the panel" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg><span class="lbl">Details</span></button>
+    <button class="icon-btn" id="btn-help" aria-label="Help" title="Help (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg><span class="lbl">Help</span></button>
+    <button class="icon-btn" id="btn-theme" aria-label="Switch light or dark mode" title="Switch light or dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg><span class="lbl">Dark mode</span></button>
+    <button class="icon-btn" id="btn-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="lbl">Full screen</span></button>
   </div>
 </header>
 
@@ -889,7 +929,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 
 <footer class="bottombar">
   <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
-  <div class="dots" id="dots"></div>
+  <div class="phases" id="phases" role="navigation" aria-label="Slides, grouped by part of the lesson"></div>
   <button class="counter" id="counter" aria-label="Open the overview"></button>
   <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
 </footer>
@@ -900,6 +940,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <dl class="help-list">
     <dt><span class="demo-term">Dotted text</span></dt><dd>A term with a short definition. Hover or tap it.</dd>
     <dt><span class="demo-detail">Box</span></dt><dd>An element with an "i" opens details in the panel. Click it or press Enter.</dd>
+    <dt>Marks at the bottom</dt><dd>One mark for each slide. The marks are grouped by the part of the lesson. Select a mark to open its slide.</dd>
     <dt><span class="kbd">→</span> <span class="kbd">Space</span> <span class="kbd">Page Down</span></dt><dd>Next slide</dd>
     <dt><span class="kbd">←</span> <span class="kbd">Page Up</span></dt><dd>Previous slide</dd>
     <dt><span class="kbd">Home</span> <span class="kbd">End</span></dt><dd>First or last slide</dd>
@@ -926,7 +967,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   const saved = store.get('eev-theme');
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   root.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
-  $('#btn-theme').addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; store.set('eev-theme', root.dataset.theme); });
+  function themeLabel() { const l = $('#btn-theme .lbl'); if (l) l.textContent = root.dataset.theme === 'dark' ? 'Light mode' : 'Dark mode'; }
+  themeLabel();
+  $('#btn-theme').addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; store.set('eev-theme', root.dataset.theme); themeLabel(); });
 
   // Top bar
   $('#deck-title').textContent = meta.title;
@@ -937,11 +980,21 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   const slides = $$('.slide');
   const stage = $('#stage');
   let current = 0, notesMode = false, panelClosed = false;
-  const dots = $('#dots'), ovGrid = $('#ov-grid');
+  const phases = $('#phases'), ovGrid = $('#ov-grid');
+  // One group of marks for each run of slides of the same type
+  const phaseName = { title: 'Start', recap: 'Case', question: 'Question', concept: 'Concept', example: 'Example', explore: 'Explore', practice: 'Practice', check: 'Check', summary: 'Summary' };
+  const marks = []; let group = null, lastType = null;
   slides.forEach((s, i) => {
     const t = s.dataset.title || ('Slide ' + (i + 1));
-    const d = document.createElement('button'); d.title = (i + 1) + '. ' + t; d.setAttribute('aria-label', 'Slide ' + (i + 1) + ': ' + t);
-    d.addEventListener('click', () => go(i)); dots.appendChild(d);
+    const type = s.dataset.type || '';
+    if (type !== lastType || !group) {
+      group = document.createElement('div'); group.className = 'phase';
+      group.innerHTML = '<span class="phase-name"></span><div class="phase-marks"></div>';
+      group.querySelector('.phase-name').textContent = phaseName[type] || 'Slide';
+      phases.appendChild(group); lastType = type;
+    }
+    const d = document.createElement('button'); d.type = 'button'; d.title = (i + 1) + '. ' + t; d.setAttribute('aria-label', 'Slide ' + (i + 1) + ': ' + t);
+    d.addEventListener('click', () => go(i)); group.querySelector('.phase-marks').appendChild(d); marks.push(d);
     const o = document.createElement('button'); o.innerHTML = '<span class="ov-type"></span><strong></strong>';
     o.querySelector('.ov-type').textContent = (i + 1) + '. ' + (s.dataset.type || '');
     o.querySelector('strong').textContent = t;
@@ -969,6 +1022,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('[data-detail].is-open').forEach(el => el.classList.remove('is-open'));
     const show = hasPanelContent(s);
     $('#btn-panel').hidden = !show;
+    const pl = $('#btn-panel .lbl'); if (pl) pl.textContent = ctl ? 'Controls' : (notesMode && note ? 'Notes' : 'Details');
     const auto = !!ctl || !!(notesMode && note);
     stage.classList.toggle('has-panel', auto && !panelClosed);
     $('#btn-panel').setAttribute('aria-pressed', String(auto && !panelClosed));
@@ -979,7 +1033,9 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     current = Math.max(0, Math.min(slides.length - 1, i));
     panelClosed = false;
     slides.forEach((s, k) => s.classList.toggle('is-active', k === current));
-    $$('#dots button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    marks.forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); d.classList.toggle('is-done', k < current); });
+    $$('.phase', phases).forEach(g => g.classList.toggle('is-current', !!g.querySelector('[aria-current]')));
+    if (slides[current].dataset.type === 'summary') renderRecall();
     $$('#ov-grid button').forEach((d, k) => { if (k === current) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     $('#counter').textContent = (current + 1) + ' / ' + slides.length;
     $('#btn-prev').disabled = current === 0; updateNav();
@@ -1064,8 +1120,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     $$('.choice', list).forEach(btn => btn.addEventListener('click', () => {
       $$('.choice', list).forEach(b => { b.setAttribute('aria-pressed', 'false'); b.classList.remove('is-correct', 'is-wrong'); });
       btn.setAttribute('aria-pressed', 'true');
+      list._picked = btn;
       if (list.dataset.check) {
         const ok = btn.dataset.value === list.dataset.answer;
+        if (list._first === undefined) list._first = ok;
         const right = $('.choice[data-value="' + list.dataset.answer + '"]', list);
         btn.classList.add(ok ? 'is-correct' : 'is-wrong'); right.classList.add('is-correct');
         const v = list.parentElement.querySelector('.verdict');
@@ -1074,6 +1132,40 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
       }
     }));
   });
+
+  // Summary slide: show the prediction of the student and the result of the check questions
+  function slideNo(el) { return slides.indexOf(el.closest('.slide')) + 1; }
+  function jump(n) { const b = document.createElement('button'); b.type = 'button'; b.textContent = 'slide ' + n; b.addEventListener('click', () => go(n - 1)); return b; }
+  function renderRecall() {
+    const sum = slides[current];
+    const preds = $$('[data-choice]').filter(l => !l.dataset.check), checks = $$('[data-check]');
+    if (!preds.length && !checks.length) return;
+    let box = $('.recall', sum);
+    if (!box) { box = document.createElement('div'); box.className = 'recall'; box.setAttribute('aria-label', 'Your work in this deck'); const links = $('.links', sum); if (links) sum.insertBefore(box, links); else sum.appendChild(box); }
+    box.innerHTML = '';
+    preds.forEach(l => {
+      const p = document.createElement('p'), n = slideNo(l);
+      if (l._picked) {
+        const st = document.createElement('strong'); st.textContent = 'Your prediction: '; p.appendChild(st);
+        const c = l._picked.cloneNode(true), key = c.querySelector('.key'); const letter = key ? key.textContent.trim() + '. ' : ''; if (key) key.remove();
+        p.appendChild(document.createTextNode(letter + c.textContent.trim() + ' Do you still agree? Go back to '));
+      } else { p.appendChild(document.createTextNode('You did not choose a prediction. Go back to ')); }
+      p.appendChild(jump(n)); p.appendChild(document.createTextNode('.')); box.appendChild(p);
+    });
+    if (checks.length) {
+      const p = document.createElement('p'), st = document.createElement('strong');
+      const right = checks.filter(l => l._first === true), again = checks.filter(l => l._first !== true);
+      st.textContent = 'Check questions: '; p.appendChild(st);
+      const sc = document.createElement('span'); if (!again.length) sc.className = 'r-ok';
+      sc.textContent = right.length + ' of ' + checks.length + ' correct on the first try.'; p.appendChild(sc);
+      if (again.length) {
+        p.appendChild(document.createTextNode(' Open again: '));
+        Array.from(new Set(again.map(slideNo))).forEach((n, k) => { if (k) p.appendChild(document.createTextNode(', ')); p.appendChild(jump(n)); });
+        p.appendChild(document.createTextNode('.'));
+      }
+      box.appendChild(p);
+    }
+  }
 
   // Card sorter: drag a card into a box, or select a card and then select a box
   $$('[data-sorter]').forEach(sr => {
