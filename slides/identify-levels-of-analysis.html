@@ -15,7 +15,7 @@
   3. Replace the example slides, details, and controls in the CONTENT area.
   4. Do not edit the SHELL STYLES or the SHELL SCRIPT. Put deck-specific styles in
      <style id="deck-styles"> and deck-specific code in <script id="deck-script">.
-     The shell version 3 offers: reveal steps (data-step), the card sorter (data-sorter),
+     The shell version 3.1 offers: reveal steps (data-step), the card sorter (data-sorter),
      SVG figure classes (.fig), and a Reset button that also resets inputs made later.
      Add ?steps=all to the URL to show all steps (for review and printing).
   5. Register the deck in slides/decks.yml.
@@ -64,7 +64,9 @@
 }
 * { box-sizing: border-box; }
 /* The type size follows the screen. A 1280 by 720 screen gives 17.5px, and a 1920 by 1080 screen gives 26.25px. */
-html { font-size: clamp(16px, min(1.367vw, 2.431vh), 36px); }
+/* The student can change the size with the A- and A+ buttons (--zoom). */
+html { font-size: calc(clamp(16px, min(1.367vw, 2.431vh), 36px) * var(--zoom, 1)); }
+:root.is-zoomed .slide { overflow-y: auto; }
 body {
   margin: 0; height: 100vh; height: 100dvh; overflow: hidden;
   font-family: var(--font-text); line-height: 1.42;
@@ -89,6 +91,8 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .icon-btn[aria-pressed="true"] { color: var(--ink); background: var(--surface-2); }
 .icon-btn svg { width: 1.15rem; height: 1.15rem; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .icon-btn[hidden] { display: none; }
+.icon-btn.txt-btn { font-size: 0.95rem; font-weight: 700; min-width: 2.25rem; letter-spacing: 0.01em; }
+.icon-btn:disabled { opacity: 0.35; cursor: default; background: transparent; }
 
 /* Stage */
 .stage { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
@@ -111,6 +115,10 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .slide[data-type="title"] .meta-list { display: grid; gap: 0.4rem; margin-top: 1rem; padding: 0; list-style: none; }
 .slide[data-type="title"] .meta-list li { display: flex; gap: 0.6rem; align-items: baseline; }
 .slide[data-type="question"] { justify-content: center; }
+/* Centred slides sit a little above the middle: the space above is 2 parts and the space below is 3 parts.
+   The two spacers shrink to nothing when the slide is full. */
+.slide[data-type="title"]::before, .slide[data-type="question"]::before, .slide[data-type="check"]::before, .slide.vcenter::before { content: ""; flex: 2 0 0px; margin-bottom: -0.9rem; }
+.slide[data-type="title"]::after, .slide[data-type="question"]::after, .slide[data-type="check"]::after, .slide.vcenter::after { content: ""; flex: 3 0 0px; margin-top: -0.9rem; }
 .slide[data-type="summary"] .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
 .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; text-decoration: none; color: var(--ink); }
 .btn:hover { border-color: var(--muted); }
@@ -231,6 +239,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .phase-marks button[aria-current="step"]::before { background: var(--ink); height: 0.5rem; }
 .counter { border: none; background: none; cursor: pointer; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 6px; white-space: nowrap; flex: none; }
 .counter:hover { background: var(--surface); color: var(--ink); }
+.bottombar.no-phases .phases { display: none; }
+#btn-phases { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); }
 
 /* Summary slide: what the student did in this deck */
 .recall { display: grid; gap: 0.3rem; padding: 0.75rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); font-size: 0.95rem; }
@@ -265,6 +275,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .stage.has-panel.sheet-open .panel { transform: translateY(0); visibility: visible; }
   .stage:not(.has-panel) .panel { display: none; }
   .icon-btn .lbl { display: none; }
+  #btn-phases { right: 0.4rem; }
   .phase-name { display: none; }
   .phases { gap: 0.4rem; align-items: center; }
   .phase-marks button { width: 0.9rem; }
@@ -276,6 +287,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   .slide h2 { font-size: 1.4rem; }
   .slide[data-type="check"] { justify-content: flex-start; }
   .phases { display: none; }
+  #btn-phases { display: none; }
+  .slide::before, .slide::after { display: none; }
 }
 @media (max-height: 520px) and (orientation: landscape) { html { font-size: 14px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -283,6 +296,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   html { font-size: 15px; }
   body { display: block; height: auto; overflow: visible; }
   .topbar, .bottombar, .panel, .overlay, .tooltip { display: none !important; }
+  .slide::before, .slide::after { display: none; }
   .card { overflow: visible; }
   .slide { position: relative; display: flex !important; inset: auto; min-height: 100vh; page-break-after: always; }
   [data-detail]::after { display: none; }
@@ -379,6 +393,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="tools">
     <button class="icon-btn" id="btn-panel" aria-label="Show or hide the panel" title="Show or hide the panel" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg><span class="lbl">Details</span></button>
     <button class="icon-btn" id="btn-help" aria-label="Help" title="Help (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg><span class="lbl">Help</span></button>
+    <button class="icon-btn txt-btn" id="btn-smaller" aria-label="Smaller text" title="Smaller text (-)">A−</button>
+    <button class="icon-btn txt-btn" id="btn-larger" aria-label="Larger text" title="Larger text (+)">A+</button>
     <button class="icon-btn" id="btn-theme" aria-label="Switch light or dark mode" title="Switch light or dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg><span class="lbl">Dark mode</span></button>
     <button class="icon-btn" id="btn-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="lbl">Full screen</span></button>
   </div>
@@ -887,6 +903,7 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   <div class="phases" id="phases" role="navigation" aria-label="Slides, grouped by part of the lesson"></div>
   <button class="counter" id="counter" aria-label="Open the overview"></button>
   <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+  <button class="icon-btn" id="btn-phases" aria-label="Show or hide the progress marks" title="Show or hide the progress marks (P)" aria-expanded="true"><svg viewBox="0 0 24 24"><path d="M3 12h4M10 12h4M17 12h4"/></svg><span class="lbl">Hide progress</span></button>
 </footer>
 
 <div class="overlay" id="overview" role="dialog" aria-label="Overview"><h2>All slides</h2><div class="ov-grid" id="ov-grid"></div></div>
@@ -899,6 +916,8 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     <dt><span class="kbd">→</span> <span class="kbd">Space</span> <span class="kbd">Page Down</span></dt><dd>Next slide</dd>
     <dt><span class="kbd">←</span> <span class="kbd">Page Up</span></dt><dd>Previous slide</dd>
     <dt><span class="kbd">Home</span> <span class="kbd">End</span></dt><dd>First or last slide</dd>
+    <dt><span class="kbd">+</span> <span class="kbd">-</span> <span class="kbd">0</span></dt><dd>Larger text, smaller text, normal text. The buttons A+ and A− do the same.</dd>
+    <dt><span class="kbd">P</span></dt><dd>Show or hide the progress marks</dd>
     <dt><span class="kbd">F</span></dt><dd>Full screen</dd>
     <dt><span class="kbd">O</span></dt><dd>Overview of all slides</dd>
     <dt><span class="kbd">N</span></dt><dd>Lecturer notes</dd>
@@ -924,6 +943,27 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
   root.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
   function themeLabel() { const l = $('#btn-theme .lbl'); if (l) l.textContent = root.dataset.theme === 'dark' ? 'Light mode' : 'Dark mode'; }
   themeLabel();
+
+  // Text size: the type follows the screen, so the zoom of the browser changes little. These steps replace it.
+  const zooms = [0.8, 0.9, 1, 1.1, 1.2, 1.35, 1.5];
+  let zi = zooms.indexOf(Number(store.get('eev-zoom'))); if (zi < 0) zi = 2;
+  function setZoom(i) {
+    zi = Math.max(0, Math.min(zooms.length - 1, i)); const z = zooms[zi];
+    root.style.setProperty('--zoom', z); root.classList.toggle('is-zoomed', z > 1); store.set('eev-zoom', String(z));
+    $('#btn-smaller').disabled = zi === 0; $('#btn-larger').disabled = zi === zooms.length - 1;
+    $('#btn-smaller').title = 'Smaller text (-). Now ' + Math.round(z * 100) + '%'; $('#btn-larger').title = 'Larger text (+). Now ' + Math.round(z * 100) + '%';
+  }
+  setZoom(zi);
+  $('#btn-smaller').addEventListener('click', () => setZoom(zi - 1));
+  $('#btn-larger').addEventListener('click', () => setZoom(zi + 1));
+
+  // Progress marks: show or hide
+  function setPhases(on) {
+    $('.bottombar').classList.toggle('no-phases', !on); store.set('eev-phases', on ? 'on' : 'off');
+    const b = $('#btn-phases'); b.setAttribute('aria-expanded', String(on)); b.querySelector('.lbl').textContent = on ? 'Hide progress' : 'Show progress';
+  }
+  setPhases(store.get('eev-phases') !== 'off');
+  $('#btn-phases').addEventListener('click', () => setPhases($('.bottombar').classList.contains('no-phases')));
   $('#btn-theme').addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; store.set('eev-theme', root.dataset.theme); themeLabel(); });
 
   // Top bar
@@ -1214,6 +1254,10 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
     else if (k === 'End') go(slides.length - 1);
     else if (k === 'f' || k === 'F') toggleFull();
     else if (k === 'o' || k === 'O') toggleOverlay('overview');
+    else if (k === '+' || k === '=') setZoom(zi + 1);
+    else if (k === '-' || k === '_') setZoom(zi - 1);
+    else if (k === '0') setZoom(2);
+    else if (k === 'p' || k === 'P') setPhases($('.bottombar').classList.contains('no-phases'));
     else if (k === '?') toggleOverlay('help');
     else if (k === 'n' || k === 'N') { notesMode = !notesMode; panelClosed = false; updatePanel(); if (notesMode && slides[current].querySelector('.notes')) setTab('notes'); }
     else if (k === 'Escape') { if ($('.overlay.is-on')) closeOverlays(); else if (tipFor) hideTip(); else if (stage.classList.contains('has-panel')) { panelClosed = true; updatePanel(); } }
