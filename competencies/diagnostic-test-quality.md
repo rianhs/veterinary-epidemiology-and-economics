@@ -163,7 +163,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Validity: test sensitivity and specificity. Reliability: repeatability and agreement. Precision: uncertainty of an estimate.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Describe the natural history of a disease</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Describe the natural history of a disease</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-2"><span class="code">S4.2</span> Build a diagnostic two-by-two table</a></li></ul></div></div></div>
 ```
 
@@ -175,7 +175,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Test result against true status from a reference test.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-1"><span class="code">S4.1</span> Distinguish validity, reliability, and precision</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Write a case definition</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-1"><span class="code">S4.1</span> Distinguish validity, reliability, and precision</a></li><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Write a case definition</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li><li><a href="diagnostic-test-quality.html#s4-6"><span class="code">S4.6</span> Calculate and interpret kappa</a></li></ul></div></div></div>
 ```
 
@@ -199,7 +199,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Positive and negative predictive values and their change with prevalence.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Calculate a prevalence</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Calculate a prevalence</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="diagnostic-test-quality.html#s4-8"><span class="code">S4.8</span> Choose a testing strategy for a purpose</a></li></ul></div></div></div>
 ```
 
@@ -211,7 +211,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Correction with test sensitivity and specificity. Conditions under which the correction fails.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Calculate a prevalence</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Calculate a prevalence</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="risk-of-introduction-and-spread.html#s14-3"><span class="code">S14.3</span> Assess the likelihood of release</a></li></ul></div></div></div>
 ```
 
@@ -259,7 +259,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Detection windows for tests that find the agent and tests that find antibodies.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Describe the natural history of a disease</a></li><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Describe the natural history of a disease</a></li><li><a href="diagnostic-test-quality.html#s4-3"><span class="code">S4.3</span> Calculate and interpret sensitivity and specificity</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 

@@ -183,7 +183,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Point source, continuous common source, propagated, endemic, and seasonal patterns. A common source shape points to a shared exposure. A propagated shape points to spread between animals.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-4"><span class="code">S6.4</span> Draw an epidemic curve</a></li><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Describe the natural history of a disease</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-4"><span class="code">S6.4</span> Draw an epidemic curve</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Describe the natural history of a disease</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="patterns-by-animal-place-and-time.html#s6-6"><span class="code">S6.6</span> Estimate an exposure window from incubation periods</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-8"><span class="code">S6.8</span> Write a descriptive summary of a disease pattern</a></li><li><a href="outbreak-investigation.html#s12-4"><span class="code">S12.4</span> Describe an outbreak by animal, place, and time</a></li></ul></div></div></div>
 ```
 

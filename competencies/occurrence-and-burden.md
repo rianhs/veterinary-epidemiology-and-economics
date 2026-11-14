@@ -121,7 +121,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Prevalence at a point in time and during a period.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Calculate a prevalence</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Calculate a prevalence</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="occurrence-and-burden.html#s5-3"><span class="code">S5.3</span> Relate prevalence, incidence, and duration</a></li><li><a href="occurrence-and-burden.html#s5-5"><span class="code">S5.5</span> Calculate a confidence interval for a frequency measure</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-1"><span class="code">S6.1</span> Describe occurrence by animal characteristics</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-2"><span class="code">S6.2</span> Map cases by place</a></li><li><a href="risk-of-introduction-and-spread.html#s14-3"><span class="code">S14.3</span> Assess the likelihood of release</a></li></ul></div></div></div>
 ```
 
@@ -133,7 +133,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Attack rate as incidence risk during an outbreak. Animal-time as the denominator of a rate.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Choose a method to estimate population size</a></li><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Calculate a prevalence</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Choose a method to estimate population size</a></li><li><a href="population-unit-and-case.html#s2-6"><span class="code">S2.6</span> Calculate a prevalence</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="occurrence-and-burden.html#s5-3"><span class="code">S5.3</span> Relate prevalence, incidence, and duration</a></li><li><a href="occurrence-and-burden.html#s5-4"><span class="code">S5.4</span> Calculate mortality measures</a></li><li><a href="occurrence-and-burden.html#s5-5"><span class="code">S5.5</span> Calculate a confidence interval for a frequency measure</a></li><li><a href="occurrence-and-burden.html#s5-6"><span class="code">S5.6</span> Express disease burden as production loss</a></li><li><a href="patterns-by-animal-place-and-time.html#s6-4"><span class="code">S6.4</span> Draw an epidemic curve</a></li><li><a href="comparing-groups-and-association.html#s8-4"><span class="code">S8.4</span> Calculate risk ratio, odds ratio, and risk difference</a></li></ul></div></div></div>
 ```
 

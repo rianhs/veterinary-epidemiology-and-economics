@@ -149,7 +149,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Confirm the diagnosis and compare the count with a baseline.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="surveillance-systems.html#s7-4"><span class="code">S7.4</span> Set a baseline and an alert threshold</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Write a case definition</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="surveillance-systems.html#s7-4"><span class="code">S7.4</span> Set a baseline and an alert threshold</a></li><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Write a case definition</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li>None in this course</li></ul></div></div></div>
 ```
 
@@ -161,7 +161,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Case definition that can change as the investigation goes on.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Write a case definition</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Write a case definition</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="outbreak-investigation.html#s12-3"><span class="code">S12.3</span> Build and update a line list</a></li></ul></div></div></div>
 ```
 

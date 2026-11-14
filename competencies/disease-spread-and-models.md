@@ -121,7 +121,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Susceptible, infectious, recovered, and dead compartments, with flows between them.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-4"><span class="code">S2.4</span> Choose a method to estimate population size</a></li><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Describe the natural history of a disease</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="population-unit-and-case.html#s2-5"><span class="code">S2.5</span> Choose a method to estimate population size</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Describe the natural history of a disease</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="disease-spread-and-models.html#s13-2"><span class="code">S13.2</span> Explain and calculate the basic reproduction number</a></li></ul></div></div></div>
 ```
 

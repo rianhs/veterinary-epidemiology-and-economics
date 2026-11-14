@@ -145,7 +145,7 @@ listing:
 ```{=html}
 <div class="skill-body"><p class="skill-scope">Exposed and unexposed groups, or cases and non-cases.</p>
 <div class="skill-grid"><div><h3 class="mini-title">Depth</h3><p class="depth depth-core">Core</p></div>
-<div><h3 class="mini-title">Needs first</h3><ul><li><a href="comparing-groups-and-association.html#s8-1"><span class="code">S8.1</span> List possible determinants of a health event</a></li><li><a href="population-unit-and-case.html#s2-2"><span class="code">S2.2</span> Describe the natural history of a disease</a></li></ul></div>
+<div><h3 class="mini-title">Needs first</h3><ul><li><a href="comparing-groups-and-association.html#s8-1"><span class="code">S8.1</span> List possible determinants of a health event</a></li><li><a href="population-unit-and-case.html#s2-3"><span class="code">S2.3</span> Describe the natural history of a disease</a></li></ul></div>
 <div><h3 class="mini-title">Leads to</h3><ul><li><a href="comparing-groups-and-association.html#s8-4"><span class="code">S8.4</span> Calculate risk ratio, odds ratio, and risk difference</a></li><li><a href="appraising-analytical-reports.html#s10-1"><span class="code">S10.1</span> Identify the study design of a report</a></li></ul></div></div></div>
 ```
 

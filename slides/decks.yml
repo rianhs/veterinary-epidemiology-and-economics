@@ -35,3 +35,8 @@
   path: /slides/frame-problem-as-answerable-question.html
   description: "Check whether a question is clear, can be answered with evidence, belongs to epidemiology or economics, and serves a choice, then list the information that it needs, with a source for each item."
   categories: [C1, S1.6]
+- title: Identify the epidemiological unit
+  type: slides
+  path: /slides/identify-the-epidemiological-unit.html
+  description: Find the group of animals that have about the same chance of exposure to a hazard, and tell the epidemiological unit from the units of observation and analysis.
+  categories: [C2, S2.1]
