@@ -200,7 +200,7 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 
 /* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
    Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
-   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+   A deck does not set --fs-comp. Every table uses 1.05rem, and 0.9rem while the Details panel is open (rule below). */
 .slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
 .slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
 .slide .after { margin-top: var(--gap-after); }
@@ -240,6 +240,9 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
 .tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
+/* Details panel open: the card is narrower, so every table gets smaller type and tighter cells. */
+.stage.has-panel .tbl { --fs-comp: 0.9rem; }
+.stage.has-panel .tbl th, .stage.has-panel .tbl td { padding: 0.3rem 0.55rem; }
 .box .tbl { border: none; border-radius: 0; background: transparent; }
 .box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
 .box .tbl td, .box .tbl tbody th { padding-left: 0; }
@@ -369,7 +372,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .tbl .dom { white-space: nowrap; font-weight: 600; }
 .tbl .dom .dot { margin-right: 0.45rem; }
 .tbl td.q { font-weight: 500; }
-.tbl { --fs-comp: 1.03rem; }
 .tbl tbody th { white-space: nowrap; }
 
 .fq-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; flex: none; }
@@ -445,8 +447,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .fq-rows dd { margin: 0; font-size: 1.05rem; }
 
 /* Details panel open: the card is narrower, so the text gets smaller */
-.stage.has-panel .tbl { --fs-comp: 0.9rem; }
-.stage.has-panel .tbl th, .stage.has-panel .tbl td { padding: 0.3rem 0.55rem; }
 .stage.has-panel .intro, .stage.has-panel .after { font-size: 1rem; }
 .stage.has-panel .definition { font-size: 1.2rem; }
 .stage.has-panel .fq-list, .stage.has-panel .passes { font-size: 0.98rem; }

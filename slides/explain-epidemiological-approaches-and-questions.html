@@ -203,7 +203,7 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 
 /* Layout patterns and components (shell 3.2). Rules: 05-slide-deck-guide.md, sections 3.5 to 3.10.
    Type scale of a slide (the sizes of shell 3.1 decks): title 1.75rem, definition 1.4rem (2.5rem alone, 1.95rem for a long one), body 1.15rem, component 1.05rem, small 0.95rem.
-   A deck may set --fs-comp for its tables (1rem to 1.2rem) to fit their density. */
+   A deck does not set --fs-comp. Every table uses 1.05rem, and 0.9rem while the Details panel is open (rule below). */
 .slide { --fs-body: 1.15rem; --fs-comp: 1.05rem; --fs-small: 0.95rem; --fs-def: 1.4rem; --fs-def-alone: 2.5rem; --fs-def-long: 1.95rem; --gap-after: 0.4rem; }
 .slide .intro, .slide .after, .slide .txt { font-size: var(--fs-body); }
 .slide .after { margin-top: var(--gap-after); }
@@ -243,6 +243,9 @@ a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 0.
 .tbl .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .tbl tr.total > * { border-top: 1px solid var(--muted); font-weight: 600; }
 .tbl-note { font-size: var(--fs-small); color: var(--muted); margin-top: -0.45rem; }
+/* Details panel open: the card is narrower, so every table gets smaller type and tighter cells. */
+.stage.has-panel .tbl { --fs-comp: 0.9rem; }
+.stage.has-panel .tbl th, .stage.has-panel .tbl td { padding: 0.3rem 0.55rem; }
 .box .tbl { border: none; border-radius: 0; background: transparent; }
 .box .tbl thead th { background: transparent; border-bottom-color: var(--muted); padding-left: 0; }
 .box .tbl td, .box .tbl tbody th { padding-left: 0; }
@@ -363,8 +366,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 <!-- ===================== DECK STYLES (edit for each deck) ===================== -->
 <style id="deck-styles">
 .facts { margin: 0; display: grid; gap: 0.6rem; width: 100%; }
-.tbl { --fs-comp: 1.1rem; }
-.tbl.dc-table { --fs-comp: 1rem; }
 .facts div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .facts dt { color: var(--muted); }
 .facts dd { margin: 0; font-weight: 700; font-size: 1.25rem; text-align: right; font-variant-numeric: tabular-nums; }
@@ -383,7 +384,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .dc-res { font-weight: 600; font-size: 1.1rem; }
 .dc-col .fig { max-width: 26rem; }
 .dc-line { font-size: 1.05rem; }
-.dc-table { font-size: 1rem; }
 .dc-table th, .dc-table td { padding: 0.35rem 0.6rem; }
 .dc-table td { text-align: right; font-variant-numeric: tabular-nums; }
 .dc-table thead th:not(:first-child) { text-align: right; }
@@ -415,7 +415,6 @@ details.acc > div { padding: 0 0.8rem 0.7rem; }
 .bd-why[hidden] { display: none; }
 .stage.has-panel .dc-col { gap: 0.3rem; }
 .stage.has-panel .dc-col .fig { max-width: 18rem; }
-.stage.has-panel .tbl.dc-table { --fs-comp: 0.95rem; }
 .stage.has-panel .dc-table th, .stage.has-panel .dc-table td { padding: 0.3rem 0.45rem; }
 .bd-why { display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.98rem; }
 .quote { font-size: 1.25rem; line-height: 1.45; margin: 0; padding-left: 1.6rem; display: grid; gap: 0.3rem; }
